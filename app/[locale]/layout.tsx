@@ -2,13 +2,13 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
-import queryClient from '@/core/queryClient';
 import { routing } from '@/i18n/routing';
-import { QueryClientProvider } from '@tanstack/react-query';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
 import '../globals.css';
+
+import Providers from './providers';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -34,6 +34,7 @@ export default async function RootLayout({
 }) {
   const { locale } = await params;
   const messages = await getMessages();
+
   if (!hasLocale(routing.locales, locale) || !messages) {
     notFound();
   }
@@ -41,7 +42,7 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+          <Providers>{children}</Providers>
         </NextIntlClientProvider>
       </body>
     </html>
