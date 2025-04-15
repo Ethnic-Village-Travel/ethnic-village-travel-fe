@@ -1,9 +1,8 @@
-// components/language-switcher.tsx
 'use client';
 
 import { useTransition } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { routing } from '@/i18n/routing';
+import { routing } from '@/libs/i18n-navigation';
 import { GlobeIcon } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
