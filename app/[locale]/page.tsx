@@ -9,6 +9,7 @@ export default function Home() {
     <div>
       <h1>{t('title')}</h1>
       <Link href="/about">{t('about')}</Link>
+
       <LanguageSwitcher />
     </div>
   );
