@@ -28,6 +28,9 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  if (process.env.NODE_ENV === 'development') {
+    throw new Error('Đây là lỗi giả để kiểm tra global-error.tsx');
+  }
   const { locale } = await params;
   const messages = await getMessages();
 
