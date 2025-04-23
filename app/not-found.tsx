@@ -1,30 +1,71 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/utils/general';
 import { ArrowLeft, Home } from 'lucide-react';
 
-import { useGlitchAndParallax } from '@/hooks/useGlitchAndParallax';
 import { Button } from '@/components/ui/button';
-import { BackgroundEffects } from '@/components/common/background-effects';
 
 import '../styles/globals.css';
 
-export default function NotFoundPage() {
-  const { isGlitching, mousePosition } = useGlitchAndParallax();
+export default function Page() {
+  const [isGlitching, setIsGlitching] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    // Trigger glitch effect at random intervals
+    const glitchInterval = setInterval(
+      () => {
+        setIsGlitching(true);
+        setTimeout(() => setIsGlitching(false), 200);
+      },
+      Math.random() * 3000 + 2000,
+    );
+
+    // Track mouse position for parallax effect
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX / window.innerWidth - 0.5,
+        y: e.clientY / window.innerHeight - 0.5,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      clearInterval(glitchInterval);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   return (
-    <div className="overflow aput-hidden relative flex min-h-screen flex-col items-center justify-center bg-black text-white">
-      <BackgroundEffects glowColor="bg-fuchsia-500/20" mousePosition={mousePosition} />
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black text-white">
+      {/* Background grid */}
+      <div className="absolute inset-0 z-0 opacity-20">
+        <div className="h-full w-full bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" />
+      </div>
 
+      {/* Glow effect */}
+      <div
+        className="absolute top-1/2 left-1/2 h-[500px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-fuchsia-500/20 blur-[100px]"
+        style={{
+          transform: `translate(-50%, -50%) translate(${mousePosition.x * 20}px, ${mousePosition.y * 20}px)`,
+        }}
+      />
+
+      {/* Main content */}
       <main className="relative z-10 flex w-full max-w-screen-xl flex-col items-center justify-center px-4 text-center">
+        {/* 404 Text with glitch effect */}
         <h1 className="relative font-mono text-[150px] leading-none font-bold tracking-tighter sm:text-[250px]">
           <span
             className={cn(
               'relative inline-block transition-transform',
               isGlitching && 'animate-[shake_0.2s_ease-in-out_infinite]',
             )}
-            style={{ transform: `translate(${mousePosition.x * 10}px, ${mousePosition.y * 10}px)` }}
+            style={{
+              transform: `translateX(${mousePosition.x * 10}px) translateY(${mousePosition.y * 10}px)`,
+            }}
           >
             4
           </span>
@@ -33,7 +74,9 @@ export default function NotFoundPage() {
               'relative inline-block text-fuchsia-500 transition-transform',
               isGlitching && 'animate-[shake_0.3s_ease-in-out_infinite]',
             )}
-            style={{ transform: `translate(${mousePosition.x * -15}px, ${mousePosition.y * -15}px)` }}
+            style={{
+              transform: `translateX(${mousePosition.x * -15}px) translateY(${mousePosition.y * -15}px)`,
+            }}
           >
             0
           </span>
@@ -42,10 +85,14 @@ export default function NotFoundPage() {
               'relative inline-block transition-transform',
               isGlitching && 'animate-[shake_0.1s_ease-in-out_infinite]',
             )}
-            style={{ transform: `translate(${mousePosition.x * 10}px, ${mousePosition.y * 10}px)` }}
+            style={{
+              transform: `translateX(${mousePosition.x * 10}px) translateY(${mousePosition.y * 10}px)`,
+            }}
           >
             4
           </span>
+
+          {/* Glitch lines */}
           {isGlitching && (
             <>
               <span className="absolute top-1/4 left-0 h-[5px] w-full bg-fuchsia-500 opacity-70"></span>
@@ -55,6 +102,7 @@ export default function NotFoundPage() {
           )}
         </h1>
 
+        {/* Message */}
         <div className="mt-4 mb-8 max-w-lg space-y-2">
           <h2 className="text-2xl font-bold sm:text-3xl">Oops! Trang không tồn tại</h2>
           <p className="text-gray-400">
@@ -62,6 +110,7 @@ export default function NotFoundPage() {
           </p>
         </div>
 
+        {/* Action buttons */}
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button
             asChild
@@ -73,8 +122,8 @@ export default function NotFoundPage() {
               <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-fuchsia-500 to-cyan-500 transition-all duration-300 group-hover:w-full"></span>
             </Link>
           </Button>
+
           <Button
-            aria-label="Go back to previous page"
             variant="secondary"
             size="lg"
             className="group relative overflow-hidden border-fuchsia-500/40 hover:border-fuchsia-400/60 hover:bg-fuchsia-950/30 hover:text-fuchsia-400"
@@ -87,8 +136,27 @@ export default function NotFoundPage() {
         </div>
       </main>
 
+      {/* Decorative elements */}
       <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-32 bg-gradient-to-t from-black to-transparent"></div>
 
+      {/* Animated particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-white opacity-20"
+            style={{
+              width: `${Math.random() * 4 + 1}px`,
+              height: `${Math.random() * 4 + 1}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animation: `float ${Math.random() * 10 + 10}s linear infinite`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Add keyframes for animations */}
       <style jsx global>{`
         @keyframes float {
           0% {
