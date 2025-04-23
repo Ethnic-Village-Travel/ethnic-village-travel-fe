@@ -5,7 +5,7 @@ import { Link } from '@/libs/i18n-navigation';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-import LanguageSwitcher from '@/components/language-switcher';
+import LanguageSwitcher from '@/components/common/language-switcher';
 
 export default function HomePage() {
   const t = useTranslations('home');

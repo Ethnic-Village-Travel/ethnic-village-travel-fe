@@ -6,7 +6,7 @@ import { AlertTriangle, RefreshCcw } from 'lucide-react';
 
 import { useGlitchAndParallax } from '@/hooks/useGlitchAndParallax';
 import { Button } from '@/components/ui/button';
-import { BackgroundEffects } from '@/components/background-effects';
+import { BackgroundEffects } from '@/components/common/background-effects';
 
 import '../styles/globals.css';
 
