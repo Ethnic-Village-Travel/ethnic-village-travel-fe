@@ -1,4 +1,4 @@
-import { AppConstant } from '@/constants/config';
+import { AppConstant } from '@/constants/app-constants';
 import { createNavigation } from 'next-intl/navigation';
 import { defineRouting } from 'next-intl/routing';
 
