@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-import { cn } from '@/libs/utils';
+import { cn } from '@/utils/general';
 import { AlertTriangle, RefreshCcw } from 'lucide-react';
 
 import { useGlitchAndParallax } from '@/hooks/useGlitchAndParallax';
 import { Button } from '@/components/ui/button';
 import { BackgroundEffects } from '@/components/background-effects';
+
+import '../styles/globals.css';
 
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const { isGlitching, mousePosition } = useGlitchAndParallax();
