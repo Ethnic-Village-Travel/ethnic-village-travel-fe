@@ -2,10 +2,10 @@
 
 import { useTransition } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { routing } from '@/libs/i18n-navigation';
 import { GlobeIcon } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
+import { routing } from '@/lib/i18n-navigation';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,

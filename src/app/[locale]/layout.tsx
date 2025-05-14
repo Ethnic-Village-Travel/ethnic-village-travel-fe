@@ -1,20 +1,30 @@
-import React from 'react';
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
-import { notFound } from 'next/navigation';
-import { routing } from '@/libs/i18n-navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
+import { Roboto } from 'next/font/google';
+import { notFound } from 'next/navigation';
+import React from 'react';
+
+import { routing } from '@/lib/i18n-navigation';
 
 import Providers from './providers';
 
-import '../../styles/globals.css';
+import '@/styles/globals.css';
 
 const roboto = Roboto({
   variable: '--font-roboto',
   subsets: ['latin'],
   weight: ['300', '400', '500', '700'],
 });
+
+// const geistMono = localFont({
+//   src: "./fonts/GeistMonoVF.woff",
+//   variable: "--font-geist-mono",
+//   weight: "100 900",
+// });
+
+//geistSans.variable
+
 
 export const metadata: Metadata = {
   title: {
