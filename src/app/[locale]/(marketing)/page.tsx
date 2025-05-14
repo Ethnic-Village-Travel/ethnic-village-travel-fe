@@ -2,10 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 
-import LanguageSwitcher from '@/components/common/language-switcher';
+import { Link } from '@/lib/i18n-navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Link } from '@/lib/i18n-navigation';
+import FormDemo from '@/components/common/form-demo';
+import LanguageSwitcher from '@/components/common/language-switcher';
 
 export default function HomePage() {
   const t = useTranslations('home');
@@ -32,6 +33,7 @@ export default function HomePage() {
           <Button>Continue</Button>
         </CardFooter>
       </Card>
+      <FormDemo />
     </div>
   );
 }
