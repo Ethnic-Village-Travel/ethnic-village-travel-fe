@@ -3,13 +3,16 @@
 import { useTranslations } from 'next-intl';
 
 import { Link } from '@/lib/i18n-navigation';
+import { useQueryConfig } from '@/hooks/useQueryConfig';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import FormDemo from '@/components/common/form-demo';
 import LanguageSwitcher from '@/components/common/language-switcher';
+import PaginationClient from '@/components/common/pagination-client';
 
 export default function HomePage() {
   const t = useTranslations('home');
+  const queryConfig = useQueryConfig();
 
   return (
     <div className="flex flex-col items-center justify-center space-y-4">
@@ -34,6 +37,7 @@ export default function HomePage() {
         </CardFooter>
       </Card>
       <FormDemo />
+      <PaginationClient queryConfig={queryConfig} pageSize={20} showFirstLast />
     </div>
   );
 }
