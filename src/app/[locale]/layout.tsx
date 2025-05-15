@@ -1,11 +1,12 @@
+import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
 import { Roboto } from 'next/font/google';
 import { notFound } from 'next/navigation';
-import React from 'react';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 
 import { routing } from '@/lib/i18n-navigation';
+import Loading from '@/components/common/loading';
 
 import Providers from './providers';
 
@@ -24,7 +25,6 @@ const roboto = Roboto({
 // });
 
 //geistSans.variable
-
 
 export const metadata: Metadata = {
   title: {
@@ -59,7 +59,9 @@ export default async function RootLayout({
     <html>
       <body className={`${roboto.variable} antialiased`} suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>{children}</Providers>
+          <Providers>
+            <Suspense fallback={<Loading fullScreen text="Đang tải trang..." />}>{children}</Suspense>
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>
