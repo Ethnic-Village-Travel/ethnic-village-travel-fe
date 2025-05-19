@@ -12,19 +12,6 @@ const config: Config = {
       fontFamily: {
         roboto: ['var(--font-roboto)'],
       },
-      fontSize: {
-        'header-1': '5rem', // 80px
-        'header-2': '3.75rem', // 60px
-        'header-3': '2.5rem', // 40px
-        'header-4': '1.875rem', // 30px
-        'header-5': '1.5rem', // 24px
-        'header-6': '1.25rem', // 20px
-        'header-7': '1.125rem', // 18px
-        'body-1': '1rem', // 16px
-        'body-2': '0.875rem', // 14px
-        caption: '0.75rem', // 12px
-        label: '0.6875rem', // 11px
-      },
       fontWeight: {
         light: '300',
         regular: '400',
@@ -122,7 +109,7 @@ const config: Config = {
 
         // Dark Colors
         dark: {
-          500: 'var(--dark-500)',
+          DEFAULT: 'var(--dark-500)',
           '5': 'var(--dark-dark-5)',
           '10': 'var(--dark-dark-10)',
           '20': 'var(--dark-dark-20)',
@@ -153,7 +140,7 @@ const config: Config = {
 
         // White Colors
         white: {
-          500: 'var(--white-500)',
+          DEFAULT: 'var(--white-500)',
           '5': 'var(--white-white-5)',
           '10': 'var(--white-white-10)',
           '20': 'var(--white-white-20)',
@@ -167,7 +154,7 @@ const config: Config = {
           200: 'var(--green-200)',
           300: 'var(--green-300)',
           400: 'var(--green-400)',
-          500: 'var(--green-500)',
+          DEFAULT: 'var(--green-500)',
           600: 'var(--green-600)',
           700: 'var(--green-700)',
         },
@@ -178,7 +165,7 @@ const config: Config = {
           200: 'var(--yellow-200)',
           300: 'var(--yellow-300)',
           400: 'var(--yellow-400)',
-          500: 'var(--yellow-500)',
+          DEFAULT: 'var(--yellow-500)',
           600: 'var(--yellow-600)',
           700: 'var(--yellow-700)',
           800: 'var(--yellow-800)',
