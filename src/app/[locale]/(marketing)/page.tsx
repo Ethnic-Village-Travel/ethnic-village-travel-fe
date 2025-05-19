@@ -7,7 +7,6 @@ import { useQueryConfig } from '@/hooks/useQueryConfig';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import FormDemo from '@/components/common/form-demo';
-import LanguageSwitcher from '@/components/common/language-switcher';
 import PaginationClient from '@/components/common/pagination-client';
 
 export default function HomePage() {
@@ -20,7 +19,6 @@ export default function HomePage() {
       <Link href="/about" className="text-primary hover:underline">
         {t('about')}
       </Link>
-      <LanguageSwitcher />
       <Card>
         <CardHeader>
           <CardTitle>Feature Card</CardTitle>

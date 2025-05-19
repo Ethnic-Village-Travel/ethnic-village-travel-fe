@@ -1,8 +1,10 @@
 'use client';
 
 import { useTransition } from 'react';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { GlobeIcon } from 'lucide-react';
+import { cn } from '@/utils/general';
+import { ChevronDown } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
 import { routing } from '@/lib/i18n-navigation';
@@ -13,6 +15,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+
+enum Language {
+  en = 'English',
+  vi = 'Tiếng Việt',
+}
 
 export default function LanguageSwitcher() {
   const router = useRouter();
@@ -35,9 +42,9 @@ export default function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">
-          <GlobeIcon className="mr-2 h-4 w-4" />
-          {locale.toUpperCase()}
+        <Button variant="ghost" size="sm">
+          <Image src={`/images/flags/${locale}.svg`} alt={locale} width={20} height={20} />
+          <ChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -45,9 +52,12 @@ export default function LanguageSwitcher() {
           <DropdownMenuItem
             key={loc}
             onClick={() => handleLocaleChange(loc)}
-            className={loc === locale ? 'text-primary font-semibold' : ''}
+            className={cn('flex items-center gap-2', {
+              'text-white focus:text-white bg-primary-500 font-semibold focus:bg-primary-500': loc === locale,
+            })}
           >
-            {loc.toUpperCase()}
+            <Image src={`/images/flags/${loc}.svg`} alt={loc} width={20} height={20} />
+            {Language[loc as keyof typeof Language]}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

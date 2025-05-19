@@ -1,28 +1,37 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
-    darkMode: ["class"],
-    content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  darkMode: ['class'],
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-  	extend: {
-  		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
-  			},
-  			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
-  			},
-  			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))',
+    extend: {
+      fontFamily: {
+        roboto: ['var(--font-roboto)'],
+      },
+      fontWeight: {
+        light: '300',
+        regular: '400',
+        medium: '500',
+        bold: '700',
+      },
+      colors: {
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
           100: 'var(--primary-primary-100)',
           200: 'var(--primary-primary-200)',
           300: 'var(--primary-primary-300)',
@@ -37,11 +46,11 @@ const config: Config = {
           '20': 'var(--primary-primary-20)',
           '80': 'var(--primary-primary-80)',
           '90': 'var(--primary-primary-90)',
-          'button': 'var(--primary-button)',
-  			},
-  			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))',
+          button: 'var(--primary-button)',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
           100: 'var(--secondary-secondary-100)',
           200: 'var(--secondary-secondary-200)',
           300: 'var(--secondary-secondary-300)',
@@ -56,29 +65,29 @@ const config: Config = {
           '20': 'var(--secondary-secondary-20)',
           '80': 'var(--secondary-secondary-80)',
           '90': 'var(--secondary-secondary-90)',
-  			},
-  			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
-  			},
-  			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
-  			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			},
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        chart: {
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
+        },
 
         // Tertiary Colors
         tertiary: {
@@ -100,7 +109,7 @@ const config: Config = {
 
         // Dark Colors
         dark: {
-          500: 'var(--dark-500)',
+          DEFAULT: 'var(--dark-500)',
           '5': 'var(--dark-dark-5)',
           '10': 'var(--dark-dark-10)',
           '20': 'var(--dark-dark-20)',
@@ -131,7 +140,7 @@ const config: Config = {
 
         // White Colors
         white: {
-          500: 'var(--white-500)',
+          DEFAULT: 'var(--white-500)',
           '5': 'var(--white-white-5)',
           '10': 'var(--white-white-10)',
           '20': 'var(--white-white-20)',
@@ -145,7 +154,7 @@ const config: Config = {
           200: 'var(--green-200)',
           300: 'var(--green-300)',
           400: 'var(--green-400)',
-          500: 'var(--green-500)',
+          DEFAULT: 'var(--green-500)',
           600: 'var(--green-600)',
           700: 'var(--green-700)',
         },
@@ -156,20 +165,20 @@ const config: Config = {
           200: 'var(--yellow-200)',
           300: 'var(--yellow-300)',
           400: 'var(--yellow-400)',
-          500: 'var(--yellow-500)',
+          DEFAULT: 'var(--yellow-500)',
           600: 'var(--yellow-600)',
           700: 'var(--yellow-700)',
           800: 'var(--yellow-800)',
           900: 'var(--yellow-900)',
         },
-  		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
-  	}
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+    },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require('tailwindcss-animate')],
 };
 export default config;

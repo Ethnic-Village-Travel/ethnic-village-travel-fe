@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
 }
 
 @layer utilities {
@@ -40,107 +44,107 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
 
-     /* Primary Colors */
-  --primary-primary-100: #d3ebf9;
-  --primary-primary-200: #c1e6fb;
-  --primary-primary-300: #8bd0f6;
-  --primary-primary-400: #69c5f9;
-  --primary-500: #35aff4;
-  --primary-primary-600: #2ba0e2;
-  --primary-primary-700: #1d92d4;
-  --primary-primary-800: #167db8;
-  --primary-primary-900: #0c6ca1;
-  --primary-primary-5: rgba(53, 175, 244, 0.05);
-  --primary-primary-10: rgba(53, 175, 244, 0.1);
-  --primary-primary-20: rgba(53, 175, 244, 0.2);
-  --primary-primary-80: rgba(53, 175, 244, 0.8);
-  --primary-primary-90: rgba(53, 175, 244, 0.9);
-  --primary-button: #0d3faf;
+    /* Primary Colors */
+    --primary-primary-100: #d3ebf9;
+    --primary-primary-200: #c1e6fb;
+    --primary-primary-300: #8bd0f6;
+    --primary-primary-400: #69c5f9;
+    --primary-500: #35aff4;
+    --primary-primary-600: #2ba0e2;
+    --primary-primary-700: #1d92d4;
+    --primary-primary-800: #167db8;
+    --primary-primary-900: #0c6ca1;
+    --primary-primary-5: rgba(53, 175, 244, 0.05);
+    --primary-primary-10: rgba(53, 175, 244, 0.1);
+    --primary-primary-20: rgba(53, 175, 244, 0.2);
+    --primary-primary-80: rgba(53, 175, 244, 0.8);
+    --primary-primary-90: rgba(53, 175, 244, 0.9);
+    --primary-button: #0d3faf;
 
-  /* Secondary Colors */
-  --secondary-secondary-100: #f9e3d9;
-  --secondary-secondary-200: #f8c9b3;
-  --secondary-secondary-300: #f9b08e;
-  --secondary-secondary-400: #ff9665;
-  --secondary-500: #fa7436;
-  --secondary-secondary-600: #e86224;
-  --secondary-secondary-700: #d8571c;
-  --secondary-secondary-800: #cc5119;
-  --secondary-secondary-900: #b74714;
-  --secondary-secondary-5: rgba(250, 116, 54, 0.05);
-  --secondary-secondary-10: rgba(250, 116, 54, 0.1);
-  --secondary-secondary-20: rgba(250, 116, 54, 0.2);
-  --secondary-secondary-80: rgba(250, 116, 54, 0.8);
-  --secondary-secondary-90: rgba(250, 116, 54, 0.9);
+    /* Secondary Colors */
+    --secondary-secondary-100: #f9e3d9;
+    --secondary-secondary-200: #f8c9b3;
+    --secondary-secondary-300: #f9b08e;
+    --secondary-secondary-400: #ff9665;
+    --secondary-500: #fa7436;
+    --secondary-secondary-600: #e86224;
+    --secondary-secondary-700: #d8571c;
+    --secondary-secondary-800: #cc5119;
+    --secondary-secondary-900: #b74714;
+    --secondary-secondary-5: rgba(250, 116, 54, 0.05);
+    --secondary-secondary-10: rgba(250, 116, 54, 0.1);
+    --secondary-secondary-20: rgba(250, 116, 54, 0.2);
+    --secondary-secondary-80: rgba(250, 116, 54, 0.8);
+    --secondary-secondary-90: rgba(250, 116, 54, 0.9);
 
-  /* Tertiary Colors */
-  --tertiary-tertiary-100: #f0b0d9;
-  --tertiary-tertiary-200: #e67bc2;
-  --tertiary-tertiary-300: #d846ab;
-  --tertiary-tertiary-400: #cd0d9b;
-  --tertiary-500: #b21589;
-  --tertiary-tertiary-600: #af0a87;
-  --tertiary-tertiary-700: #9b0982;
-  --tertiary-tertiary-800: #8a087c;
-  --tertiary-tertiary-900: #6c0772;
-  --tertiary-tertiary-5: rgba(178, 21, 137, 0.05);
-  --tertiary-tertiary-10: rgba(178, 21, 137, 0.1);
-  --tertiary-tertiary-20: rgba(178, 21, 137, 0.2);
-  --tertiary-tertiary-80: rgba(178, 21, 137, 0.8);
-  --tertiary-tertiary-90: rgba(178, 21, 137, 0.9);
+    /* Tertiary Colors */
+    --tertiary-tertiary-100: #f0b0d9;
+    --tertiary-tertiary-200: #e67bc2;
+    --tertiary-tertiary-300: #d846ab;
+    --tertiary-tertiary-400: #cd0d9b;
+    --tertiary-500: #b21589;
+    --tertiary-tertiary-600: #af0a87;
+    --tertiary-tertiary-700: #9b0982;
+    --tertiary-tertiary-800: #8a087c;
+    --tertiary-tertiary-900: #6c0772;
+    --tertiary-tertiary-5: rgba(178, 21, 137, 0.05);
+    --tertiary-tertiary-10: rgba(178, 21, 137, 0.1);
+    --tertiary-tertiary-20: rgba(178, 21, 137, 0.2);
+    --tertiary-tertiary-80: rgba(178, 21, 137, 0.8);
+    --tertiary-tertiary-90: rgba(178, 21, 137, 0.9);
 
-  /* Dark Colors */
-  --dark-500: #0f1416;
-  --dark-dark-5: rgba(15, 20, 22, 0.05);
-  --dark-dark-10: rgba(15, 20, 22, 0.1);
-  --dark-dark-20: rgba(15, 20, 22, 0.2);
-  --dark-dark-75: rgba(15, 20, 22, 0.75);
-  --dark-dark-80: rgba(15, 20, 22, 0.8);
-  --dark-dark-90: rgba(15, 20, 22, 0.9);
+    /* Dark Colors */
+    --dark-500: #0f1416;
+    --dark-dark-5: rgba(15, 20, 22, 0.05);
+    --dark-dark-10: rgba(15, 20, 22, 0.1);
+    --dark-dark-20: rgba(15, 20, 22, 0.2);
+    --dark-dark-75: rgba(15, 20, 22, 0.75);
+    --dark-dark-80: rgba(15, 20, 22, 0.8);
+    --dark-dark-90: rgba(15, 20, 22, 0.9);
 
-  /* Gray Colors */
-  --gray-500: #a6aaac;
-  --gray-gray-5: rgba(166, 170, 172, 0.05);
-  --gray-gray-10: rgba(166, 170, 172, 0.1);
-  --gray-gray-20: rgba(166, 170, 172, 0.2);
-  --gray-gray-80: rgba(166, 170, 172, 0.8);
-  --gray-gray-90: rgba(166, 170, 172, 0.9);
+    /* Gray Colors */
+    --gray-500: #a6aaac;
+    --gray-gray-5: rgba(166, 170, 172, 0.05);
+    --gray-gray-10: rgba(166, 170, 172, 0.1);
+    --gray-gray-20: rgba(166, 170, 172, 0.2);
+    --gray-gray-80: rgba(166, 170, 172, 0.8);
+    --gray-gray-90: rgba(166, 170, 172, 0.9);
 
-  /* Light Colors */
-  --light-500: #d9e1e1;
-  --light-light-5: rgba(217, 225, 225, 0.05);
-  --light-light-10: rgba(217, 225, 225, 0.1);
-  --light-light-20: rgba(217, 225, 225, 0.2);
-  --light-light-80: rgba(217, 225, 225, 0.8);
-  --light-light-90: rgba(217, 225, 225, 0.9);
+    /* Light Colors */
+    --light-500: #d9e1e1;
+    --light-light-5: rgba(217, 225, 225, 0.05);
+    --light-light-10: rgba(217, 225, 225, 0.1);
+    --light-light-20: rgba(217, 225, 225, 0.2);
+    --light-light-80: rgba(217, 225, 225, 0.8);
+    --light-light-90: rgba(217, 225, 225, 0.9);
 
-  /* White Colors */
-  --white-500: #fff;
-  --white-white-5: rgba(255, 255, 255, 0.05);
-  --white-white-10: rgba(255, 255, 255, 0.1);
-  --white-white-20: rgba(255, 255, 255, 0.2);
-  --white-white-80: rgba(255, 255, 255, 0.8);
-  --white-white-90: rgba(255, 255, 255, 0.9);
+    /* White Colors */
+    --white-500: #fff;
+    --white-white-5: rgba(255, 255, 255, 0.05);
+    --white-white-10: rgba(255, 255, 255, 0.1);
+    --white-white-20: rgba(255, 255, 255, 0.2);
+    --white-white-80: rgba(255, 255, 255, 0.8);
+    --white-white-90: rgba(255, 255, 255, 0.9);
 
-  /* Green Colors */
-  --green-100: #edfaf3;
-  --green-200: #e0f5eb;
-  --green-300: #ceeedf;
-  --green-400: #b4e2cf;
-  --green-500: #9bd7c0;
-  --green-600: #7abea9;
-  --green-700: #5aa290;
+    /* Green Colors */
+    --green-100: #edfaf3;
+    --green-200: #e0f5eb;
+    --green-300: #ceeedf;
+    --green-400: #b4e2cf;
+    --green-500: #9bd7c0;
+    --green-600: #7abea9;
+    --green-700: #5aa290;
 
-  /* Yellow Colors */
-  --yellow-100: #fff9d1;
-  --yellow-200: #fff08a;
-  --yellow-300: #ffe34a;
-  --yellow-400: #ffd21a;
-  --yellow-500: #fbbf00;
-  --yellow-600: #d79a00;
-  --yellow-700: #b37700;
-  --yellow-800: #9a6400;
-  --yellow-900: #947847;
+    /* Yellow Colors */
+    --yellow-100: #fff9d1;
+    --yellow-200: #fff08a;
+    --yellow-300: #ffe34a;
+    --yellow-400: #ffd21a;
+    --yellow-500: #fbbf00;
+    --yellow-600: #d79a00;
+    --yellow-700: #b37700;
+    --yellow-800: #9a6400;
+    --yellow-900: #947847;
   }
   .dark {
     --background: 0 0% 3.9%;
