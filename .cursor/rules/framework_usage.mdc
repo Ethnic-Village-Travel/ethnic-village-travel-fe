@@ -1,0 +1,271 @@
+---
+description: 
+globs: 
+---
+# Framework Usage Guidelines
+
+## Next.js
+
+1. **App Router**
+   - Use the App Router architecture for all new pages
+   - Leverage nested layouts for shared UI elements
+   - Use route groups (in parentheses) to organize routes without affecting URL structure
+   ```tsx
+   // Route Groups Example
+   app/
+   ├── (auth)/          // Route group (not part of URL)
+   │   ├── login/       // /login
+   │   └── register/    // /register
+   └── (main)/
+       ├── dashboard/   // /dashboard
+       └── profile/     // /profile
+   ```
+
+2. **Data Fetching**
+   - Prefer Server Components for data fetching
+   - Use React Server Components (RSC) whenever possible
+   - Only use Client Components when you need:
+     - Interactivity and event listeners
+     - State and lifecycle effects
+     - Browser-only APIs
+   - Mark client components with `'use client'` at the top of the file
+
+3. **Server Actions**
+   - Use Server Actions for form submissions
+   - Handle sensitive operations on the server
+   - Validate data server-side before processing
+
+4. **Routing**
+   - Use dynamic segments for variable parts of routes: `[id]`
+   - Use catch-all segments for nested dynamic routes: `[...slug]`
+   - Implement proper loading and error states for each route
+
+## React Query (TanStack Query)
+
+1. **Query Organization**
+   - Group related queries in custom hooks
+   - Use descriptive query keys
+   ```typescript
+   // Example query key structure
+   ['users', userId]
+   ['tours', { status: 'active', page: 2 }]
+   ```
+
+2. **Query Configuration**
+   - Set appropriate staleTime and cacheTime based on data freshness needs
+   - Use refetchOnWindowFocus and refetchOnMount strategically
+   - Implement proper error handling
+
+3. **Mutations**
+   - Use mutations for state-changing operations
+   - Update local state optimistically when appropriate
+   - Handle error states and rollbacks
+
+4. **Query Keys**
+   - Use consistent query key structure
+   - Organize keys hierarchically
+   - Include all relevant parameters that affect data
+
+## Zustand (State Management)
+
+1. **Store Organization**
+   - Create separate stores for different domains
+   - Keep stores small and focused
+   - Combine stores when needed
+
+2. **Store Creation**
+   ```typescript
+   // Example store
+   import { create } from 'zustand';
+
+   interface UserState {
+     user: User | null;
+     isLoading: boolean;
+     error: Error | null;
+     login: (credentials: Credentials) => Promise<void>;
+     logout: () => void;
+   }
+
+   export const useUserStore = create<UserState>((set) => ({
+     user: null,
+     isLoading: false,
+     error: null,
+     login: async (credentials) => {
+       set({ isLoading: true, error: null });
+       try {
+         const user = await loginApi(credentials);
+         set({ user, isLoading: false });
+       } catch (error) {
+         set({ error, isLoading: false });
+       }
+     },
+     logout: () => {
+       set({ user: null });
+     },
+   }));
+   ```
+
+3. **Store Usage**
+   - Select only what you need from the store
+   - Use selectors to optimize re-renders
+   ```typescript
+   // Good - select only what you need
+   const user = useUserStore((state) => state.user);
+   
+   // Avoid - causes re-renders for any store change
+   const { user } = useUserStore();
+   ```
+
+4. **Persistence**
+   - Use middleware for persistence when needed
+   - Be careful with sensitive data
+
+## Tailwind CSS
+
+1. **Organization**
+   - Use consistent class order (layout, typography, visual)
+   - Extract common patterns to components
+   - Use Tailwind's modifiers (`hover:`, `focus:`, etc.) consistently
+
+2. **Custom Components**
+   - Use the shadcn/ui approach for components
+   - Leverage `cva` for component variants
+   ```typescript
+   // Button component with variants
+   import { cva } from 'class-variance-authority';
+
+   const buttonVariants = cva(
+     'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background',
+     {
+       variants: {
+         variant: {
+           default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+           destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+           outline: 'border border-input hover:bg-accent hover:text-accent-foreground',
+           secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+           ghost: 'hover:bg-accent hover:text-accent-foreground',
+           link: 'underline-offset-4 hover:underline text-primary',
+         },
+         size: {
+           default: 'h-10 py-2 px-4',
+           sm: 'h-9 px-3 rounded-md',
+           lg: 'h-11 px-8 rounded-md',
+         },
+       },
+       defaultVariants: {
+         variant: 'default',
+         size: 'default',
+       },
+     }
+   );
+   ```
+
+3. **Responsive Design**
+   - Use Tailwind's responsive prefixes consistently
+   - Design for mobile-first, then add breakpoints
+   - Test thoroughly across all target device sizes
+
+4. **Theme Customization**
+   - Maintain a consistent color palette in `tailwind.config.ts`
+   - Use CSS variables for dynamic theming
+   - Follow a consistent naming convention for custom colors
+
+## next-intl (Internationalization)
+
+1. **Message Organization**
+   - Organize messages by feature/page
+   - Use nested structures for related messages
+   - Use variables for dynamic content
+
+2. **Message Definition**
+   ```typescript
+   // Example messages structure
+   export default {
+     Index: {
+       title: 'Welcome to Ethnic Village Travel',
+       description: 'Discover authentic ethnic villages and experiences',
+     },
+     Auth: {
+       login: {
+         title: 'Login to your account',
+         emailLabel: 'Email address',
+         passwordLabel: 'Password',
+         submit: 'Sign in',
+       },
+     },
+     Common: {
+       errors: {
+         required: '{field} is required',
+         invalidEmail: 'Please enter a valid email address',
+       },
+     },
+   };
+   ```
+
+3. **Usage in Components**
+   - Use the `useTranslations` hook
+   - Access messages with dot notation
+   ```tsx
+   'use client';
+   
+   import { useTranslations } from 'next-intl';
+   
+   export function LoginForm() {
+     const t = useTranslations('Auth.login');
+     
+     return (
+       <form>
+         <h2>{t('title')}</h2>
+         {/* Form fields */}
+       </form>
+     );
+   }
+   ```
+
+4. **Best Practices**
+   - Always use the translation system for user-facing text
+   - Include all languages from the beginning
+   - Use placeholders for dynamic content instead of string concatenation
+
+## Performance Optimization
+
+1. **Component Optimization**
+   - Use `memo` for expensive components that render often
+   - Use the `useCallback` hook for function props
+   - Use the `useMemo` hook for expensive calculations
+
+2. **Image Optimization**
+   - Always use Next.js `<Image>` component
+   - Specify proper `width` and `height`
+   - Use appropriate loading strategies
+   ```tsx
+   import Image from 'next/image';
+   
+   export function Avatar({ user }) {
+     return (
+       <Image
+         src={user.avatarUrl}
+         alt={`${user.name}'s profile picture`}
+         width={40}
+         height={40}
+         className="rounded-full"
+       />
+     );
+   }
+   ```
+
+3. **Code Splitting**
+   - Use dynamic imports for large components
+   - Lazy load below-the-fold content
+   ```tsx
+   import dynamic from 'next/dynamic';
+   
+   const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
+     loading: () => <p>Loading...</p>,
+   });
+   ```
+
+4. **API Optimization**
+   - Implement proper caching strategies
+   - Use incremental static regeneration for semi-static data
+   - Optimize data fetching to minimize waterfall requests

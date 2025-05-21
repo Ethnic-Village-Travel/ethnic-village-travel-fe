@@ -1,0 +1,189 @@
+---
+description: 
+globs: 
+---
+ # File Structure Guidelines
+
+## Project Structure Overview
+
+```
+ethnic-village-travel-fe/
+├── .cursor/                # Cursor IDE configuration
+├── .next/                  # Next.js build output
+├── public/                 # Static assets
+├── src/                    # Source code
+│   ├── app/                # Next.js App Router pages
+│   ├── components/         # React components
+│   │   ├── base/           # Base components (buttons, inputs, etc.)
+│   │   ├── features/       # Feature-specific components
+│   │   ├── layout/         # Layout components
+│   │   ├── shared/         # Shared components used across features
+│   │   └── ui/             # UI components from shadcn/ui
+│   ├── constants/          # Application constants
+│   ├── core/               # Core functionality
+│   ├── helpers/            # Helper functions
+│   ├── hooks/              # Custom React hooks
+│   ├── lib/                # Library code and third-party integrations
+│   ├── messages/           # Internationalization messages
+│   ├── store/              # State management (Zustand)
+│   ├── styles/             # Global styles
+│   ├── types/              # TypeScript type definitions
+│   └── utils/              # Utility functions
+└── ...                     # Configuration files
+```
+
+## File Naming Conventions
+
+1. **Component Files**
+   - Use PascalCase for component files: `UserProfile.tsx`
+   - Use `.tsx` extension for files containing JSX
+   - Use `.ts` extension for files containing only TypeScript
+
+2. **Non-Component Files**
+   - Use camelCase for utility, hook, and other non-component files: `formatDate.ts`
+   - Use kebab-case for configuration files: `next-config.mjs`
+
+3. **Index Files**
+   - Use `index.ts` or `index.tsx` for barrel exports
+   - Keep index files simple, only for re-exporting
+
+4. **Test Files**
+   - Use the same name as the file being tested with `.test` or `.spec` suffix:
+     - `Button.tsx` → `Button.test.tsx`
+
+## Directory Structure Guidelines
+
+1. **Components Directory**
+
+   ```
+   components/
+   ├── base/              # Base components (buttons, inputs, etc.)
+   │   ├── Button/
+   │   │   ├── Button.tsx
+   │   │   ├── Button.test.tsx
+   │   │   └── index.ts
+   │   └── ...
+   ├── features/          # Feature-specific components
+   │   ├── Authentication/
+   │   │   ├── LoginForm/
+   │   │   │   ├── LoginForm.tsx
+   │   │   │   └── index.ts
+   │   │   ├── SignupForm/
+   │   │   └── ...
+   │   ├── TourListing/
+   │   └── ...
+   ├── layout/            # Layout components
+   │   ├── Header/
+   │   ├── Footer/
+   │   └── ...
+   ├── shared/            # Shared components used across features
+   │   ├── Card/
+   │   ├── Modal/
+   │   └── ...
+   └── ui/                # UI components from shadcn/ui
+       ├── button/
+       ├── dialog/
+       └── ...
+   ```
+
+2. **App Directory (Next.js App Router)**
+
+   ```
+   app/
+   ├── (auth)/            # Authentication route group
+   │   ├── login/
+   │   │   └── page.tsx
+   │   └── signup/
+   │       └── page.tsx
+   ├── (main)/            # Main route group
+   │   ├── tours/
+   │   │   ├── [id]/
+   │   │   │   └── page.tsx
+   │   │   └── page.tsx
+   │   └── ...
+   ├── api/               # API routes
+   │   └── ...
+   ├── layout.tsx         # Root layout
+   └── page.tsx           # Home page
+   ```
+
+3. **Store Directory**
+
+   ```
+   store/
+   ├── slices/            # Store slices by feature
+   │   ├── authSlice.ts
+   │   ├── tourSlice.ts
+   │   └── ...
+   ├── hooks.ts           # Custom store hooks
+   └── index.ts           # Store exports
+   ```
+
+## Best Practices
+
+1. **Component Structure**
+   - One component per file
+   - Group related files in folders
+   - Include an index.ts file for cleaner imports
+
+   ```
+   Button/
+   ├── Button.tsx         # Main component
+   ├── Button.test.tsx    # Tests
+   ├── Button.module.css  # Component-specific styles (if not using Tailwind)
+   └── index.ts           # Re-export
+   ```
+
+2. **Feature Organization**
+   - Group related components by feature
+   - Keep feature-specific code isolated
+   - Share common components through the shared directory
+
+3. **Import Organization**
+   - Use absolute imports from the src directory
+   - Group imports logically:
+     1. External libraries
+     2. Internal modules
+     3. Components
+     4. Styles
+
+   ```typescript
+   // External libraries
+   import React, { useState } from 'react';
+   import { motion } from 'framer-motion';
+   
+   // Internal modules
+   import { formatDate } from '@/utils/formatDate';
+   import { useUserData } from '@/hooks/useUserData';
+   
+   // Components
+   import { Button } from '@/components/base/Button';
+   
+   // Styles (if not using Tailwind exclusively)
+   import styles from './Component.module.css';
+   ```
+
+4. **File Size Limits**
+   - Keep components focused and small (under 300 lines)
+   - Extract complex logic to custom hooks
+   - Split large components into smaller, focused components
+
+5. **Path Aliases**
+   - Use path aliases for cleaner imports
+   - Configure in tsconfig.json:
+
+   ```json
+   {
+     "compilerOptions": {
+       "baseUrl": ".",
+       "paths": {
+         "@/*": ["src/*"]
+       }
+     }
+   }
+   ```
+
+6. **Code Co-location**
+   - Keep related files close to each other
+   - Place tests next to the files they test
+   - Group by feature rather than by technical type when possible
