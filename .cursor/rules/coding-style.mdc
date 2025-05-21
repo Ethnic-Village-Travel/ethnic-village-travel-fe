@@ -1,0 +1,291 @@
+---
+description: 
+globs: 
+---
+---
+alwaysApply: true
+---
+## Naming Conventions
+
+1. **Variables and Functions**
+   - Use camelCase for variable and function names
+   - Names should be descriptive and meaningful
+   - Avoid single letter names except for temporary variables (e.g., i in loops)
+   ```typescript
+   // Good
+   const userProfile = getUserProfile();
+
+   // Bad
+   const up = getUP();
+   ```
+
+2. **Components**
+   - Use PascalCase for React components
+   - Component names should be descriptive and reflect their purpose
+   ```typescript
+   // Good
+   const UserProfileCard = () => { ... }
+
+   // Bad
+   const profile = () => { ... }
+   ```
+
+3. **Types and Interfaces**
+   - Use PascalCase for types and interfaces
+   - Prefix interfaces with 'I' when it makes semantically clear that it's an interface
+   ```typescript
+   type UserData = { ... }
+   interface IUserAuthProps { ... }
+   ```
+
+4. **Constants**
+   - Use UPPER_SNAKE_CASE for constants
+   ```typescript
+   const MAX_RETRY_ATTEMPTS = 3;
+   ```
+
+## Code Formatting
+
+1. **Indentation**
+   - Use 2 spaces for indentation
+   - Configure your editor to use spaces, not tabs
+
+2. **Line Length**
+   - Maximum line length should be 100 characters
+   - Break longer lines for improved readability
+
+3. **Spacing**
+   - Use spaces after commas and semicolons
+   - Use spaces around operators
+   ```typescript
+   // Good
+   const sum = a + b;
+   const items = [1, 2, 3];
+
+   // Bad
+   const sum=a+b;
+   const items=[1,2,3];
+   ```
+
+4. **Curly Braces**
+   - Always use curly braces for control statements
+   - Opening brace on the same line as the statement
+   ```typescript
+   // Good
+   if (condition) {
+     doSomething();
+   }
+
+   // Bad
+   if (condition)
+     doSomething();
+   ```
+
+5. **Object and Array Formatting**
+   - For multiline objects and arrays, include a trailing comma
+   - Place each property on its own line for readability when appropriate
+   ```typescript
+   // Good for multiline
+   const user = {
+     name: 'John',
+     email: 'john@example.com',
+     role: 'admin',
+   };
+
+   // Good for short objects
+   const point = { x: 10, y: 20 };
+   ```
+
+## Comments
+
+1. **Code Documentation**
+   - Use JSDoc for functions and components that are complex or exported
+   ```typescript
+   /**
+    * Fetches user data from the API
+    * @param userId - The ID of the user to fetch
+    * @returns The user data object
+    */
+   const fetchUserData = (userId: string): Promise<UserData> => { ... }
+   ```
+
+2. **Comment Style**
+   - Use `//` for single line comments
+   - Use `/* */` for multi-line comments
+   - Comments should explain "why" not "what"
+
+3. **TODO Comments**
+   - Use TODO comments for temporary, non-critical, or future improvements
+   - Include your name/identifier and be specific about what needs to be done
+   ```typescript
+   // TODO(john): Implement caching for user data
+   ```
+
+## TypeScript Best Practices
+
+1. **Type Annotations**
+   - Use explicit type annotations for function parameters and return types
+   - Utilize TypeScript's inference for variable declarations when obvious
+   ```typescript
+   // Good - explicit typing for functions
+   function calculateTotal(items: CartItem[]): number { ... }
+
+   // Good - inference for simple variables
+   const count = 0; // TypeScript infers number type
+   ```
+
+2. **Avoid Any**
+   - Minimize use of `any` type
+   - Use appropriate type definitions or create custom types/interfaces
+
+3. **Null and Undefined**
+   - Use `undefined` rather than `null` in most cases
+   - Use optional chaining and nullish coalescing operators
+   ```typescript
+   const username = user?.name ?? 'Anonymous';
+   ```
+
+4. **Type Assertion**
+   - Prefer type assertion with `as` syntax over angle brackets
+   ```typescript
+   // Good
+   const length = (someValue as string).length;
+
+   // Avoid
+   const length = (<string>someValue).length;
+   ```
+
+## React-Specific Patterns
+
+1. **Component Organization**
+   - One component per file
+   - Group related components in feature folders
+
+2. **Props**
+   - Destructure props in function parameters
+   - Use TypeScript interfaces to define prop types
+   ```typescript
+   interface ButtonProps {
+     label: string;
+     onClick: () => void;
+     disabled?: boolean;
+   }
+
+   const Button = ({ label, onClick, disabled = false }: ButtonProps) => { ... }
+   ```
+
+3. **Hooks**
+   - Follow the React Hooks rules
+   - Create custom hooks for reusable stateful logic
+   - Prefix custom hook names with "use"
+   ```typescript
+   const useUserData = (userId: string) => { ... }
+   ```
+
+4. **Client Components**
+   - Mark client components with 'use client' at the top of the file
+   - Keep client components focused on client-side functionality
+   ```typescript
+   'use client';
+
+   import { useState } from 'react';
+
+   export function Counter() {
+     const [count, setCount] = useState(0);
+     return (
+       <button onClick={() => setCount(count + 1)}>
+         Count: {count}
+       </button>
+     );
+   }
+   ```
+
+## Tailwind CSS Styling
+
+1. **Class Organization**
+   - Group Tailwind classes by category for readability:
+     1. Layout (position, display, width, height)
+     2. Spacing (margin, padding)
+     3. Typography (font, text)
+     4. Visual (background, border, shadow)
+     5. Interactive (hover, focus)
+   ```tsx
+   // Good organization
+   <div className="
+     absolute top-0 left-0 w-full h-16
+     px-4 py-2
+     flex items-center justify-between
+     bg-white border-b border-gray-200 shadow-sm
+     hover:shadow-md
+   ">
+   ```
+
+2. **Extract Repeated Patterns**
+   - Use Tailwind's `@apply` directive in CSS modules for repeated patterns
+   - Create component variant utilities with `cva` for complex variations
+   - Consider using shadcn/ui components for common UI elements
+
+3. **Responsive Design**
+   - Use mobile-first approach with responsive prefixes
+   - Be consistent with breakpoint usage:
+     - sm: 640px
+     - md: 768px
+     - lg: 1024px
+     - xl: 1280px
+     - 2xl: 1536px
+   ```tsx
+   <div className="w-full md:w-1/2 lg:w-1/3">
+   ```
+
+4. **Dark Mode**
+   - Use Tailwind's dark mode utilities with the `dark:` prefix
+   - Test all components in both light and dark modes
+   ```tsx
+   <div className="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+   ```
+
+## shadcn/ui Components
+
+1. **Component Usage**
+   - Import shadcn/ui components from `@/components/ui`
+   - Use the provided variants and sizes
+   ```tsx
+   import { Button } from '@/components/ui/button';
+
+   <Button variant="outline" size="sm">Click me</Button>
+   ```
+
+2. **Component Customization**
+   - Extend shadcn/ui components rather than modifying them directly
+   - Create wrapper components for specialized versions
+   ```tsx
+   import { Button } from '@/components/ui/button';
+
+   export function ActionButton({ children, ...props }) {
+     return (
+       <Button
+         variant="default"
+         className="font-bold uppercase"
+         {...props}
+       >
+         {children}
+       </Button>
+     );
+   }
+   ```
+
+3. **Form Components**
+   - Use React Hook Form with shadcn/ui form components
+   - Follow the form patterns documented in shadcn/ui docs
+   ```tsx
+   import { zodResolver } from '@hookform/resolvers/zod';
+   import { useForm } from 'react-hook-form';
+   import * as z from 'zod';
+   import { Button } from '@/components/ui/button';
+   import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+   import { Input } from '@/components/ui/input';
+   ```
+
+   ```typescript
+   const useUserData = (userId: string) => { ... }
+   ```
