@@ -19,6 +19,7 @@ const config: Config = {
         bold: '700',
       },
       colors: {
+        star: 'var(--star)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
