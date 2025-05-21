@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import FormDemo from '@/components/common/form-demo';
 import PaginationClient from '@/components/common/pagination-client';
-import TourItem, { Layout as TourLayout } from '@/components/common/tour-item';
+import { TourItem, Layout as TourLayout } from '@/components/features/tour';
 
 const TOUR: Tour = {
   id: 1,
