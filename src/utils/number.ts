@@ -70,3 +70,22 @@ export function formatNumber(
 
   return result;
 }
+
+export function formatCurrencyVND(
+  value: number | string,
+  discount_percent?: number,
+  max_discount_amount?: number,
+): string {
+  let number = typeof value === 'string' ? parseFloat(value) : value;
+
+  if (isNaN(number)) return '0đ';
+
+  if (discount_percent) {
+    const rawDiscount = (number * discount_percent) / 100;
+    const discount = max_discount_amount ? Math.min(rawDiscount, max_discount_amount) : rawDiscount;
+
+    number = number - discount;
+  }
+
+  return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ';
+}

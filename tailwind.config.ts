@@ -19,6 +19,7 @@ const config: Config = {
         bold: '700',
       },
       colors: {
+        star: 'var(--star)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -30,7 +31,7 @@ const config: Config = {
           foreground: 'hsl(var(--popover-foreground))',
         },
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
+          DEFAULT: 'var(--primary-500)',
           foreground: 'hsl(var(--primary-foreground))',
           100: 'var(--primary-primary-100)',
           200: 'var(--primary-primary-200)',

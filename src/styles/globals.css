@@ -44,6 +44,9 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
 
+    /* Custom Colors */
+    --star: #fbbf00;
+
     /* Primary Colors */
     --primary-primary-100: #d3ebf9;
     --primary-primary-200: #c1e6fb;
@@ -146,6 +149,7 @@ body {
     --yellow-800: #9a6400;
     --yellow-900: #947847;
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -178,6 +182,7 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
