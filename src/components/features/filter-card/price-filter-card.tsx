@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cn } from '@/utils/general';
+import { cn } from '@/utils';
 import { formatCurrencyVND } from '@/utils/number';
 import { ChevronDown } from 'lucide-react';
 

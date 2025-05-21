@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { cn } from '@/utils/general';
+import { cn } from '@/utils';
 import { Slot } from '@radix-ui/react-slot';
 import {
   FileArchiveIcon,
@@ -1152,7 +1152,7 @@ const FileUploadItemProgress = React.forwardRef<HTMLDivElement, FileUploadItemPr
           data-slot="file-upload-progress"
           {...progressProps}
           ref={forwardedRef}
-          className={cn('absolute inset-0 bg-primary/50 transition-[clip-path] duration-300 ease-linear', className)}
+          className={cn('bg-primary/50 absolute inset-0 transition-[clip-path] duration-300 ease-linear', className)}
           style={{
             clipPath: `inset(${topInset}% 0% 0% 0%)`,
           }}
@@ -1172,7 +1172,7 @@ const FileUploadItemProgress = React.forwardRef<HTMLDivElement, FileUploadItemPr
           data-slot="file-upload-progress"
           {...progressProps}
           ref={forwardedRef}
-          className={cn('relative h-1.5 w-full overflow-hidden rounded-full bg-primary/20', className)}
+          className={cn('bg-primary/20 relative h-1.5 w-full overflow-hidden rounded-full', className)}
         >
           <div
             className="h-full w-full flex-1 bg-primary transition-transform duration-300 ease-linear"

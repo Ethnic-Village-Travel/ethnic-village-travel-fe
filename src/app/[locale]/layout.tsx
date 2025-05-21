@@ -6,7 +6,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 
 import { routing } from '@/lib/i18n-navigation';
-import Loading from '@/components/common/loading';
+import Loading from '@/components/shared/loading';
 
 import Providers from './providers';
 

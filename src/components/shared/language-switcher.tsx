@@ -3,7 +3,7 @@
 import { useTransition } from 'react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { cn } from '@/utils/general';
+import { cn } from '@/utils';
 import { ChevronDown } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
@@ -43,7 +43,7 @@ export default function LanguageSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm">
-          <Image src={`/images/flags/${locale}.svg`} alt={locale} width={20} height={20} />
+          <Image src={`/icons/${locale}.svg`} alt={locale} width={20} height={20} />
           <ChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
@@ -53,10 +53,10 @@ export default function LanguageSwitcher() {
             key={loc}
             onClick={() => handleLocaleChange(loc)}
             className={cn('flex items-center gap-2', {
-              'text-white focus:text-white bg-primary-500 font-semibold focus:bg-primary-500': loc === locale,
+              'bg-primary-500 font-semibold text-white focus:bg-primary-500 focus:text-white': loc === locale,
             })}
           >
-            <Image src={`/images/flags/${loc}.svg`} alt={loc} width={20} height={20} />
+            <Image src={`/icons/${loc}.svg`} alt={loc} width={20} height={20} />
             {Language[loc as keyof typeof Language]}
           </DropdownMenuItem>
         ))}

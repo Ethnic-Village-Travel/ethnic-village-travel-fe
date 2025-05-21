@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { RouteConstant } from '@/constants/route-constants';
-import { calculateRatingStats } from '@/utils/common';
-import { cn } from '@/utils/general';
+import { calculateRatingStats, cn } from '@/utils';
 import { formatCurrencyVND } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
 import { CalendarDays, MapPin, Star, StarHalf } from 'lucide-react';

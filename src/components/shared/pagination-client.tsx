@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
-import { createSearchParams } from '@/utils/general';
+import { createSearchParams } from '@/utils';
 
 import { QueryConfig } from '@/types/query.type';
 import {
