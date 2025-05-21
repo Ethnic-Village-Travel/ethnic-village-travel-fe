@@ -7,9 +7,9 @@ import { Link } from '@/lib/i18n-navigation';
 import { useQueryConfig } from '@/hooks/useQueryConfig';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import FormDemo from '@/components/common/form-demo';
-import PaginationClient from '@/components/common/pagination-client';
 import { TourItem, Layout as TourLayout } from '@/components/features/tour';
+import FormDemo from '@/components/shared/form-demo';
+import PaginationClient from '@/components/shared/pagination-client';
 
 const TOUR: Tour = {
   id: 1,

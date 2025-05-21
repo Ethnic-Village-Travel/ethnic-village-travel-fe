@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@/utils/general';
-import { AlertTriangle, RefreshCcw } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { cn } from '@/utils';
+import { AlertTriangle, RefreshCcw } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 
@@ -59,7 +59,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
 
           {/* Glow effect */}
           <div
-            className="absolute top-1/2 left-1/2 h-[500px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-500/20 blur-[100px]"
+            className="absolute left-1/2 top-1/2 h-[500px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-500/20 blur-[100px]"
             style={{
               transform: `translate(-50%, -50%) translate(${mousePosition.x * 20}px, ${mousePosition.y * 20}px)`,
             }}
@@ -80,7 +80,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
               />
             </div>
 
-            <h1 className="relative font-mono text-[80px] leading-none font-bold tracking-tighter sm:text-[120px]">
+            <h1 className="relative font-mono text-[80px] font-bold leading-none tracking-tighter sm:text-[120px]">
               <span
                 className={cn(
                   'relative inline-block transition-transform',
@@ -140,15 +140,15 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
               {/* Glitch lines */}
               {isGlitching && (
                 <>
-                  <span className="absolute top-1/4 left-0 h-[5px] w-full bg-red-500 opacity-70"></span>
-                  <span className="absolute top-2/4 left-0 h-[2px] w-full bg-cyan-400 opacity-70"></span>
-                  <span className="absolute top-3/4 left-0 h-[3px] w-full bg-yellow-400 opacity-70"></span>
+                  <span className="absolute left-0 top-1/4 h-[5px] w-full bg-red-500 opacity-70"></span>
+                  <span className="absolute left-0 top-2/4 h-[2px] w-full bg-cyan-400 opacity-70"></span>
+                  <span className="absolute left-0 top-3/4 h-[3px] w-full bg-yellow-400 opacity-70"></span>
                 </>
               )}
             </h1>
 
             {/* Message */}
-            <div className="mt-4 mb-8 max-w-lg space-y-2">
+            <div className="mb-8 mt-4 max-w-lg space-y-2">
               <h2 className="text-2xl font-bold sm:text-3xl">Đã xảy ra lỗi nghiêm trọng</h2>
               <p className="text-gray-400">
                 Hệ thống đã gặp sự cố không mong muốn. Chúng tôi đã ghi nhận lỗi này và đang khắc phục.

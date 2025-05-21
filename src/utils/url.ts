@@ -1,27 +1,3 @@
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
-export const generateKey = (pre = '') => {
-  return `${pre}_${new Date().getTime()}`;
-};
-
-export function debounce(fn: any, delay = 500) {
-  let timerId: any;
-  return () => {
-    if (timerId) {
-      clearTimeout(timerId);
-      timerId = null;
-    }
-    timerId = setTimeout(() => {
-      fn();
-    }, delay);
-  };
-}
-
 type ParamKeyValuePair = [string, string];
 type URLSearchParamsInit = string | string[][] | Record<string, string> | URLSearchParams;
 export const createSearchParams = (init: URLSearchParamsInit): URLSearchParams => {

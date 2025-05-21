@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Footer from '@/components/common/footer';
-import Header from '@/components/common/header';
+import Footer from '@/components/layout/footer';
+import Header from '@/components/layout/header';
 
 import '@/styles/globals.css';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/utils/general';
+import { cn } from '@/utils';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 
