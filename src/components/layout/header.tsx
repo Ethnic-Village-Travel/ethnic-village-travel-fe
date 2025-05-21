@@ -52,7 +52,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
         <Link href="/" className="flex items-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white transition-transform duration-300 ease-in-out hover:scale-110">
             <Image
-              src="/images/logo.svg"
+              src="/icons/logo.svg"
               alt="Ethnic Village Travel"
               width={40}
               height={40}

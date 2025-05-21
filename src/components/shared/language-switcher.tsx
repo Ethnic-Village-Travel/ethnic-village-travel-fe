@@ -43,7 +43,7 @@ export default function LanguageSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm">
-          <Image src={`/images/flags/${locale}.svg`} alt={locale} width={20} height={20} />
+          <Image src={`/icons/${locale}.svg`} alt={locale} width={20} height={20} />
           <ChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
@@ -56,7 +56,7 @@ export default function LanguageSwitcher() {
               'bg-primary-500 font-semibold text-white focus:bg-primary-500 focus:text-white': loc === locale,
             })}
           >
-            <Image src={`/images/flags/${loc}.svg`} alt={loc} width={20} height={20} />
+            <Image src={`/icons/${loc}.svg`} alt={loc} width={20} height={20} />
             {Language[loc as keyof typeof Language]}
           </DropdownMenuItem>
         ))}
