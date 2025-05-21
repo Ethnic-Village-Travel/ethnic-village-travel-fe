@@ -2,8 +2,9 @@
 description: 
 globs: 
 ---
-# File Structure Guidelines
-
+---
+alwaysApply: true
+---
 ## Project Structure Overview
 
 ```
@@ -13,6 +14,10 @@ ethnic-village-travel-fe/
 ├── public/                 # Static assets
 ├── src/                    # Source code
 │   ├── app/                # Next.js App Router pages
+│   │   ├── [locale]/       # Internationalization routes
+│   │   │   ├── (marketing)/# Marketing/public pages
+│   │   │   ├── admin/      # Admin pages
+│   │   │   └── ...         # Other localized routes
 │   ├── components/         # React components
 │   │   ├── base/           # Base components (buttons, inputs, etc.)
 │   │   ├── features/       # Feature-specific components
@@ -24,7 +29,7 @@ ethnic-village-travel-fe/
 │   ├── helpers/            # Helper functions
 │   ├── hooks/              # Custom React hooks
 │   ├── lib/                # Library code and third-party integrations
-│   ├── messages/           # Internationalization messages
+│   ├── messages/           # Internationalization messages (JSON files)
 │   ├── store/              # State management (Zustand)
 │   ├── styles/             # Global styles
 │   ├── types/              # TypeScript type definitions
@@ -81,30 +86,33 @@ ethnic-village-travel-fe/
    │   ├── Modal/
    │   └── ...
    └── ui/                # UI components from shadcn/ui
-       ├── button/
-       ├── dialog/
+       ├── button.tsx
+       ├── dialog.tsx
        └── ...
    ```
 
-2. **App Directory (Next.js App Router)**
+2. **App Directory (Next.js App Router with Internationalization)**
 
    ```
    app/
-   ├── (auth)/            # Authentication route group
-   │   ├── login/
-   │   │   └── page.tsx
-   │   └── signup/
-   │       └── page.tsx
-   ├── (main)/            # Main route group
-   │   ├── tours/
-   │   │   ├── [id]/
+   ├── [locale]/          # Dynamic route for language
+   │   ├── (marketing)/   # Marketing pages route group
+   │   │   ├── about/
    │   │   │   └── page.tsx
-   │   │   └── page.tsx
-   │   └── ...
-   ├── api/               # API routes
-   │   └── ...
-   ├── layout.tsx         # Root layout
-   └── page.tsx           # Home page
+   │   │   ├── tours/
+   │   │   │   ├── [id]/
+   │   │   │   │   └── page.tsx
+   │   │   │   └── page.tsx
+   │   │   └── ...
+   │   ├── admin/         # Admin pages
+   │   │   ├── dashboard/
+   │   │   │   └── page.tsx
+   │   │   └── ...
+   │   ├── layout.tsx     # Localized root layout
+   │   └── providers.tsx  # Client providers
+   ├── sitemap.ts         # Sitemap generator
+   ├── robots.ts          # Robots configuration
+   └── favicon.ico        # Site favicon
    ```
 
 3. **Store Directory**
@@ -117,6 +125,15 @@ ethnic-village-travel-fe/
    │   └── ...
    ├── hooks.ts           # Custom store hooks
    └── index.ts           # Store exports
+   ```
+
+4. **Messages Directory**
+
+   ```
+   messages/
+   ├── en.json            # English messages
+   ├── vi.json            # Vietnamese messages
+   └── ...                # Other language files
    ```
 
 ## Best Practices
@@ -184,6 +201,10 @@ ethnic-village-travel-fe/
    ```
 
 6. **Code Co-location**
+   - Keep related files close to each other
+   - Place tests next to the files they test
+   - Group by feature rather than by technical type when possible
+
    - Keep related files close to each other
    - Place tests next to the files they test
    - Group by feature rather than by technical type when possible

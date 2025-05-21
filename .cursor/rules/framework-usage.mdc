@@ -2,23 +2,21 @@
 description: 
 globs: 
 ---
-# Framework Usage Guidelines
-
+---
+alwaysApply: true
+---
 ## Next.js
 
-1. **App Router**
-   - Use the App Router architecture for all new pages
-   - Leverage nested layouts for shared UI elements
-   - Use route groups (in parentheses) to organize routes without affecting URL structure
+1. **App Router with Internationalization**
+   - Use the App Router architecture with `[locale]` dynamic routes
+   - Organize routes using route groups for related functionality
+   - Use the `next-intl` middleware for language detection and routing
    ```tsx
-   // Route Groups Example
+   // Route organization example
    app/
-   ├── (auth)/          // Route group (not part of URL)
-   │   ├── login/       // /login
-   │   └── register/    // /register
-   └── (main)/
-       ├── dashboard/   // /dashboard
-       └── profile/     // /profile
+   ├── [locale]/          // Dynamic route for language (e.g., /en, /vi)
+   │   ├── (marketing)/   // Marketing pages route group
+   │   └── admin/         // Admin pages
    ```
 
 2. **Data Fetching**
@@ -37,7 +35,7 @@ globs:
 
 4. **Routing**
    - Use dynamic segments for variable parts of routes: `[id]`
-   - Use catch-all segments for nested dynamic routes: `[...slug]`
+   - Use the locale parameter for internationalization: `[locale]`
    - Implement proper loading and error states for each route
 
 ## React Query (TanStack Query)
@@ -111,7 +109,7 @@ globs:
    ```typescript
    // Good - select only what you need
    const user = useUserStore((state) => state.user);
-   
+
    // Avoid - causes re-renders for any store change
    const { user } = useUserStore();
    ```
@@ -172,47 +170,65 @@ globs:
 
 ## next-intl (Internationalization)
 
-1. **Message Organization**
-   - Organize messages by feature/page
+1. **Project Setup**
+   - Use `[locale]` dynamic route segment for language routing
+   - Configure supported locales in middleware
+   - Set up message loading for each locale
+
+2. **Message Organization**
+   - Organize messages in JSON files by language (`en.json`, `vi.json`)
    - Use nested structures for related messages
    - Use variables for dynamic content
 
-2. **Message Definition**
-   ```typescript
-   // Example messages structure
-   export default {
-     Index: {
-       title: 'Welcome to Ethnic Village Travel',
-       description: 'Discover authentic ethnic villages and experiences',
+3. **Message Definition**
+   ```json
+   // Example messages in en.json
+   {
+     "Index": {
+       "title": "Welcome to Ethnic Village Travel",
+       "description": "Discover authentic ethnic villages and experiences"
      },
-     Auth: {
-       login: {
-         title: 'Login to your account',
-         emailLabel: 'Email address',
-         passwordLabel: 'Password',
-         submit: 'Sign in',
-       },
+     "Auth": {
+       "login": {
+         "title": "Login to your account",
+         "emailLabel": "Email address",
+         "passwordLabel": "Password",
+         "submit": "Sign in"
+       }
      },
-     Common: {
-       errors: {
-         required: '{field} is required',
-         invalidEmail: 'Please enter a valid email address',
-       },
-     },
-   };
+     "Common": {
+       "errors": {
+         "required": "{field} is required",
+         "invalidEmail": "Please enter a valid email address"
+       }
+     }
+   }
    ```
 
-3. **Usage in Components**
-   - Use the `useTranslations` hook
-   - Access messages with dot notation
+4. **Usage in Components**
+   - In Server Components, use the `getTranslations` function
+   - In Client Components, use the `useTranslations` hook
    ```tsx
+   // Server Component example
+   import { getTranslations } from 'next-intl/server';
+
+   export async function generateMetadata() {
+     const t = await getTranslations('Index');
+
+     return {
+       title: t('title'),
+       description: t('description')
+     };
+   }
+
+   // Client Component example
    'use client';
-   
+
    import { useTranslations } from 'next-intl';
-   
+
    export function LoginForm() {
      const t = useTranslations('Auth.login');
-     
+
      return (
        <form>
          <h2>{t('title')}</h2>
@@ -222,10 +238,30 @@ globs:
    }
    ```
 
-4. **Best Practices**
-   - Always use the translation system for user-facing text
-   - Include all languages from the beginning
-   - Use placeholders for dynamic content instead of string concatenation
+5. **Language Switching**
+   - Use the `usePathname` and `useRouter` hooks from next-intl
+   - Implement a language switcher component
+   ```tsx
+   'use client';
+
+   import { usePathname, useRouter } from 'next-intl/client';
+
+   export function LanguageSwitcher() {
+     const pathname = usePathname();
+     const router = useRouter();
+
+     const switchLanguage = (locale: string) => {
+       router.replace(pathname, { locale });
+     };
+
+     return (
+       <div>
+         <button onClick={() => switchLanguage('en')}>English</button>
+         <button onClick={() => switchLanguage('vi')}>Tiếng Việt</button>
+       </div>
+     );
+   }
+   ```
 
 ## Performance Optimization
 
@@ -240,7 +276,7 @@ globs:
    - Use appropriate loading strategies
    ```tsx
    import Image from 'next/image';
-   
+
    export function Avatar({ user }) {
      return (
        <Image
@@ -254,17 +290,10 @@ globs:
    }
    ```
 
-3. **Code Splitting**
+3. **Bundle Optimization**
    - Use dynamic imports for large components
-   - Lazy load below-the-fold content
-   ```tsx
-   import dynamic from 'next/dynamic';
-   
-   const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
-     loading: () => <p>Loading...</p>,
-   });
-   ```
-
+   - Implement proper code splitting
+   - Monitor bundle size regularly
 4. **API Optimization**
    - Implement proper caching strategies
    - Use incremental static regeneration for semi-static data
