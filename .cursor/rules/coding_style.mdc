@@ -1,8 +1,4 @@
----
-description: 
-globs: 
----
- # Coding Style Guidelines
+# Coding Style Guidelines
 
 ## Naming Conventions
 
@@ -13,8 +9,8 @@ globs:
    ```typescript
    // Good
    const userProfile = getUserProfile();
-   
-   // Bad 
+
+   // Bad
    const up = getUP();
    ```
 
@@ -24,7 +20,7 @@ globs:
    ```typescript
    // Good
    const UserProfileCard = () => { ... }
-   
+
    // Bad
    const profile = () => { ... }
    ```
@@ -60,7 +56,7 @@ globs:
    // Good
    const sum = a + b;
    const items = [1, 2, 3];
-   
+
    // Bad
    const sum=a+b;
    const items=[1,2,3];
@@ -74,7 +70,7 @@ globs:
    if (condition) {
      doSomething();
    }
-   
+
    // Bad
    if (condition)
      doSomething();
@@ -106,7 +102,7 @@ globs:
    ```typescript
    // Good - explicit typing for functions
    function calculateTotal(items: CartItem[]): number { ... }
-   
+
    // Good - inference for simple variables
    const count = 0; // TypeScript infers number type
    ```
@@ -137,7 +133,7 @@ globs:
      onClick: () => void;
      disabled?: boolean;
    }
-   
+
    const Button = ({ label, onClick, disabled = false }: ButtonProps) => { ... }
    ```
 

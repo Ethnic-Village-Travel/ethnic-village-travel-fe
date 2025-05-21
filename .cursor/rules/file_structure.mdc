@@ -2,7 +2,7 @@
 description: 
 globs: 
 ---
- # File Structure Guidelines
+# File Structure Guidelines
 
 ## Project Structure Overview
 
@@ -151,14 +151,14 @@ ethnic-village-travel-fe/
    // External libraries
    import React, { useState } from 'react';
    import { motion } from 'framer-motion';
-   
+
    // Internal modules
    import { formatDate } from '@/utils/formatDate';
    import { useUserData } from '@/hooks/useUserData';
-   
+
    // Components
    import { Button } from '@/components/base/Button';
-   
+
    // Styles (if not using Tailwind exclusively)
    import styles from './Component.module.css';
    ```
