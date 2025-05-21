@@ -4,7 +4,7 @@ import { calculateRatingStats } from '@/utils/common';
 import { cn } from '@/utils/general';
 import { formatCurrencyVND } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
-import { CalendarDays, EyeIcon, MapPin, Star, StarHalf } from 'lucide-react';
+import { CalendarDays, MapPin, Star, StarHalf } from 'lucide-react';
 
 import { Tour } from '@/types/tour.type';
 import { Badge } from '@/components/ui/badge';
@@ -26,9 +26,9 @@ export default function TourItem({ tour, layout = Layout.VERTICAL }: TourItemPro
   const renderStars = () => (
     <div className="flex items-center">
       {[...Array(Math.floor(ratingObj.average))].map((_, i) => (
-        <Star key={i} strokeWidth={0} className="fill-star h-5 w-5" />
+        <Star key={i} strokeWidth={0} className="h-5 w-5 fill-star" />
       ))}
-      {ratingObj.average % 1 >= 0.5 && <StarHalf strokeWidth={0} className="fill-star h-5 w-5" />}
+      {ratingObj.average % 1 >= 0.5 && <StarHalf strokeWidth={0} className="h-5 w-5 fill-star" />}
     </div>
   );
 
@@ -43,7 +43,7 @@ export default function TourItem({ tour, layout = Layout.VERTICAL }: TourItemPro
         className={layout === Layout.HORIZONTAL ? 'flex w-full flex-col justify-between p-4 pt-2' : 'p-4 pt-2'}
       >
         <Link href={RouteConstant.tour_detail} className="block">
-          <h3 className={cn('line-clamp-2 text-xl font-bold', layout === Layout.HORIZONTAL ? 'mb-3' : 'mb-1')}>
+          <h3 className={cn('mb-1 line-clamp-2 text-xl font-bold', { 'mb-3': layout === Layout.HORIZONTAL })}>
             {tour.title}
           </h3>
           <div className="mb-2 flex items-center gap-2">
