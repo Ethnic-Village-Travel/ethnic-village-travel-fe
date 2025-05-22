@@ -1,9 +1,9 @@
-import { AppConstant } from '@/constants/app-constants';
+import { AppConstant } from '@/constants/app';
 import { createNavigation } from 'next-intl/navigation';
 import { defineRouting } from 'next-intl/routing';
 
 export const routing = defineRouting({
-  locales: AppConstant.locales,
+  locales: Object.keys(AppConstant.locales),
   defaultLocale: AppConstant.defaultLocale,
   localePrefix: AppConstant.localePrefix,
 });

@@ -44,11 +44,11 @@ const Header = ({ navItemClassName }: HeaderProps) => {
 
   return (
     <header
-      className={cn('fixed left-0 right-0 top-0 z-50 flex items-center justify-center bg-transparent px-32 py-4', {
+      className={cn('fixed left-0 right-0 top-0 z-50 flex items-center justify-center bg-transparent py-4', {
         'backdrop-blur-lg': hasBackdrop,
       })}
     >
-      <div className="container flex max-w-[1220px] items-center justify-between">
+      <div className="flex w-full max-w-screen-2xl items-center justify-between px-28">
         <Link href="/" className="flex items-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white transition-transform duration-300 ease-in-out hover:scale-110">
             <Image

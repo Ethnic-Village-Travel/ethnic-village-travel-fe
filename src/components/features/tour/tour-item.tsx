@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { RouteConstant } from '@/constants/route-constants';
+import { RouteConstant } from '@/constants/route';
 import { calculateRatingStats, cn } from '@/utils';
 import { formatCurrencyVND } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
@@ -9,17 +9,12 @@ import { Tour } from '@/types/tour.type';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 
-export enum Layout {
-  HORIZONTAL = 'horizontal',
-  VERTICAL = 'vertical',
-}
-
 type TourItemProps = {
   tour: Tour;
-  layout?: Layout.HORIZONTAL | Layout.VERTICAL;
+  layout?: 'horizontal' | 'vertical';
 };
 
-export default function TourItem({ tour, layout = Layout.VERTICAL }: TourItemProps) {
+export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
   const ratingObj = calculateRatingStats(tour.rating || []);
 
   const renderStars = () => (
@@ -33,27 +28,27 @@ export default function TourItem({ tour, layout = Layout.VERTICAL }: TourItemPro
 
   return (
     <Card
-      className={cn({
-        'flex max-w-2xl flex-row': layout === Layout.HORIZONTAL,
-        'flex w-80 flex-col': layout === Layout.VERTICAL,
+      className={cn('flex w-full flex-col', {
+        'flex-row': layout === 'horizontal',
       })}
     >
-      {layout === Layout.HORIZONTAL ? (
-        <img src={tour.image_url} alt={tour.title} className="h-48 w-48 rounded-l-xl object-cover" />
-      ) : (
-        <img src={tour.image_url} alt={tour.title} className="h-40 w-full rounded-t-xl object-cover" />
-      )}
+      <img
+        src={tour.image_url}
+        alt={tour.title}
+        className={cn('h-full w-48 rounded-l-xl object-cover', {
+          'h-40 w-full rounded-t-xl': layout === 'vertical',
+        })}
+      />
+
       <CardContent
         className={cn({
-          'flex w-full flex-col justify-between p-4 pt-2': layout === Layout.HORIZONTAL,
-          'p-4 pt-2': layout === Layout.VERTICAL,
+          'flex w-full flex-col justify-between p-4 pt-2': layout === 'horizontal',
+          'flex-1 p-4 pt-2': layout === 'vertical',
         })}
       >
-        <Link href={RouteConstant.tour_detail} className="block">
-          <h3 className={cn('mb-1 line-clamp-2 text-xl font-bold', { 'mb-3': layout === Layout.HORIZONTAL })}>
-            {tour.title}
-          </h3>
-          <div className="mb-2 flex items-center gap-2">
+        <Link href={`${RouteConstant.tour}/${tour.slug}`} className="flex flex-col gap-2">
+          <h3 className={cn('line-clamp-2 h-[56px] text-xl font-bold')}>{tour.title}</h3>
+          <div className="flex items-center gap-2">
             <Badge variant="secondary" className="flex items-center gap-1 py-1">
               <MapPin className="h-4 w-4" />
               {tour.pick_up_location}
@@ -63,26 +58,28 @@ export default function TourItem({ tour, layout = Layout.VERTICAL }: TourItemPro
               {tour.days}
             </Badge>
           </div>
-          <div className="mb-2 flex items-center gap-2">
+          <div className="flex items-center gap-2">
             {renderStars()}
             <span className="text-sm text-muted-foreground">
               {ratingObj.average} ({ratingObj.total})
             </span>
           </div>
 
-          <Separator className="my-2 h-px w-full bg-gray-20" />
-          <div className="mt-2 flex items-center justify-between">
+          <Separator className="h-px w-full bg-gray-20" />
+          <div className="flex h-[52px] items-center justify-between">
             <div className="flex flex-col">
-              <span className="text-base font-semibold tracking-wide text-gray-500 line-through">
-                {formatCurrencyVND(tour.price)}
-              </span>
+              {tour?.promotions && tour?.promotions?.length > 0 && (
+                <span className="text-base font-semibold tracking-wide text-gray-500 line-through">
+                  {formatCurrencyVND(tour.price)}
+                </span>
+              )}
               <span className="text-xl font-semibold tracking-wide text-primary">
                 {formatCurrencyVND(
                   tour.price,
-                  tour.promotions?.[0].discount_percent,
-                  tour.promotions?.[0].max_discount_amount,
+                  tour.promotions?.[0]?.discount_percent || 0,
+                  tour.promotions?.[0]?.max_discount_amount || 0,
                 )}
-                /người{' '}
+                /người
               </span>
             </div>
             {tour.max_slot && <span className="text-xs text-muted-foreground">Max: {tour.max_slot}</span>}

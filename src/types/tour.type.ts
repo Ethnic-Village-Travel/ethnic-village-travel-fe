@@ -7,6 +7,7 @@ export interface Tour {
   id: number;
   image_url: string;
   title: string;
+  slug: string;
   overview?: string;
   status?: string;
   max_slot?: number;
