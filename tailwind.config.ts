@@ -18,8 +18,12 @@ const config: Config = {
         medium: '500',
         bold: '700',
       },
+      boxShadow: {
+        'custom-blue': '0 0 4px 1.5px var(--shadow)',
+      },
       colors: {
         star: 'var(--star)',
+        shadow: 'var(--shadow)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

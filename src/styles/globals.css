@@ -46,6 +46,7 @@ body {
 
     /* Custom Colors */
     --star: #fbbf00;
+    --shadow: rgba(105, 197, 249, 0.25);
 
     /* Primary Colors */
     --primary-primary-100: #d3ebf9;
