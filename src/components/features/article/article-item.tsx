@@ -37,7 +37,7 @@ const ArticleItem = ({
   const isHorizontal = variant === 'horizontal';
 
   return (
-    <Link href={`/articles/${slug}`} className="block w-full" passHref>
+    <Link href={`/article/${slug}`} className="block w-full" passHref>
       <Card
         className={cn(
           'w-full overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-md',
