@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { cn } from '@/utils/general';
+import { cn } from '@/utils';
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 import { ButtonProps, buttonVariants } from '@/components/ui/button';
