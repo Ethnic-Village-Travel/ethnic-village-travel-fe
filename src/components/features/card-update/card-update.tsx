@@ -83,7 +83,7 @@ export default function CardUpdate({ title, className, formSchema, childrenList,
   };
 
   return (
-    <Card className={className}>
+    <Card className={cn(className, 'rounded-md')}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 px-5 py-3">
         <CardTitle>{title}</CardTitle>
         {!isUpdating && (
@@ -124,7 +124,7 @@ export default function CardUpdate({ title, className, formSchema, childrenList,
         </CardFooter>
       ) : (
         footerOptions && (
-          <CardFooter className={cn('flex justify-between border-t text-sm text-muted-foreground')}>
+          <CardFooter className={cn('flex justify-between rounded-b-md bg-gray-20 px-5 py-0')}>
             {footerOptions}
           </CardFooter>
         )

@@ -25,10 +25,11 @@ const CONTACT_INFORMATION: CardUpdateChildren[] = [
 export default function ContactInformationForm() {
   return (
     <CardUpdate
-      className="shadow-custom-blue rounded-md border-none"
+      className="shadow-custom-blue border-none"
       title="Contact Information"
       formSchema={formSchema}
       childrenList={CONTACT_INFORMATION}
+      // footerOptions={<div>123 </div>}
     />
   );
 }
