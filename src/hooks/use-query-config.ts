@@ -3,7 +3,7 @@ import omitBy from 'lodash/omitBy';
 
 import { QueryConfig } from '@/types/query.type';
 
-import { useQueryParams } from './useQueryParams';
+import { useQueryParams } from './use-query-params';
 
 export const useQueryConfig = () => {
   const queryParams: QueryConfig = useQueryParams();

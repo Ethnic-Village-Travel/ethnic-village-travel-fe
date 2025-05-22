@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { RouteConstant } from '@/constants/route';
 import { cn } from '@/utils';
 
 import { Badge } from '@/components/ui/badge';
@@ -15,7 +16,7 @@ export interface ArticleItemProps {
   thumbnailUrl?: string;
   slug: string;
   className?: string;
-  variant?: 'vertical' | 'horizontal';
+  layout?: 'vertical' | 'horizontal';
   description?: string;
   date?: string;
   tags?: string[];
@@ -26,21 +27,21 @@ const ArticleItem = ({
   title,
   author,
   readTime,
-  thumbnailUrl = '/images/blog/blog-card-thumbnail.png',
+  thumbnailUrl = '/images/blog-card-thumbnail.png',
   slug,
   className,
-  variant = 'vertical',
+  layout = 'vertical',
   description,
   date,
   tags,
 }: ArticleItemProps) => {
-  const isHorizontal = variant === 'horizontal';
+  const isHorizontal = layout === 'horizontal';
 
   return (
-    <Link href={`/article/${slug}`} className="block w-full" passHref>
+    <Link href={`${RouteConstant.article_detail.replace(':slug', slug)}`} className="block w-full">
       <Card
         className={cn(
-          'w-full overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-md',
+          'h-full w-full overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-md',
           {
             'flex flex-col md:flex-row': isHorizontal,
           },
@@ -61,7 +62,7 @@ const ArticleItem = ({
         >
           <div>
             {tags && tags.length > 0 && (
-              <div className="mb-2 flex flex-wrap gap-2">
+              <div className="mb-2 flex h-[44px] flex-wrap gap-1">
                 {tags.map(tag => (
                   <Badge key={tag} autoVariant shape="rounded" size="sm">
                     {tag}

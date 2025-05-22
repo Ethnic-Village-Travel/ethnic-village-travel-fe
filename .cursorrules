@@ -245,12 +245,6 @@ rules:
 
 - section: File Naming Conventions content: |
 
-  ## Component Files
-
-  - Use PascalCase, extension `.tsx`
-
-  ## Non-Component Files
-
   - Use kebab-case (e.g. `format-date.ts`)
 
   ## Index Files

@@ -20,3 +20,30 @@ export function hashStringToNumber(str: string): number {
   }
   return Math.abs(hash);
 }
+
+/**
+ * Function to remove Vietnamese tones
+ * @param str - String to remove Vietnamese tones
+ * @returns String without Vietnamese tones
+ */
+function removeVietnameseTones(str: string) {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D');
+}
+
+/**
+ * Function to slugify string
+ * @param str - String to slugify
+ * @returns Slugified string
+ */
+export function slugify(str: string) {
+  return removeVietnameseTones(str)
+    .toLowerCase()
+    .replace(/[^a-zA-Z\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/ /g, '-');
+}

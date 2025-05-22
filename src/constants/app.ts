@@ -4,7 +4,10 @@ const localePrefix: LocalePrefixMode = 'as-needed';
 
 export const AppConstant = {
   name: 'Ethnic Village Travel',
-  locales: ['en', 'vi'],
+  locales: {
+    en: 'English',
+    vi: 'Tiếng Việt',
+  },
   defaultLocale: 'vi',
   localePrefix,
 };

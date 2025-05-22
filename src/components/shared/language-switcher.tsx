@@ -3,6 +3,7 @@
 import { useTransition } from 'react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
+import { AppConstant } from '@/constants/app';
 import { cn } from '@/utils';
 import { ChevronDown } from 'lucide-react';
 import { useLocale } from 'next-intl';
@@ -15,11 +16,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
-enum Language {
-  en = 'English',
-  vi = 'Tiếng Việt',
-}
 
 export default function LanguageSwitcher() {
   const router = useRouter();
@@ -57,7 +53,7 @@ export default function LanguageSwitcher() {
             })}
           >
             <Image src={`/icons/${loc}.svg`} alt={loc} width={20} height={20} />
-            {Language[loc as keyof typeof Language]}
+            {AppConstant.locales[loc as keyof typeof AppConstant.locales]}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
