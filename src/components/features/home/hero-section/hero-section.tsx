@@ -13,10 +13,7 @@ interface HeroSectionProps {
 export function HeroSection({ className }: HeroSectionProps) {
   return (
     <section
-      className={cn(
-        'relative -mx-4 mt-[-80px] h-[600px] w-screen overflow-hidden md:-mx-8 lg:-mx-16 xl:-mx-28',
-        className,
-      )}
+      className={cn('relative left-1/2 right-1/2 ml-[-50vw] mt-[-80px] h-[600px] w-screen overflow-hidden', className)}
     >
       {/* Background Image */}
       <div className="absolute inset-0">
