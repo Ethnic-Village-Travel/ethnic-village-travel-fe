@@ -65,7 +65,9 @@ export default async function RootLayout({
             <Suspense fallback={<Loading fullScreen text="Đang tải trang..." />}>
               <div className="relative flex min-h-screen w-full flex-col gap-10">
                 <Header navItemClassName="text-dark" />
-                <main className="w-full flex-1">{children}</main>
+                <main className="mx-auto mt-[80px] w-full max-w-screen-2xl flex-1 px-4 md:px-8 lg:px-16 xl:px-28">
+                  {children}
+                </main>
                 <Footer />
               </div>
             </Suspense>

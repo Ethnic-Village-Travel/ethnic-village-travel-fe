@@ -16,13 +16,11 @@ export default function HomePage() {
     <div className="flex w-full flex-col gap-6">
       <HeroSection />
 
-      <div className="mx-auto flex max-w-screen-2xl flex-col gap-6 px-4 md:px-8 lg:px-16 xl:px-28">
-        <TourSection />
+      <TourSection />
 
-        <ArticleSection />
+      <ArticleSection />
 
-        <ReasonSection />
-      </div>
+      <ReasonSection />
 
       {/* <PaginationClient queryConfig={queryConfig} pageSize={20} showFirstLast /> */}
     </div>
