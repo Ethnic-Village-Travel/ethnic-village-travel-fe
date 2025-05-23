@@ -36,7 +36,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
         src={tour.image_url}
         alt={tour.title}
         className={cn('h-full w-48 rounded-l-xl object-cover', {
-          'h-40 w-full rounded-t-xl': layout === 'vertical',
+          'h-40 w-full rounded-t-xl rounded-bl-none': layout === 'vertical',
         })}
       />
 
@@ -47,7 +47,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
         })}
       >
         <Link href={`${RouteConstant.tour}/${tour.slug}`} className="flex flex-col gap-2">
-          <h3 className={cn('line-clamp-2 h-[56px] text-xl font-bold')}>{tour.title}</h3>
+          <h3 className={cn('line-clamp-2 h-[52px] text-lg font-bold')}>{tour.title}</h3>
           <div className="flex items-center gap-2">
             <Badge variant="secondary" className="flex items-center gap-1 py-1">
               <MapPin className="h-4 w-4" />

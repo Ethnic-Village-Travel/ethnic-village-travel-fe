@@ -4,6 +4,7 @@ import { useTransition } from 'react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { AppConstant } from '@/constants/app';
+import { RouteConstant } from '@/constants/route';
 import { cn } from '@/utils';
 import { ChevronDown } from 'lucide-react';
 import { useLocale } from 'next-intl';
@@ -38,9 +39,9 @@ export default function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" size="sm" className="hover:bg-white-20 focus-visible:ring-0">
           <Image src={`/icons/${locale}.svg`} alt={locale} width={20} height={20} />
-          <ChevronDown className="h-4 w-4" />
+          <ChevronDown className={cn('h-4 w-4', { 'text-white': pathname.includes(RouteConstant.home) })} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

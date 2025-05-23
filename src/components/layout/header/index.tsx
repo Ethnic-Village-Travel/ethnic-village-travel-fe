@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { RouteConstant } from '@/constants/route';
 import { cn } from '@/utils';
 import { ClassNameValue } from 'tailwind-merge';
 
@@ -73,6 +74,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
                     'before:absolute before:bottom-[-2px] before:left-0 before:h-[2px] before:w-0 before:bg-primary-500 before:transition-all before:duration-300 before:ease-in-out',
                     navItemClassName,
                     {
+                      'text-white': pathname.includes(RouteConstant.home),
                       'text-primary-500 before:w-full': pathname.includes(link.href),
                     },
                   )}

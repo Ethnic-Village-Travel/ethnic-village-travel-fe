@@ -24,7 +24,7 @@ const FooterNewsletter: React.FC = () => {
         </h3>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[720px]">
-            <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:gap-6 md:gap-[72px]">
+            <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:gap-6 md:gap-8">
               <FormField
                 control={form.control}
                 name="email"
