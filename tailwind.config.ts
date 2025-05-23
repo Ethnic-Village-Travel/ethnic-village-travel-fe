@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
+import type { PluginAPI } from 'tailwindcss/types/config';
 
 const config: Config = {
   darkMode: ['class'],
@@ -118,7 +120,11 @@ const config: Config = {
           '5': 'var(--dark-dark-5)',
           '10': 'var(--dark-dark-10)',
           '20': 'var(--dark-dark-20)',
-          '75': 'var(--dark-dark-75)',
+          '30': 'var(--dark-dark-30)',
+          '40': 'var(--dark-dark-40)',
+          '50': 'var(--dark-dark-50)',
+          '60': 'var(--dark-dark-60)',
+          '70': 'var(--dark-dark-70)',
           '80': 'var(--dark-dark-80)',
           '90': 'var(--dark-dark-90)',
         },
@@ -184,6 +190,20 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+
+    plugin(function ({ addComponents }: PluginAPI) {
+      addComponents({
+        '.full-bleed': {
+          position: 'relative',
+          width: '100vw',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+        },
+      });
+    }),
+  ],
 };
 export default config;

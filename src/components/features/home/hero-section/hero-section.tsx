@@ -12,9 +12,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ className }: HeroSectionProps) {
   return (
-    <section
-      className={cn('relative left-1/2 right-1/2 ml-[-50vw] mt-[-80px] h-[600px] w-screen overflow-hidden', className)}
-    >
+    <section className={cn('full-bleed relative mt-[-80px] h-[600px] overflow-hidden', className)}>
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image src="/images/homepage_hero.jpg" alt="Hero Background" fill className="object-cover" priority />
