@@ -102,7 +102,11 @@ body {
     --dark-dark-5: rgba(15, 20, 22, 0.05);
     --dark-dark-10: rgba(15, 20, 22, 0.1);
     --dark-dark-20: rgba(15, 20, 22, 0.2);
-    --dark-dark-75: rgba(15, 20, 22, 0.75);
+    --dark-dark-30: rgba(15, 20, 22, 0.3);
+    --dark-dark-40: rgba(15, 20, 22, 0.4);
+    --dark-dark-50: rgba(15, 20, 22, 0.5);
+    --dark-dark-60: rgba(15, 20, 22, 0.6);
+    --dark-dark-70: rgba(15, 20, 22, 0.7);
     --dark-dark-80: rgba(15, 20, 22, 0.8);
     --dark-dark-90: rgba(15, 20, 22, 0.9);
 
