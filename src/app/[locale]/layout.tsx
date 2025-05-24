@@ -14,6 +14,8 @@ import Providers from './providers';
 
 import '@/styles/globals.css';
 
+import { Toaster } from '@/components/ui/toaster';
+
 const roboto = Roboto({
   variable: '--font-roboto',
   subsets: ['latin'],
@@ -69,6 +71,7 @@ export default async function RootLayout({
                   {children}
                 </main>
                 <Footer />
+                <Toaster />
               </div>
             </Suspense>
           </Providers>
