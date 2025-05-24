@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { MOCK_TOURS } from '@/data/tours';
 import { cn } from '@/utils';

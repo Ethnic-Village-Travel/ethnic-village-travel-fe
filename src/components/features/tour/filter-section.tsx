@@ -1,3 +1,5 @@
+'use client';
+
 import { FILTERS } from '@/data/filters';
 
 import { FilterCardGroup, PriceFilterCard } from '../filter-card';
