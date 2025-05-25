@@ -61,8 +61,11 @@ export default async function RootLayout({
       <body className={`${roboto.variable} antialiased`} suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
-            <Toaster />
-            <Suspense fallback={<Loading fullScreen text="Đang tải trang..." />}>{children}</Suspense>
+            <Suspense fallback={<Loading fullScreen text="Đang tải trang..." />}>
+              {children}
+
+              <Toaster />
+            </Suspense>
           </Providers>
         </NextIntlClientProvider>
       </body>

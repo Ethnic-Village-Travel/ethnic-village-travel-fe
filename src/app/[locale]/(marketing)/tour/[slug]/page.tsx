@@ -1,22 +1,37 @@
 import { notFound } from 'next/navigation';
 import { MOCK_TOURS } from '@/data/tours';
 
-interface TourDetailPageProps {
-  params: { slug: string };
+import SimilarTrip from '@/components/features/tour/detail/similar-trip';
+import { TourDetailContent } from '@/components/features/tour/detail/tour-detail-content';
+import TourDetailHeader from '@/components/features/tour/detail/tour-detail-header';
+
+interface TourDetailProps {
+  params: {
+    slug: string;
+  };
 }
 
-export default function TourDetail({ params }: TourDetailPageProps) {
-  const { slug } = params;
-  const tourData = MOCK_TOURS.find(tour => tour.slug === slug);
-  if (!tourData) {
-    console.log('Tour not found');
+export default function TourDetailPage({ params }: TourDetailProps) {
+  const tour = MOCK_TOURS.find(tour => tour.slug === params.slug);
+
+  if (!tour) {
+    console.log('Tour not found:', params.slug);
     return notFound();
   }
+
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="text-2xl font-bold">{tourData.title}</h1>
-      <p className="mt-4 text-lg">Welcome to the Tour Page!</p>
-      <p className="mt-4 text-lg">{slug}</p>
+    <div>
+      <div className="full-bleed h-[600px]">
+        <img src={tour.image_url} alt={tour.title} className="h-full w-full object-cover" />
+      </div>
+
+      <div className="px-[80px] pb-[60px] pt-6">
+        <div className="space-y-10">
+          <TourDetailHeader {...tour} />
+          <TourDetailContent tour={tour} />
+          <SimilarTrip tours={MOCK_TOURS.slice(0, 3)} />
+        </div>
+      </div>
     </div>
   );
 }

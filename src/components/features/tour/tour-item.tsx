@@ -4,12 +4,13 @@ import { RouteConstant } from '@/constants/route';
 import { calculateRatingStats, cn } from '@/utils';
 import { formatCurrencyVND } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
-import { CalendarDays, MapPin, Star, StarHalf } from 'lucide-react';
+import { CalendarDays, MapPin } from 'lucide-react';
 
 import { Tour } from '@/types/tour.type';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import BookmarkButton from '@/components/shared/bookmark-button';
+import StarRating from '@/components/shared/star-rating';
 
 type TourItemProps = {
   tour: Tour;
@@ -18,15 +19,6 @@ type TourItemProps = {
 
 export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
   const ratingObj = calculateRatingStats(tour.rating || []);
-
-  const renderStars = () => (
-    <div className="flex items-center">
-      {[...Array(Math.floor(ratingObj.average))].map((_, i) => (
-        <Star key={i} strokeWidth={0} className="h-5 w-5 fill-star" />
-      ))}
-      {ratingObj.average % 1 >= 0.5 && <StarHalf strokeWidth={0} className="h-5 w-5 fill-star" />}
-    </div>
-  );
 
   return (
     <Card
@@ -65,7 +57,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
         </div>
         <div className="mb-1 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {renderStars()}
+            <StarRating average={ratingObj.average} />
             <span className="text-sm text-muted-foreground">
               {ratingObj.average} ({ratingObj.total})
             </span>{' '}
