@@ -46,7 +46,7 @@ export function SearchBar({ className, onSearch }: SearchBarProps) {
       className={cn('flex items-center gap-2 rounded-xl border-[1px] border-primary-400 bg-white p-2 px-4', className)}
     >
       <Select value={searchData.location} onValueChange={value => setSearchData({ ...searchData, location: value })}>
-        <SelectTrigger className="flex h-fit max-w-56 gap-4 border-0 bg-transparent p-2 py-1 text-left font-semibold shadow-none focus:ring-0 focus-visible:ring-0">
+        <SelectTrigger className="flex h-fit max-w-60 gap-4 border-0 bg-transparent p-2 py-1 text-left font-semibold shadow-none focus:ring-0 focus-visible:ring-0">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-5">
             <MapPin className="h-6 w-6 text-primary-500" />
           </div>

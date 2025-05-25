@@ -1,3 +1,6 @@
+import { usePathname } from 'next/navigation';
+import { RouteConstant } from '@/constants/route';
+import { cn } from '@/utils';
 import { Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
@@ -6,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 
 const FooterNewsletter: React.FC = () => {
+  const pathname = usePathname();
   const form = useForm({
     defaultValues: {
       email: '',
@@ -17,7 +21,12 @@ const FooterNewsletter: React.FC = () => {
   };
 
   return (
-    <Card className="absolute -top-[66px] left-1/2 w-[90%] max-w-[920px] -translate-x-1/2 rounded-b-[30px] rounded-t-md border-none bg-white text-black sm:w-[85%] md:w-[80%]">
+    <Card
+      className={cn(
+        'absolute -top-[66px] left-1/2 w-[90%] max-w-[920px] -translate-x-1/2 rounded-b-[30px] rounded-t-md border-none bg-white text-black sm:w-[85%] md:w-[80%]',
+        { hidden: pathname !== RouteConstant.home },
+      )}
+    >
       <CardContent className="flex flex-col items-center gap-5 p-6">
         <h3 className="text-center text-base font-bold sm:text-xl md:text-2xl lg:text-3xl">
           Luôn được cập nhật về các lời khuyên du lịch

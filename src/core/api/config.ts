@@ -12,4 +12,8 @@ export const API = {
   BLOG: {
     GET: '/blog',
   },
+  TOUR: {
+    GET_BOOKMARK_STATUS: '/tours/bookmark/status',
+    TOGGLE_BOOKMARK: '/tours/bookmark',
+  },
 };
