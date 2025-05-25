@@ -6,15 +6,12 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 
 import { routing } from '@/lib/i18n-navigation';
-import Footer from '@/components/layout/footer';
-import Header from '@/components/layout/header';
+import { Toaster } from '@/components/ui/toaster';
 import Loading from '@/components/shared/loading';
 
 import Providers from './providers';
 
 import '@/styles/globals.css';
-
-import { Toaster } from '@/components/ui/toaster';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -65,14 +62,9 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <Suspense fallback={<Loading fullScreen text="Đang tải trang..." />}>
-              <div className="relative flex min-h-screen w-full flex-col gap-10">
-                <Header navItemClassName="text-dark" />
-                <main className="mx-auto mt-[80px] w-full max-w-screen-2xl flex-1 px-4 md:px-8 lg:px-16 xl:px-28">
-                  {children}
-                </main>
-                <Footer />
-                <Toaster />
-              </div>
+              {children}
+
+              <Toaster />
             </Suspense>
           </Providers>
         </NextIntlClientProvider>
