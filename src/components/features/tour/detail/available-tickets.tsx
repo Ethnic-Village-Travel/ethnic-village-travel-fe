@@ -71,7 +71,7 @@ const AvailableTickets = ({ tickets }: AvailableTicketsProps) => {
   };
 
   return (
-    <Card className="mt-2.5 p-6 px-3 shadow-[1px_1px_2px_0px_rgba(105,197,249,0.25),-1px_-1px_2px_0px_rgba(105,197,249,0.25)]">
+    <Card className="mt-2.5 p-6 px-5 shadow-[1px_1px_2px_0px_rgba(105,197,249,0.25),-1px_-1px_2px_0px_rgba(105,197,249,0.25)]">
       <h2 className="mb-4 text-xl font-bold">Available Tickets</h2>
       <div className="relative">
         {showLeftButton && (
@@ -91,7 +91,7 @@ const AvailableTickets = ({ tickets }: AvailableTicketsProps) => {
               variant={selectedTicket === ticket.id ? 'default' : 'outline'}
               onClick={() => handleTicketClick(ticket.id)}
               className={cn(
-                'flex h-auto min-w-[150px] flex-col items-center gap-1 border-gray-500 px-4 py-2 transition-all duration-200',
+                'flex h-auto min-w-[120px] flex-col items-center gap-1 border-gray-500 px-4 py-2 transition-all duration-200',
                 {
                   'border-secondary-600 text-secondary-600': ticket.isSpecial,
                   'hover:bg-primary-500/90 bg-primary-500 text-white': selectedTicket === ticket.id,
