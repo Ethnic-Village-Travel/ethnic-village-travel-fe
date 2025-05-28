@@ -22,6 +22,7 @@ const config: Config = {
       },
       boxShadow: {
         'custom-blue': '0 0 4px 1.5px var(--shadow)',
+        'custom-gray': '0px 55px 70px 0px rgba(0, 0, 0, 0.03), 0px 55px 90px 0px rgba(0, 0, 0, 0.03)',
       },
       colors: {
         star: 'var(--star)',

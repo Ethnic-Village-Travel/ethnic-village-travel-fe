@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { AddReviewCard } from '../features/tour/detail/add-review-card';
+import { AddReviewCard } from '../features/tour/tour-detail/add-review-card';
 import StarRating from './star-rating';
 
 interface ReviewItemProps {

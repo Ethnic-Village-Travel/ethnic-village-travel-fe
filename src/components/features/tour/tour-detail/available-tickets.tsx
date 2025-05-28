@@ -71,7 +71,7 @@ const AvailableTickets = ({ tickets }: AvailableTicketsProps) => {
   };
 
   return (
-    <Card className="mt-2.5 p-6 px-5 shadow-[1px_1px_2px_0px_rgba(105,197,249,0.25),-1px_-1px_2px_0px_rgba(105,197,249,0.25)]">
+    <Card className="shadow-custom-gray mt-2.5 p-6 px-5">
       <h2 className="mb-4 text-xl font-bold">Available Tickets</h2>
       <div className="relative">
         {showLeftButton && (
