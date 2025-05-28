@@ -1,10 +1,11 @@
 'use client';
 
 import { calculateRatingStats } from '@/utils';
-import { Heart, Share2 } from 'lucide-react';
+import { BookmarkIcon, Heart, Share2 } from 'lucide-react';
 
 import { Tour } from '@/types/tour.type';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import Divider from '@/components/shared/divider';
 import StarRating from '@/components/shared/star-rating';
 
@@ -36,7 +37,7 @@ const TourDetailHeader = (tour: Tour) => {
             <StarRating average={ratingObj.average} />
           </div>
 
-          <Divider className="h-[53px]" />
+          <Separator className="h-[53px]" orientation="vertical" />
 
           {/* Days Section */}
           <div className="flex flex-col gap-1.5">
@@ -44,7 +45,7 @@ const TourDetailHeader = (tour: Tour) => {
             <span className="text-base text-dark">5 Days/4 Night</span>
           </div>
 
-          <Divider className="h-[53px]" />
+          <Separator className="h-[53px]" orientation="vertical" />
 
           {/* Location Section */}
           <div className="flex flex-col gap-1.5">
@@ -58,13 +59,13 @@ const TourDetailHeader = (tour: Tour) => {
           <Button
             variant="outline"
             size="icon"
-            className="hover:border-primary-500/80 h-[50px] w-[50px] border-primary-500 [&_svg]:size-6"
+            className="hover:border-primary-500/80 h-[38px] w-[38px] border-primary-500 [&_svg]:size-5"
           >
-            <Heart className="text-primary-500" />
+            <BookmarkIcon className="text-primary-500" />
           </Button>
           <Button
             variant="outline"
-            className="hover:border-primary-500/80 hover:text-primary-500/80 h-[50px] border-primary-500 text-primary-500 [&_svg]:size-6"
+            className="hover:border-primary-500/80 hover:text-primary-500/80 h-[38px] border-primary-500 text-primary-500 [&_svg]:size-5"
           >
             <Share2 className="mr-2" />
             Share

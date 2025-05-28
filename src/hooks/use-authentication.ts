@@ -7,6 +7,7 @@ export function useAuthentication() {
     isAuthenticated: false,
     user: {
       id: 1,
+      avatar: '',
       name: 'Demo User',
       email: 'demo@example.com',
     },

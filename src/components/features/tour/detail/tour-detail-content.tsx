@@ -76,7 +76,7 @@ export function TourDetailContent({ tour }: TourDetailContentProps) {
           {TABS.map(tab => (
             <button
               key={tab}
-              className={cn('text-xl transition-colors duration-300 hover:text-primary', {
+              className={cn('text-xl font-semibold transition-colors duration-300 hover:text-primary', {
                 'text-primary': activeTab === tab,
               })}
               onClick={() => setActiveTab(tab)}
