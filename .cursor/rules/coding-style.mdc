@@ -1,0 +1,105 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+# Software Development Guidelines for Cursor IDE
+
+## General Principles & Workflow
+
+- **Requirement Compliance**: Fully and carefully meet user requirements.
+- **Code Quality**: Write correct, best-practice-compliant, DRY, bug-free, fully functional, and working code.
+- **Readability First**: Focus on readable, maintainable code rather than premature optimization.
+- **Completeness**: Fully implement features, minimize TODOs (if present, must include descriptions and deadlines).
+- **Thorough Testing**: Ensure complete code with edge case handling and potential bug checks.
+- **Unclear Requirements**: Confirm with users/stakeholders instead of guessing.
+- **Workflow**:
+    1. Analyze requirements and identify technical constraints.
+    2. Plan architecture and solution flow.
+    3. Implement step-by-step, following best practices.
+    4. Review, optimize, and handle edge cases.
+    5. Ensure the code meets requirements, is secure and efficient.
+- **System 2 Thinking**: Apply structured thinking, break down complex tasks.
+- **Tree of Thoughts**: Evaluate possible solutions and select the optimal one.
+- **Iterative Refinement**: Improve through iterations, handle edge cases, and optimize.
+
+## Code Style & Structure
+
+- **Functional & Declarative**: Prefer functional and declarative programming; use classes only when necessary.
+- **Modularization**: Break code into modules, prioritize reusability and composability.
+- **File Structure**:
+    - Main file: Exported component.
+    - Subcomponents, helpers, static content, types: Organized in separate files/folders.
+    - Example: `components/auth-wizard` (lowercase, kebab-case).
+- **Naming Conventions**:
+    - Folders: lowercase, kebab-case (e.g., `auth-wizard`).
+    - Components: Named exports (e.g., `export const AuthWizard`).
+    - Variables/Functions: Descriptive, use auxiliary verbs (e.g., `isLoading`, `hasError`).
+    - Event handlers: Use `handle` prefix (e.g., `handleClick`, `handleKeyDown`).
+
+## TypeScript Usage
+
+- **Interfaces vs Types**: Prefer interfaces for objects and inheritance; use types for unions/intersections or complex cases.
+- **Enums**: Use maps for dynamic mapping; enums allowed for simple, fixed values.
+- **Functional Components**: Use with TypeScript interfaces.
+- **Typing**: Define types for constants where possible.
+
+## Syntax & Formatting
+
+- **Pure Functions**: Use the `function` keyword.
+- **Conditionals**: Avoid unnecessary braces, prefer concise syntax.
+- **JSX**: Write declaratively.
+- **Functions/Constants**: Use `const fn = () =>` when appropriate.
+
+## UI & Styling
+
+- **Tailwind CSS**: Use Tailwind classes; avoid raw CSS or `<style>` tags.
+- **Utility `cn`**: Use `class:` with `cn` (clsx + tailwind-merge) instead of ternaries.
+- **Responsive Design**: Mobile-first using Tailwind; test on mobile, tablet, and desktop.
+- **UI Frameworks**: Use Tailwind CSS, Shadcn UI, Radix UI.
+- **Accessibility (a11y)**:
+    - Comply with WCAG (ARIA attributes, keyboard navigation, contrast).
+    - Check accessibility with Lighthouse.
+
+## Performance & Next.js Optimization
+
+- **Server Components**: Favor React Server Components (RSC) and Next.js SSR.
+- **Limit** `use client`: Use only for irreplaceable client-side logic or Web APIs.
+- **Images**:
+    - Use WebP with fallbacks (e.g., `<picture>` or `next/image`).
+    - Include dimensions and implement lazy loading.
+- **Web Vitals**: Optimize LCP, CLS, FID per Next.js documentation.
+- **Data Fetching**: Follow Next.js documentation.
+
+## State Management & Data Fetching
+
+- **State Management**: Use Zustand for global state; React Context/local state for simple cases.
+- **Data Fetching**: Use TanStack React Query for complex fetching; integrate with Next.js APIs.
+- **Form Libraries**: Use Zod with React Hook Form if needed.
+
+## Error Handling & Validation
+
+- **Error Handling**: Use early returns, guard clauses, custom error types.
+- **Validation**: Use Zod for schema validation and integrate with form libraries.
+- **Edge Cases**: Check and handle boundary scenarios.
+
+## Security
+
+- **Error Handling**: Display friendly messages, avoid leaking sensitive information.
+- **Validation**: Sanitize user input with Zod.
+
+## Documentation
+
+- **Comments**: Use only for complex logic, explain "why" not "what".
+- **JSDoc**: Use for functions/components to support IntelliSense.
+
+## Internationalization (i18n)
+
+- Use `next-intl` for multilingual support if needed.
+
+## Colors
+
+- **Use Defined Color Variables**: Prioritize using color variables defined in `tailwind.config.js` or `global.css` (e.g., `text-dark-500` instead of `text-[#1c1c1c]`).
+- **Figma MPC Mapping**: When generating UI from MPC (Figma), map Figma colors to pre-defined Tailwind color variables to maintain consistency.
+- **Palette Compliance**: Ensure all colors used in the project exist within the declared palette.

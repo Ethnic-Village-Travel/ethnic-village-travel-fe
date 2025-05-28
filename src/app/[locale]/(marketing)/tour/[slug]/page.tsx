@@ -1,9 +1,7 @@
 import { notFound } from 'next/navigation';
 import { MOCK_TOURS } from '@/data/tours';
 
-import SimilarTrip from '@/components/features/tour/detail/similar-trip';
-import { TourDetailContent } from '@/components/features/tour/detail/tour-detail-content';
-import TourDetailHeader from '@/components/features/tour/detail/tour-detail-header';
+import TourDetail from '@/components/features/tour/tour-detail';
 
 interface TourDetailProps {
   params: {
@@ -20,18 +18,12 @@ export default function TourDetailPage({ params }: TourDetailProps) {
   }
 
   return (
-    <div>
+    <div className="">
       <div className="full-bleed h-[600px]">
         <img src={tour.image_url} alt={tour.title} className="h-full w-full object-cover" />
       </div>
 
-      <div className="px-[80px] pb-[60px] pt-6">
-        <div className="space-y-10">
-          <TourDetailHeader {...tour} />
-          <TourDetailContent tour={tour} />
-          <SimilarTrip tours={MOCK_TOURS.slice(0, 3)} />
-        </div>
-      </div>
+      <TourDetail tour={tour} />
     </div>
   );
 }
