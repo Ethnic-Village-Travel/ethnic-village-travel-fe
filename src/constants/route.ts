@@ -8,4 +8,6 @@ export const RouteConstant = {
 
   article: '/article',
   article_detail: '/article/:slug',
+
+  order: '/order',
 };

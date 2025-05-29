@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { cn } from '@/utils';
-import { formatCurrencyVND } from '@/utils/number';
+import { formatCurrency } from '@/utils/number';
 import { ChevronDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -39,7 +39,7 @@ export default function PriceFilterCard() {
           <CardContent className="px-3 py-3 pt-1">
             <div className="space-y-6">
               <p className="font-medium text-black">
-                Từ: {formatCurrencyVND(priceRange[0])} - {formatCurrencyVND(priceRange[1])}
+                Từ: {formatCurrency(priceRange[0])} - {formatCurrency(priceRange[1])}
               </p>
               <Slider
                 defaultValue={priceRange}

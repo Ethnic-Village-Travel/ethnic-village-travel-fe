@@ -1,3 +1,7 @@
+import dayjs from 'dayjs';
+
+import 'dayjs/locale/vi';
+
 const EXCEEDING_LIMIT_VALUE = 1.79769313e308;
 const STANDARD_SUFFIXES = ['', 'K', 'M', 'B', 'T'];
 
@@ -71,23 +75,37 @@ export function formatNumber(
   return result;
 }
 
-export function formatCurrencyVND(
+export function formatCurrency(
   value: number | string,
-  discount_percent?: number,
-  max_discount_amount?: number,
+  options?: {
+    locale?: 'vi' | 'en' | 'ko';
+    discount_percent?: number;
+    max_discount_amount?: number;
+  },
 ): string {
+  const { locale = 'vi', discount_percent, max_discount_amount } = options || {};
+
   let number = typeof value === 'string' ? parseFloat(value) : value;
 
-  if (isNaN(number)) return '0đ';
+  if (isNaN(number)) return locale === 'vi' ? '0đ' : locale === 'ko' ? '₩0' : '$0';
 
-  if (discount_percent) {
-    const rawDiscount = (number * discount_percent) / 100;
-    const discount = max_discount_amount ? Math.min(rawDiscount, max_discount_amount) : rawDiscount;
-
-    number = number - discount;
+  if (discount_percent && max_discount_amount) {
+    number = calculateDiscount(number, discount_percent, max_discount_amount);
   }
 
-  return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ';
+  const currencyFormatters = {
+    vi: (n: number) => n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ',
+    en: (n: number) => '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+    ko: (n: number) => '₩' + n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+  };
+
+  return currencyFormatters[locale](number);
+}
+
+export function calculateDiscount(value: number, discountPercent: number, maxDiscountAmount: number) {
+  const rawDiscount = (value * discountPercent) / 100;
+  const discount = maxDiscountAmount ? Math.min(rawDiscount, maxDiscountAmount) : rawDiscount;
+  return value - discount;
 }
 
 export function formatTimeAgo(timestamp: Date, locale = 'vi-VN') {
@@ -131,4 +149,27 @@ export function calculateRatingPercentage(
   }
 
   return ratingPercentage;
+}
+
+interface FormatTourDatesOptions {
+  locale?: 'en' | 'vi';
+  dateFormat?: string;
+}
+
+export function formatTourDates(startDate: Date, endDate: Date, options: FormatTourDatesOptions = {}) {
+  const { locale = 'vi', dateFormat = 'MMM DD, YYYY' } = options;
+
+  dayjs.locale(locale);
+
+  const start = dayjs(startDate);
+  const end = dayjs(endDate);
+  const days = end.diff(start, 'day') + 1;
+  const nights = days - 1;
+
+  return {
+    startDate: start.format(dateFormat),
+    endDate: end.format(dateFormat),
+    duration: locale === 'en' ? `${days}D-${nights}N` : `${days} ngày ${nights} đêm`,
+    durationShort: `${days}D-${nights}N`,
+  };
 }
