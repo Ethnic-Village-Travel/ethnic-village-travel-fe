@@ -85,7 +85,7 @@ export default function CardUpdate({ title, className, formSchema, childrenList,
   return (
     <Card className={cn(className, 'rounded-md')}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 px-5 py-3">
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-xl">{title}</CardTitle>
         {!isUpdating && (
           <Button variant="link" size="sm" onClick={handleChange}>
             Change
@@ -95,16 +95,16 @@ export default function CardUpdate({ title, className, formSchema, childrenList,
       <Separator className="h-px w-full bg-gray-20" />
       <CardContent className="px-5 py-3">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-2 gap-4">
             {childrenList.map(item =>
               !isUpdating ? (
-                <div className="flex flex-col gap-2">
+                <div className="m-0 flex flex-col gap-2">
                   {item.label}
-                  {item.defaultValue}
+                  {item.defaultChildren}
                 </div>
               ) : (
                 <FormItem>
-                  <FormLabel>{item.label}</FormLabel>
+                  <FormLabel className="font-semibold text-gray-500">{item.label}</FormLabel>
                   <FormControl>{item.children}</FormControl>
                   <FormMessage />
                 </FormItem>

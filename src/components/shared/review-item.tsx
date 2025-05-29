@@ -71,7 +71,7 @@ export function ReviewItem({ review, onEdit, onDelete, onPin, onReport }: Review
               {/* User info */}
               <div className="flex flex-col">
                 <h4 className="font-semibold">{review.user.name}</h4>
-                <StarRating average={review.rating} />
+                <StarRating average={review.rating} readOnly />
               </div>
             </div>
 

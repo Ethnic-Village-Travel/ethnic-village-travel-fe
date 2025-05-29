@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { EntityConstant } from '@/constants/entity';
 import { RouteConstant } from '@/constants/route';
 import { calculateRatingStats, cn } from '@/utils';
-import { formatCurrencyVND } from '@/utils/number';
+import { formatCurrency } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
 import { CalendarDays, MapPin } from 'lucide-react';
 
@@ -59,7 +59,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
         </div>
         <div className="mb-1 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <StarRating average={ratingObj.average} />
+            <StarRating average={ratingObj.average} readOnly />
             <span className="text-sm text-muted-foreground">
               {ratingObj.average} ({ratingObj.total})
             </span>{' '}
@@ -72,15 +72,14 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
           <div className="flex flex-col">
             {tour?.promotions && tour?.promotions?.length > 0 && (
               <span className="text-base font-semibold tracking-wide text-gray-500 line-through">
-                {formatCurrencyVND(tour.price)}
+                {formatCurrency(tour.price)}
               </span>
             )}
             <span className="text-xl font-semibold tracking-wide text-primary">
-              {formatCurrencyVND(
-                tour.price,
-                tour.promotions?.[0]?.discount_percent || 0,
-                tour.promotions?.[0]?.max_discount_amount || 0,
-              )}
+              {formatCurrency(tour.price, {
+                discount_percent: tour.promotions?.[0]?.discount_percent || 0,
+                max_discount_amount: tour.promotions?.[0]?.max_discount_amount || 0,
+              })}
               /người
             </span>
           </div>
