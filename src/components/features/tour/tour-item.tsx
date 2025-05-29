@@ -43,7 +43,9 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
         })}
       >
         <Link href={`${RouteConstant.tour}/${tour.slug}`} className="flex flex-col gap-2">
-          <h3 className={cn('line-clamp-2 h-[56px] text-lg font-bold leading-tight')}>{tour.title}</h3>
+          <h3 className={cn('line-clamp-2 overflow-hidden text-lg font-bold leading-tight md:h-[50px] lg:h-[56px]')}>
+            {tour.title}
+          </h3>
         </Link>
         <div className="flex items-center gap-2">
           <Badge variant="secondary" className="flex items-center gap-1 py-1">

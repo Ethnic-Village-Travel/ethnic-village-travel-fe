@@ -7,8 +7,8 @@ const GuildProfileCard = () => {
     description: 'Hơn cả một hướng dẫn viên, là người bạn đồng hành chia sẻ những câu chuyện địa phương.',
   };
   return (
-    <div className="shadow-custom-gray flex flex-col gap-2 rounded-[20px] border border-gray-20 bg-white p-[30px]">
-      <div className="flex gap-4">
+    <div className="flex flex-col gap-2 rounded-[20px] border border-gray-20 bg-white p-[30px] shadow-custom-gray lg:max-w-[360px]">
+      <div className="flex gap-4 sm:flex-col sm:items-center md:flex-col md:items-center lg:flex-col lg:items-center xl:flex-row">
         <img
           src="/images/tour-card-thumbnail.png"
           alt="Guild Profile Card"
