@@ -30,7 +30,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
         <img
           src={tour.image_url}
           alt={tour.title}
-          className={cn('h-full w-48 rounded-l-xl object-cover', {
+          className={cn('h-full rounded-l-xl object-cover md:w-48', {
             'h-40 w-full rounded-t-xl rounded-bl-none': layout === 'vertical',
           })}
         />
@@ -38,7 +38,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
 
       <CardContent
         className={cn({
-          'flex w-full flex-col justify-between p-4 pt-2': layout === 'horizontal',
+          'flex w-full flex-col justify-between p-4 pl-5 pt-2': layout === 'horizontal',
           'flex-1 p-4 pt-2': layout === 'vertical',
         })}
       >
@@ -64,7 +64,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
               {ratingObj.average} ({ratingObj.total})
             </span>{' '}
           </div>
-          <BookmarkButton entityId={1} entityType={EntityConstant.tour} />
+          <BookmarkButton entityId={tour.id} entityType={EntityConstant.tour} />
         </div>
 
         <Separator className="h-px w-full bg-gray-20" />
