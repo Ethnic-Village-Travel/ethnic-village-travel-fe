@@ -70,7 +70,7 @@ export const BookingCalculator = ({ onBook }: BookingCalculatorProps) => {
   };
 
   return (
-    <div className="shadow-custom-gray grid gap-4 rounded-[20px] border border-gray-20 bg-white p-[30px]">
+    <div className="xl:flex-0 grid gap-4 rounded-[20px] border border-gray-20 bg-white p-[30px] shadow-custom-gray lg:w-[360px]">
       <div className="text-dark-900 text-center text-[30px] font-bold leading-[1.17]">${totalPrice}</div>
 
       <Separator />

@@ -6,7 +6,6 @@ import { BookmarkIcon, Heart, Share2 } from 'lucide-react';
 import { Tour } from '@/types/tour.type';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import Divider from '@/components/shared/divider';
 import StarRating from '@/components/shared/star-rating';
 
 import AvailableTickets from './available-tickets';
@@ -34,7 +33,7 @@ const TourDetailHeader = (tour: Tour) => {
           {/* Review Section */}
           <div className="flex flex-col gap-1.5">
             <span className="text-sm text-gray-500">Review</span>
-            <StarRating average={ratingObj.average} />
+            <StarRating average={ratingObj.average} readOnly />
           </div>
 
           <Separator className="h-[53px]" orientation="vertical" />

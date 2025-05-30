@@ -3,10 +3,16 @@
 import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
 
-import { BookingCalculator } from './booking-calculator';
-import GuildProfileCard from './guild-profile-card';
+import { Order } from '@/types/order';
 
-const FloatingBookingPanel = () => {
+import { BookingCalculator } from './booking-calculator';
+import GuildProfileCard from './pick-drop-location';
+
+type FloatingBookingPanelProps = {
+  order: Order;
+};
+
+const FloatingBookingPanel = ({ order }: FloatingBookingPanelProps) => {
   const router = useRouter();
 
   const handleBook = () => {
@@ -15,7 +21,7 @@ const FloatingBookingPanel = () => {
 
   return (
     <div className="flex gap-5 xl:w-[360px] xl:flex-shrink-0 xl:flex-col">
-      <BookingCalculator onBook={handleBook} />
+      <BookingCalculator order={order} onBook={handleBook} />
       <GuildProfileCard />
     </div>
   );

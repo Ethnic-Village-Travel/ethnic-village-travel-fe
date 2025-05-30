@@ -27,6 +27,7 @@ const config: Config = {
       colors: {
         star: 'var(--star)',
         shadow: 'var(--shadow)',
+        success: 'var(--success)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
