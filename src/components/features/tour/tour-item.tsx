@@ -31,7 +31,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
           src={tour.image_url}
           alt={tour.title}
           className={cn('h-full rounded-l-xl object-cover md:w-48', {
-            'h-40 w-full rounded-t-xl rounded-bl-none': layout === 'vertical',
+            'h-40 w-full rounded-t-xl rounded-bl-none md:w-full': layout === 'vertical',
           })}
         />
       </Link>

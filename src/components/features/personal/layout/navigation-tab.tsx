@@ -39,7 +39,7 @@ export default function PersonalNavigationTab() {
   };
 
   return (
-    <Card className="flex h-fit w-[320px] flex-col gap-6 rounded-lg bg-white pb-4 pt-5">
+    <Card className="flex h-fit min-w-[320px] flex-col gap-6 rounded-lg bg-white pb-4 pt-5">
       <CardHeader className="px-4 py-0">
         <div className="relative flex items-center gap-3">
           <div className="relative h-[40px] w-[40px] rounded-full bg-[url('https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D')] bg-cover bg-center">
