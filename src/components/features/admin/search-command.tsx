@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
 import {
   Bell,
@@ -45,12 +45,11 @@ const COMMAND_ITEMS = {
 
 export default function SearchCommand() {
   const router = useRouter();
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setOpen(open => !open);
       }
@@ -64,10 +63,19 @@ export default function SearchCommand() {
       <Button
         variant="outline"
         onClick={() => setOpen(true)}
-        className="flex w-64 cursor-pointer items-center justify-start gap-2 rounded-lg px-2 py-2"
+        className="flex w-64 cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-2"
       >
-        <Search className="!h-4 !w-4" />
-        Search
+        <div className="flex items-center gap-2">
+          <Search className="!h-4 !w-4" />
+          Search
+        </div>
+        <p className="text-sm text-muted-foreground">
+          {' '}
+          <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+            {' '}
+            <span className="text-xs">⌘</span>K{' '}
+          </kbd>{' '}
+        </p>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <Command className="rounded-lg border shadow-md md:min-w-[450px]">
