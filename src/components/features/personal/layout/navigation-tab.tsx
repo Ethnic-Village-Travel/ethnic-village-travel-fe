@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
 import { cn } from '@/utils';
 import { Bookmark, LogOut, ScrollText, Settings } from 'lucide-react';
@@ -31,11 +31,14 @@ const navigationItems = [
 ];
 
 export default function PersonalNavigationTab() {
+  const router = useRouter();
   const pathname = usePathname();
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     sessionStorage.clear();
+
+    router.push(RouteConstant.home);
   };
 
   return (
