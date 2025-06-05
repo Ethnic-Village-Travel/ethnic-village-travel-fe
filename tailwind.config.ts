@@ -9,6 +9,7 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: ['shadow-2xs', 'shadow-xs', 'shadow-sm', 'shadow', 'shadow-md', 'shadow-lg', 'shadow-xl', 'shadow-2xl'],
   theme: {
     extend: {
       fontFamily: {
@@ -96,6 +97,16 @@ const config: Config = {
           '3': 'hsl(var(--chart-3))',
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
+        },
+        sidebar: {
+          DEFAULT: '#f9fafb',
+          foreground: '#333333',
+          primary: '#3b82f6',
+          'primary-foreground': '#ffffff',
+          accent: '#e0f2fe',
+          'accent-foreground': '#1e3a8a',
+          border: '#e5e7eb',
+          ring: '#3b82f6',
         },
 
         // Tertiary Colors

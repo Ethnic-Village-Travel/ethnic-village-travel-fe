@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Footer from '@/components/layout/footer';
-import Header from '@/components/layout/header';
+import Footer from '@/components/layout/marketing/footer';
+import Header from '@/components/layout/marketing/header';
 
 const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   return (

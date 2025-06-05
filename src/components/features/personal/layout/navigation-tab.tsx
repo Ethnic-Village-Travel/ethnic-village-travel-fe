@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
 import { cn } from '@/utils';
 import { Bookmark, LogOut, ScrollText, Settings } from 'lucide-react';
@@ -31,15 +31,18 @@ const navigationItems = [
 ];
 
 export default function PersonalNavigationTab() {
+  const router = useRouter();
   const pathname = usePathname();
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     sessionStorage.clear();
+
+    router.push(RouteConstant.home);
   };
 
   return (
-    <Card className="flex h-fit w-[320px] flex-col gap-6 rounded-lg bg-white pb-4 pt-5">
+    <Card className="flex h-fit min-w-[320px] flex-col gap-6 rounded-lg bg-white pb-4 pt-5">
       <CardHeader className="px-4 py-0">
         <div className="relative flex items-center gap-3">
           <div className="relative h-[40px] w-[40px] rounded-full bg-[url('https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D')] bg-cover bg-center">

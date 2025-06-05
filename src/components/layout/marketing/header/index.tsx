@@ -9,8 +9,7 @@ import { cn } from '@/utils';
 import { ClassNameValue } from 'tailwind-merge';
 
 import { Button } from '@/components/ui/button';
-
-import LanguageSwitcher from '../../shared/language-switcher';
+import LanguageSwitcher from '@/components/shared/language-switcher';
 
 const navLinks = [
   { name: 'Home', href: '/' },
