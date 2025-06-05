@@ -75,6 +75,11 @@ export function formatNumber(
   return result;
 }
 
+export function currencyToNumber(value: string): number {
+  const number = value.replace(/[^0-9]/g, '');
+  return parseInt(number, 10);
+}
+
 export function formatCurrency(
   value: number | string,
   options?: {

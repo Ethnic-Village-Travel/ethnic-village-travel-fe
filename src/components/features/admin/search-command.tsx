@@ -41,6 +41,14 @@ const COMMAND_ITEMS = {
     { label: 'Report', icon: FileText, href: RouteConstant.admin_report },
     { label: 'Chatbot', icon: MessageCircle, href: RouteConstant.admin_chatbot },
   ],
+  Create: [
+    { label: 'User Create', icon: Book, href: RouteConstant.admin_user_create },
+    { label: 'Role Create', icon: Book, href: RouteConstant.admin_role_create },
+    { label: 'Tour Create', icon: MapPin, href: RouteConstant.admin_tour_create },
+    { label: 'Article Create', icon: ShoppingCart, href: RouteConstant.admin_article_create },
+    { label: 'Notification Create', icon: Bell, href: RouteConstant.admin_notification_create },
+    { label: 'Chatbot Information Create', icon: MessageCircle, href: RouteConstant.admin_chatbot_create },
+  ],
 } as const;
 
 export default function SearchCommand() {
