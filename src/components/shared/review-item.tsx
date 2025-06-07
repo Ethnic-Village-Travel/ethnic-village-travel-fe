@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { cn } from '@/utils';
-import { formatTimeAgo } from '@/utils/number';
+import { formatTimeAgo } from '@/utils/date';
 import { MoreHorizontal, PinIcon, Trash2Icon } from 'lucide-react';
 
 import { Review } from '@/types/review.type';

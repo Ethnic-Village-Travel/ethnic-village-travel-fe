@@ -1,4 +1,4 @@
-import { formatTourDates } from '@/utils';
+import { formatTourDates } from '@/utils/date';
 
 import { Order } from '@/types/order';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';

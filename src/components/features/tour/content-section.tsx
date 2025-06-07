@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MOCK_TOURS } from '@/data/tours';
 import { cn } from '@/utils';
 import { LayoutGrid, List } from 'lucide-react';
@@ -22,6 +22,11 @@ export default function TourContentSection() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
   const queryConfig = useQueryConfig();
+
+  useEffect(() => {
+    const page = Number(queryConfig.page || 1);
+    setCurrentPage(page);
+  }, [queryConfig.page, setCurrentPage]);
 
   return (
     <div className="flex-1">
