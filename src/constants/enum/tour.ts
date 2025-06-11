@@ -2,46 +2,46 @@ export const TourStatusEnum = {
   DRAFT: {
     value: '0',
     label: 'Draft',
-    color: 'bg-gray-100 text-gray-800 border-gray-200',
+    variant: 'gray',
   },
   APPROVED: {
     value: '1',
     label: 'Approved',
-    color: 'bg-blue-50 text-blue-800 border-blue-200',
+    variant: 'blue',
   },
   SCHEDULED: {
     value: '2',
     label: 'Scheduled',
-    color: 'bg-purple-50 text-purple-800 border-purple-200',
+    variant: 'purple',
   },
   PUBLISHED: {
     value: '3',
     label: 'Published',
-    color: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+    variant: 'teal',
   },
   FULLY_BOOKED: {
     value: '4',
     label: 'Fully Booked',
-    color: 'bg-amber-50 text-amber-800 border-amber-200',
+    variant: 'amber',
   },
   ONGOING: {
     value: '5',
     label: 'Ongoing',
-    color: 'bg-green-50 text-green-800 border-green-200',
+    variant: 'green',
   },
   PAUSED: {
     value: '6',
     label: 'Paused',
-    color: 'bg-orange-50 text-orange-800 border-orange-200',
+    variant: 'orange',
   },
   COMPLETED: {
     value: '7',
     label: 'Completed',
-    color: 'bg-blue-50 text-blue-800 border-blue-200',
+    variant: 'blue',
   },
   CANCELLED: {
     value: '8',
     label: 'Cancelled',
-    color: 'bg-red-50 text-red-800 border-red-200',
+    variant: 'red',
   },
 } as const;
