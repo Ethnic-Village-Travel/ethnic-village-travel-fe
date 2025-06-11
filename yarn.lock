@@ -146,6 +146,45 @@
     picocolors "^1.0.0"
     sisteransi "^1.0.5"
 
+"@dnd-kit/accessibility@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/accessibility/-/accessibility-3.1.1.tgz#3b4202bd6bb370a0730f6734867785919beac6af"
+  integrity sha512-2P+YgaXF+gRsIihwwY1gCsQSYnu9Zyj2py8kY5fFvUM1qm2WA2u639R6YNVfU4GWr+ZM5mqEsfHZZLoRONbemw==
+  dependencies:
+    tslib "^2.0.0"
+
+"@dnd-kit/core@^6.3.1":
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/core/-/core-6.3.1.tgz#4c36406a62c7baac499726f899935f93f0e6d003"
+  integrity sha512-xkGBRQQab4RLwgXxoqETICr6S5JlogafbhNsidmrkVv2YRs5MLwpjoF2qpiGjQt8S9AoxtIV603s0GIUpY5eYQ==
+  dependencies:
+    "@dnd-kit/accessibility" "^3.1.1"
+    "@dnd-kit/utilities" "^3.2.2"
+    tslib "^2.0.0"
+
+"@dnd-kit/modifiers@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/modifiers/-/modifiers-9.0.0.tgz#96a0280c77b10c716ef79d9792ce7ad04370771d"
+  integrity sha512-ybiLc66qRGuZoC20wdSSG6pDXFikui/dCNGthxv4Ndy8ylErY0N3KVxY2bgo7AWwIbxDmXDg3ylAFmnrjcbVvw==
+  dependencies:
+    "@dnd-kit/utilities" "^3.2.2"
+    tslib "^2.0.0"
+
+"@dnd-kit/sortable@^10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/sortable/-/sortable-10.0.0.tgz#1f9382b90d835cd5c65d92824fa9dafb78c4c3e8"
+  integrity sha512-+xqhmIIzvAYMGfBYYnbKuNicfSsk4RksY2XdmJhT+HAC01nix6fHCztU68jooFiMUB01Ky3F0FyOvhG/BZrWkg==
+  dependencies:
+    "@dnd-kit/utilities" "^3.2.2"
+    tslib "^2.0.0"
+
+"@dnd-kit/utilities@^3.2.2":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/utilities/-/utilities-3.2.2.tgz#5a32b6af356dc5f74d61b37d6f7129a4040ced7b"
+  integrity sha512-+MKAJEOfaBe5SmV6t34p80MMKhjvUz0vRrvVJbPT0WElzaOJ/1xs+D+KDv+tD/NE5ujfrChEcshd4fLn0wpiqg==
+  dependencies:
+    tslib "^2.0.0"
+
 "@emnapi/core@^1.4.3":
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/@emnapi/core/-/core-1.4.3.tgz#9ac52d2d5aea958f67e52c40a065f51de59b77d6"
@@ -630,7 +669,7 @@
   resolved "https://registry.yarnpkg.com/@radix-ui/react-context/-/react-context-1.1.2.tgz#61628ef269a433382c364f6f1e3788a6dc213a36"
   integrity sha512-jCi/QKUM2r1Ju5a3J64TH2A5SpKAgh0LpknyqdQ4m6DCV0xJ2HG1xARRwNGPQfi1SLdLWZ1OJz6F4OMBBNiGJA==
 
-"@radix-ui/react-dialog@^1.1.14", "@radix-ui/react-dialog@^1.1.6":
+"@radix-ui/react-dialog@^1.1.1", "@radix-ui/react-dialog@^1.1.14", "@radix-ui/react-dialog@^1.1.6":
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-dialog/-/react-dialog-1.1.14.tgz#4c69c80c258bc6561398cfce055202ea11075107"
   integrity sha512-+CpweKjqpzTmwRwcYECQcNYbI8V9VSQt0SNFKeEBLgfucbsLssU6Ppq7wUdNXEGb573bMjFhVjKVll8rmV6zMw==
@@ -921,6 +960,28 @@
     "@radix-ui/react-use-layout-effect" "1.1.1"
     "@radix-ui/react-visually-hidden" "1.2.3"
 
+"@radix-ui/react-toggle-group@^1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-toggle-group/-/react-toggle-group-1.1.10.tgz#4406b3be3869cad497ca7ee4993c3598731f774e"
+  integrity sha512-kiU694Km3WFLTC75DdqgM/3Jauf3rD9wxeS9XtyWFKsBUeZA337lC+6uUazT7I1DhanZ5gyD5Stf8uf2dbQxOQ==
+  dependencies:
+    "@radix-ui/primitive" "1.1.2"
+    "@radix-ui/react-context" "1.1.2"
+    "@radix-ui/react-direction" "1.1.1"
+    "@radix-ui/react-primitive" "2.1.3"
+    "@radix-ui/react-roving-focus" "1.1.10"
+    "@radix-ui/react-toggle" "1.1.9"
+    "@radix-ui/react-use-controllable-state" "1.2.2"
+
+"@radix-ui/react-toggle@1.1.9", "@radix-ui/react-toggle@^1.1.9":
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-toggle/-/react-toggle-1.1.9.tgz#9cb99a29bc7cd15186ba3ba797808a013a726fba"
+  integrity sha512-ZoFkBBz9zv9GWer7wIjvdRxmh2wyc2oKWw6C6CseWd6/yq1DK/l5lJ+wnsmFwJZbBYqr02mrf8A2q/CVCuM3ZA==
+  dependencies:
+    "@radix-ui/primitive" "1.1.2"
+    "@radix-ui/react-primitive" "2.1.3"
+    "@radix-ui/react-use-controllable-state" "1.2.2"
+
 "@radix-ui/react-tooltip@^1.2.7":
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-tooltip/-/react-tooltip-1.2.7.tgz#23612ac7a5e8e1f6829e46d0e0ad94afe3976c72"
@@ -1103,6 +1164,18 @@
   integrity sha512-YxdLZVGN4QkT5YT1HKZQWiIlcgauIXEIsMOTSjvyD5wLYK8YVvKZUPAysMqossFJJfDpJW3pFn7WNZuPOqq+fw==
   dependencies:
     "@tanstack/query-core" "5.76.0"
+
+"@tanstack/react-table@^8.21.3":
+  version "8.21.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.21.3.tgz#2c38c747a5731c1a07174fda764b9c2b1fb5e91b"
+  integrity sha512-5nNMTSETP4ykGegmVkhjcS8tTLW6Vl4axfEGQN3v0zdHYbK4UfoqfPChclTrJ4EoK9QynqAu9oUf8VEmrpZ5Ww==
+  dependencies:
+    "@tanstack/table-core" "8.21.3"
+
+"@tanstack/table-core@8.21.3":
+  version "8.21.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.21.3.tgz#2977727d8fc8dfa079112d9f4d4c019110f1732c"
+  integrity sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==
 
 "@tybys/wasm-util@^0.9.0":
   version "0.9.0"
@@ -2741,6 +2814,15 @@ format@^0.2.0:
   resolved "https://registry.yarnpkg.com/format/-/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
   integrity sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww==
 
+framer-motion@^12.16.0:
+  version "12.16.0"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-12.16.0.tgz#d715b81b1b41ba61ce842e7085390e1533ec3814"
+  integrity sha512-xryrmD4jSBQrS2IkMdcTmiS4aSKckbS7kLDCuhUn9110SQKG1w3zlq1RTqCblewg+ZYe+m3sdtzQA6cRwo5g8Q==
+  dependencies:
+    motion-dom "^12.16.0"
+    motion-utils "^12.12.1"
+    tslib "^2.4.0"
+
 framer-motion@^12.8.0:
   version "12.12.1"
   resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-12.12.1.tgz#b756079cc050be7fa6ae0d093ab0903fd3f15ca1"
@@ -3932,6 +4014,11 @@ minimist@^1.2.0, minimist@^1.2.6:
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-7.1.2.tgz#93a9626ce5e5e66bd4db86849e7515e92340a707"
   integrity sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==
 
+mitt@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.1.tgz#ea36cf0cc30403601ae074c8f77b7092cdab36d1"
+  integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
+
 mlly@^1.7.4:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/mlly/-/mlly-1.7.4.tgz#3d7295ea2358ec7a271eaa5d000a0f84febe100f"
@@ -3949,10 +4036,25 @@ motion-dom@^12.12.1:
   dependencies:
     motion-utils "^12.12.1"
 
+motion-dom@^12.16.0:
+  version "12.16.0"
+  resolved "https://registry.yarnpkg.com/motion-dom/-/motion-dom-12.16.0.tgz#ccf88d45db04214f32d455e12621f5213968bfd5"
+  integrity sha512-Z2nGwWrrdH4egLEtgYMCEN4V2qQt1qxlKy/uV7w691ztyA41Q5Rbn0KNGbsNVDZr9E8PD2IOQ3hSccRnB6xWzw==
+  dependencies:
+    motion-utils "^12.12.1"
+
 motion-utils@^12.12.1:
   version "12.12.1"
   resolved "https://registry.yarnpkg.com/motion-utils/-/motion-utils-12.12.1.tgz#63e28751325cb9d1cd684f3c273a570022b0010e"
   integrity sha512-f9qiqUHm7hWSLlNW8gS9pisnsN7CRFRD58vNjptKdsqFLpkVnX00TNeD6Q0d27V9KzT7ySFyK1TZ/DShfVOv6w==
+
+motion@^12.16.0:
+  version "12.16.0"
+  resolved "https://registry.yarnpkg.com/motion/-/motion-12.16.0.tgz#7f428ac20778da002282d45bc97296ef8fd1ff79"
+  integrity sha512-P3HA83fnPMEGBLfKdD5vDdjH1Aa3wM3jT3+HX3fCVpy/4/lJiqvABajLgZenBu+rzkFzmeaPkvT7ouf9Tq5tVQ==
+  dependencies:
+    framer-motion "^12.16.0"
+    tslib "^2.4.0"
 
 ms@^2.1.1, ms@^2.1.3:
   version "2.1.3"
@@ -4041,6 +4143,13 @@ nth-check@^2.1.1:
   integrity sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==
   dependencies:
     boolbase "^1.0.0"
+
+nuqs@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/nuqs/-/nuqs-2.4.3.tgz#4d0713f44822ae64145740d013c074e1d1523b6d"
+  integrity sha512-BgtlYpvRwLYiJuWzxt34q2bXu/AIS66sLU1QePIMr2LWkb+XH0vKXdbLSgn9t6p7QKzwI7f38rX3Wl9llTXQ8Q==
+  dependencies:
+    mitt "^3.0.1"
 
 object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"
@@ -5216,6 +5325,13 @@ util-deprecate@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
+
+vaul@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/vaul/-/vaul-1.1.2.tgz#c959f8b9dc2ed4f7d99366caee433fbef91f5ba9"
+  integrity sha512-ZFkClGpWyI2WUQjdLJ/BaGuV6AVQiJ3uELGk3OYtP+B6yCO7Cmn9vPFXVJkRaGkOJu3m8bQMgtyzNHixULceQA==
+  dependencies:
+    "@radix-ui/react-dialog" "^1.1.1"
 
 vue-eslint-parser@^10.1.3:
   version "10.1.3"

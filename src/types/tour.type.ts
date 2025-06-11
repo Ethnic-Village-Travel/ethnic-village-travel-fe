@@ -10,7 +10,7 @@ export interface Tour {
   slug: string;
   overview?: string;
   status?: string;
-  max_slot?: number;
+  max_slot: number;
   days: string;
   pick_up_location?: any;
   adult_price?: number;
@@ -22,6 +22,6 @@ export interface Tour {
   rating?: Rating[];
   promotions?: Promotion[];
   published_at?: string;
-  avalable_slots?: number;
+  avalable_slots: number;
   price: number;
 }

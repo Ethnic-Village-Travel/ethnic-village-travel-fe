@@ -9,7 +9,10 @@ export const useQueryConfig = () => {
   const queryParams: QueryConfig = useQueryParams();
   const queryConfig: QueryConfig = omitBy(
     {
-      page: queryParams.page || '1',
+      page: queryParams.page || 1,
+      perPage: queryParams.perPage || 10,
+      status: queryParams.status || [],
+      ethnics: queryParams.ethnics || [],
       // limit: queryParams.limit || '10',
       // sort_by: queryParams.sort_by || 'createdAt',
       // order: queryParams.order || 'desc',

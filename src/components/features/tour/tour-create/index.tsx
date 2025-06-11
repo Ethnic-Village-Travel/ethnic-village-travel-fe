@@ -1,9 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import { TourStatusEnum } from '@/constants/enum/tour';
+import { MOCK_ETHNICS } from '@/data/ethnics';
+import { MOCK_LOCATIONS } from '@/data/locations';
 import { currencyToNumber, formatCurrency } from '@/utils';
+import { getEnumOptions } from '@/utils/object';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addDays } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -23,11 +26,6 @@ import ContactNumber from './contact-number';
 import InExService from './in-ex-service';
 import TourItinerary from './tour-itinerary';
 
-const STATUS_ENUM = {
-  Inactive: '0',
-  Active: '1',
-} as const;
-
 const tourSchema = z
   .object({
     image: z.string().min(1, { message: 'Image is required' }),
@@ -35,7 +33,12 @@ const tourSchema = z
     location: z.string().min(1, { message: 'Location is required' }),
     ethnic: z.array(z.string()).min(1, { message: 'At least one ethnic is required' }),
     maxSlots: z.number().min(1, { message: 'Max slots must be at least 1' }),
-    status: z.enum(['0', '1']),
+    status: z.string().refine(
+      value => {
+        return Object.values(TourStatusEnum).some(status => status.value === value);
+      },
+      { message: 'Invalid status value' },
+    ),
     pickupLocation: z.string().min(1, { message: 'Pick-up location is required' }),
     startDate: z.date().refine(data => data > new Date(), { message: 'Start date must be in the future' }),
     endDate: z.date(),
@@ -73,35 +76,11 @@ const tourSchema = z
 
 export type TourFormValues = z.infer<typeof tourSchema>;
 
-const mockLocationData: Location[] = [
-  {
-    id: '1',
-    city: 'Thành phố Lào Cai',
-    province: 'Lào Cai',
-  },
-  {
-    id: '2',
-    city: 'Sa Pa',
-    province: 'Sapa',
-  },
-  {
-    id: '3',
-    city: 'Bắc Hà',
-    province: 'Lào Cai',
-  },
-];
-
-const mockEthnicData: Ethnic[] = [
-  { id: '1', name: 'Kinh' },
-  { id: '2', name: "H'mong" },
-  { id: '3', name: 'Tay' },
-];
-
 export default function TourCreateContent() {
   const form = useForm<TourFormValues>({
     resolver: zodResolver(tourSchema),
     defaultValues: {
-      status: STATUS_ENUM.Inactive,
+      status: TourStatusEnum.DRAFT.value,
       contactNumbers: [{ name: '', phone: '' }],
       itinerary: [],
       ethnic: [],
@@ -175,13 +154,13 @@ export default function TourCreateContent() {
                             <SelectValue placeholder="Select location">
                               {field.value && (
                                 <span className="font-medium">
-                                  {mockLocationData.find(loc => loc.id === field.value)?.city}
+                                  {MOCK_LOCATIONS.find(loc => loc.id === field.value)?.city}
                                 </span>
                               )}
                             </SelectValue>
                           </SelectTrigger>
                           <SelectContent>
-                            {mockLocationData.map(option => (
+                            {MOCK_LOCATIONS.map(option => (
                               <SelectItem key={option.id} value={option.id}>
                                 <div className="flex flex-col">
                                   <div className="flex gap-2">
@@ -211,7 +190,7 @@ export default function TourCreateContent() {
                         Ethnic<span className="text-destructive"> *</span>
                       </FormLabel>
                       <MultiSelect
-                        options={mockEthnicData}
+                        options={MOCK_ETHNICS}
                         onValueChange={values => field.onChange(values)}
                         placeholder="Select ethnic"
                         variant="secondary"
@@ -255,9 +234,9 @@ export default function TourCreateContent() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            {Object.entries(STATUS_ENUM).map(([key, value]) => (
-                              <SelectItem key={value} value={value}>
-                                {key}
+                            {getEnumOptions(TourStatusEnum).map(({ id, name }) => (
+                              <SelectItem key={id} value={id}>
+                                {name}
                               </SelectItem>
                             ))}
                           </SelectContent>
