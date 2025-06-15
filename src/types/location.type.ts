@@ -1,5 +1,5 @@
 export interface Location {
-  id: string;
+  id: number;
   address?: string;
   city: string;
   province: string;
