@@ -77,14 +77,16 @@ export function currencyToNumber(value: string): number {
 }
 
 export function formatCurrency(
-  value: number | string,
+  value: number | string | undefined | null,
   options?: {
     locale?: 'vi' | 'en' | 'ko';
     discount_percent?: number;
     max_discount_amount?: number;
   },
 ): string {
-  const { locale = 'vi', discount_percent, max_discount_amount } = options || {};
+  if (!value) return '';
+
+  const { locale = 'vi', discount_percent = 0, max_discount_amount = 0 } = options || {};
 
   let number = typeof value === 'string' ? parseFloat(value) : value;
 

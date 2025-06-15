@@ -47,3 +47,13 @@ export function slugify(str: string) {
     .trim()
     .replace(/ /g, '-');
 }
+
+export function toSnakeCase(str: string): string {
+  return str
+    .normalize('NFD') // Normalize unicode characters
+    .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+    .replace(/[^a-zA-Z0-9\s]/g, '') // Remove special characters
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '_'); // Replace spaces with underscore
+}
