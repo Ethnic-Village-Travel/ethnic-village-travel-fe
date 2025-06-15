@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { cn } from '@/utils';
-import { CalendarIcon, MapPin } from 'lucide-react';
+import { CalendarIcon, MapPin, Search } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -95,7 +95,7 @@ export function SearchBar({ className, onSearch }: SearchBarProps) {
 
       <div className="flex w-full flex-grow items-center gap-1">
         <div className="flex h-12 min-w-12 items-center justify-center rounded-full bg-primary-5">
-          <MapPin className="h-6 w-6 text-primary-500" />
+          <Search className="h-6 w-6 text-primary-500" />
         </div>
 
         <Input

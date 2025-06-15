@@ -1,98 +1,90 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { MOCK_TOURS } from '@/data/tours';
+import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/utils';
-import { LayoutGrid, List } from 'lucide-react';
 
+import { useFilteredTourList } from '@/hooks/api/useFilteredTourList';
 import { useQueryConfig } from '@/hooks/use-query-config';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
 import { TourItem } from '@/components/features/tour';
 import PaginationClient from '@/components/shared/pagination-client';
 
-const VIEW_MOD = { GRID: 'grid', LIST: 'list' } as const;
+import { EmptyState } from './empty-state';
+import { SORT_OPTIONS, TourHeader } from './header-section';
+import { TourSkeleton } from './tour-skeleton';
 
-type ViewMode = (typeof VIEW_MOD)[keyof typeof VIEW_MOD];
+const ITEM_PER_PAGE = 12;
+
+type ViewMode = 'grid' | 'list';
 
 export default function TourContentSection() {
-  const [viewMode, setViewMode] = useState<ViewMode>(VIEW_MOD.GRID);
-  const [sortBy, setSortBy] = useState<string>('recommended');
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const queryConfig = useQueryConfig();
 
-  useEffect(() => {
-    const page = Number(queryConfig.page || 1);
-    setCurrentPage(page);
-  }, [queryConfig.page, setCurrentPage]);
+  const sortBy = searchParams.get('sort_by') || 'default';
+  const order = searchParams.get('order') || 'desc';
+  const currentSort = `${sortBy}-${order}`;
+
+  const handleSortChange = (value: string) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    const [newSortBy, newOrder] = value.split('-');
+
+    if (newSortBy === SORT_OPTIONS.DEFAULT.sortBy) {
+      newParams.delete('sort_by');
+      newParams.delete('order');
+    } else {
+      newParams.set('sort_by', newSortBy);
+      newParams.set('order', newOrder);
+    }
+
+    router.push(`?${newParams.toString()}`);
+  };
+
+  const { tours, totalPages, isLoading } = useFilteredTourList(ITEM_PER_PAGE);
+  const isEmpty = !isLoading && (!tours || tours.length === 0);
 
   return (
     <div className="flex-1">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Tours</h1>
-        <div className="flex items-center gap-4">
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px] focus:ring-0 focus-visible:ring-0">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="recommended">Recommended</SelectItem>
-              <SelectItem value="price-low-to-high">Price: Low to High</SelectItem>
-              <SelectItem value="price-high-to-low">Price: High to Low</SelectItem>
-              <SelectItem value="rating">Rating</SelectItem>
-              <SelectItem value="duration">Duration</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Separator className="mx-1 h-8 w-[0.5px] bg-gray-20" />
-
-          <div className="flex items-center rounded-full border-[1px] border-gray-500">
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn('rounded-l-full text-gray-500 hover:text-primary-500', {
-                'bg-gray-100 text-primary-500': viewMode === VIEW_MOD.GRID,
-              })}
-              onClick={() => setViewMode('grid')}
-            >
-              <LayoutGrid className="h-4 w-4" />
-            </Button>
-            <Separator className="h-5 w-[0.5px] bg-gray-20" />
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn('rounded-r-full text-gray-500 hover:text-primary-500', {
-                'bg-gray-100 text-primary-500': viewMode === VIEW_MOD.LIST,
-              })}
-              onClick={() => setViewMode('list')}
-            >
-              <List className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </div>
+      <TourHeader
+        sortBy={currentSort}
+        onSortByChange={handleSortChange}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        disabled={isEmpty}
+      />
 
       <div className="grid gap-6">
-        <div
-          className={cn('grid gap-6', {
-            'grid-cols-1 md:grid-cols-2 lg:grid-cols-3': viewMode === 'grid',
-            'grid-cols-1': viewMode === 'list',
-          })}
-        >
-          {MOCK_TOURS.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map(tour => (
-            <TourItem key={tour.id} tour={tour} layout={viewMode === 'list' ? 'horizontal' : 'vertical'} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div
+            className={cn('grid gap-6', {
+              'grid-cols-1 md:grid-cols-2 lg:grid-cols-3': viewMode === 'grid',
+              'grid-cols-1': viewMode === 'list',
+            })}
+          >
+            {Array.from({ length: ITEM_PER_PAGE }).map((_, idx) => (
+              <TourSkeleton key={idx} layout={viewMode === 'list' ? 'horizontal' : 'vertical'} />
+            ))}
+          </div>
+        ) : isEmpty ? (
+          <EmptyState />
+        ) : (
+          <>
+            <div
+              className={cn('grid gap-6', {
+                'grid-cols-1 md:grid-cols-2 lg:grid-cols-3': viewMode === 'grid',
+                'grid-cols-1': viewMode === 'list',
+              })}
+            >
+              {tours.map(tour => (
+                <TourItem key={tour.id} tour={tour} layout={viewMode === 'list' ? 'horizontal' : 'vertical'} />
+              ))}
+            </div>
 
-        {/* Pagination */}
-        <PaginationClient
-          queryConfig={queryConfig}
-          pageSize={Math.ceil(MOCK_TOURS.length / itemsPerPage)}
-          range={itemsPerPage}
-          showFirstLast
-        />
+            <PaginationClient queryConfig={queryConfig} pageSize={totalPages} range={ITEM_PER_PAGE} showFirstLast />
+          </>
+        )}
       </div>
     </div>
   );
