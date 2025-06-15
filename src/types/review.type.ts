@@ -3,8 +3,6 @@ export interface Review {
   userId: number;
   rating: number;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
   isPinned?: boolean;
   user: {
     id: number;
@@ -13,6 +11,9 @@ export interface Review {
   };
   entityId: number;
   entityType: string;
+  deleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ReviewStats {

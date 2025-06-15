@@ -2,5 +2,28 @@
   "home": {
     "title": "Hello world!",
     "about": "Go to the about page"
+  },
+  "tour": {
+    "item": {
+      "max_slots": "Max: {slots}",
+      "duration": "{days} days - {nights} nights",
+      "pickup_location": "Pickup: {location}",
+      "price": "{price}/person"
+    },
+    "list": {
+      "title": "Tours",
+      "empty": {
+        "title": "No tours found",
+        "description": "Try adjusting your filters to find what you're looking for."
+      },
+      "sort": {
+        "placeholder": "Sort by",
+        "default": "Default",
+        "price_low_high": "Price: Low to High",
+        "price_high_low": "Price: High to Low",
+        "rating": "Rating",
+        "duration": "Duration"
+      }
+    }
   }
 }

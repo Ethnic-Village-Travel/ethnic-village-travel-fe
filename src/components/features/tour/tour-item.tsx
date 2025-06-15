@@ -5,6 +5,7 @@ import { calculateRatingStats, cn } from '@/utils';
 import { formatCurrency } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
 import { CalendarDays, MapPin } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
 import { Badge } from '@/components/ui/badge';
@@ -18,7 +19,10 @@ type TourItemProps = {
 };
 
 export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
-  const ratingObj = calculateRatingStats(tour.rating || []);
+  const ratingObj = tour.avgRating
+    ? { average: tour.avgRating, total: tour.ratingCount }
+    : calculateRatingStats(tour.reviews || []);
+  const t = useTranslations('tour.item');
 
   return (
     <Card
@@ -28,7 +32,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
     >
       <Link href={`${RouteConstant.tour}/${tour.slug}`} className="flex flex-col gap-2">
         <img
-          src={tour.image_url}
+          src={tour.imageUrl}
           alt={tour.title}
           className={cn('h-full rounded-l-xl object-cover md:w-48', {
             'h-40 w-full rounded-t-xl rounded-bl-none md:w-full': layout === 'vertical',
@@ -50,11 +54,11 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
         <div className="flex items-center gap-2">
           <Badge variant="secondary" className="flex items-center gap-1 py-1">
             <MapPin className="h-4 w-4" />
-            {tour.pick_up_location}
+            {tour.locations && tour.locations.map(l => l.city).join(' -')}
           </Badge>
           <Badge variant="secondary" className="flex items-center gap-1 py-1">
             <CalendarDays className="h-4 w-4" />
-            {tour.days}
+            {t('duration', { days: tour.duration, nights: tour.duration - 1 })}
           </Badge>
         </div>
         <div className="mb-1 flex items-center justify-between">
@@ -72,18 +76,21 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
           <div className="flex flex-col">
             {tour?.promotions && tour?.promotions?.length > 0 && (
               <span className="text-base font-semibold tracking-wide text-gray-500 line-through">
-                {formatCurrency(tour.price)}
+                {t('price', {
+                  price: formatCurrency(tour.adultPrice),
+                })}
               </span>
             )}
             <span className="text-xl font-semibold tracking-wide text-primary">
-              {formatCurrency(tour.price, {
-                discount_percent: tour.promotions?.[0]?.discount_percent || 0,
-                max_discount_amount: tour.promotions?.[0]?.max_discount_amount || 0,
+              {t('price', {
+                price: formatCurrency(tour.adultPrice, {
+                  discount_percent: tour.promotions?.[0]?.discountPercent,
+                  max_discount_amount: tour.promotions?.[0]?.maxDiscountAmount,
+                }),
               })}
-              /người
             </span>
           </div>
-          {tour.max_slot && <span className="text-xs text-muted-foreground">Max: {tour.max_slot}</span>}
+          {tour.avalableSlots && <span className="text-xs text-muted-foreground">{tour.avalableSlots}</span>}
         </div>
       </CardContent>
     </Card>

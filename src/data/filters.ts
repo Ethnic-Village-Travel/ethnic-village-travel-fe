@@ -1,27 +1,86 @@
-export const FILTERS = [
-  {
+export type FilterItem = {
+  label: string;
+  value: string; // Used for URL query params
+  apiValue?:
+    | {
+        min?: number;
+        max?: number;
+      }
+    | string
+    | number
+    | boolean; // Used for API parameters
+  id?: number;
+};
+
+export type FilterConfig = {
+  title: string;
+  name: string;
+  items: FilterItem[];
+  maxVisible: number;
+  isMultiSelect?: boolean;
+};
+
+export const FILTERS: Record<string, FilterConfig> = {
+  ethnic: {
     title: 'Ethnic',
-    items: ['Co', 'Tày', 'Nùng', 'Thái', 'Mông', 'Khơ Mú', 'Xinh Mun', 'La Ha', 'Dao'],
+    name: 'e',
+    items: [],
     maxVisible: 4,
   },
-  {
+  popular: {
     title: 'Popular Filter',
-    items: ['ĐANG GIẢM GIÁ', '8+ Ấn tượng', 'Được yêu thích nhất', '7+ Days'],
+    name: 'p',
+    items: [
+      { label: 'ĐANG GIẢM GIÁ', value: 'on_sale', apiValue: true },
+      // { label: '8+ Ấn tượng', value: 'rating_gte_8' },
+      // { label: 'Được yêu thích nhất', value: 'most_favorited' },
+      // { label: '7+ Days', value: 'duration_gte_7' },
+    ],
     maxVisible: 4,
   },
-  {
+  location: {
     title: 'Location',
-    items: ['Sa Pa', 'Hà Giang', 'Cao Bằng', 'Lào Cai', 'Lai Châu', 'Điện Biên', 'Yên Bái', 'Mai Châu', 'Ninh Bình'],
+    name: 'l',
+    items: [],
     maxVisible: 5,
   },
-  {
+  duration: {
     title: 'Duration',
-    items: ['1 Day', '2-3 Days', '4-7 Days', '7+ Days'],
+    name: 'd',
+    items: [
+      {
+        label: '1 Day',
+        value: 'duration_eq_1',
+        apiValue: { min: 1, max: 1 },
+      },
+      {
+        label: '2-3 Days',
+        value: 'duration_between_2_3',
+        apiValue: { min: 2, max: 3 },
+      },
+      {
+        label: '4-7 Days',
+        value: 'duration_between_4_7',
+        apiValue: { min: 4, max: 7 },
+      },
+      {
+        label: '7+ Days',
+        value: 'duration_gte_7',
+        apiValue: { min: 7 },
+      },
+    ],
     maxVisible: 4,
+    isMultiSelect: false,
   },
-  {
+  rating: {
     title: 'Rating',
-    items: ['5 stars', '4 stars and up', '3 stars and up'],
+    name: 'r',
+    items: [
+      { label: '5 stars', value: 'rating_eq_5', apiValue: 5 },
+      { label: '4 stars and up', value: 'rating_gte_4', apiValue: 4 },
+      { label: '3 stars and up', value: 'rating_gte_3', apiValue: 3 },
+    ],
     maxVisible: 3,
+    isMultiSelect: false,
   },
-];
+};

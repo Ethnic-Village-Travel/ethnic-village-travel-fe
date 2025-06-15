@@ -7,15 +7,22 @@ import { useQueryParams } from './use-query-params';
 
 export const useQueryConfig = () => {
   const queryParams: QueryConfig = useQueryParams();
+
   const queryConfig: QueryConfig = omitBy(
     {
-      page: queryParams.page || 1,
-      perPage: queryParams.perPage || 10,
+      page: queryParams.page || 0,
       status: queryParams.status || [],
-      ethnics: queryParams.ethnics || [],
+      e: queryParams.e || [],
+      p: queryParams.p || [],
+      l: queryParams.l || [],
+      d: queryParams.d,
+      r: queryParams.r,
+      min: queryParams.min ? Number(queryParams.min) : undefined,
+      max: queryParams.max ? Number(queryParams.max) : undefined,
+      sort_by: queryParams.sort_by || undefined,
+      order: queryParams.order || undefined,
+      // perPage: queryParams.perPage || 10,
       // limit: queryParams.limit || '10',
-      // sort_by: queryParams.sort_by || 'createdAt',
-      // order: queryParams.order || 'desc',
       // search: queryParams.search,
     },
     isUndefined,

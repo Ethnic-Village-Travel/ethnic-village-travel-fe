@@ -1,27 +1,28 @@
-import { Ethnic } from './ethnic.types';
+import { Ethnic } from './ethnic.type';
 import { Location } from './location.type';
 import { Promotion } from './promotion.type';
-import { Rating } from './ratings.type';
+import { Review } from './review.type';
 
 export interface Tour {
   id: number;
-  image_url: string;
+  imageUrl: string;
   title: string;
   slug: string;
   overview?: string;
   status?: string;
-  max_slot: number;
-  days: string;
-  pick_up_location?: any;
-  adult_price?: number;
-  child_price?: number;
+  maxSlot: number;
+  duration: number;
+  pickUpLocation?: Location;
+  adultPrice?: number;
+  childPrice?: number;
   contacts?: any[];
   timeline?: any[];
   ethnics?: Ethnic[];
   locations?: Location[];
-  rating?: Rating[];
+  ratingCount?: number;
+  avgRating?: number;
+  reviews?: Review[];
   promotions?: Promotion[];
-  published_at?: string;
-  avalable_slots: number;
-  price: number;
+  publishedAt?: string;
+  avalableSlots: number;
 }

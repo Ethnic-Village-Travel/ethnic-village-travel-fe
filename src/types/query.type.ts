@@ -1,10 +1,16 @@
 export type QueryConfig = {
   page?: number;
   perPage?: number;
-  status?: string[];
-  ethnics?: string[];
   limit?: string;
-  sort_by?: 'createdAt';
+  sort_by?: string;
   order?: 'asc' | 'desc';
   search?: string;
+  status?: string[];
+  e?: string[];
+  p?: string[];
+  l?: string[];
+  d?: string;
+  r?: string;
+  min?: number;
+  max?: number;
 };

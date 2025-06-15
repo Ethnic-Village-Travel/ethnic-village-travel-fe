@@ -2,5 +2,28 @@
   "home": {
     "title": "Xin chào thế giới!",
     "about": "Đi đến trang giới thiệu"
+  },
+  "tour": {
+    "item": {
+      "max_slots": "Tối đa: {slots}",
+      "duration": "{days} ngày - {nights} đêm",
+      "pickup_location": "Điểm đón: {location}",
+      "price": "{price}/người"
+    },
+    "list": {
+      "title": "Tour du lịch",
+      "empty": {
+        "title": "Không tìm thấy tour nào",
+        "description": "Hãy thử điều chỉnh bộ lọc để tìm tour phù hợp."
+      },
+      "sort": {
+        "placeholder": "Sắp xếp theo",
+        "default": "Mặc định",
+        "price_low_high": "Giá: Thấp đến cao",
+        "price_high_low": "Giá: Cao đến thấp",
+        "rating": "Đánh giá",
+        "duration": "Thời gian"
+      }
+    }
   }
 }
