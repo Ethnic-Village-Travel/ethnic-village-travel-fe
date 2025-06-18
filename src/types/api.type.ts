@@ -1,9 +1,7 @@
 export interface ApiResponse<T = any> {
-  meta: {
-    code: number;
-    success: boolean;
-    message: string;
-  };
+  code: number;
+  success: boolean;
+  message: string;
   data?: T;
 }
 

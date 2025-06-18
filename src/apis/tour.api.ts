@@ -2,6 +2,7 @@ import { API, API_ROOT } from '@/core/api';
 import api from '@/core/api/api';
 import { encodeQueryData } from '@/core/api/utils';
 
+import { ApiResponse } from '@/types/api.type';
 import { Tour } from '@/types/tour.type';
 
 export interface TourListParams {
@@ -30,10 +31,9 @@ export interface TourListResponse {
   numberOfElements: number;
   empty: boolean;
 }
-const API_URL = `${API_ROOT}/api/${API.TOUR.SEARCH}`;
 
 export const tourApi = {
-  getTourList: async (params: TourListParams): Promise<TourListResponse> => {
+  getTourList: async (params: TourListParams): Promise<ApiResponse<TourListResponse>> => {
     const queryParams = {
       ...params,
       ethnicIds: params.ethnicIds?.join(','),
@@ -41,7 +41,12 @@ export const tourApi = {
     };
 
     const queryString = encodeQueryData(queryParams);
-    const { data } = await api.get(`${API_URL}?${queryString}`);
-    return data.data;
+    const response = await api.get<ApiResponse<TourListResponse>>(`${API.TOUR.SEARCH}?${queryString}`);
+    return response.data;
+  },
+
+  getTourDetail: async (slug: string): Promise<ApiResponse<Tour>> => {
+    const response = await api.get<ApiResponse<Tour>>(`${API.TOUR.DETAIL}/${slug}`);
+    return response.data;
   },
 };
