@@ -1,3 +1,5 @@
+import { User } from '@/types/user.type';
+
 // This is a mock authentication hook
 // In a real application, this would integrate with your authentication system
 export function useAuthentication() {
@@ -7,9 +9,13 @@ export function useAuthentication() {
     isAuthenticated: false,
     user: {
       id: 1,
-      avatar: '',
-      name: 'Demo User',
       email: 'demo@example.com',
-    },
+      avatar: '',
+      personal: {
+        firstName: 'Demo',
+        lastName: 'User',
+        avatar: '',
+      },
+    } as User,
   };
 }
