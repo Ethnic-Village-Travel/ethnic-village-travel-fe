@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/utils';
 import { CalendarIcon, MapPin, Search } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -30,6 +32,8 @@ interface SearchData {
 }
 
 export function SearchBar({ className, onSearch }: SearchBarProps) {
+  const router = useRouter();
+  const t = useTranslations('search');
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [searchData, setSearchData] = useState<SearchData>({
     location: '',
@@ -38,7 +42,31 @@ export function SearchBar({ className, onSearch }: SearchBarProps) {
   });
 
   const handleSearch = () => {
+    // Convert search data to URL params
+    const params = new URLSearchParams();
+
+    if (searchData.keyword?.trim()) {
+      params.set('search', searchData.keyword.trim());
+    }
+    if (searchData.location) {
+      params.set('l', searchData.location);
+    }
+    if (searchData.date) {
+      // Format date for URL if needed - can be enhanced later
+      // params.set('date', searchData.date.toISOString().split('T')[0]);
+    }
+
+    // Call onSearch callback if provided
     onSearch?.(searchData);
+
+    // Navigate to tour list with search params
+    router.push(`/tour?${params.toString()}`);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
@@ -50,7 +78,7 @@ export function SearchBar({ className, onSearch }: SearchBarProps) {
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-5">
             <MapPin className="h-6 w-6 text-primary-500" />
           </div>
-          <SelectValue placeholder="Chọn địa điểm" className="text-base font-semibold" color="dark" />
+          <SelectValue placeholder={t('location_placeholder')} className="text-base font-semibold" color="dark" />
         </SelectTrigger>
         <SelectContent>
           {locations.map(location => (
@@ -75,7 +103,7 @@ export function SearchBar({ className, onSearch }: SearchBarProps) {
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-5">
               <CalendarIcon className="h-6 w-6 text-primary-500" />
             </div>
-            {date ? date.toLocaleDateString('vi-VN') : <span>Chọn ngày</span>}
+            {date ? date.toLocaleDateString('vi-VN') : <span>{t('date_placeholder')}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0 font-semibold text-dark" align="start">
@@ -100,15 +128,16 @@ export function SearchBar({ className, onSearch }: SearchBarProps) {
 
         <Input
           type="text"
-          placeholder="Tìm kiếm điểm đến..."
+          placeholder={t('keyword_placeholder')}
           className="border-0 bg-transparent shadow-none focus-visible:ring-0"
           value={searchData.keyword}
           onChange={e => setSearchData({ ...searchData, keyword: e.target.value })}
+          onKeyPress={handleKeyPress}
         />
       </div>
 
       <Button className="h-fit rounded-full bg-primary-button px-5 py-2" onClick={handleSearch}>
-        Tìm kiếm
+        {t('search_button')}
       </Button>
     </div>
   );

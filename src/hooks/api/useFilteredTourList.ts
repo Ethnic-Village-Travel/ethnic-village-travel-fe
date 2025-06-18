@@ -1,7 +1,6 @@
 import { FilterConfig, FILTERS } from '@/data/filters';
 import { toSnakeCase } from '@/utils';
 
-import { Tour } from '@/types/tour.type';
 import { SORT_OPTIONS } from '@/components/features/tour/header-section';
 
 import { useQueryConfig } from '../use-query-config';
@@ -78,6 +77,9 @@ export const useFilteredTourList = (pageSize: number = 12) => {
   // Handle rating filter
   const rating = getFilterValue(FILTERS.rating, queryConfig.r, (value): value is number => typeof value === 'number');
 
+  // Handle search term
+  const searchKey = queryConfig.search || undefined;
+
   // Get tour list with filters
   const { data: response, isLoading } = useTourList({
     page: queryConfig.page || 0,
@@ -92,6 +94,7 @@ export const useFilteredTourList = (pageSize: number = 12) => {
     rating,
     minDuration,
     maxDuration,
+    searchKey,
   });
 
   const tourRes = response?.data;

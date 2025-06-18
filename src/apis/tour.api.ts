@@ -1,4 +1,4 @@
-import { API, API_ROOT } from '@/core/api';
+import { API } from '@/core/api';
 import api from '@/core/api/api';
 import { encodeQueryData } from '@/core/api/utils';
 
@@ -18,6 +18,7 @@ export interface TourListParams {
   rating?: number;
   minDuration?: number;
   maxDuration?: number;
+  searchKey?: string;
 }
 
 export interface TourListResponse {

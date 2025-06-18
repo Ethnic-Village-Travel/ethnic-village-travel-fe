@@ -21,9 +21,9 @@ export const useQueryConfig = () => {
       max: queryParams.max ? Number(queryParams.max) : undefined,
       sort_by: queryParams.sort_by || undefined,
       order: queryParams.order || undefined,
+      search: queryParams.search,
       // perPage: queryParams.perPage || 10,
       // limit: queryParams.limit || '10',
-      // search: queryParams.search,
     },
     isUndefined,
   );

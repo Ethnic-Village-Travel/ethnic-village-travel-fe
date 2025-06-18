@@ -117,20 +117,16 @@ export function getTourTableColumns({ setRowAction }: GetTourTableColumnsProps):
     {
       accessorKey: 'slots',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Slots" />,
-      cell: ({ row }) => (
-        <span>
-          {row.original.max_slot - row.original.avalable_slots}/{row.original.max_slot}
-        </span>
-      ),
+      cell: ({ row }) => <span>{row.original.maxSlot || 0}</span>,
       enableSorting: false,
       enableColumnFilter: true,
       filterFn: 'inNumberRange',
     },
     {
-      accessorKey: 'published_at',
+      accessorKey: 'publishedAt',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Publish(UTC)" />,
       cell: ({ row }) => {
-        const [date, time] = splitDateStr(row.original.published_at);
+        const [date, time] = splitDateStr(row.original.publishedAt);
         return (
           <div className="whitespace-pre">
             {date}
@@ -146,7 +142,7 @@ export function getTourTableColumns({ setRowAction }: GetTourTableColumnsProps):
       accessorKey: 'start_date',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Start(UTC)" />,
       cell: ({ row }) => {
-        const [date, time] = splitDateStr(row.original.published_at);
+        const [date, time] = splitDateStr(row.original.publishedAt);
         return (
           <div className="whitespace-pre">
             {date}
@@ -160,7 +156,7 @@ export function getTourTableColumns({ setRowAction }: GetTourTableColumnsProps):
       accessorKey: 'end_date',
       header: ({ column }) => <DataTableColumnHeader column={column} title="End(UTC)" />,
       cell: ({ row }) => {
-        const [date, time] = splitDateStr(row.original.published_at);
+        const [date, time] = splitDateStr(row.original.publishedAt);
         return (
           <div className="whitespace-pre">
             {date}
