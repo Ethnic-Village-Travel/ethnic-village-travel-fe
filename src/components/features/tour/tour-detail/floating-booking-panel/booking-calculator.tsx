@@ -1,8 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
+import { useBookingStore } from '@/store/useBookingStore';
 import { cn } from '@/utils/classnames';
+import { formatCurrency } from '@/utils/number';
+import { useTranslations } from 'next-intl';
 
+import { Tour } from '@/types/tour.type';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
@@ -11,10 +16,11 @@ interface PersonTypeCalculatorProps {
   label: string;
   price: number;
   value: number;
+  locale: 'vi' | 'en';
   onChange: (value: number) => void;
 }
 
-const PersonTypeCalculator = ({ label, price, value, onChange }: PersonTypeCalculatorProps) => {
+const PersonTypeCalculator = ({ label, price, value, locale, onChange }: PersonTypeCalculatorProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
 
@@ -35,73 +41,92 @@ const PersonTypeCalculator = ({ label, price, value, onChange }: PersonTypeCalcu
         onChange={handleChange}
         className="h-14 w-14 border-gray-20 text-center text-base"
       />
-      <span className="text-dark-900 whitespace-nowrap text-base">x ${price}</span>
+      <span className="text-dark-900 whitespace-nowrap text-base">x {formatCurrency(price, { locale })}</span>
     </div>
   );
 };
 
 interface BookingCalculatorProps {
-  onBook?: () => void;
+  tour: Tour;
+  onBook?: (quantities: { adult: number; child: number }) => void;
 }
 
-const PRICE = {
-  adult: 130,
-  child: 110,
-  infant: 100,
-};
-
-export const BookingCalculator = ({ onBook }: BookingCalculatorProps) => {
+export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
+  const t = useTranslations('tour.detail.booking');
+  const params = useParams();
+  const locale = params.locale as 'vi' | 'en';
+  const { selectedDateId, availableSlots } = useBookingStore();
   const [quantities, setQuantities] = useState({
     adult: 0,
     child: 0,
-    infant: 0,
   });
 
-  const totalPrice = Object.entries(PRICE).reduce(
-    (acc, [type, price]) => acc + price * quantities[type as keyof typeof quantities],
-    0,
-  );
+  const totalPrice = quantities.adult * (tour.adultPrice || 0) + quantities.child * (tour.childPrice || 0);
+  const totalQuantity = quantities.adult + quantities.child;
 
   const handleQuantityChange = (type: keyof typeof quantities) => (value: number) => {
-    setQuantities(prev => ({
-      ...prev,
+    const newQuantities = {
+      ...quantities,
       [type]: value,
-    }));
+    };
+    const newTotal = newQuantities.adult + newQuantities.child;
+
+    // Only update if new total is within available slots
+    if (availableSlots === null || newTotal <= availableSlots) {
+      setQuantities(newQuantities);
+    }
   };
 
   return (
     <div className="xl:flex-0 grid gap-4 rounded-[20px] border border-gray-20 bg-white p-[30px] shadow-custom-gray lg:w-[360px]">
-      <div className="text-dark-900 text-center text-[30px] font-bold leading-[1.17]">${totalPrice}</div>
+      <h3 className="text-dark-900 text-center text-[30px] font-bold leading-[1.17]">{t('title')}</h3>
+
+      {!selectedDateId ? (
+        <p className="text-center text-sm text-gray-500">{t('select_date')}</p>
+      ) : availableSlots && availableSlots > 0 ? (
+        <p className="text-center text-sm text-gray-500">{t('available_slots', { count: availableSlots })}</p>
+      ) : (
+        <p className="text-center text-sm text-red-500">{t('no_slots')}</p>
+      )}
 
       <Separator />
 
       <PersonTypeCalculator
-        label="Adult"
-        price={PRICE.adult}
+        label={t('adult')}
+        price={tour.adultPrice || 0}
         value={quantities.adult}
+        locale={locale}
         onChange={handleQuantityChange('adult')}
       />
       <PersonTypeCalculator
-        label="Children"
-        price={PRICE.child}
+        label={t('child')}
+        price={tour.childPrice || 0}
         value={quantities.child}
+        locale={locale}
         onChange={handleQuantityChange('child')}
       />
-      <PersonTypeCalculator
-        label="Infant"
-        price={PRICE.infant}
-        value={quantities.infant}
-        onChange={handleQuantityChange('infant')}
-      />
+
+      <div className="flex items-center justify-between">
+        <span className="text-dark-900 text-base font-bold">{t('total')}</span>
+        <span className="text-dark-900 text-xl font-bold">{formatCurrency(totalPrice, { locale })}</span>
+      </div>
 
       <Button
-        onClick={onBook}
+        onClick={() => onBook?.(quantities)}
+        disabled={
+          !selectedDateId ||
+          !availableSlots ||
+          availableSlots === 0 ||
+          totalPrice === 0 ||
+          totalQuantity > availableSlots
+        }
         className={cn(
           'hover:bg-primary/90 h-auto w-full bg-primary py-5 text-white',
           'text-base font-normal leading-[1.625]',
+          'disabled:cursor-not-allowed disabled:bg-gray-300',
         )}
       >
-        Book Now
+        {t('book_now')}
       </Button>
     </div>
   );
