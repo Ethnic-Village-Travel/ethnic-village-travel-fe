@@ -3,6 +3,17 @@
     "title": "Hello world!",
     "about": "Go to the about page"
   },
+  "search": {
+    "location_placeholder": "Select location",
+    "keyword_placeholder": "Search destinations...",
+    "date_placeholder": "Select date",
+    "search_button": "Search",
+    "searching": "Searching...",
+    "no_results": "No results found",
+    "results_count": "Found {count} tours",
+    "clear_search": "Clear filters",
+    "search_error": "An error occurred while searching"
+  },
   "tour": {
     "item": {
       "max_slots": "Max: {slots}",
@@ -12,6 +23,9 @@
     },
     "list": {
       "title": "Tours",
+      "search_results": "Search results for \"{keyword}\"",
+      "filter_by": "Filter by",
+      "clear_filters": "Clear filters",
       "empty": {
         "title": "No tours found",
         "description": "Try adjusting your filters to find what you're looking for."
