@@ -54,7 +54,9 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
         <div className="flex items-center gap-2">
           <Badge variant="secondary" className="flex items-center gap-1 py-1">
             <MapPin className="h-4 w-4" />
-            {tour.locations && tour.locations.map(l => l.city).join(' -')}
+            <span className="block max-w-[70px] overflow-hidden truncate text-ellipsis whitespace-nowrap">
+              {tour.locations?.map(l => l.city).join(' - ')}
+            </span>
           </Badge>
           <Badge variant="secondary" className="flex items-center gap-1 py-1">
             <CalendarDays className="h-4 w-4" />

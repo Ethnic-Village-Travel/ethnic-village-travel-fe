@@ -14,16 +14,185 @@
       "title": "Tour du lịch",
       "empty": {
         "title": "Không tìm thấy tour nào",
-        "description": "Hãy thử điều chỉnh bộ lọc để tìm tour phù hợp."
+        "description": "Hãy thử điều chỉnh bộ lọc để tìm thấy những gì bạn đang tìm kiếm."
       },
       "sort": {
         "placeholder": "Sắp xếp theo",
         "default": "Mặc định",
-        "price_low_high": "Giá: Thấp đến cao",
-        "price_high_low": "Giá: Cao đến thấp",
+        "price_low_high": "Giá: Thấp đến Cao",
+        "price_high_low": "Giá: Cao đến Thấp",
         "rating": "Đánh giá",
         "duration": "Thời gian"
       }
+    },
+    "detail": {
+      "review": "Đánh giá",
+      "days": "Ngày",
+      "location": "Địa điểm",
+      "duration_format": "{days} Ngày/{nights} Đêm",
+      "share": "Chia sẻ",
+      "overview_tab": "Tổng quan",
+      "reviews_tab": "Đánh giá",
+      "loading": "Đang tải thông tin tour...",
+      "not_found": "Không tìm thấy tour",
+      "overview": {
+        "title": "Tổng quan chuyến đi",
+        "included_excluded": "Bao gồm/Không bao gồm",
+        "trip_plan": "Lịch trình chuyến đi",
+        "no_overview": "Chưa có thông tin tổng quan"
+      },
+      "similar": {
+        "title": "Tour tương tự",
+        "empty": {
+          "title": "Không có tour tương tự nào",
+          "description": "Hiện tại chưa có tour tương tự nào cho tour này."
+        }
+      },
+      "booking": {
+        "title": "Đặt Tour Này",
+        "adult": "Người lớn",
+        "child": "Trẻ em",
+        "adult_price": "${price}/người lớn",
+        "child_price": "${price}/trẻ em",
+        "total": "Tổng cộng",
+        "book_now": "Đặt ngay",
+        "available_slots": "Còn {count} chỗ trống",
+        "no_slots": "Hết chỗ",
+        "select_date": "Vui lòng chọn ngày",
+        "booking_failed": "Đặt tour thất bại",
+        "booking_failed_out_of_stock": "Số lượng chỗ trống không đủ"
+      },
+      "reviews": {
+        "total_reviews": "{count} đánh giá",
+        "average_rating": "Đánh giá trung bình",
+        "add_review": "Thêm đánh giá của bạn",
+        "your_rating": "Đánh giá của bạn",
+        "your_review": "Nội dung đánh giá",
+        "submit": "Gửi đánh giá",
+        "submitting": "Đang gửi...",
+        "load_more": "Xem thêm đánh giá",
+        "no_reviews": "Chưa có đánh giá nào",
+        "no_name": "Người ẩn danh",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "pin": "Ghim",
+        "unpin": "Bỏ ghim",
+        "report": "Báo cáo",
+        "placeholder": "Viết đánh giá của bạn tại đây...",
+        "delete_confirm": "Bạn có chắc chắn muốn xóa đánh giá này?",
+        "report_confirm": "Bạn có chắc chắn muốn báo cáo đánh giá này?"
+      },
+      "available_tickets": {
+        "title": "Lịch khởi hành",
+        "available_slots": "Còn {count} chỗ",
+        "no_slots": "Hết chỗ",
+        "special_price": "Giá đặc biệt"
+      },
+      "guild_profile": {
+        "experience": "Kinh nghiệm: {years} năm",
+        "languages": "Ngôn ngữ",
+        "achievements": "Thành tích",
+        "description": "Hơn cả một hướng dẫn viên, là người bạn đồng hành chia sẻ những câu chuyện địa phương."
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Chào mừng trở lại",
+      "please_login": "Vui lòng đăng nhập để tiếp tục",
+      "email": "Email",
+      "email_placeholder": "Nhập email của bạn",
+      "password": "Mật khẩu",
+      "password_placeholder": "Nhập mật khẩu của bạn",
+      "remember_me": "Ghi nhớ đăng nhập",
+      "forgot_password": "Quên mật khẩu?",
+      "no_account": "Chưa có tài khoản?",
+      "signup": "Đăng ký",
+      "sign_in": "Đăng nhập",
+      "signing_in": "Đang đăng nhập...",
+      "login_success": "Đăng nhập thành công"
+    },
+    "signup": {
+      "go_to_login": "Đăng nhập",
+      "create_account": "Tạo tài khoản mới",
+      "please_enter_details": "Vui lòng nhập thông tin",
+      "first_name": "Tên",
+      "first_name_placeholder": "Nhập tên của bạn",
+      "last_name": "Họ",
+      "last_name_placeholder": "Nhập họ của bạn",
+      "email": "Email",
+      "email_placeholder": "Nhập email của bạn",
+      "password": "Mật khẩu",
+      "password_placeholder": "Nhập mật khẩu của bạn",
+      "agree_to_terms": "Tôi đồng ý với điều khoản và điều kiện",
+      "sign_up": "Đăng ký"
+    },
+    "forgot_password": {
+      "back": "Quay lại",
+      "title": "Quên mật khẩu",
+      "description": "Nhập địa chỉ email đã đăng ký. Chúng tôi sẽ gửi mã để đặt lại mật khẩu của bạn.",
+      "email": "Địa chỉ email",
+      "email_placeholder": "Nhập email của bạn",
+      "send_otp": "Gửi mã OTP"
+    },
+    "enter_otp": {
+      "back": "Quay lại",
+      "title": "Nhập mã OTP",
+      "description": "Chúng tôi đã gửi mã đến địa chỉ email đã đăng ký của bạn",
+      "verify_otp": "Xác thực OTP"
+    }
+  },
+  "layout": {
+    "header": {
+      "nav": {
+        "home": "Trang chủ",
+        "about": "Về chúng tôi",
+        "services": "Dịch vụ",
+        "destinations": "Điểm đến",
+        "blog": "Blog",
+        "contact": "Liên hệ"
+      },
+      "auth": {
+        "sign_in": "Đăng nhập",
+        "sign_up": "Đăng ký"
+      }
+    },
+    "footer": {
+      "about": {
+        "title": "Về chúng tôi",
+        "our_story": "Câu chuyện của chúng tôi",
+        "team": "Đội ngũ",
+        "careers": "Tuyển dụng",
+        "testimonials": "Đánh giá",
+        "partners": "Đối tác",
+        "press": "Báo chí",
+        "blog": "Blog"
+      },
+      "support": {
+        "title": "Hỗ trợ",
+        "help_center": "Trung tâm trợ giúp",
+        "safety": "Thông tin an toàn",
+        "cancellation": "Chính sách hủy",
+        "covid": "Phản ứng COVID-19",
+        "accessibility": "Khả năng tiếp cận",
+        "report": "Báo cáo vấn đề"
+      },
+      "destinations": {
+        "title": "Điểm đến",
+        "ha_giang": "Hà Giang",
+        "sapa": "Sa Pa",
+        "mu_cang_chai": "Mù Cang Chải",
+        "mai_chau": "Mai Châu",
+        "ba_be": "Ba Bể",
+        "kon_tum": "Kon Tum",
+        "dak_nong": "Đắk Nông"
+      },
+      "newsletter": {
+        "title": "Luôn được cập nhật về các lời khuyên du lịch",
+        "email_placeholder": "Địa chỉ email của bạn",
+        "subscribe": "Đăng ký"
+      },
+      "copyright": "©2023 Travo Bảo lưu mọi quyền"
     }
   }
 }

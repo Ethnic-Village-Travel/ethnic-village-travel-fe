@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/utils';
 import { formatTimeAgo } from '@/utils/date';
-import { MoreHorizontal, PinIcon, Trash2Icon } from 'lucide-react';
+import { Loader2, MoreHorizontal, PinIcon, Trash2Icon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Review } from '@/types/review.type';
-import { useAuthentication } from '@/hooks/use-authentication';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -23,11 +24,25 @@ interface ReviewItemProps {
   onDelete?: (review: Review) => void;
   onPin?: (review: Review) => void;
   onReport?: (review: Review) => void;
+  isDeleting?: boolean;
+  isPinning?: boolean;
+  isReporting?: boolean;
 }
 
-export function ReviewItem({ review, onEdit, onDelete, onPin, onReport }: ReviewItemProps) {
+export function ReviewItem({
+  review,
+  onEdit,
+  onDelete,
+  onPin,
+  onReport,
+  isDeleting,
+  isPinning,
+  isReporting,
+}: ReviewItemProps) {
+  const t = useTranslations('tour.detail.reviews');
+
   const [isEditing, setIsEditing] = useState(false);
-  const { user: currentUser } = useAuthentication();
+  const { user: currentUser } = useAuthStore();
   const isOwner = currentUser?.id === review.user.id;
 
   const handleSubmit = ({ rating, content }: { rating: number; content: string }) => {
@@ -38,17 +53,18 @@ export function ReviewItem({ review, onEdit, onDelete, onPin, onReport }: Review
     };
 
     onEdit?.(newReview);
-
-    console.log('====================================');
-    console.log(newReview);
-    console.log('====================================');
-
     setIsEditing(false);
   };
 
   const handleCancel = () => {
     setIsEditing(false);
   };
+
+  const userName = review.user.personal
+    ? `${review.user.personal.firstName} ${review.user.personal.lastName}`
+    : t('no_name');
+
+  const userAvatar = review.user.personal?.avatar || review.user.avatar;
 
   return (
     <div
@@ -65,12 +81,12 @@ export function ReviewItem({ review, onEdit, onDelete, onPin, onReport }: Review
             <div className="flex items-start gap-4">
               {/* Avatar */}
               <div className="relative h-full w-10 overflow-hidden rounded-full bg-gray-100">
-                {review.user.avatar && <img src={review.user.avatar} alt={review.user.name} className="object-cover" />}
+                {userAvatar && <img src={userAvatar} alt={userName} className="object-cover" />}
               </div>
 
               {/* User info */}
               <div className="flex flex-col">
-                <h4 className="font-semibold">{review.user.name}</h4>
+                <h4 className="font-semibold">{userName}</h4>
                 <StarRating average={review.rating} readOnly />
               </div>
             </div>
@@ -87,28 +103,37 @@ export function ReviewItem({ review, onEdit, onDelete, onPin, onReport }: Review
                   <>
                     <DropdownMenuItem onClick={() => setIsEditing(true)} className="gap-2">
                       <PinIcon className="h-4 w-4" />
-                      Chỉnh sửa
+                      {t('edit')}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => onDelete?.(review)}
                       className="gap-2 text-destructive hover:text-destructive focus:text-destructive"
+                      disabled={isDeleting}
                     >
-                      <Trash2Icon className="h-4 w-4" />
-                      Xóa
+                      {isDeleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2Icon className="h-4 w-4" />}
+                      {t('delete')}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                   </>
                 )}
                 {currentUser?.id && (
                   <>
-                    <DropdownMenuItem onClick={() => onPin?.(review)} className="gap-2">
-                      <PinIcon className="h-4 w-4" />
-                      {review.isPinned ? 'Bỏ ghim' : 'Ghim'}
+                    <DropdownMenuItem onClick={() => onPin?.(review)} className="gap-2" disabled={isPinning}>
+                      {isPinning ? <Loader2 className="h-4 w-4 animate-spin" /> : <PinIcon className="h-4 w-4" />}
+                      {review.isPinned ? t('unpin') : t('pin')}
                     </DropdownMenuItem>
                     {!isOwner && (
-                      <DropdownMenuItem onClick={() => onReport?.(review)} className="gap-2 text-destructive">
-                        <Trash2Icon className="h-4 w-4" />
-                        Báo cáo
+                      <DropdownMenuItem
+                        onClick={() => onReport?.(review)}
+                        className="gap-2 text-destructive"
+                        disabled={isReporting}
+                      >
+                        {isReporting ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Trash2Icon className="h-4 w-4" />
+                        )}
+                        {t('report')}
                       </DropdownMenuItem>
                     )}
                   </>
@@ -121,20 +146,19 @@ export function ReviewItem({ review, onEdit, onDelete, onPin, onReport }: Review
           <p className="text-gray-600">{review.content}</p>
 
           {/* Review metadata */}
-
           <div className="flex items-center gap-2 text-sm text-gray-500">
             {review.isPinned && (
               <>
                 <PinIcon className="h-4 w-4" />
-                <span>Đã ghim</span>
+                <span>{t('pin')}</span>
                 <span>•</span>
               </>
             )}
-            <span className="capitalize">{formatTimeAgo(review.createdAt)}</span>
+            <span className="capitalize">{formatTimeAgo(new Date(review.createdAt))}</span>
             {review.updatedAt > review.createdAt && (
               <>
                 <span>•</span>
-                <span>Đã chỉnh sửa</span>
+                <span>{t('edit')}</span>
               </>
             )}
           </div>

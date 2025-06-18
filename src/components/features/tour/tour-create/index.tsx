@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { Ethnic } from '@/types/ethnic.types';
+import { Ethnic } from '@/types/ethnic.type';
 import { Location } from '@/types/location.type';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

@@ -44,20 +44,6 @@ const getFilterIds = <T extends EntityWithId>(
   );
 };
 
-const calculateAverageRating = (tour: Tour): number => {
-  if (!tour.reviews || tour.reviews.length === 0) return 0;
-
-  const sum = tour.reviews.reduce((acc, review) => acc + review.rating, 0);
-  return sum / tour.reviews.length;
-};
-
-const filterToursByRating = (tours: Tour[], minRating: number): Tour[] => {
-  return tours.filter(tour => {
-    const avgRating = calculateAverageRating(tour);
-    return avgRating >= minRating;
-  });
-};
-
 export const useFilteredTourList = (pageSize: number = 12) => {
   const queryConfig = useQueryConfig();
   const { data: ethnicRes } = useEthnicList();
@@ -93,7 +79,7 @@ export const useFilteredTourList = (pageSize: number = 12) => {
   const rating = getFilterValue(FILTERS.rating, queryConfig.r, (value): value is number => typeof value === 'number');
 
   // Get tour list with filters
-  const { data: tourRes, isLoading } = useTourList({
+  const { data: response, isLoading } = useTourList({
     page: queryConfig.page || 0,
     size: pageSize,
     sortBy: queryConfig.sort_by,
@@ -107,6 +93,8 @@ export const useFilteredTourList = (pageSize: number = 12) => {
     minDuration,
     maxDuration,
   });
+
+  const tourRes = response?.data;
 
   return {
     tours: tourRes?.content || [],

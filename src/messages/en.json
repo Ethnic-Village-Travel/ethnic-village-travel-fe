@@ -24,6 +24,175 @@
         "rating": "Rating",
         "duration": "Duration"
       }
+    },
+    "detail": {
+      "review": "Review",
+      "days": "Days",
+      "location": "Location",
+      "duration_format": "{days} Days/{nights} Nights",
+      "share": "Share",
+      "overview_tab": "Overview",
+      "reviews_tab": "Reviews",
+      "loading": "Loading tour details...",
+      "not_found": "Tour not found",
+      "overview": {
+        "title": "Trip Overview",
+        "included_excluded": "Included/Excluded",
+        "trip_plan": "Trip Plan",
+        "no_overview": "No overview available"
+      },
+      "similar": {
+        "title": "Similar Tours",
+        "empty": {
+          "title": "No similar tours found",
+          "description": "There are currently no similar tours for this tour."
+        }
+      },
+      "booking": {
+        "title": "Book This Tour",
+        "adult": "Adult",
+        "child": "Child",
+        "adult_price": "${price}/adult",
+        "child_price": "${price}/child",
+        "total": "Total",
+        "book_now": "Book Now",
+        "available_slots": "{count} slots available",
+        "no_slots": "No slots available",
+        "select_date": "Please select a date",
+        "booking_failed": "Booking failed",
+        "booking_failed_out_of_stock": "Out of stock"
+      },
+      "reviews": {
+        "total_reviews": "{count} reviews",
+        "average_rating": "Average rating",
+        "add_review": "Add your review",
+        "your_rating": "Your rating",
+        "your_review": "Your review",
+        "submit": "Submit Review",
+        "submitting": "Submitting...",
+        "load_more": "Load more reviews",
+        "no_reviews": "No reviews yet",
+        "no_name": "Anonymous",
+        "edit": "Edit",
+        "delete": "Delete",
+        "pin": "Pin",
+        "unpin": "Unpin",
+        "report": "Report",
+        "placeholder": "Write your review here...",
+        "delete_confirm": "Are you sure you want to delete this review?",
+        "report_confirm": "Are you sure you want to report this review?"
+      },
+      "available_tickets": {
+        "title": "Available Dates",
+        "available_slots": "{count} slots left",
+        "no_slots": "Sold out",
+        "special_price": "Special price"
+      },
+      "guild_profile": {
+        "experience": "Experience: {years} years",
+        "languages": "Languages",
+        "achievements": "Achievements",
+        "description": "More than just a guide, a companion sharing local stories."
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Welcome back",
+      "please_login": "Please login to continue",
+      "email": "Email",
+      "email_placeholder": "Enter your email",
+      "password": "Password",
+      "password_placeholder": "Enter your password",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "no_account": "Don't have an account?",
+      "signup": "Sign up",
+      "sign_in": "Sign in",
+      "signing_in": "Signing in...",
+      "login_success": "Login successful"
+    },
+    "signup": {
+      "go_to_login": "Go to login",
+      "create_account": "Create New Account",
+      "please_enter_details": "Please enter details",
+      "first_name": "First Name",
+      "first_name_placeholder": "Enter your first name",
+      "last_name": "Last Name",
+      "last_name_placeholder": "Enter your last name",
+      "email": "Email",
+      "email_placeholder": "Enter your email",
+      "password": "Password",
+      "password_placeholder": "Enter your password",
+      "agree_to_terms": "I agree to the terms and conditions",
+      "sign_up": "Sign up"
+    },
+    "forgot_password": {
+      "back": "Back",
+      "title": "Forgot Password",
+      "description": "Enter your registered email address. we'll send you a code to reset your password.",
+      "email": "Email Address",
+      "email_placeholder": "Enter your email",
+      "send_otp": "Send OTP"
+    },
+    "enter_otp": {
+      "back": "Back",
+      "title": "Enter OTP",
+      "description": "We have share a code of your registered email address",
+      "verify_otp": "Verify OTP"
+    }
+  },
+  "layout": {
+    "header": {
+      "nav": {
+        "home": "Home",
+        "about": "About Us",
+        "services": "Services",
+        "destinations": "Destinations",
+        "blog": "Blog",
+        "contact": "Contact Us"
+      },
+      "auth": {
+        "sign_in": "Sign in",
+        "sign_up": "Sign up"
+      }
+    },
+    "footer": {
+      "about": {
+        "title": "About Us",
+        "our_story": "Our Story",
+        "team": "Team",
+        "careers": "Careers",
+        "testimonials": "Testimonials",
+        "partners": "Partners",
+        "press": "Press",
+        "blog": "Blog"
+      },
+      "support": {
+        "title": "Support",
+        "help_center": "Help Center",
+        "safety": "Safety Information",
+        "cancellation": "Cancellation Options",
+        "covid": "COVID-19 Response",
+        "accessibility": "Accessibility",
+        "report": "Report Issue"
+      },
+      "destinations": {
+        "title": "Destinations",
+        "ha_giang": "Ha Giang",
+        "sapa": "Sapa",
+        "mu_cang_chai": "Mu Cang Chai",
+        "mai_chau": "Mai Chau",
+        "ba_be": "Ba Be",
+        "kon_tum": "Kon Tum",
+        "dak_nong": "Dak Nong"
+      },
+      "newsletter": {
+        "title": "Stay updated with travel tips",
+        "email_placeholder": "Your Email Address",
+        "subscribe": "Subscribe"
+      },
+      "copyright": "©2023 Travo All Rights are reserved️"
     }
   }
 }

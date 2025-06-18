@@ -1,7 +1,8 @@
 'use client';
 
 import { calculateRatingStats } from '@/utils';
-import { BookmarkIcon, Heart, Share2 } from 'lucide-react';
+import { BookmarkIcon, Share2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
 import { Button } from '@/components/ui/button';
@@ -10,19 +11,9 @@ import StarRating from '@/components/shared/star-rating';
 
 import AvailableTickets from './available-tickets';
 
-const availableTickets = [
-  { id: '1', day: 'Sat', date: '19 Apr' },
-  { id: '2', day: 'Sun', date: '20 Apr' },
-  { id: '3', day: 'Mon', date: '21 Apr', isSelected: true },
-  { id: '4', day: 'Tue', date: '22 Apr' },
-  { id: '5', day: 'Wed', date: '23 Apr', isSpecial: true, specialText: 'Special Holiday' },
-  { id: '6', day: 'Thu', date: '24 Apr' },
-  { id: '7', day: 'Fri', date: '25 Apr' },
-  { id: '8', day: 'Sat', date: '26 Apr' },
-];
-
 const TourDetailHeader = (tour: Tour) => {
-  const ratingObj = calculateRatingStats(tour.rating || []);
+  const t = useTranslations('tour.detail');
+  const ratingObj = calculateRatingStats(tour.reviews || []);
 
   return (
     <div className="flex flex-col gap-2.5">
@@ -32,7 +23,7 @@ const TourDetailHeader = (tour: Tour) => {
         <div className="flex items-center gap-5">
           {/* Review Section */}
           <div className="flex flex-col gap-1.5">
-            <span className="text-sm text-gray-500">Review</span>
+            <span className="text-sm text-gray-500">{t('review')}</span>
             <StarRating average={ratingObj.average} readOnly />
           </div>
 
@@ -40,16 +31,18 @@ const TourDetailHeader = (tour: Tour) => {
 
           {/* Days Section */}
           <div className="flex flex-col gap-1.5">
-            <span className="text-sm text-gray-500">Days</span>
-            <span className="text-base text-dark">5 Days/4 Night</span>
+            <span className="text-sm text-gray-500">{t('days')}</span>
+            <span className="text-base text-dark">
+              {t('duration_format', { days: tour.duration, nights: tour.duration - 1 })}
+            </span>
           </div>
 
           <Separator className="h-[53px]" orientation="vertical" />
 
           {/* Location Section */}
           <div className="flex flex-col gap-1.5">
-            <span className="text-sm text-gray-500">Location</span>
-            <span className="text-base text-dark">Maldives</span>
+            <span className="text-sm text-gray-500">{t('location')}</span>
+            <span className="text-base text-dark">{tour.locations.map(location => location.city).join(' - ')}</span>
           </div>
         </div>
 
@@ -67,12 +60,12 @@ const TourDetailHeader = (tour: Tour) => {
             className="hover:border-primary-500/80 hover:text-primary-500/80 h-[38px] border-primary-500 text-primary-500 [&_svg]:size-5"
           >
             <Share2 className="mr-2" />
-            Share
+            {t('share')}
           </Button>
         </div>
       </div>
 
-      <AvailableTickets tickets={availableTickets} />
+      <AvailableTickets tour={tour} />
     </div>
   );
 };

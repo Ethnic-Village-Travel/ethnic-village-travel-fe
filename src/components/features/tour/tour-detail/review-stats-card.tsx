@@ -1,5 +1,6 @@
 import { calculateRatingPercentage } from '@/utils';
 import { Star } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { ReviewStats } from '@/types/review.type';
 import { Progress } from '@/components/ui/progress';
@@ -11,6 +12,7 @@ interface ReviewStatsCardProps {
 }
 
 export function ReviewStatsCard({ stats }: ReviewStatsCardProps) {
+  const t = useTranslations('tour.detail.reviews');
   const { totalReviews, averageRating, ratingCounts } = stats;
   const percentages = calculateRatingPercentage(ratingCounts, totalReviews);
   const ratings = [5, 4, 3, 2, 1]; // Display in descending order
@@ -21,7 +23,7 @@ export function ReviewStatsCard({ stats }: ReviewStatsCardProps) {
         <div className="flex flex-col gap-2">
           <h3 className="text-2xl font-bold">{averageRating.toFixed(1)}</h3>
           <StarRating average={averageRating} />
-          <p className="text-sm text-gray-500">{totalReviews} đánh giá</p>
+          <p className="text-sm text-gray-500">{t('total_reviews', { count: totalReviews })}</p>
         </div>
 
         <Separator className="m-3 h-[150px] w-[2px] bg-white-80" orientation="vertical" />

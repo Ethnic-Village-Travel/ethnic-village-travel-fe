@@ -1,11 +1,15 @@
+import { useAuthStore } from '@/store/useAuthStore';
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { API_ROOT, TIMEOUT } from './config';
 
 const instance = axios.create({
-  baseURL: API_ROOT,
+  baseURL: API_ROOT + '/api',
   timeout: TIMEOUT,
-  headers: {},
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
 });
 
 export function setDefaultHeaders(headers: Record<string, string>): void {
@@ -17,6 +21,10 @@ export function setDefaultHeaders(headers: Record<string, string>): void {
 // Request interceptor
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+    const authStore = useAuthStore.getState();
+    if (authStore.accessToken) {
+      config.headers.Authorization = `${authStore.tokenType} ${authStore.accessToken}`;
+    }
     return config;
   },
   (error: AxiosError): Promise<AxiosError> => {
@@ -30,15 +38,22 @@ instance.interceptors.response.use(
     return response;
   },
   (error: AxiosError): Promise<AxiosError> => {
-    // Handle unauthorized access
-    if (error?.response?.status === 401) {
-      // Implement your authentication failure logic here
-      // Example:
-      // deleteCookie("auth_access_token");
-      // router.push("/login");
+    if (!error.response) {
+      // Network error
+      return Promise.reject({
+        message: 'Network error. Please check your internet connection.',
+        error: 'NETWORK_ERROR',
+        statusCode: 0,
+      });
     }
 
-    return Promise.reject(error);
+    // Handle unauthorized access
+    if (error.response.status === 401) {
+      const authStore = useAuthStore.getState();
+      authStore.logout();
+    }
+
+    return Promise.reject(error.response.data);
   },
 );
 

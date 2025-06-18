@@ -1,8 +1,14 @@
 import { PackageSearch } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export function EmptyState() {
-  const t = useTranslations('tour.list.empty');
+type EmptyStateNamespace = 'tour.list.empty' | 'tour.detail.similar.empty';
+
+interface EmptyStateProps {
+  namespace?: EmptyStateNamespace;
+}
+
+export function EmptyState({ namespace = 'tour.list.empty' }: EmptyStateProps) {
+  const t = useTranslations(namespace);
 
   return (
     <div className="flex flex-col items-center justify-center py-12">

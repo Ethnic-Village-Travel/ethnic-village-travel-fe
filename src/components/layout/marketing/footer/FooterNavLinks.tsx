@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 interface FooterLinkGroupProps {
   title: string;
@@ -26,40 +27,42 @@ const FooterLinkGroup: React.FC<FooterLinkGroupProps> = ({ title, links }) => {
 };
 
 const FooterNavLinks: React.FC = () => {
+  const t = useTranslations('layout.footer');
+
   const aboutUsLinks = [
-    { label: 'Our Story', href: '#' },
-    { label: 'Team', href: '#' },
-    { label: 'Careers', href: '#' },
-    { label: 'Testimonials', href: '#' },
-    { label: 'Partners', href: '#' },
-    { label: 'Press', href: '#' },
-    { label: 'Blog', href: '#' },
+    { label: t('about.our_story'), href: '#' },
+    { label: t('about.team'), href: '#' },
+    { label: t('about.careers'), href: '#' },
+    { label: t('about.testimonials'), href: '#' },
+    { label: t('about.partners'), href: '#' },
+    { label: t('about.press'), href: '#' },
+    { label: t('about.blog'), href: '#' },
   ];
 
   const supportLinks = [
-    { label: 'Help Center', href: '#' },
-    { label: 'Safety Information', href: '#' },
-    { label: 'Cancellation Options', href: '#' },
-    { label: 'COVID-19 Response', href: '#' },
-    { label: 'Accessibility', href: '#' },
-    { label: 'Report Issue', href: '#' },
+    { label: t('support.help_center'), href: '#' },
+    { label: t('support.safety'), href: '#' },
+    { label: t('support.cancellation'), href: '#' },
+    { label: t('support.covid'), href: '#' },
+    { label: t('support.accessibility'), href: '#' },
+    { label: t('support.report'), href: '#' },
   ];
 
   const destinationLinks = [
-    { label: 'Ha Giang', href: '#' },
-    { label: 'Sapa', href: '#' },
-    { label: 'Mu Cang Chai', href: '#' },
-    { label: 'Mai Chau', href: '#' },
-    { label: 'Ba Be', href: '#' },
-    { label: 'Kon Tum', href: '#' },
-    { label: 'Dak Nong', href: '#' },
+    { label: t('destinations.ha_giang'), href: '#' },
+    { label: t('destinations.sapa'), href: '#' },
+    { label: t('destinations.mu_cang_chai'), href: '#' },
+    { label: t('destinations.mai_chau'), href: '#' },
+    { label: t('destinations.ba_be'), href: '#' },
+    { label: t('destinations.kon_tum'), href: '#' },
+    { label: t('destinations.dak_nong'), href: '#' },
   ];
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-8 lg:gap-16">
-      <FooterLinkGroup title="About Us" links={aboutUsLinks} />
-      <FooterLinkGroup title="Support" links={supportLinks} />
-      <FooterLinkGroup title="Destinations" links={destinationLinks} />
+      <FooterLinkGroup title={t('about.title')} links={aboutUsLinks} />
+      <FooterLinkGroup title={t('support.title')} links={supportLinks} />
+      <FooterLinkGroup title={t('destinations.title')} links={destinationLinks} />
     </div>
   );
 };

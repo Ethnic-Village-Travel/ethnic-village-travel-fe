@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/utils';
 import { Star } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Review } from '@/types/review.type';
-import { useAuthentication } from '@/hooks/use-authentication';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -15,7 +16,8 @@ interface AddReviewCardProps {
 }
 
 export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddReviewCardProps) {
-  const { isAuthenticated, user } = useAuthentication();
+  const t = useTranslations('tour.detail.reviews');
+  const { isAuthenticated, user } = useAuthStore();
   const [rating, setRating] = useState(review?.rating || 0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [content, setContent] = useState(review?.content || '');
@@ -32,7 +34,7 @@ export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddRevi
   if (!isAuthenticated) {
     return (
       <div className="flex flex-col items-center gap-4">
-        <p className="text-center text-gray-500">Vui lòng đăng nhập để đánh giá</p>
+        <p className="text-center text-gray-500">{t('add_review')}</p>
         <Button>Đăng nhập</Button>
       </div>
     );
@@ -41,9 +43,18 @@ export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddRevi
   const renderUser = () => {
     let curUser = {
       id: review?.user.id || user?.id,
-      name: review?.user.name || user?.name,
+      name: review?.user.personal?.firstName + ' ' + review?.user.personal?.lastName,
       avatar: review?.user.avatar || user?.avatar,
     };
+
+    const personal = review?.user.personal || user?.personal;
+    if (personal) {
+      curUser = {
+        ...curUser,
+        name: `${personal.firstName} ${personal.lastName}`,
+        avatar: personal.avatar || curUser.avatar,
+      };
+    }
 
     return (
       <div className="flex items-center gap-4">
@@ -62,7 +73,7 @@ export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddRevi
 
       {/* Rating */}
       <div className="flex flex-col gap-1">
-        <span className="text-sm text-gray-500">Đánh giá của bạn</span>
+        <span className="text-sm text-gray-500">{t('your_rating')}</span>
         <div className="flex items-center gap-1">
           {[1, 2, 3, 4, 5].map(value => (
             <button
@@ -89,11 +100,11 @@ export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddRevi
 
       {/* Comment */}
       <div className="flex flex-col gap-2">
-        <span className="text-sm text-gray-500">Nhận xét của bạn</span>
+        <span className="text-sm text-gray-500">{t('your_review')}</span>
         <Textarea
           value={content}
           onChange={e => setContent(e.target.value)}
-          placeholder="Chia sẻ trải nghiệm của bạn..."
+          placeholder={t('placeholder')}
           className="focus-visible:ring-none focus-visible:ring-0"
           rows={4}
         />
@@ -108,7 +119,7 @@ export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddRevi
         )}
 
         <Button type="submit" disabled={rating === 0 || isLoading}>
-          Gửi đánh giá
+          {isLoading ? t('submitting') : t('submit')}
         </Button>
       </div>
     </form>

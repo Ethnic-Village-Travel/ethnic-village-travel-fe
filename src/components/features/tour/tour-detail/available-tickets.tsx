@@ -1,40 +1,40 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useBookingStore } from '@/store/useBookingStore';
 import { cn } from '@/utils';
+import { format } from 'date-fns';
+import { vi } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useDraggable } from 'react-use-draggable-scroll';
 
+import { Tour } from '@/types/tour.type';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-interface TicketDate {
-  id: string;
-  day: string;
-  date: string;
-  isSelected?: boolean;
-  isSpecial?: boolean;
-  specialText?: string;
-}
-
 interface AvailableTicketsProps {
-  tickets: TicketDate[];
+  tour: Tour;
 }
 
-const AvailableTickets = ({ tickets }: AvailableTicketsProps) => {
+const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
+  const t = useTranslations('tour.detail.available_tickets');
   const scrollRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
   const { events } = useDraggable(scrollRef);
 
-  const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
+  const { selectedDateId, setSelectedDate } = useBookingStore();
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
 
   useEffect(() => {
-    const initialSelected = tickets.find(ticket => ticket.isSelected);
-    if (initialSelected) {
-      setSelectedTicket(initialSelected.id);
+    // Select first available date by default
+    if (tour?.availableDates && tour?.availableDates.length > 0) {
+      const firstAvailableDate = tour.availableDates.find(date => date.availableSlots > 0);
+      if (firstAvailableDate) {
+        setSelectedDate(firstAvailableDate.id, firstAvailableDate.availableSlots);
+      }
     }
-  }, [tickets]);
+  }, [tour?.availableDates, setSelectedDate]);
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -66,13 +66,13 @@ const AvailableTickets = ({ tickets }: AvailableTicketsProps) => {
     }
   }, []);
 
-  const handleTicketClick = (ticketId: string) => {
-    setSelectedTicket(ticketId);
+  const handleDateClick = (dateId: number, availableSlots: number) => {
+    setSelectedDate(dateId, availableSlots);
   };
 
   return (
-    <Card className="shadow-custom-gray mt-2.5 p-6 px-5">
-      <h2 className="mb-4 text-xl font-bold">Available Tickets</h2>
+    <Card className="mt-2.5 p-6 px-5 shadow-custom-gray">
+      <h2 className="mb-4 text-xl font-bold">{t('title')}</h2>
       <div className="relative">
         {showLeftButton && (
           <Button
@@ -85,40 +85,52 @@ const AvailableTickets = ({ tickets }: AvailableTicketsProps) => {
           </Button>
         )}
         <div ref={scrollRef} {...events} className="custom-scrollbar flex gap-3">
-          {tickets.map(ticket => (
-            <Button
-              key={ticket.id}
-              variant={selectedTicket === ticket.id ? 'default' : 'outline'}
-              onClick={() => handleTicketClick(ticket.id)}
-              className={cn(
-                'flex h-auto min-w-[120px] flex-col items-center gap-1 border-gray-500 px-4 py-2 transition-all duration-200',
-                {
-                  'border-secondary-600 text-secondary-600': ticket.isSpecial,
-                  'hover:bg-primary-500/90 bg-primary-500 text-white': selectedTicket === ticket.id,
-                },
-              )}
-            >
-              <span
-                className={cn('text-lg', {
-                  'text-[#FF9665]': ticket.isSpecial,
-                  'text-white': selectedTicket === ticket.id,
-                })}
+          {tour?.availableDates?.map(date => {
+            const startDate = new Date(date.startDate);
+            const isSpecial = false;
+
+            return (
+              <Button
+                key={date.id}
+                variant={selectedDateId === date.id ? 'default' : 'outline'}
+                onClick={() => handleDateClick(date.id, date.availableSlots)}
+                className={cn(
+                  'flex h-auto min-w-[120px] flex-col items-center gap-1 border-gray-500 px-4 py-2 transition-all duration-200',
+                  {
+                    'border-secondary-600 text-secondary-600': isSpecial,
+                    'hover:bg-primary-500/90 bg-primary-500 text-white': selectedDateId === date.id,
+                  },
+                )}
               >
-                {ticket.isSpecial ? '🔥 ' : ''}
-                {ticket.day}
-              </span>
-              <span className="text-xl font-bold">{ticket.date}</span>
-              {ticket.specialText && (
                 <span
-                  className={cn('text-sm font-bold', {
-                    'text-white': selectedTicket === ticket.id,
+                  className={cn('text-lg', {
+                    'text-[#FF9665]': isSpecial,
+                    'text-white': selectedDateId === date.id,
                   })}
                 >
-                  {ticket.specialText}
+                  {isSpecial ? '🔥 ' : ''}
+                  {format(startDate, 'EEEE', { locale: vi })}
                 </span>
-              )}
-            </Button>
-          ))}
+                <span className="text-xl font-bold">{format(startDate, 'dd/MM', { locale: vi })}</span>
+                <span
+                  className={cn('text-sm font-bold', {
+                    'text-white': selectedDateId === date.id,
+                  })}
+                >
+                  {date.availableSlots > 0 ? t('available_slots', { count: date.availableSlots }) : t('no_slots')}
+                </span>
+                {isSpecial && (
+                  <span
+                    className={cn('text-sm font-bold text-[#FF9665]', {
+                      'text-white': selectedDateId === date.id,
+                    })}
+                  >
+                    {t('special_price')}
+                  </span>
+                )}
+              </Button>
+            );
+          })}
         </div>
         {showRightButton && (
           <Button
