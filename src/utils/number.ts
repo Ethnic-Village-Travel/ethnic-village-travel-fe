@@ -1,5 +1,6 @@
 const EXCEEDING_LIMIT_VALUE = 1.79769313e308;
 const STANDARD_SUFFIXES = ['', 'K', 'M', 'B', 'T'];
+const VND_TO_USD_RATE = 25000;
 
 const EXTENDED_SUFFIXES: string[] = (() => {
   const suffixes: string[] = [];
@@ -94,6 +95,11 @@ export function formatCurrency(
 
   if (discount_percent && max_discount_amount) {
     number = calculateDiscount(number, discount_percent, max_discount_amount);
+  }
+
+  // Convert VND to USD for English locale
+  if (locale === 'en') {
+    number = Math.round((number / VND_TO_USD_RATE) * 100) / 100;
   }
 
   const currencyFormatters = {
