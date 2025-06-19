@@ -14,6 +14,34 @@
     "clear_search": "Xóa bộ lọc",
     "search_error": "Có lỗi xảy ra khi tìm kiếm"
   },
+  "filters": {
+    "ethnic": {
+      "title": "Dân tộc"
+    },
+    "popular": {
+      "title": "Bộ lọc phổ biến",
+      "on_sale": "ĐANG GIẢM GIÁ"
+    },
+    "location": {
+      "title": "Địa điểm"
+    },
+    "duration": {
+      "title": "Thời gian",
+      "1_day": "1 Ngày",
+      "2_3_days": "2-3 Ngày",
+      "4_7_days": "4-7 Ngày",
+      "7_plus_days": "7+ Ngày"
+    },
+    "rating": {
+      "title": "Đánh giá",
+      "5_stars": "5 sao",
+      "4_stars_up": "4 sao trở lên",
+      "3_stars_up": "3 sao trở lên"
+    },
+    "price": {
+      "title": "Giá"
+    }
+  },
   "tour": {
     "item": {
       "max_slots": "Tối đa: {slots}",

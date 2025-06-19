@@ -10,8 +10,8 @@ export interface TourListParams {
   size?: number;
   sortBy?: string;
   order?: 'asc' | 'desc';
-  ethnicIds: number[] | undefined;
-  locationIds: number[] | undefined;
+  ethnicIds?: number[];
+  locationIds?: number[];
   minPrice?: number;
   maxPrice?: number;
   onSale?: boolean;
@@ -19,6 +19,7 @@ export interface TourListParams {
   minDuration?: number;
   maxDuration?: number;
   searchKey?: string;
+  date?: string; // ISO date string (YYYY-MM-DD)
 }
 
 export interface TourListResponse {

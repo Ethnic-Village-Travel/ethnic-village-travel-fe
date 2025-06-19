@@ -1,54 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { cn } from '@/utils';
 import { formatCurrency } from '@/utils/number';
 import { ChevronDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { useQueryConfig } from '@/hooks/use-query-config';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Slider } from '@/components/ui/slider';
+import { RangeSlider } from '@/components/ui/range-slider';
 
-export default function PriceFilterCard() {
-  const [open, setOpen] = useState(true);
-  const router = useRouter();
+const MIN_PRICE_RANGE = 0;
+const MAX_PRICE_RANGE = 20000000;
+
+const PriceFilterCard = () => {
   const queryConfig = useQueryConfig();
 
-  // Get price range from queryConfig or use default values
-  const defaultPriceRange = [0, 20000000];
-  const [localPriceRange, setLocalPriceRange] = useState([
-    queryConfig.min ?? defaultPriceRange[0],
-    queryConfig.max ?? defaultPriceRange[1],
+  const t = useTranslations('filters.price');
+
+  const [open, setOpen] = useState(true);
+  const [priceRange, setPriceRange] = useState<[number, number]>([
+    queryConfig.min ?? MIN_PRICE_RANGE,
+    queryConfig.max ?? MAX_PRICE_RANGE,
   ]);
-
-  // Update URL with debounce
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      // Only update if values have changed
-      if (localPriceRange[0] !== queryConfig.min || localPriceRange[1] !== queryConfig.max) {
-        // Update queryConfig with new price range
-        const searchParams = new URLSearchParams();
-        Object.entries(queryConfig).forEach(([key, val]) => {
-          if (Array.isArray(val)) {
-            val.forEach(v => searchParams.append(key, v.toString()));
-          } else if (val !== undefined) {
-            searchParams.set(key, val.toString());
-          }
-        });
-
-        // Add price range to search params
-        searchParams.set('min', localPriceRange[0].toString());
-        searchParams.set('max', localPriceRange[1].toString());
-
-        // Update the URL with new search params
-        router.push(`?${searchParams.toString()}`);
-      }
-    }, 500); // 500ms debounce delay
-
-    return () => clearTimeout(timer);
-  }, [localPriceRange, queryConfig, router]);
 
   return (
     <Card className="mb-4 w-64 rounded-2xl border-none bg-primary-10 px-0.5 pb-0.5 shadow-none">
@@ -56,7 +31,7 @@ export default function PriceFilterCard() {
         className="flex cursor-pointer flex-row items-center justify-between rounded-t-2xl px-3 py-2"
         onClick={() => setOpen(o => !o)}
       >
-        <CardTitle className="text-base font-semibold">Giá</CardTitle>
+        <CardTitle className="text-base font-semibold">{t('title')}</CardTitle>
         <Button variant="ghost" size="icon" tabIndex={-1} type="button" className="h-fit hover:bg-transparent">
           <span
             className={cn('block transition-transform duration-300', {
@@ -78,14 +53,16 @@ export default function PriceFilterCard() {
           <CardContent className="rounded-[14px] bg-white px-4 py-4">
             <div className="space-y-6">
               <p className="font-medium text-black">
-                Từ: {formatCurrency(localPriceRange[0])} - {formatCurrency(localPriceRange[1])}
+                {formatCurrency(queryConfig.min)} - {formatCurrency(queryConfig.max)}
               </p>
-              <Slider
-                value={localPriceRange}
-                min={0}
-                max={20000000}
+              <RangeSlider
+                value={priceRange}
+                min={MIN_PRICE_RANGE}
+                max={MAX_PRICE_RANGE}
                 step={10000}
-                onValueChange={setLocalPriceRange}
+                onValueChange={value => {
+                  setPriceRange(value);
+                }}
                 className="py-4"
               />
             </div>
@@ -94,4 +71,6 @@ export default function PriceFilterCard() {
       </div>
     </Card>
   );
-}
+};
+
+export default PriceFilterCard;

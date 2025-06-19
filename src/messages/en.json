@@ -1,18 +1,46 @@
 {
   "home": {
     "title": "Hello world!",
-    "about": "Go to the about page"
+    "about": "Go to about page"
   },
   "search": {
-    "location_placeholder": "Select location",
+    "location_placeholder": "Choose location",
     "keyword_placeholder": "Search destinations...",
-    "date_placeholder": "Select date",
+    "date_placeholder": "Choose date",
     "search_button": "Search",
     "searching": "Searching...",
     "no_results": "No results found",
     "results_count": "Found {count} tours",
     "clear_search": "Clear filters",
     "search_error": "An error occurred while searching"
+  },
+  "filters": {
+    "ethnic": {
+      "title": "Ethnic"
+    },
+    "popular": {
+      "title": "Popular Filter",
+      "on_sale": "ON SALE"
+    },
+    "location": {
+      "title": "Location"
+    },
+    "duration": {
+      "title": "Duration",
+      "1_day": "1 Day",
+      "2_3_days": "2-3 Days",
+      "4_7_days": "4-7 Days",
+      "7_plus_days": "7+ Days"
+    },
+    "rating": {
+      "title": "Rating",
+      "5_stars": "5 stars",
+      "4_stars_up": "4 stars and up",
+      "3_stars_up": "3 stars and up"
+    },
+    "price": {
+      "title": "Price"
+    }
   },
   "tour": {
     "item": {

@@ -85,7 +85,7 @@ export function formatCurrency(
     max_discount_amount?: number;
   },
 ): string {
-  if (!value) return '';
+  if (value === undefined || value === null) return '0';
 
   const { locale = 'vi', discount_percent = 0, max_discount_amount = 0 } = options || {};
 

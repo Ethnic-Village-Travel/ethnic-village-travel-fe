@@ -13,4 +13,5 @@ export type QueryConfig = {
   r?: string;
   min?: number;
   max?: number;
+  date?: string;
 };
