@@ -28,7 +28,13 @@ export default function LanguageSwitcher() {
     if (newLocale === locale) return;
 
     const segments = pathname.split('/');
-    segments[1] = newLocale;
+
+    if (AppConstant.defaultLocale === locale) {
+      segments.splice(1, 0, newLocale);
+    } else {
+      segments[1] = newLocale;
+    }
+
     const newPath = segments.join('/');
 
     startTransition(() => {

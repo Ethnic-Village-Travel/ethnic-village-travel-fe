@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { RouteConstant } from '@/constants/route';
 import { cn, createSearchParams } from '@/utils';
 import { format, parseISO } from 'date-fns';
 import { vi } from 'date-fns/locale';
@@ -49,7 +50,7 @@ export function SearchBar({ className }: SearchBarProps) {
       date: searchData.date?.toISOString().split('T')[0],
     });
 
-    router.push(`${pathname}?${params.toString()}`);
+    router.push(`${RouteConstant.tour}?${params.toString()}`);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
