@@ -1,6 +1,8 @@
 import { FilterConfig, FILTERS } from '@/data/filters';
 import { toSnakeCase } from '@/utils';
+import { omitBy } from 'lodash';
 
+import { TourListParams } from '@/types/tour.type';
 import { SORT_OPTIONS } from '@/components/features/tour/header-section';
 
 import { useTourSearchQueryConfig } from '../use-query-config';
@@ -48,56 +50,43 @@ export const useFilteredTourList = (pageSize: number = 12) => {
   const { data: ethnicRes } = useEthnicList();
   const { data: locationRes } = useLocationList();
 
-  // Handle ethnic and location filters
-  const ethnicIds = getFilterIds(queryConfig.e, ethnicRes?.data, ethnic => ethnic.code);
-
-  const locationIds = getFilterIds(queryConfig.l, locationRes?.data, location => toSnakeCase(location.city));
-
-  // Convert price values
-  const minPrice = queryConfig.min ? Number(queryConfig.min) : undefined;
-  const maxPrice = queryConfig.max ? Number(queryConfig.max) : undefined;
-
-  // Handle popular filters (on_sale)
-  const popularValues = queryConfig.p ? (Array.isArray(queryConfig.p) ? queryConfig.p : [queryConfig.p]) : [];
-  const onSale = popularValues.includes('on_sale');
-
-  // Handle duration filter
-  const durationValue = getFilterValue(
-    FILTERS.duration,
-    queryConfig.d,
-    (value): value is { min: number; max?: number } => typeof value === 'object' && value !== null,
+  const filterParams: TourListParams = omitBy(
+    {
+      page: queryConfig.page || 0,
+      size: pageSize,
+      ethnicIds: getFilterIds(queryConfig.e, ethnicRes?.data, ethnic => ethnic.code),
+      locationIds: getFilterIds(queryConfig.l, locationRes?.data, location => location.city),
+      minPrice: queryConfig.min,
+      maxPrice: queryConfig.max,
+      onSale: queryConfig.p
+        ? (Array.isArray(queryConfig.p) ? queryConfig.p : [queryConfig.p]).includes('on_sale')
+        : false,
+      rating: getFilterValue(FILTERS.rating, queryConfig.r, (value): value is number => typeof value === 'number'),
+      minDuration: getFilterValue(
+        FILTERS.duration,
+        queryConfig.d,
+        (value): value is { min: number; max?: number } => typeof value === 'object' && value !== null,
+      )?.min,
+      maxDuration: getFilterValue(
+        FILTERS.duration,
+        queryConfig.d,
+        (value): value is { min: number; max?: number } => typeof value === 'object' && value !== null,
+      )?.max,
+      searchKey: queryConfig.search,
+      date: queryConfig.date,
+      order: queryConfig.order,
+      sortBy: queryConfig.sort_by,
+    },
+    (v, k) => {
+      return v === undefined || v === null || (Array.isArray(v) && v.length === 0);
+    },
   );
-  const minDuration = durationValue?.min;
-  const maxDuration = durationValue?.max;
 
-  if (queryConfig.sort_by === SORT_OPTIONS.PRICE_ASC.sortBy) {
-    queryConfig.sort_by = 'adultPrice';
-  }
-
-  // Handle rating filter
-  const rating = getFilterValue(FILTERS.rating, queryConfig.r, (value): value is number => typeof value === 'number');
-
-  // Get tour list with filters
-  const { data: response, isLoading } = useTourList({
-    page: queryConfig.page || 0,
-    size: pageSize,
-    sortBy: queryConfig.sort_by,
-    order: queryConfig.order || 'desc',
-    ethnicIds,
-    locationIds,
-    minPrice,
-    maxPrice,
-    onSale,
-    rating,
-    minDuration,
-    maxDuration,
-  });
-
-  const tourRes = response?.data;
+  const { data: tourRes, isLoading } = useTourList(filterParams);
 
   return {
-    tours: tourRes?.content || [],
-    totalPages: tourRes?.totalPages || 0,
+    tours: tourRes?.data?.content || [],
+    totalPages: tourRes?.data?.totalPages || 0,
     isLoading,
   };
 };

@@ -3,6 +3,45 @@
     "title": "Xin chào thế giới!",
     "about": "Đi đến trang giới thiệu"
   },
+  "search": {
+    "location_placeholder": "Chọn địa điểm",
+    "keyword_placeholder": "Tìm kiếm điểm đến...",
+    "date_placeholder": "Chọn ngày",
+    "search_button": "Tìm kiếm",
+    "searching": "Đang tìm kiếm...",
+    "no_results": "Không tìm thấy kết quả",
+    "results_count": "Tìm thấy {count} tour",
+    "clear_search": "Xóa bộ lọc",
+    "search_error": "Có lỗi xảy ra khi tìm kiếm"
+  },
+  "filters": {
+    "ethnic": {
+      "title": "Dân tộc"
+    },
+    "popular": {
+      "title": "Bộ lọc phổ biến",
+      "on_sale": "ĐANG GIẢM GIÁ"
+    },
+    "location": {
+      "title": "Địa điểm"
+    },
+    "duration": {
+      "title": "Thời gian",
+      "1_day": "1 Ngày",
+      "2_3_days": "2-3 Ngày",
+      "4_7_days": "4-7 Ngày",
+      "7_plus_days": "7+ Ngày"
+    },
+    "rating": {
+      "title": "Đánh giá",
+      "5_stars": "5 sao",
+      "4_stars_up": "4 sao trở lên",
+      "3_stars_up": "3 sao trở lên"
+    },
+    "price": {
+      "title": "Giá"
+    }
+  },
   "tour": {
     "item": {
       "max_slots": "Tối đa: {slots}",
@@ -12,6 +51,9 @@
     },
     "list": {
       "title": "Tour du lịch",
+      "search_results": "Kết quả tìm kiếm cho \"{keyword}\"",
+      "filter_by": "Lọc theo",
+      "clear_filters": "Xóa bộ lọc",
       "empty": {
         "title": "Không tìm thấy tour nào",
         "description": "Hãy thử điều chỉnh bộ lọc để tìm thấy những gì bạn đang tìm kiếm."

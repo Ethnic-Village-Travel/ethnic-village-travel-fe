@@ -1,19 +1,19 @@
 'use client';
 
 import { FilterItem, FILTERS } from '@/data/filters';
-import { toSnakeCase } from '@/utils/string';
 
 import { useEthnicList } from '@/hooks/api/useEthnic';
 import { useLocationList } from '@/hooks/api/useLocation';
 
-import { FilterCardGroup, PriceFilterCard } from '../filter-card';
+import FilterCardGroup from '../filter-card/filter-card-group';
+import PriceFilterCard from '../filter-card/price-filter-card';
 
 export default function FilterSection() {
   const { data: locationRes } = useLocationList();
   const locationItems: FilterItem[] =
     locationRes?.data.map(l => ({
       label: l.city,
-      value: toSnakeCase(l.city),
+      value: l.city,
       id: l.id,
     })) || [];
 

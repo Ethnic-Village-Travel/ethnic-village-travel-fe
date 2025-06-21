@@ -21,12 +21,12 @@ export const SORT_OPTIONS = {
     labelKey: 'sort.default',
   },
   PRICE_ASC: {
-    sortBy: 'price',
+    sortBy: 'adultPrice',
     order: 'asc',
     labelKey: 'sort.price_low_high',
   },
   PRICE_DESC: {
-    sortBy: 'price',
+    sortBy: 'adultPrice',
     order: 'desc',
     labelKey: 'sort.price_high_low',
   },

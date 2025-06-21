@@ -1,4 +1,4 @@
-import { API, API_ROOT } from '@/core/api';
+import { API } from '@/core/api';
 import api from '@/core/api/api';
 import { encodeQueryData } from '@/core/api/utils';
 

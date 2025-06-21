@@ -1,26 +1,28 @@
-import isUndefined from 'lodash/isUndefined';
+import { isUndefined } from 'lodash';
 import omitBy from 'lodash/omitBy';
 
 import { OrderTourQueryConfig, QueryConfig } from '@/types/query.type';
 
 import { useQueryParams } from './use-query-params';
 
-export const useTourSearchQueryConfig = () => {
-  const queryParams: QueryConfig = useQueryParams();
+export const useQueryConfig = () => {
+  const queryParams = useQueryParams();
 
   const queryConfig: QueryConfig = omitBy(
     {
       page: queryParams.page || 0,
-      searchKey: queryParams.searchKey,
-      e: queryParams.e || [],
-      p: queryParams.p || [],
-      l: queryParams.l || [],
+      status: queryParams.status?.split(',') || [],
+      e: queryParams.e?.split(',') || [],
+      p: queryParams.p?.split(',') || [],
+      l: queryParams.l?.split(',') || [],
       d: queryParams.d,
       r: queryParams.r,
-      min: queryParams.min ? Number(queryParams.min) : undefined,
-      max: queryParams.max ? Number(queryParams.max) : undefined,
+      min: queryParams.min ? Number(queryParams.min) : 0,
+      max: queryParams.max ? Number(queryParams.max) : 20000000,
       sort_by: queryParams.sort_by || undefined,
       order: queryParams.order || undefined,
+      search: queryParams.search,
+      date: queryParams.date,
     },
     isUndefined,
   );
@@ -38,7 +40,9 @@ export const useOrderTourQueryConfig = () => {
       adult: queryParams.adult,
       child: queryParams.child,
     },
-    isUndefined,
+    (v, k) => {
+      return v === undefined || v === null;
+    },
   );
 
   return queryConfig;

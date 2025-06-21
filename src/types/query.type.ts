@@ -4,7 +4,7 @@ export type QueryConfig = Partial<{
   limit: string;
   sort_by: string;
   order: 'asc' | 'desc';
-  searchKey: string;
+  search: string;
   status: string[];
   e: string[];
   p: string[];
@@ -13,6 +13,7 @@ export type QueryConfig = Partial<{
   r: string;
   min: number;
   max: number;
+  date: string;
 }>;
 
 export type OrderTourQueryConfig = Partial<{
