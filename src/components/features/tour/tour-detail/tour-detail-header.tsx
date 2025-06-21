@@ -42,7 +42,7 @@ const TourDetailHeader = (tour: Tour) => {
           {/* Location Section */}
           <div className="flex flex-col gap-1.5">
             <span className="text-sm text-gray-500">{t('location')}</span>
-            <span className="text-base text-dark">{tour.locations.map(location => location.city).join(' - ')}</span>
+            <span className="text-base text-dark">{tour.locations?.map(location => location.city).join(' - ')}</span>
           </div>
         </div>
 

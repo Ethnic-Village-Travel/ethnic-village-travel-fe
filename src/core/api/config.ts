@@ -32,4 +32,9 @@ export const API = {
     PIN: '/review/pin',
     REPORT: '/review/report',
   },
+  BOOKING: {
+    GET: '/booking',
+    STORE: '/booking/store',
+    UPDATE: '/booking/update',
+  },
 };
