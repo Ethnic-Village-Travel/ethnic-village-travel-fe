@@ -3,50 +3,32 @@ import api from '@/core/api/api';
 import { encodeQueryData } from '@/core/api/utils';
 
 import { ApiResponse } from '@/types/api.type';
-import { Tour } from '@/types/tour.type';
-
-export interface TourListParams {
-  page?: number;
-  size?: number;
-  sortBy?: string;
-  order?: 'asc' | 'desc';
-  ethnicIds: number[] | undefined;
-  locationIds: number[] | undefined;
-  minPrice?: number;
-  maxPrice?: number;
-  onSale?: boolean;
-  rating?: number;
-  minDuration?: number;
-  maxDuration?: number;
-}
-
-export interface TourListResponse {
-  content: Tour[];
-  totalElements: number;
-  totalPages: number;
-  number: number;
-  size: number;
-  first: boolean;
-  last: boolean;
-  numberOfElements: number;
-  empty: boolean;
-}
+import { Tour, TourListParams, TourListResponse } from '@/types/tour.type';
 
 export const tourApi = {
   getTourList: async (params: TourListParams): Promise<ApiResponse<TourListResponse>> => {
-    const queryParams = {
-      ...params,
-      ethnicIds: params.ethnicIds?.join(','),
-      locationIds: params.locationIds?.join(','),
-    };
+    try {
+      const queryParams = {
+        ...params,
+        ethnicIds: params.ethnicIds?.join(','),
+        locationIds: params.locationIds?.join(','),
+      };
 
-    const queryString = encodeQueryData(queryParams);
-    const response = await api.get<ApiResponse<TourListResponse>>(`${API.TOUR.SEARCH}?${queryString}`);
-    return response.data;
+      const queryString = encodeQueryData(queryParams);
+      const { data } = await api.get<ApiResponse<TourListResponse>>(`${API.TOUR.SEARCH}?${queryString}`);
+
+      return data;
+    } catch {
+      throw new Error('Failed to get tour list');
+    }
   },
 
   getTourDetail: async (slug: string): Promise<ApiResponse<Tour>> => {
-    const response = await api.get<ApiResponse<Tour>>(`${API.TOUR.DETAIL}/${slug}`);
-    return response.data;
+    try {
+      const { data } = await api.get<ApiResponse<Tour>>(`${API.TOUR.DETAIL}/${slug}`);
+      return data;
+    } catch {
+      throw new Error('Failed to get tour list');
+    }
   },
 };

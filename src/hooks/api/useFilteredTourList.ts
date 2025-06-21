@@ -1,10 +1,9 @@
 import { FilterConfig, FILTERS } from '@/data/filters';
 import { toSnakeCase } from '@/utils';
 
-import { Tour } from '@/types/tour.type';
 import { SORT_OPTIONS } from '@/components/features/tour/header-section';
 
-import { useQueryConfig } from '../use-query-config';
+import { useTourSearchQueryConfig } from '../use-query-config';
 import { useEthnicList } from './useEthnic';
 import { useLocationList } from './useLocation';
 import { useTourList } from './useTour';
@@ -45,7 +44,7 @@ const getFilterIds = <T extends EntityWithId>(
 };
 
 export const useFilteredTourList = (pageSize: number = 12) => {
-  const queryConfig = useQueryConfig();
+  const queryConfig = useTourSearchQueryConfig();
   const { data: ethnicRes } = useEthnicList();
   const { data: locationRes } = useLocationList();
 

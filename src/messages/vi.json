@@ -60,7 +60,9 @@
         "no_slots": "Hết chỗ",
         "select_date": "Vui lòng chọn ngày",
         "booking_failed": "Đặt tour thất bại",
-        "booking_failed_out_of_stock": "Số lượng chỗ trống không đủ"
+        "booking_failed_out_of_stock": "Số lượng chỗ trống không đủ",
+        "discount": "Giảm giá",
+        "max": "Tối đa"
       },
       "reviews": {
         "total_reviews": "{count} đánh giá",
@@ -193,6 +195,50 @@
         "subscribe": "Đăng ký"
       },
       "copyright": "©2023 Travo Bảo lưu mọi quyền"
+    }
+  },
+  "order": {
+    "additional_info": {
+      "title": "Yêu cầu bổ sung (không bắt buộc)",
+      "placeholder": "Chia sẻ trải nghiệm của bạn...",
+      "format_note": "Định dạng: Tiếng Anh hoặc ngôn ngữ địa phương tại điểm đến. Yêu cầu tùy thuộc vào tình hình thực tế của nhà cung cấp."
+    },
+    "contact_info": {
+      "title": "Thông tin liên hệ",
+      "phone": "Số điện thoại",
+      "email": "Email",
+      "phone_placeholder": "Nhập số điện thoại của bạn",
+      "email_placeholder": "Nhập email của bạn",
+      "visitor": "Tôi là khách du lịch",
+      "order_for_others": "Tôi đặt cho người khác"
+    },
+    "guest_info": {
+      "title": "Thông tin khách",
+      "phone": "Số điện thoại",
+      "email": "Email",
+      "phone_placeholder": "Nhập số điện thoại của bạn",
+      "email_placeholder": "Nhập email của bạn"
+    },
+    "tour_info": {
+      "tour_guide": "Hướng dẫn viên",
+      "pickup_location": "Điểm đón",
+      "review": "Đánh giá",
+      "days": "Ngày",
+      "location": "Địa điểm",
+      "adults": "Người lớn",
+      "children": "Trẻ em"
+    },
+    "booking_calculator": {
+      "adult": "Người lớn",
+      "children": "Trẻ em",
+      "coupon_discount": "Mã giảm giá",
+      "enter_promotion": "Nhập mã khuyến mãi",
+      "book_now": "Đặt ngay"
+    },
+    "pick_drop_location": {
+      "title": "Điểm đón/trả khách",
+      "location": "Địa điểm",
+      "address": "Địa chỉ"
     }
   }
 }

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/utils';
 
 import { useFilteredTourList } from '@/hooks/api/useFilteredTourList';
-import { useQueryConfig } from '@/hooks/use-query-config';
+import { useTourSearchQueryConfig } from '@/hooks/use-query-config';
 import { TourItem } from '@/components/features/tour';
 import PaginationClient from '@/components/shared/pagination-client';
 
@@ -21,7 +21,7 @@ export default function TourContentSection() {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const router = useRouter();
   const searchParams = useSearchParams();
-  const queryConfig = useQueryConfig();
+  const queryConfig = useTourSearchQueryConfig();
 
   const sortBy = searchParams.get('sort_by') || 'default';
   const order = searchParams.get('order') || 'desc';
