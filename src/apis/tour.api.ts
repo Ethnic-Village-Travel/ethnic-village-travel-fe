@@ -28,7 +28,7 @@ export const tourApi = {
       const { data } = await api.get<ApiResponse<Tour>>(`${API.TOUR.DETAIL}/${slug}`);
       return data;
     } catch {
-      throw new Error('Failed to get tour list');
+      throw new Error('Failed to get tour detail');
     }
   },
 };
