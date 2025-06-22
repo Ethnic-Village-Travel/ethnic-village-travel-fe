@@ -11,5 +11,9 @@ export const useBookingStore = create<BookingState>(set => ({
   selectedDateId: null,
   availableSlots: null,
   setSelectedDate: (dateId, slots) => set({ selectedDateId: dateId, availableSlots: slots }),
-  reset: () => set({ selectedDateId: null, availableSlots: null }),
+  reset: () =>
+    set({
+      selectedDateId: null,
+      availableSlots: null,
+    }),
 }));

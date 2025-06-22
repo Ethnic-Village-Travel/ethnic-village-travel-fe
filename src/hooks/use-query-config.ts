@@ -1,6 +1,7 @@
+import { isUndefined } from 'lodash';
 import omitBy from 'lodash/omitBy';
 
-import { QueryConfig } from '@/types/query.type';
+import { OrderTourQueryConfig, QueryConfig } from '@/types/query.type';
 
 import { useQueryParams } from './use-query-params';
 
@@ -22,8 +23,22 @@ export const useQueryConfig = () => {
       order: queryParams.order || undefined,
       search: queryParams.search,
       date: queryParams.date,
-      // perPage: queryParams.perPage || 10,
-      // limit: queryParams.limit || '10',
+    },
+    isUndefined,
+  );
+
+  return queryConfig;
+};
+
+export const useOrderTourQueryConfig = () => {
+  const queryParams: OrderTourQueryConfig = useQueryParams();
+
+  const queryConfig: OrderTourQueryConfig = omitBy(
+    {
+      tour: queryParams.tour,
+      availableDate: queryParams.availableDate,
+      adult: queryParams.adult,
+      child: queryParams.child,
     },
     (v, k) => {
       return v === undefined || v === null;

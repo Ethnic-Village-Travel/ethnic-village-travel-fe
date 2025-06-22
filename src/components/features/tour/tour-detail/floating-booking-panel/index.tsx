@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
 import { useBookingStore } from '@/store/useBookingStore';
 import { useTranslations } from 'next-intl';
@@ -20,6 +20,8 @@ const FloatingBookingPanel = ({ tour }: FloatingBookingPanelProps) => {
   const { selectedDateId, availableSlots } = useBookingStore();
   const { toast } = useToast();
   const t = useTranslations('tour.detail.booking');
+  const params = useParams();
+  const tourSlug = params.slug as string;
 
   const handleBook = (quantities: { adult: number; child: number }) => {
     if (availableSlots && availableSlots < quantities.adult + quantities.child) {
@@ -32,7 +34,7 @@ const FloatingBookingPanel = ({ tour }: FloatingBookingPanelProps) => {
 
     router.push(
       RouteConstant.order +
-        `?tour=${tour.slug}&availableDate=${selectedDateId}&adult=${quantities.adult}&child=${quantities.child}`,
+        `?tour=${tourSlug}&availableDate=${selectedDateId}&adult=${quantities.adult}&child=${quantities.child}`,
     );
   };
 

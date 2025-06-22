@@ -1,3 +1,6 @@
+import { TourInfo } from '@/types/booking.type';
+import { Tour } from '@/types/tour.type';
+
 const EXCEEDING_LIMIT_VALUE = 1.79769313e308;
 const STANDARD_SUFFIXES = ['', 'K', 'M', 'B', 'T'];
 const VND_TO_USD_RATE = 25000;
@@ -36,6 +39,31 @@ export function formatShortNumber(number: number | string | bigint | undefined |
   }
 
   return `${Number(formattedValue.toFixed(decimals))}${suffix}`;
+}
+
+export function calculateTotalPrice(quantities: { adult: number; child: number }, tour: Tour | TourInfo) {
+  const adultSubtotal = quantities.adult * (tour.adultPrice || 0);
+  const childSubtotal = quantities.child * (tour.childPrice || 0);
+
+  if (!tour.promotions?.[0]?.discountPercent) {
+    return adultSubtotal + childSubtotal;
+  }
+
+  // Calculate discount for adult tickets
+  const adultDiscountAmount = Math.min(
+    (tour.promotions?.[0]?.discountPercent / 100) * adultSubtotal,
+    tour.promotions?.[0]?.maxDiscountAmount || Number.MAX_VALUE,
+  );
+  const adultTotal = adultSubtotal - adultDiscountAmount;
+
+  // Calculate discount for child tickets
+  const childDiscountAmount = Math.min(
+    (tour.promotions?.[0]?.discountPercent / 100) * childSubtotal,
+    tour.promotions?.[0]?.maxDiscountAmount || Number.MAX_VALUE,
+  );
+  const childTotal = childSubtotal - childDiscountAmount;
+
+  return adultTotal + childTotal;
 }
 
 export function formatNumber(

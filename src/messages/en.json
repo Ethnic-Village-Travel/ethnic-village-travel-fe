@@ -102,7 +102,9 @@
         "no_slots": "No slots available",
         "select_date": "Please select a date",
         "booking_failed": "Booking failed",
-        "booking_failed_out_of_stock": "Out of stock"
+        "booking_failed_out_of_stock": "Out of stock",
+        "discount": "Discount",
+        "max": "Max"
       },
       "reviews": {
         "total_reviews": "{count} reviews",
@@ -235,6 +237,50 @@
         "subscribe": "Subscribe"
       },
       "copyright": "©2023 Travo All Rights are reserved️"
+    }
+  },
+  "order": {
+    "additional_info": {
+      "title": "Additional requirements (optional)",
+      "placeholder": "Share your experience...",
+      "format_note": "Format: English or local language at destination. Requirements subject to actual situation of the supplier."
+    },
+    "contact_info": {
+      "title": "Contact Information",
+      "phone": "Phone",
+      "email": "Email",
+      "phone_placeholder": "Enter your Phone",
+      "email_placeholder": "Enter your Email",
+      "visitor": "I am a visitor",
+      "order_for_others": "I order for others"
+    },
+    "guest_info": {
+      "title": "Guest information",
+      "phone": "Phone",
+      "email": "Email",
+      "phone_placeholder": "Enter your Phone",
+      "email_placeholder": "Enter your Email"
+    },
+    "tour_info": {
+      "tour_guide": "Tour guide",
+      "pickup_location": "Pick-up location",
+      "review": "Review",
+      "days": "Days",
+      "location": "Location",
+      "adults": "Adults",
+      "children": "Children"
+    },
+    "booking_calculator": {
+      "adult": "Adult",
+      "children": "Children",
+      "coupon_discount": "Coupon Discount",
+      "enter_promotion": "Enter promotion code",
+      "book_now": "Book Now"
+    },
+    "pick_drop_location": {
+      "title": "Pick-up/Drop-off location",
+      "location": "Location",
+      "address": "Address"
     }
   }
 }
