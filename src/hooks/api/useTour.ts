@@ -1,4 +1,4 @@
-import { tourApi, TourListParams } from '@/apis/tour.api';
+import { TabType, tourApi, TourListParams } from '@/apis/tour.api';
 import { useQuery } from '@tanstack/react-query';
 
 import { ApiResponse } from '@/types/api.type';
@@ -21,5 +21,12 @@ export const useTourDetail = (slug: string) => {
     queryKey: [TOUR_QUERY_KEY.DETAIL, slug],
     queryFn: () => tourApi.getTourDetail(slug),
     enabled: !!slug,
+  });
+};
+
+export const useFilteredTours = (tabType: TabType) => {
+  return useQuery({
+    queryKey: ['filtered-tours', tabType],
+    queryFn: () => tourApi.getFilteredTours(tabType),
   });
 };

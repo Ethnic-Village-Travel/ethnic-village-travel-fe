@@ -1,7 +1,17 @@
 {
+  "common": {
+    "error_loading_list": "An error occurred while loading the list",
+    "no_results": "No results found",
+    "view_more": "View more"
+  },
   "home": {
     "title": "Hello world!",
-    "about": "Go to about page"
+    "about": "Go to about page",
+    "tour": {
+      "popular": "Popular",
+      "outstanding": "Outstanding",
+      "best_price": "Best Price"
+    }
   },
   "search": {
     "location_placeholder": "Choose location",

@@ -34,6 +34,8 @@ export interface TourListResponse {
   empty: boolean;
 }
 
+export type TabType = 'popular' | 'outstanding' | 'best_price';
+
 export const tourApi = {
   getTourList: async (params: TourListParams): Promise<ApiResponse<TourListResponse>> => {
     const queryParams = {
@@ -49,6 +51,11 @@ export const tourApi = {
 
   getTourDetail: async (slug: string): Promise<ApiResponse<Tour>> => {
     const response = await api.get<ApiResponse<Tour>>(`${API.TOUR.DETAIL}/${slug}`);
+    return response.data;
+  },
+
+  getFilteredTours: async (tabType: TabType = 'popular'): Promise<ApiResponse<Tour[]>> => {
+    const response = await api.get<ApiResponse<Tour[]>>(`${API.TOUR.FILTER_TAB}?tabType=${tabType}`);
     return response.data;
   },
 };
