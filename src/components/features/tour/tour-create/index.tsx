@@ -154,14 +154,14 @@ export default function TourCreateContent() {
                             <SelectValue placeholder="Select location">
                               {field.value && (
                                 <span className="font-medium">
-                                  {MOCK_LOCATIONS.find(loc => loc.id === field.value)?.city}
+                                  {MOCK_LOCATIONS.find(loc => loc.id === Number(field.value))?.city}
                                 </span>
                               )}
                             </SelectValue>
                           </SelectTrigger>
                           <SelectContent>
                             {MOCK_LOCATIONS.map(option => (
-                              <SelectItem key={option.id} value={option.id}>
+                              <SelectItem key={option.id} value={option.id.toString()}>
                                 <div className="flex flex-col">
                                   <div className="flex gap-2">
                                     <span className="text-sm font-semibold">{option.city}</span>

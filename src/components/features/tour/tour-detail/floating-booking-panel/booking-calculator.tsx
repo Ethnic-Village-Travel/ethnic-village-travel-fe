@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useBookingStore } from '@/store/useBookingStore';
 import { cn } from '@/utils/classnames';
-import { formatCurrency } from '@/utils/number';
+import { calculateTotalPrice, formatCurrency } from '@/utils/number';
 import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
@@ -61,7 +61,7 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
     child: 0,
   });
 
-  const totalPrice = quantities.adult * (tour.adultPrice || 0) + quantities.child * (tour.childPrice || 0);
+  const totalPrice = calculateTotalPrice(quantities, tour);
   const totalQuantity = quantities.adult + quantities.child;
 
   const handleQuantityChange = (type: keyof typeof quantities) => (value: number) => {
@@ -105,6 +105,16 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
         locale={locale}
         onChange={handleQuantityChange('child')}
       />
+
+      {tour.promotions && tour.promotions.length > 0 && (
+        <div className="flex items-center justify-between">
+          <span className="text-dark-900 text-base font-bold">{t('discount')}</span>
+          <span className="text-dark-900 text-base">
+            {tour.promotions[0].discountPercent}% ({t('max')}{' '}
+            {formatCurrency(tour.promotions[0].maxDiscountAmount || 0, { locale })})
+          </span>
+        </div>
+      )}
 
       <div className="flex items-center justify-between">
         <span className="text-dark-900 text-base font-bold">{t('total')}</span>
