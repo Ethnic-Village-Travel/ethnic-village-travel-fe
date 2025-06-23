@@ -10,6 +10,9 @@ export const RouteConstant = {
   article_detail: '/article/:slug',
 
   order: '/order',
+  order_detail: '/order/:id',
+
+  payment: '/payment/:id',
 
   personal_bookmark: '/personal/bookmark',
   personal_transaction: '/personal/transaction',
