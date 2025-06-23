@@ -103,6 +103,7 @@
         "select_date": "Vui lòng chọn ngày",
         "booking_failed": "Đặt tour thất bại",
         "booking_failed_out_of_stock": "Số lượng chỗ trống không đủ",
+        "booking_failed_invalid_data": "Dữ liệu không hợp lệ",
         "discount": "Giảm giá",
         "max": "Tối đa"
       },
@@ -247,19 +248,23 @@
     },
     "contact_info": {
       "title": "Thông tin liên hệ",
-      "phone": "Số điện thoại",
-      "email": "Email",
-      "phone_placeholder": "Nhập số điện thoại của bạn",
-      "email_placeholder": "Nhập email của bạn",
-      "visitor": "Tôi là khách du lịch",
-      "order_for_others": "Tôi đặt cho người khác"
+      "booker_name": "Họ tên",
+      "booker_phone": "Số điện thoại",
+      "booker_email": "Email",
+      "enter_name": "Nhập họ tên của bạn",
+      "enter_phone": "Nhập số điện thoại của bạn",
+      "enter_email": "Nhập email của bạn",
+      "visitor": "Tôi là khách tham quan",
+      "order_for_others": "Đặt cho người khác"
     },
     "guest_info": {
       "title": "Thông tin khách",
+      "name": "Họ tên",
       "phone": "Số điện thoại",
       "email": "Email",
-      "phone_placeholder": "Nhập số điện thoại của bạn",
-      "email_placeholder": "Nhập email của bạn"
+      "enter_name": "Nhập họ tên của bạn",
+      "enter_phone": "Nhập số điện thoại của bạn",
+      "enter_email": "Nhập email của bạn"
     },
     "tour_info": {
       "tour_guide": "Hướng dẫn viên",
@@ -275,12 +280,28 @@
       "children": "Trẻ em",
       "coupon_discount": "Mã giảm giá",
       "enter_promotion": "Nhập mã khuyến mãi",
-      "book_now": "Đặt ngay"
+      "book_now": "Đặt ngay",
+      "confirm_failed": "Đặt tour thất bại",
+      "contact_info_required": "Thông tin liên hệ là bắt buộc",
+      "guest_info_required": "Thông tin khách là bắt buộc"
     },
     "pick_drop_location": {
       "title": "Điểm đón/trả khách",
       "location": "Địa điểm",
       "address": "Địa chỉ"
+    },
+    "promotion": {
+      "errors": {
+        "not_found": "Không tìm thấy mã khuyến mãi",
+        "inactive": "Mã khuyến mãi chưa được kích hoạt",
+        "expired": "Mã khuyến mãi đã hết hạn",
+        "out_of_stock": "Mã khuyến mãi đã hết lượt sử dụng"
+      },
+      "success": "Áp dụng mã khuyến mãi thành công",
+      "discount": "Giảm giá",
+      "max": "Tối đa",
+      "promotion_code": "Mã khuyến mãi",
+      "apply": "Áp dụng"
     }
   }
 }

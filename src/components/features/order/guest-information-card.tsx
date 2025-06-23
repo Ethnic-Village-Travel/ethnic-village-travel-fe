@@ -1,41 +1,80 @@
+import { PersonInfo, useBookingStore } from '@/store/useBookingStore';
+import { useTranslations } from 'next-intl';
 import { z } from 'zod';
 
-import { FormField } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { BookingGetResponse } from '@/types/booking';
+import CardUpdate, { CardUpdateField } from '@/components/features/card-update/card-update';
 
-import { CardUpdate, CardUpdateChildren } from '../card-update';
+import { BOOKING_TYPE } from './contact-information-card';
 
 const formSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email address'),
   phone: z.string().regex(/^[0-9]{10}$/, 'Phone number must have 10 digits'),
 });
 
-const GUEST_INFORMATION: CardUpdateChildren[] = [
-  {
-    name: 'phone',
-    label: <span className="text-lg font-semibold text-gray-500">Phone</span>,
-    defaultChildren: <span className="text-base font-semibold">+84788641673</span>,
-    defaultValue: '+84788641673',
-    children: <FormField name="phone" render={({ field }) => <Input placeholder="Enter your Phone" {...field} />} />,
-  },
-  {
-    name: 'email',
-    label: <span className="text-lg font-semibold text-gray-500">Email</span>,
-    defaultChildren: <span className="text-base font-semibold">phanxuansy@gmail.com</span>,
-    defaultValue: 'phanxuansy@gmail.com',
-    children: <FormField name="email" render={({ field }) => <Input placeholder="Enter your Email" {...field} />} />,
-  },
-];
+interface GuestInformationCardProps {
+  booking?: BookingGetResponse;
+}
 
-export default function ContactInformationCard() {
+const TRANSLATION_NAMESPACE = 'order.guest_info';
+
+export default function GuestInformationCard({ booking }: GuestInformationCardProps) {
+  const t = useTranslations(TRANSLATION_NAMESPACE);
+  const { bookingType, guestInfo, setGuestInfo } = useBookingStore();
+
+  const handleSubmit = async (data: { name: string; email: string; phone: string }) => {
+    setGuestInfo(data);
+  };
+
+  const getGuestInformation = (guestInfo: PersonInfo | null): CardUpdateField[] => {
+    // Get detail based on booking type
+    const detail = guestInfo || booking?.bookerDetail || booking?.passengerDetail;
+
+    return [
+      {
+        type: 'input',
+        name: 'name',
+        label: 'name',
+        defaultChildren: <span className="text-base font-semibold">{detail?.name || ''}</span>,
+        defaultValue: detail?.name || '',
+        placeholder: 'enter_name',
+        translationNamespace: TRANSLATION_NAMESPACE,
+        required: true,
+      },
+      {
+        type: 'tel',
+        name: 'phone',
+        label: 'phone',
+        defaultChildren: <span className="text-base font-semibold">{detail?.phone || ''}</span>,
+        defaultValue: detail?.phone || '',
+        placeholder: 'enter_phone',
+        translationNamespace: TRANSLATION_NAMESPACE,
+        required: true,
+      },
+      {
+        type: 'email',
+        name: 'email',
+        label: 'email',
+        defaultChildren: <span className="text-base font-semibold">{detail?.email || ''}</span>,
+        defaultValue: detail?.email || '',
+        placeholder: 'enter_email',
+        translationNamespace: TRANSLATION_NAMESPACE,
+        required: true,
+      },
+    ];
+  };
+
   return (
     <div className="flex w-full flex-col gap-4">
-      <h2 className="text-2xl font-semibold text-gray-800">Guest information</h2>
+      <h2 className="text-2xl font-semibold text-gray-800">{t('title')}</h2>
       <CardUpdate
         className="border-none shadow-custom-blue"
-        title="phan xuan s"
+        title=""
         formSchema={formSchema}
-        childrenList={GUEST_INFORMATION}
+        fields={getGuestInformation(guestInfo)}
+        onSubmit={handleSubmit}
+        defaultIsUpdating={bookingType === BOOKING_TYPE.OTHERS && !guestInfo}
       />
     </div>
   );
