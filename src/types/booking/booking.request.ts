@@ -28,8 +28,10 @@ export interface BookingUpdateRequest {
 }
 
 export interface BookingConfirmRequest {
-  guestInformation: PersonInfo | null;
-  additionalInformation: string | null;
+  promotionId?: string;
+  discountAmountApplied?: number;
+  guestInformation?: PersonInfo;
+  additionalInformation?: string;
   totalPrice: number;
   tourData: TourInfo;
 }

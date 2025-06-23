@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useState } from 'react';
 import { useBookingStore } from '@/store/useBookingStore';
 import { cn } from '@/utils/classnames';
 import { calculateTotalPriceWithPromotion, formatCurrency } from '@/utils/number';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
 import { Button } from '@/components/ui/button';
@@ -16,7 +15,7 @@ interface PersonTypeCalculatorProps {
   label: string;
   price: number;
   value: number;
-  locale: 'vi' | 'en';
+  locale: 'vi' | 'en' | 'ko';
   onChange: (value: number) => void;
 }
 
@@ -53,8 +52,7 @@ export type BookingCalculatorProps = {
 
 export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
   const t = useTranslations('tour.detail.booking');
-  const params = useParams();
-  const locale = params.locale as 'vi' | 'en';
+  const locale = useLocale() as 'vi' | 'en' | 'ko';
   const { selectedDateId, availableSlots } = useBookingStore();
   const [quantities, setQuantities] = useState({
     adult: 0,

@@ -1,12 +1,12 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
 import { useBookingStore } from '@/store/useBookingStore';
 import { applyPromotionToTotal, calculateTotalPrice, calculateTotalPriceWithPromotion, formatCurrency } from '@/utils';
 import { cn } from '@/utils/classnames';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { BookingGetResponse, BookingStoreResponse } from '@/types/booking/booking.response';
 import { PromotionValidateResponse } from '@/types/promotion.type';
@@ -46,8 +46,7 @@ interface BookingCalculatorProps {
 export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
   const t = useTranslations('order');
   const router = useRouter();
-  const params = useParams();
-  const locale = params.locale as 'vi' | 'en';
+  const locale = useLocale() as 'vi' | 'en' | 'ko';
   const { toast } = useToast();
 
   const [quantities, setQuantities] = useState({
@@ -88,6 +87,8 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
       }
 
       confirmBooking({
+        promotionId: promotion?.id,
+        discountAmountApplied: totalPrice,
         guestInformation: guestInfo,
         additionalInformation: additionalInfo,
         totalPrice: discountPrice,

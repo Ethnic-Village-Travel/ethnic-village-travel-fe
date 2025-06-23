@@ -1,7 +1,6 @@
-import { useParams } from 'next/navigation';
 import { validatePromotion } from '@/apis/promotion.api';
 import { formatCurrency } from '@/utils';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 import { BookingStoreResponse } from '@/types/booking';
@@ -18,8 +17,7 @@ type PromotionValidationFormProps = {
 
 const PromotionValidationForm = ({ promotion, booking, setPromotion }: PromotionValidationFormProps) => {
   const t = useTranslations('order.promotion');
-  const params = useParams();
-  const locale = params.locale as 'vi' | 'en';
+  const locale = useLocale() as 'vi' | 'en' | 'ko';
   const { toast } = useToast();
 
   const { register, handleSubmit } = useForm<{ code: string }>();
