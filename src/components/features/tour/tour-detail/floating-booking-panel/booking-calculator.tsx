@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useBookingStore } from '@/store/useBookingStore';
 import { cn } from '@/utils/classnames';
-import { calculateTotalPrice, formatCurrency } from '@/utils/number';
+import { calculateTotalPriceWithPromotion, formatCurrency } from '@/utils/number';
 import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
@@ -46,10 +46,10 @@ const PersonTypeCalculator = ({ label, price, value, locale, onChange }: PersonT
   );
 };
 
-interface BookingCalculatorProps {
+export type BookingCalculatorProps = {
   tour: Tour;
-  onBook?: (quantities: { adult: number; child: number }) => void;
-}
+  onBook?: (tourSlug: string, quantities: { adult: number; child: number }, availableDateId?: number) => void;
+};
 
 export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
   const t = useTranslations('tour.detail.booking');
@@ -61,7 +61,7 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
     child: 0,
   });
 
-  const totalPrice = calculateTotalPrice(quantities, tour);
+  const totalPrice = calculateTotalPriceWithPromotion(quantities, tour);
   const totalQuantity = quantities.adult + quantities.child;
 
   const handleQuantityChange = (type: keyof typeof quantities) => (value: number) => {
@@ -72,7 +72,7 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
     const newTotal = newQuantities.adult + newQuantities.child;
 
     // Only update if new total is within available slots
-    if (availableSlots === null || newTotal <= availableSlots) {
+    if (availableSlots === undefined || newTotal <= availableSlots) {
       setQuantities(newQuantities);
     }
   };
@@ -122,7 +122,7 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
       </div>
 
       <Button
-        onClick={() => onBook?.(quantities)}
+        onClick={() => onBook?.(tour.slug, quantities, selectedDateId)}
         disabled={
           !selectedDateId ||
           !availableSlots ||
