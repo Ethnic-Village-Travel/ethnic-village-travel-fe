@@ -16,6 +16,7 @@ export const API = {
   TOUR: {
     SEARCH: '/tour',
     DETAIL: '/tour',
+    FILTER_TAB: '/tour/filter-tab',
     GET_BOOKMARK_STATUS: '/tours/bookmark/status',
     TOGGLE_BOOKMARK: '/tours/bookmark',
   },

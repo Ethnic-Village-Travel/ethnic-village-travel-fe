@@ -6,7 +6,11 @@ import { LoginRequest, LoginResponse } from '@/types/auth.type';
 
 export const authApi = {
   login: async (data: LoginRequest): Promise<ApiResponse<LoginResponse>> => {
-    const response = await api.post<ApiResponse<LoginResponse>>(API.AUTH.SIGNIN, data);
-    return response.data;
+    try {
+      const response = await api.post<ApiResponse<LoginResponse>>(API.AUTH.SIGNIN, data);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to login');
+    }
   },
 };

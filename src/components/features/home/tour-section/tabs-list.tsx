@@ -1,15 +1,18 @@
+import { TabType } from '@/apis/tour.api';
 import { cn } from '@/utils/classnames';
+import { useTranslations } from 'next-intl';
 
 interface TabsListProps {
   tabs: {
-    id: string;
+    id: TabType;
     label: string;
   }[];
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  activeTab: TabType;
+  setActiveTab: (tab: TabType) => void;
 }
 
 const TabsList = ({ tabs, activeTab, setActiveTab }: TabsListProps) => {
+  const t = useTranslations('home.tour');
   return (
     <div className="flex w-full gap-3">
       {tabs.map(tab => (
@@ -24,7 +27,7 @@ const TabsList = ({ tabs, activeTab, setActiveTab }: TabsListProps) => {
           )}
           onClick={() => setActiveTab(tab.id)}
         >
-          {tab.label}
+          {t(tab.id)}
         </button>
       ))}
     </div>

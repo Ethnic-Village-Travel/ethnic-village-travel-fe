@@ -16,6 +16,7 @@ import {
   User,
 } from 'lucide-react';
 
+import { logout } from '@/lib/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Sidebar,
@@ -53,10 +54,8 @@ export default function AdminSidebar() {
   const userEmail = 'dirtylesc@gmail.com';
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    sessionStorage.clear();
-
-    router.push(RouteConstant.login);
+    logout();
+    router.push(RouteConstant.home);
   };
 
   return (
@@ -88,7 +87,7 @@ export default function AdminSidebar() {
                   <SidebarMenuItem key={item.label}>
                     <SidebarMenuButton
                       className={cn({
-                        'text-sidebar-primary-foreground hover:text-sidebar-primary-foreground bg-primary-500 hover:bg-primary-500':
+                        'bg-primary-500 text-sidebar-primary-foreground hover:bg-primary-500 hover:text-sidebar-primary-foreground':
                           pathname === item.href,
                       })}
                       onClick={() => router.push(item.href)}

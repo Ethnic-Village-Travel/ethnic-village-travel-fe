@@ -5,6 +5,8 @@ import { encodeQueryData } from '@/core/api/utils';
 import { ApiResponse } from '@/types/api.type';
 import { Tour, TourListParams, TourListResponse } from '@/types/tour.type';
 
+export type TabType = 'popular' | 'outstanding' | 'best_price';
+
 export const tourApi = {
   getTourList: async (params: TourListParams): Promise<ApiResponse<TourListResponse>> => {
     try {
@@ -30,5 +32,10 @@ export const tourApi = {
     } catch {
       throw new Error('Failed to get tour detail');
     }
+  },
+
+  getFilteredTours: async (tabType: TabType = 'popular'): Promise<ApiResponse<Tour[]>> => {
+    const response = await api.get<ApiResponse<Tour[]>>(`${API.TOUR.FILTER_TAB}?tabType=${tabType}`);
+    return response.data;
   },
 };

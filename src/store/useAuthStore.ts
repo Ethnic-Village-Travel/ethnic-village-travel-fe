@@ -1,59 +1,79 @@
+import { setCookie } from '@/utils/cookie';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { User } from '@/types/auth.type';
 
-export type AuthPopupType = 'login' | 'signup' | 'forgot-password' | 'enter-otp';
-
 interface AuthState {
-  accessToken: string | null;
-  tokenType: string | null;
-  expiresAt: string | null;
+  accessToken: string;
+  refreshToken: string;
   user: User | null;
   isAuthenticated: boolean;
-  isOpen: boolean;
-  currentPopup: AuthPopupType;
-  email: string;
-  setAuth: (data: { accessToken: string; tokenType: string; expiresAt: string; user: User }) => void;
-  logout: () => void;
-  setOpen: (isOpen: boolean) => void;
-  setCurrentPopup: (popup: AuthPopupType) => void;
-  setEmail: (email: string) => void;
+  loginOpen: boolean;
+  signupOpen: boolean;
+  forgotPasswordOpen: boolean;
+  enterOtpOpen: boolean;
+  otpEmail: string;
+  setAuth: (data: { accessToken: string; refreshToken: string; user: User | null }) => void;
+  setLoginOpen: (open: boolean) => void;
+  setSignupOpen: (open: boolean) => void;
+  setForgotPasswordOpen: (open: boolean) => void;
+  setEnterOtpOpen: (open: boolean) => void;
+  setOtpEmail: (email: string) => void;
+  closeAllPopups: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     set => ({
-      accessToken: null,
-      tokenType: null,
-      expiresAt: null,
+      accessToken: '',
+      refreshToken: '',
       user: null,
       isAuthenticated: false,
-      isOpen: false,
-      currentPopup: 'login',
-      email: '',
-      setAuth: data =>
+      loginOpen: false,
+      signupOpen: false,
+      forgotPasswordOpen: false,
+      enterOtpOpen: false,
+      otpEmail: '',
+      setAuth: ({ accessToken, refreshToken, user }) => {
+        // Set cookies cho middleware
+        if (typeof window !== 'undefined') {
+          setCookie('accessToken', accessToken, 1);
+          setCookie('refreshToken', refreshToken, 7);
+          setCookie('userRoles', JSON.stringify(user?.roles || []), 7);
+          setCookie('userPermissions', JSON.stringify(user?.permissions || []), 7);
+          setCookie('userId', user?.id?.toString() || '', 7);
+        }
+
         set({
-          accessToken: data.accessToken,
-          tokenType: data.tokenType,
-          expiresAt: data.expiresAt,
-          user: data.user,
-          isAuthenticated: true,
-        }),
-      logout: () =>
+          accessToken,
+          refreshToken,
+          user,
+          isAuthenticated: !!accessToken && !!user,
+        });
+      },
+
+      setLoginOpen: open => set({ loginOpen: open }),
+      setSignupOpen: open => set({ signupOpen: open }),
+      setForgotPasswordOpen: open => set({ forgotPasswordOpen: open }),
+      setEnterOtpOpen: open => set({ enterOtpOpen: open }),
+      setOtpEmail: email => set({ otpEmail: email }),
+      closeAllPopups: () =>
         set({
-          accessToken: null,
-          tokenType: null,
-          expiresAt: null,
-          user: null,
-          isAuthenticated: false,
+          loginOpen: false,
+          signupOpen: false,
+          forgotPasswordOpen: false,
+          enterOtpOpen: false,
         }),
-      setOpen: isOpen => set({ isOpen }),
-      setCurrentPopup: popup => set({ currentPopup: popup }),
-      setEmail: email => set({ email }),
     }),
     {
       name: 'auth-storage',
+      partialize: state => ({
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }),
     },
   ),
 );

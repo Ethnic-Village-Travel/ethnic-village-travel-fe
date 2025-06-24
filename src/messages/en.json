@@ -1,7 +1,17 @@
 {
+  "common": {
+    "error_loading_list": "An error occurred while loading the list",
+    "no_results": "No results found",
+    "view_more": "View more"
+  },
   "home": {
     "title": "Hello world!",
-    "about": "Go to about page"
+    "about": "Go to about page",
+    "tour": {
+      "popular": "Popular",
+      "outstanding": "Outstanding",
+      "best_price": "Best Price"
+    }
   },
   "bookmark": {
     "auth_required": "Please login to save this item"
@@ -156,12 +166,12 @@
       "forgot_password": "Forgot password?",
       "no_account": "Don't have an account?",
       "signup": "Sign up",
-      "sign_in": "Sign in",
+      "sign_in": "Login",
       "signing_in": "Signing in...",
       "login_success": "Login successful"
     },
     "signup": {
-      "go_to_login": "Go to login",
+      "go_to_login": "Login",
       "create_account": "Create New Account",
       "please_enter_details": "Please enter details",
       "first_name": "First Name",
@@ -173,7 +183,8 @@
       "password": "Password",
       "password_placeholder": "Enter your password",
       "agree_to_terms": "I agree to the terms and conditions",
-      "sign_up": "Sign up"
+      "sign_up": "Sign up",
+      "already_have_account": "Already have an account?"
     },
     "forgot_password": {
       "back": "Back",

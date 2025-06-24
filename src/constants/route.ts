@@ -14,6 +14,7 @@ export const RouteConstant = {
 
   payment: '/payment/:id',
 
+  personal: '/personal',
   personal_bookmark: '/personal/bookmark',
   personal_transaction: '/personal/transaction',
   personal_account: '/personal/account',

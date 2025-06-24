@@ -1,7 +1,17 @@
 {
+  "common": {
+    "error_loading_list": "Có lỗi xảy ra khi tải danh sách",
+    "no_results": "Không có kết quả",
+    "view_more": "Xem thêm"
+  },
   "home": {
     "title": "Xin chào thế giới!",
-    "about": "Đi đến trang giới thiệu"
+    "about": "Đi đến trang giới thiệu",
+    "tour": {
+      "popular": "Phổ biến",
+      "outstanding": "Đặc sắc",
+      "best_price": "Giá tốt"
+    }
   },
   "bookmark": {
     "auth_required": "Vui lòng đăng nhập để lưu mục này"
@@ -173,7 +183,8 @@
       "password": "Mật khẩu",
       "password_placeholder": "Nhập mật khẩu của bạn",
       "agree_to_terms": "Tôi đồng ý với điều khoản và điều kiện",
-      "sign_up": "Đăng ký"
+      "sign_up": "Đăng ký",
+      "already_have_account": "Đã có tài khoản?"
     },
     "forgot_password": {
       "back": "Quay lại",

@@ -2,6 +2,8 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { getCookie } from '@/utils/cookie';
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
+import { logout } from '@/lib/auth';
+
 import { API_ROOT, TIMEOUT } from './config';
 
 const instance = axios.create({
@@ -9,7 +11,6 @@ const instance = axios.create({
   timeout: TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
-    'Accept-Language': 'en',
   },
   withCredentials: true,
 });
@@ -25,11 +26,10 @@ instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const authStore = useAuthStore.getState();
     if (authStore.accessToken) {
-      config.headers.Authorization = `${authStore.tokenType} ${authStore.accessToken}`;
+      config.headers.Authorization = `Bearer ${authStore.accessToken}`;
     }
 
-    const locale = getCookie('NEXT_LOCALE');
-    config.headers['Accept-Language'] = locale || 'vi';
+    config.headers['Accept-Language'] = getCookie('NEXT_LOCALE') || 'vi';
 
     return config;
   },
@@ -55,8 +55,7 @@ instance.interceptors.response.use(
 
     // Handle unauthorized access
     if (error.response.status === 401) {
-      const authStore = useAuthStore.getState();
-      authStore.logout();
+      logout();
     }
 
     return Promise.reject(error.response.data);
