@@ -1,6 +1,10 @@
+import { EntityType } from '@/constants/entity';
+import { BookmarkStatus } from '@/constants/enum/bookmark.enum';
+
 export interface Bookmark {
-  id?: number;
-  userId?: number;
-  entityId: number;
-  entityType: string;
+  id: string;
+  entityType: EntityType;
+  entityId: string;
+  status: BookmarkStatus;
+  createdAt: string;
 }

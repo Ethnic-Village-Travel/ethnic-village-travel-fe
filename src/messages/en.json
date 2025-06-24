@@ -3,6 +3,9 @@
     "title": "Hello world!",
     "about": "Go to about page"
   },
+  "bookmark": {
+    "auth_required": "Please login to save this item"
+  },
   "search": {
     "location_placeholder": "Choose location",
     "keyword_placeholder": "Search destinations...",

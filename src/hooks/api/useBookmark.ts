@@ -1,42 +1,46 @@
-import { API } from '@/core/api';
-import api from '@/core/api/api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { bookmarkApi } from '@/apis/bookmark.api';
+import type { BookmarkRequest, BookmarkResponse } from '@/apis/bookmark.api';
+import { EntityType } from '@/constants/entity';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { Bookmark } from '@/types/bookmark.type';
+export const BOOKMARK_QUERY_KEYS = {
+  all: ['bookmarks'] as const,
+  lists: () => [...BOOKMARK_QUERY_KEYS.all, 'list'] as const,
+  list: (type: EntityType) => [...BOOKMARK_QUERY_KEYS.lists(), type] as const,
+  checks: () => [...BOOKMARK_QUERY_KEYS.all, 'check'] as const,
+  check: (entityId: string, type: EntityType) => [...BOOKMARK_QUERY_KEYS.checks(), entityId, type] as const,
+};
 
-// Get bookmark status
-async function getBookmarkStatus({ entityId, entityType }: Bookmark) {
-  const { data } = await api.get(`${API.TOUR.GET_BOOKMARK_STATUS}/${entityType}/${entityId}`);
-  return data;
-}
-
-export const useGetBookmarkStatus = ({ entityId, entityType }: Bookmark) => {
-  return useQuery({
-    queryKey: ['bookmark-status', entityId, entityType],
-    queryFn: () =>
-      getBookmarkStatus({
-        entityId: entityId,
-        entityType: entityType,
-      }),
+export const useApiBookmarkAdd = () => {
+  return useMutation({
+    mutationFn: async (request: BookmarkRequest) => {
+      const data = await bookmarkApi.addBookmark(request);
+      return data;
+    },
   });
 };
 
-// Toggle bookmark
-async function toggleBookmark({ entityId, entityType }: Bookmark) {
-  const { data } = await api.post(`${API.TOUR.TOGGLE_BOOKMARK}/${entityType}/${entityId}`);
-  return data;
-}
-
-export const useToggleBookmark = () => {
-  const queryClient = useQueryClient();
-
+export const useApiBookmarkRemove = () => {
   return useMutation({
-    mutationFn: toggleBookmark,
-    onSuccess: (_, tourId) => {
-      // Invalidate bookmark status query to refetch
-      queryClient.invalidateQueries({
-        queryKey: ['bookmark-status', tourId],
-      });
+    mutationFn: async (request: BookmarkRequest) => {
+      const data = await bookmarkApi.removeBookmark(request);
+      return data;
     },
+  });
+};
+
+export const useApiBookmarkList = (type: EntityType) => {
+  return useQuery({
+    queryKey: BOOKMARK_QUERY_KEYS.list(type),
+    queryFn: () => bookmarkApi.getBookmarks(type),
+    select: response => response.data as BookmarkResponse,
+  });
+};
+
+export const useApiBookmarkStatus = (entityId: string, type: EntityType) => {
+  return useQuery({
+    queryKey: BOOKMARK_QUERY_KEYS.check(entityId, type),
+    queryFn: () => bookmarkApi.checkBookmarkStatus(entityId, type),
+    select: response => response.data as BookmarkResponse,
   });
 };

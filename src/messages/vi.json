@@ -3,6 +3,9 @@
     "title": "Xin chào thế giới!",
     "about": "Đi đến trang giới thiệu"
   },
+  "bookmark": {
+    "auth_required": "Vui lòng đăng nhập để lưu mục này"
+  },
   "search": {
     "location_placeholder": "Chọn địa điểm",
     "keyword_placeholder": "Tìm kiếm điểm đến...",
@@ -301,6 +304,24 @@
       "discount": "Giảm giá",
       "max": "Tối đa",
       "promotion_code": "Mã khuyến mãi",
+      "apply": "Áp dụng"
+    }
+  },
+  "Common": {
+    "button": {
+      "submit": "Xác nhận",
+      "cancel": "Hủy",
+      "close": "Đóng",
+      "save": "Lưu",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "back": "Quay lại",
+      "next": "Tiếp theo"
+    }
+  },
+  "Filter": {
+    "title": "Bộ lọc",
+    "button": {
       "apply": "Áp dụng"
     }
   }

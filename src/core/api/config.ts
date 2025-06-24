@@ -42,4 +42,8 @@ export const API = {
   PROMOTION: {
     VALIDATE: '/promotion/validate',
   },
+  BOOKMARK: {
+    BASE: '/bookmark',
+    CHECK: '/bookmark/check',
+  },
 };

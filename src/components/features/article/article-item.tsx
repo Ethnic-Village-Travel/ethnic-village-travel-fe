@@ -2,13 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { EntityConstant } from '@/constants/entity';
+import { EntityType } from '@/constants/entity';
 import { RouteConstant } from '@/constants/route';
 import { cn } from '@/utils';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import BookmarkButton from '@/components/shared/bookmark-button';
+import { BookmarkButton } from '@/components/shared/bookmark-button';
 
 export interface ArticleItemProps {
   id: number;
@@ -22,6 +22,7 @@ export interface ArticleItemProps {
   description?: string;
   date?: string;
   tags?: string[];
+  isBookmarked?: boolean;
 }
 
 const ArticleItem = ({
@@ -36,6 +37,7 @@ const ArticleItem = ({
   description,
   date,
   tags,
+  isBookmarked = false,
 }: ArticleItemProps) => {
   const isHorizontal = layout === 'horizontal';
 
@@ -97,7 +99,7 @@ const ArticleItem = ({
                 </>
               )}
             </div>
-            <BookmarkButton entityId={id} entityType={EntityConstant.article} />
+            <BookmarkButton entityId={id.toString()} entityType={EntityType.ARTICLE} isBookmarked={isBookmarked} />
           </div>
         </CardContent>
       </Card>
