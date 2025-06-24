@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -8,40 +8,64 @@ import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormMessage } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
+import SharedFormField, { SharedFormFieldProps } from '@/components/shared/form-field';
 
-export type CardUpdateChildren = {
+export type CardUpdateField = Omit<SharedFormFieldProps, 'name'> & {
   name: string;
-  label: React.ReactNode;
-  defaultChildren?: React.ReactNode;
   defaultValue: string;
-  children: React.ReactNode;
 };
 
 interface CardUpdateProps {
   title: string;
   className?: string;
   formSchema: z.ZodObject<any>;
-  childrenList: CardUpdateChildren[];
+  fields: CardUpdateField[];
   footerOptions?: React.ReactNode;
+  defaultIsUpdating?: boolean;
+  onSubmit?: (data: any) => Promise<void>;
 }
 
-export default function CardUpdate({ title, className, formSchema, childrenList, footerOptions }: CardUpdateProps) {
+export default function CardUpdate({
+  title,
+  className,
+  formSchema,
+  fields = [],
+  footerOptions,
+  defaultIsUpdating = false,
+  onSubmit,
+}: CardUpdateProps) {
   type FormData = z.infer<typeof formSchema>;
-  const [isUpdating, setIsUpdating] = useState(false);
+
+  // Check if all required fields have values
+  const hasAllRequiredFields = () => {
+    return fields.every(field => {
+      if (field.required) {
+        return field.defaultValue && field.defaultValue.trim() !== '';
+      }
+      return true;
+    });
+  };
+
+  const [isUpdating, setIsUpdating] = useState(defaultIsUpdating || !hasAllRequiredFields());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<{
     success: boolean;
     message: string;
   } | null>(null);
 
+  useEffect(() => {
+    setIsUpdating(defaultIsUpdating || !hasAllRequiredFields());
+  }, [defaultIsUpdating, fields]);
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: childrenList.reduce((acc, item) => {
+    defaultValues: fields.reduce((acc, item) => {
       acc[item.name] = item.defaultValue;
       return acc;
     }, {} as FormData),
+    mode: 'onBlur',
   });
 
   const handleChange = () => {
@@ -49,27 +73,36 @@ export default function CardUpdate({ title, className, formSchema, childrenList,
   };
 
   const handleCancel = () => {
-    setIsUpdating(false);
+    if (hasAllRequiredFields()) {
+      form.reset();
+      setIsUpdating(false);
+    }
   };
 
   const handleSubmit = async (data: FormData) => {
     try {
       setIsSubmitting(true);
 
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
+      if (onSubmit) {
+        await onSubmit(data);
+      } else {
+        // Default submit behavior
+        const formData = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      }
 
       setSubmitResult({
         success: true,
         message: 'Form submitted successfully!',
       });
 
-      form.reset();
+      // Always set isUpdating to false after successful submission
+      setIsUpdating(false);
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitResult({
@@ -78,7 +111,6 @@ export default function CardUpdate({ title, className, formSchema, childrenList,
       });
     } finally {
       setIsSubmitting(false);
-      setIsUpdating(false);
     }
   };
 
@@ -96,29 +128,25 @@ export default function CardUpdate({ title, className, formSchema, childrenList,
       <CardContent className="px-5 py-3">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="grid grid-cols-2 gap-4">
-            {childrenList.map(item =>
-              !isUpdating ? (
-                <div className="m-0 flex flex-col gap-2">
-                  {item.label}
-                  {item.defaultChildren}
-                </div>
-              ) : (
-                <FormItem>
-                  <FormLabel className="font-semibold text-gray-500">{item.label}</FormLabel>
-                  <FormControl>{item.children}</FormControl>
-                  <FormMessage />
-                </FormItem>
-              ),
-            )}
+            {fields.map(field => (
+              <div key={field.name} className="flex flex-col gap-1">
+                <SharedFormField {...field} defaultChildren={!isUpdating ? field.defaultChildren : undefined} />
+                {isUpdating && form.formState.errors[field.name]?.message && (
+                  <FormMessage>{form.formState.errors[field.name]?.message?.toString()}</FormMessage>
+                )}
+              </div>
+            ))}
           </form>
         </Form>
       </CardContent>
       {isUpdating ? (
         <CardFooter className="flex justify-end gap-3">
-          <Button variant="outline" onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button onClick={() => handleSubmit(form.getValues())} disabled={isSubmitting}>
+          {hasAllRequiredFields() && (
+            <Button variant="outline" onClick={handleCancel}>
+              Cancel
+            </Button>
+          )}
+          <Button onClick={form.handleSubmit(handleSubmit)} disabled={isSubmitting || !form.formState.isValid}>
             {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
         </CardFooter>

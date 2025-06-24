@@ -1,11 +1,12 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
 import { useBookingStore } from '@/store/useBookingStore';
 import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
+import { useApiBookingStore } from '@/hooks/api/useBooking';
 import { useToast } from '@/hooks/use-toast';
 
 import { BookingCalculator } from './booking-calculator';
@@ -20,22 +21,51 @@ const FloatingBookingPanel = ({ tour }: FloatingBookingPanelProps) => {
   const { selectedDateId, availableSlots } = useBookingStore();
   const { toast } = useToast();
   const t = useTranslations('tour.detail.booking');
-  const params = useParams();
-  const tourSlug = params.slug as string;
+  const storeBooking = useApiBookingStore();
 
-  const handleBook = (quantities: { adult: number; child: number }) => {
-    if (availableSlots && availableSlots < quantities.adult + quantities.child) {
+  const handleBook = async (
+    tourSlug: string,
+    quantities: { adult: number; child: number },
+    availableDateId?: number,
+  ) => {
+    try {
+      if (!tourSlug || !availableDateId || (!quantities.adult && !quantities.child)) {
+        toast({
+          title: t('booking_failed'),
+          description: t('booking_failed_invalid_data'),
+        });
+        return;
+      }
+
+      if (availableSlots && availableSlots < quantities.adult + quantities.child) {
+        toast({
+          title: t('booking_failed'),
+          description: t('booking_failed_out_of_stock'),
+        });
+        return;
+      }
+
+      const result = await storeBooking.mutateAsync({
+        tourSlug: tourSlug,
+        availableDateId: String(availableDateId),
+        adultCount: Number(quantities.adult),
+        childCount: Number(quantities.child),
+      });
+
+      if (result) {
+        router.push(RouteConstant.order_detail.replace(':id', result.id));
+      } else {
+        toast({
+          title: t('booking_failed'),
+          description: t('booking_failed_invalid_data'),
+        });
+      }
+    } catch (error) {
       toast({
         title: t('booking_failed'),
-        description: t('booking_failed_out_of_stock'),
+        description: t('booking_failed_invalid_data'),
       });
-      return;
     }
-
-    router.push(
-      RouteConstant.order +
-        `?tour=${tourSlug}&availableDate=${selectedDateId}&adult=${quantities.adult}&child=${quantities.child}`,
-    );
   };
 
   return (

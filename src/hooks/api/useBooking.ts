@@ -1,0 +1,55 @@
+import { bookingApi } from '@/apis/booking.api';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import { BookingConfirmRequest, BookingGetResponse, BookingStoreRequest, BookingUpdateRequest } from '@/types/booking';
+
+export const useApiBookingGet = (id: string) => {
+  return useQuery({
+    queryKey: ['booking', id],
+    queryFn: () => bookingApi.get(id),
+    enabled: !!id,
+    select: response => response.data as BookingGetResponse,
+  });
+};
+
+export const useApiBookingStore = () => {
+  return useMutation({
+    mutationFn: async (request: BookingStoreRequest) => {
+      const { data } = await bookingApi.store(request);
+      return data;
+    },
+  });
+};
+
+export const useApiBookingUpdate = () => {
+  return useMutation({
+    mutationFn: async (request: BookingUpdateRequest) => {
+      const { data } = await bookingApi.update(request);
+      return data;
+    },
+  });
+};
+
+export const useApiBookingUpdateContact = () => {
+  return useMutation({
+    mutationFn: async ({
+      id,
+      contactInfo,
+    }: {
+      id: string;
+      contactInfo: { name: string; email: string; phone: string };
+    }) => {
+      const { success } = await bookingApi.updateContact(id, contactInfo);
+      return success;
+    },
+  });
+};
+
+export const useApiBookingConfirm = (id: string) => {
+  return useMutation({
+    mutationFn: async (request: BookingConfirmRequest) => {
+      const { data } = await bookingApi.confirmBooking(id, request);
+      return data;
+    },
+  });
+};

@@ -1,4 +1,5 @@
 import { useAuthStore } from '@/store/useAuthStore';
+import { getCookie } from '@/utils/cookie';
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { API_ROOT, TIMEOUT } from './config';
@@ -8,6 +9,7 @@ const instance = axios.create({
   timeout: TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
+    'Accept-Language': 'en',
   },
   withCredentials: true,
 });
@@ -25,6 +27,10 @@ instance.interceptors.request.use(
     if (authStore.accessToken) {
       config.headers.Authorization = `${authStore.tokenType} ${authStore.accessToken}`;
     }
+
+    const locale = getCookie('NEXT_LOCALE');
+    config.headers['Accept-Language'] = locale || 'vi';
+
     return config;
   },
   (error: AxiosError): Promise<AxiosError> => {

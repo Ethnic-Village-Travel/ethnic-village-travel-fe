@@ -1,4 +1,4 @@
-import { TourInfo } from '@/types/booking.type';
+import { TourInfo } from '@/types/booking/booking.type';
 import { Tour } from '@/types/tour.type';
 
 const EXCEEDING_LIMIT_VALUE = 1.79769313e308;
@@ -45,6 +45,13 @@ export function calculateTotalPrice(quantities: { adult: number; child: number }
   const adultSubtotal = quantities.adult * (tour.adultPrice || 0);
   const childSubtotal = quantities.child * (tour.childPrice || 0);
 
+  return adultSubtotal + childSubtotal;
+}
+
+export function calculateTotalPriceWithPromotion(quantities: { adult: number; child: number }, tour: Tour | TourInfo) {
+  const adultSubtotal = quantities.adult * (tour.adultPrice || 0);
+  const childSubtotal = quantities.child * (tour.childPrice || 0);
+
   if (!tour.promotions?.[0]?.discountPercent) {
     return adultSubtotal + childSubtotal;
   }
@@ -64,6 +71,19 @@ export function calculateTotalPrice(quantities: { adult: number; child: number }
   const childTotal = childSubtotal - childDiscountAmount;
 
   return adultTotal + childTotal;
+}
+
+export function applyPromotionToTotal(
+  total: number,
+  promotion?: { discountPercent?: number; maxDiscountAmount?: number },
+): number {
+  if (!promotion?.discountPercent) return total;
+
+  const discount = (promotion.discountPercent / 100) * total;
+  const maxDiscount = promotion.maxDiscountAmount ?? Number.MAX_VALUE;
+
+  const discountApplied = Math.min(discount, maxDiscount);
+  return total - discountApplied;
 }
 
 export function formatNumber(

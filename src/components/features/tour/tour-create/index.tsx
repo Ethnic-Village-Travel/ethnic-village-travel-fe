@@ -32,7 +32,6 @@ const tourSchema = z
     title: z.string().min(1, { message: 'Title is required' }),
     location: z.string().min(1, { message: 'Location is required' }),
     ethnic: z.array(z.string()).min(1, { message: 'At least one ethnic is required' }),
-    maxSlots: z.number().min(1, { message: 'Max slots must be at least 1' }),
     status: z.string().refine(
       value => {
         return Object.values(TourStatusEnum).some(status => status.value === value);
@@ -203,23 +202,6 @@ export default function TourCreateContent() {
                 />
 
                 <div className="grid grid-cols-2 gap-4">
-                  {/* Max Slots */}
-                  <FormField
-                    control={form.control}
-                    name="maxSlots"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="font-semibold">
-                          Max slots<span className="text-destructive"> *</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input type="number" {...field} onChange={e => field.onChange(parseInt(e.target.value))} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
                   {/* Status */}
                   <FormField
                     control={form.control}

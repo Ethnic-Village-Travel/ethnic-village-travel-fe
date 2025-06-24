@@ -7,8 +7,21 @@ interface FormatTourDatesOptions {
   dateFormat?: string;
 }
 
-export function formatTourDates(startDate: Date, endDate: Date, options: FormatTourDatesOptions = {}) {
+export function formatTourDates(
+  startDate: Date | string | undefined,
+  endDate: Date | string | undefined,
+  options: FormatTourDatesOptions = {},
+) {
+  if (!startDate || !endDate) return { startDate: '', endDate: '', duration: '', durationShort: '' };
+
   const { locale = 'vi', dateFormat = 'MMM DD, YYYY' } = options;
+
+  if (typeof startDate === 'string') {
+    startDate = new Date(startDate);
+  }
+  if (typeof endDate === 'string') {
+    endDate = new Date(endDate);
+  }
 
   dayjs.locale(locale);
 
