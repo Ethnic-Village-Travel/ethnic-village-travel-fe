@@ -1,3 +1,4 @@
+import { setCookie } from '@/utils/cookie';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -34,13 +35,24 @@ export const useAuthStore = create<AuthState>()(
       forgotPasswordOpen: false,
       enterOtpOpen: false,
       otpEmail: '',
-      setAuth: ({ accessToken, refreshToken, user }) =>
+      setAuth: ({ accessToken, refreshToken, user }) => {
+        // Set cookies cho middleware
+        if (typeof window !== 'undefined') {
+          setCookie('accessToken', accessToken, 1);
+          setCookie('refreshToken', refreshToken, 7);
+          setCookie('userRoles', JSON.stringify(user?.roles || []), 7);
+          setCookie('userPermissions', JSON.stringify(user?.permissions || []), 7);
+          setCookie('userId', user?.id?.toString() || '', 7);
+        }
+
         set({
           accessToken,
           refreshToken,
           user,
           isAuthenticated: !!accessToken && !!user,
-        }),
+        });
+      },
+
       setLoginOpen: open => set({ loginOpen: open }),
       setSignupOpen: open => set({ signupOpen: open }),
       setForgotPasswordOpen: open => set({ forgotPasswordOpen: open }),
