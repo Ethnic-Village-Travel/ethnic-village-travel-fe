@@ -67,7 +67,7 @@ async function getSignatureDeposit(filters: any, userToken: string) {
   try {
     filters = encodeQueryData(filters);
     if (userToken) {
-      const { data } = await api.get(`${API.CUSTOMER.LOGIN}?${filters}`, {
+      const { data } = await api.get(`${API.AUTH.SIGNIN}?${filters}`, {
         headers: { Authorization: `Bearer ${userToken}` },
       });
       return data;
@@ -86,7 +86,7 @@ export const useGetSignatureDeposit = () => {
 // post normal
 async function postLogin(wallet: any) {
   try {
-    const { data } = await api.post(`${API.CUSTOMER.LOGIN}?${encodeQueryData(wallet)}`);
+    const { data } = await api.post(`${API.AUTH.SIGNIN}?${encodeQueryData(wallet)}`);
     return data;
   } catch {
     throw new Error('Something went wrong with our system. Please try again!');

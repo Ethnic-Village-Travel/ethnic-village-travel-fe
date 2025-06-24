@@ -3,7 +3,6 @@ import * as z from 'zod';
 export const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
-  rememberMe: z.boolean(),
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
@@ -13,9 +12,6 @@ export const signupSchema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
-  agreeToTerms: z.boolean().refine(value => value, {
-    message: 'You must agree to the terms and conditions',
-  }),
 });
 
 export type SignupFormValues = z.infer<typeof signupSchema>;

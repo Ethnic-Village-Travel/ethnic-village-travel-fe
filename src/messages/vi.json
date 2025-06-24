@@ -183,7 +183,8 @@
       "password": "Mật khẩu",
       "password_placeholder": "Nhập mật khẩu của bạn",
       "agree_to_terms": "Tôi đồng ý với điều khoản và điều kiện",
-      "sign_up": "Đăng ký"
+      "sign_up": "Đăng ký",
+      "already_have_account": "Đã có tài khoản?"
     },
     "forgot_password": {
       "back": "Quay lại",

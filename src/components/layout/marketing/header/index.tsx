@@ -23,7 +23,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasBackdrop, setHasBackdrop] = useState(false);
-  const { setOpen, setCurrentPopup } = useAuthStore();
+  const { setLoginOpen, setSignupOpen } = useAuthStore();
 
   const navLinks = [
     { name: t('nav.home'), href: '/' },
@@ -48,13 +48,11 @@ const Header = ({ navItemClassName }: HeaderProps) => {
   };
 
   const handleSignInClick = () => {
-    setCurrentPopup('login');
-    setOpen(true);
+    setLoginOpen(true);
   };
 
   const handleSignUpClick = () => {
-    setCurrentPopup('signup');
-    setOpen(true);
+    setSignupOpen(true);
   };
 
   return (
