@@ -35,9 +35,9 @@ export interface BookingGetResponse {
   startDate: string;
   endDate: string;
   paymentMethod: PaymentMethod;
-  paymentStatus: PaymentStatus;
   paymentDate: string;
   discountAmountApplied: number;
   tour: TourInfo;
   additionalInformation?: string;
+  paymentExpiredDate: string;
 }

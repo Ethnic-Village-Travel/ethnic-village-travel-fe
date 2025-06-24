@@ -74,7 +74,7 @@ export default function GuestInformationCard({ booking }: GuestInformationCardPr
         formSchema={formSchema}
         fields={getGuestInformation(guestInfo)}
         onSubmit={handleSubmit}
-        defaultIsUpdating={bookingType === BOOKING_TYPE.OTHERS && !guestInfo}
+        defaultIsUpdating={bookingType === BOOKING_TYPE.OTHERS}
       />
     </div>
   );
