@@ -1,81 +1,115 @@
-import { cn } from '@/utils';
-import { BookmarkIcon } from 'lucide-react';
+import { EntityType } from '@/constants/entity';
+import { cn } from '@/utils/classnames';
+import { Bookmark } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-import { Bookmark as BookmarkButtonProps } from '@/types/bookmark.type';
-import { useGetBookmarkStatus, useToggleBookmark } from '@/hooks/api/useBookmark';
+import { useApiBookmarkAdd, useApiBookmarkRemove } from '@/hooks/api/useBookmark';
 import { useAuthentication } from '@/hooks/use-authentication';
 import { useToast } from '@/hooks/use-toast';
-import { ToastAction } from '@/components/ui/toast';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-import { Button } from '../ui/button';
+interface BookmarkButtonProps {
+  entityId: string;
+  entityType: EntityType;
+  isBookmarked?: boolean;
+  className?: string;
+  variant?: 'default' | 'outline' | 'ghost';
+  size?: 'icon' | 'default' | 'sm' | 'lg';
+  showText?: boolean;
+}
 
-export default function BookmarkButton({ entityId, entityType }: BookmarkButtonProps) {
+export const BookmarkButton = ({
+  entityId,
+  entityType,
+  isBookmarked = false,
+  className,
+  variant = 'ghost',
+  size = 'icon',
+  showText = false,
+}: BookmarkButtonProps) => {
+  const { mutate: addBookmark, isPending: isAdding } = useApiBookmarkAdd();
+  const { mutate: removeBookmark, isPending: isRemoving } = useApiBookmarkRemove();
   const { toast } = useToast();
   const { isAuthenticated } = useAuthentication();
-  const { data: isBookmarked, isLoading: isLoadingStatus } = useGetBookmarkStatus({
-    entityId: entityId,
-    entityType: entityType,
-  });
-  const { mutate: toggleBookmark, isPending } = useToggleBookmark();
+  const t = useTranslations('bookmark');
+
+  const isLoading = isAdding || isRemoving;
 
   const handleToggleBookmark = () => {
+    if (isLoading) return;
+
     if (!isAuthenticated) {
       toast({
-        title: 'Yêu cầu đăng nhập',
-        description: 'Vui lòng đăng nhập để lưu tour',
+        title: t('auth_required'),
         variant: 'destructive',
-        className: 'right-4 top-0',
-        action: (
-          <ToastAction altText="Đăng nhập" className="font-semibold">
-            Đăng nhập
-          </ToastAction>
-        ),
       });
       return;
     }
 
-    toggleBookmark(
-      {
-        entityId: entityId,
-        entityType: entityType,
-      },
-      {
-        onSuccess: () => {
+    const request = { entityId, entityType };
+    if (isBookmarked) {
+      removeBookmark(request, {
+        onSuccess: response => {
           toast({
-            title: isBookmarked ? 'Đã xóa khỏi danh sách yêu thích' : 'Đã thêm vào danh sách yêu thích',
-            description: isBookmarked
-              ? 'Tour đã được xóa khỏi danh sách yêu thích'
-              : 'Tour đã được thêm vào danh sách yêu thích',
+            title: response.message,
           });
         },
-        onError: () => {
+        onError: (error: any) => {
           toast({
-            title: 'Lỗi',
-            description: 'Không thể cập nhật trạng thái yêu thích. Vui lòng thử lại.',
+            title: error.message,
             variant: 'destructive',
           });
         },
-      },
-    );
+      });
+    } else {
+      addBookmark(request, {
+        onSuccess: response => {
+          toast({
+            title: response.message,
+          });
+        },
+        onError: (error: any) => {
+          toast({
+            title: error.message,
+            variant: 'destructive',
+          });
+        },
+      });
+    }
   };
 
-  const isDisabled = isPending;
-  const isLoading = isLoadingStatus || isPending;
-
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className={cn(
-        'h-8 w-8 rounded-full p-0',
-        isBookmarked ? 'text-primary-500' : 'text-gray-500',
-        'hover:bg-primary-20 hover:text-primary-500',
-        isDisabled && 'cursor-not-allowed opacity-50',
-      )}
-      onClick={handleToggleBookmark}
-      disabled={isDisabled}
-    >
-      <BookmarkIcon className={cn('h-4 w-4', isLoading && 'animate-pulse')} />
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant={variant}
+            size={size}
+            className={cn(
+              'group gap-2 transition-all duration-300',
+              {
+                'text-primary': isBookmarked,
+                'hover:text-primary': !isBookmarked,
+              },
+              className,
+            )}
+            onClick={handleToggleBookmark}
+            disabled={isLoading}
+          >
+            <Bookmark
+              className={cn(
+                'h-[1.2rem] w-[1.2rem] transition-transform group-hover:scale-110',
+                isBookmarked ? 'fill-current' : 'fill-none',
+              )}
+            />
+            {showText && (isBookmarked ? 'Saved' : 'Save')}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>{isBookmarked ? 'Remove from bookmarks' : 'Add to bookmarks'}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
-}
+};

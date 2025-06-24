@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { EntityConstant } from '@/constants/entity';
+import { EntityType } from '@/constants/entity';
 import { RouteConstant } from '@/constants/route';
 import { calculateRatingStats, cn } from '@/utils';
 import { formatCurrency } from '@/utils/number';
@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
 import { Tour } from '@/types/tour.type';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import BookmarkButton from '@/components/shared/bookmark-button';
+import { BookmarkButton } from '@/components/shared/bookmark-button';
 import StarRating from '@/components/shared/star-rating';
 
 type TourItemProps = {
@@ -70,7 +70,11 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
               {ratingObj.average} ({ratingObj.total})
             </span>{' '}
           </div>
-          <BookmarkButton entityId={tour.id} entityType={EntityConstant.tour} />
+          <BookmarkButton
+            entityId={tour.id.toString()}
+            entityType={EntityType.TOUR}
+            // isBookmarked={tour.isBookmarked ?? false}
+          />
         </div>
 
         <Separator className="h-px w-full bg-gray-20" />
@@ -92,7 +96,6 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
               })}
             </span>
           </div>
-          {tour.avalableSlots && <span className="text-xs text-muted-foreground">{tour.avalableSlots}</span>}
         </div>
       </CardContent>
     </Card>
