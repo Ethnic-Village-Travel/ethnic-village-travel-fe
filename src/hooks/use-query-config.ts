@@ -29,21 +29,3 @@ export const useQueryConfig = () => {
 
   return queryConfig;
 };
-
-export const useOrderTourQueryConfig = () => {
-  const queryParams: OrderTourQueryConfig = useQueryParams();
-
-  const queryConfig: OrderTourQueryConfig = omitBy(
-    {
-      tour: queryParams.tour,
-      availableDate: queryParams.availableDate,
-      adult: queryParams.adult,
-      child: queryParams.child,
-    },
-    (v, k) => {
-      return v === undefined || v === null;
-    },
-  );
-
-  return queryConfig;
-};

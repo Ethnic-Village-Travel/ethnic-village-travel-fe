@@ -103,6 +103,7 @@
         "select_date": "Please select a date",
         "booking_failed": "Booking failed",
         "booking_failed_out_of_stock": "Out of stock",
+        "booking_failed_invalid_data": "Invalid data",
         "discount": "Discount",
         "max": "Max"
       },
@@ -247,19 +248,23 @@
     },
     "contact_info": {
       "title": "Contact Information",
-      "phone": "Phone",
-      "email": "Email",
-      "phone_placeholder": "Enter your Phone",
-      "email_placeholder": "Enter your Email",
-      "visitor": "I am a visitor",
-      "order_for_others": "I order for others"
+      "booker_name": "Name",
+      "booker_phone": "Phone",
+      "booker_email": "Email",
+      "enter_name": "Enter your name",
+      "enter_phone": "Enter your phone number",
+      "enter_email": "Enter your email",
+      "visitor": "I am the visitor",
+      "order_for_others": "Order for others"
     },
     "guest_info": {
       "title": "Guest information",
+      "name": "Name",
       "phone": "Phone",
       "email": "Email",
-      "phone_placeholder": "Enter your Phone",
-      "email_placeholder": "Enter your Email"
+      "enter_name": "Enter your name",
+      "enter_phone": "Enter your phone number",
+      "enter_email": "Enter your email"
     },
     "tour_info": {
       "tour_guide": "Tour guide",
@@ -275,12 +280,28 @@
       "children": "Children",
       "coupon_discount": "Coupon Discount",
       "enter_promotion": "Enter promotion code",
-      "book_now": "Book Now"
+      "book_now": "Book Now",
+      "confirm_failed": "Booking failed",
+      "contact_info_required": "Contact information is required",
+      "guest_info_required": "Guest information is required"
     },
     "pick_drop_location": {
       "title": "Pick-up/Drop-off location",
       "location": "Location",
       "address": "Address"
+    },
+    "promotion": {
+      "errors": {
+        "not_found": "Promotion code not found",
+        "inactive": "This promotion is not active yet",
+        "expired": "This promotion has expired",
+        "out_of_stock": "This promotion is out of stock"
+      },
+      "success": "Promotion code applied successfully",
+      "discount": "Discount",
+      "max": "Max",
+      "promotion_code": "Promotion code",
+      "apply": "Apply"
     }
   }
 }

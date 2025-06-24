@@ -1,28 +1,19 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { RouteConstant } from '@/constants/route';
-
-import { Order } from '@/types/order';
+import { BookingGetResponse } from '@/types/booking/booking.response';
 
 import { BookingCalculator } from './booking-calculator';
 import GuildProfileCard from './pick-drop-location';
 
 type FloatingBookingPanelProps = {
-  order: Order;
+  booking: BookingGetResponse;
 };
 
-const FloatingBookingPanel = ({ order }: FloatingBookingPanelProps) => {
-  const router = useRouter();
-
-  const handleBook = () => {
-    router.push(RouteConstant.order);
-  };
-
+const FloatingBookingPanel = ({ booking }: FloatingBookingPanelProps) => {
   return (
     <div className="flex gap-5 xl:w-[360px] xl:flex-shrink-0 xl:flex-col">
-      <BookingCalculator order={order} onBook={handleBook} />
-      <GuildProfileCard />
+      <BookingCalculator booking={booking} />
+      <GuildProfileCard location={booking.tour.pickUpLocation} />
     </div>
   );
 };

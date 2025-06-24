@@ -33,8 +33,13 @@ export const API = {
     REPORT: '/review/report',
   },
   BOOKING: {
-    GET: '/booking',
+    GET: '/booking/{id}',
     STORE: '/booking/store',
     UPDATE: '/booking/update',
+    UPDATE_CONTACT: '/booking/{id}/contact',
+    CONFIRM: '/booking/{id}/confirm',
+  },
+  PROMOTION: {
+    VALIDATE: '/promotion/validate',
   },
 };

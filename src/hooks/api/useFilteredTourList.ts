@@ -5,7 +5,7 @@ import { omitBy } from 'lodash';
 import { TourListParams } from '@/types/tour.type';
 import { SORT_OPTIONS } from '@/components/features/tour/header-section';
 
-import { useTourSearchQueryConfig } from '../use-query-config';
+import { useQueryConfig } from '../use-query-config';
 import { useEthnicList } from './useEthnic';
 import { useLocationList } from './useLocation';
 import { useTourList } from './useTour';
@@ -46,7 +46,7 @@ const getFilterIds = <T extends EntityWithId>(
 };
 
 export const useFilteredTourList = (pageSize: number = 12) => {
-  const queryConfig = useTourSearchQueryConfig();
+  const queryConfig = useQueryConfig();
   const { data: ethnicRes } = useEthnicList();
   const { data: locationRes } = useLocationList();
 

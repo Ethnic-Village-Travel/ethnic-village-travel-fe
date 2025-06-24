@@ -29,9 +29,9 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
   useEffect(() => {
     // Select first available date by default
     if (tour?.availableDates && tour?.availableDates.length > 0) {
-      const firstAvailableDate = tour.availableDates.find(date => date.availableSlots > 0);
+      const firstAvailableDate = tour.availableDates.find(date => date.bookedSlots < date.maxSlots);
       if (firstAvailableDate) {
-        setSelectedDate(firstAvailableDate.id, firstAvailableDate.availableSlots);
+        setSelectedDate(firstAvailableDate.id, firstAvailableDate.maxSlots - firstAvailableDate.bookedSlots);
       }
     }
   }, [tour?.availableDates, setSelectedDate]);
@@ -93,7 +93,7 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
               <Button
                 key={date.id}
                 variant={selectedDateId === date.id ? 'default' : 'outline'}
-                onClick={() => handleDateClick(date.id, date.availableSlots)}
+                onClick={() => handleDateClick(date.id, date.maxSlots - date.bookedSlots)}
                 className={cn(
                   'flex h-auto min-w-[120px] flex-col items-center gap-1 border-gray-500 px-4 py-2 transition-all duration-200',
                   {
@@ -117,7 +117,9 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
                     'text-white': selectedDateId === date.id,
                   })}
                 >
-                  {date.availableSlots > 0 ? t('available_slots', { count: date.availableSlots }) : t('no_slots')}
+                  {date.bookedSlots < date.maxSlots
+                    ? t('available_slots', { count: date.maxSlots - date.bookedSlots })
+                    : t('no_slots')}
                 </span>
                 {isSpecial && (
                   <span
