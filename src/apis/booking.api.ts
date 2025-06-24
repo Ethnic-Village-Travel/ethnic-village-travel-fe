@@ -51,8 +51,12 @@ export const bookingApi = {
     }
   },
   confirmBooking: async (id: string, request: BookingConfirmRequest) => {
-    const res = await api.post<ApiResponse<void>>(API.BOOKING.CONFIRM.replace('{id}', id), request);
+    try {
+      const res = await api.post<ApiResponse<void>>(API.BOOKING.CONFIRM.replace('{id}', id), request);
 
-    return res;
+      return res;
+    } catch {
+      throw new Error('Failed to confirm booking');
+    }
   },
 };
