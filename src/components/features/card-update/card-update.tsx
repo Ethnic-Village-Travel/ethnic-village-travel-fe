@@ -57,7 +57,7 @@ export default function CardUpdate({
 
   useEffect(() => {
     setIsUpdating(defaultIsUpdating || !hasAllRequiredFields());
-  }, [defaultIsUpdating, hasAllRequiredFields]);
+  }, [defaultIsUpdating, fields]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -101,9 +101,8 @@ export default function CardUpdate({
         message: 'Form submitted successfully!',
       });
 
-      if (hasAllRequiredFields()) {
-        setIsUpdating(false);
-      }
+      // Always set isUpdating to false after successful submission
+      setIsUpdating(false);
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitResult({
