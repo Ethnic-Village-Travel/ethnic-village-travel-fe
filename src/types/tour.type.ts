@@ -11,7 +11,6 @@ export interface Tour {
   slug: string;
   overview?: string;
   status?: string;
-  maxSlot: number;
   duration: number;
   pickUpLocation?: Location;
   adultPrice?: number;
@@ -27,14 +26,14 @@ export interface Tour {
   promotions?: Promotion[];
   availableDates?: TourAvailableDate[];
   publishedAt?: string;
-  avalableSlots: number;
 }
 
 export interface TourAvailableDate {
   id: number;
   startDate: string;
   endDate: string;
-  availableSlots: number;
+  bookedSlots: number;
+  maxSlots: number;
 }
 
 export interface TourTimeLine {

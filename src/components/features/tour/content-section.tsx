@@ -6,7 +6,7 @@ import { cn } from '@/utils';
 import { useTranslations } from 'next-intl';
 
 import { useFilteredTourList } from '@/hooks/api/useFilteredTourList';
-import { useTourSearchQueryConfig } from '@/hooks/use-query-config';
+import { useQueryConfig } from '@/hooks/use-query-config';
 import { TourItem } from '@/components/features/tour';
 import PaginationClient from '@/components/shared/pagination-client';
 
@@ -21,7 +21,7 @@ export default function TourContentSection() {
   const t = useTranslations('search');
   const router = useRouter();
   const searchParams = useSearchParams();
-  const queryConfig = useTourSearchQueryConfig();
+  const queryConfig = useQueryConfig();
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
 
   const sortBy = searchParams.get('sort_by') || 'default';
