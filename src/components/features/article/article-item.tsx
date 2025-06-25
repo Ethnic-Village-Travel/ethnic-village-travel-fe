@@ -99,7 +99,11 @@ const ArticleItem = ({
                 </>
               )}
             </div>
-            <BookmarkButton entityId={id.toString()} entityType={EntityType.ARTICLE} isBookmarked={isBookmarked} />
+            <BookmarkButton
+              entityId={id.toString()}
+              entityType={EntityType.ARTICLE}
+              isBookmarkedDefault={isBookmarked}
+            />
           </div>
         </CardContent>
       </Card>
