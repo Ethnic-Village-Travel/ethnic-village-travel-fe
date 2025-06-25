@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
 import { useAuthStore } from '@/store/useAuthStore';
+import { cn } from '@/utils/classnames';
 import { Bell } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -22,6 +23,7 @@ import {
 export const UserMenu = () => {
   const t = useTranslations('layout.header.user_menu');
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useAuthStore();
   const [unreadCount] = useState(5); // TODO: Replace with actual notification count
 
@@ -44,7 +46,7 @@ export const UserMenu = () => {
         className="relative"
         // onClick={() => handleNavigate(RouteConstant.notifications)}
       >
-        <Bell className="text-black" />
+        <Bell className={cn('text-black', pathname === RouteConstant.home && 'text-white')} />
         {unreadCount > 0 && (
           <Badge
             variant="destructive"
@@ -57,28 +59,28 @@ export const UserMenu = () => {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="hover:bg-white/10 flex items-center gap-2 p-1 text-white">
+          <Button variant="ghost" className="flex items-center gap-2 px-3 py-1 text-white">
             <Avatar className="h-8 w-8">
               <AvatarImage src={user.avatar} />
-              <AvatarFallback>
+              <AvatarFallback className={cn('text-black', pathname === RouteConstant.home && 'text-white')}>
                 {user.personal?.firstName?.[0]}
                 {user.personal?.lastName?.[0]}
               </AvatarFallback>
             </Avatar>
-            <span className="max-w-[100px] truncate">
+            <span className={cn('max-w-[100px] truncate text-black', pathname === RouteConstant.home && 'text-white')}>
               {user.personal?.firstName} {user.personal?.lastName}
             </span>
           </Button>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" className="w-48">
-          <DropdownMenuItem onClick={() => handleNavigate(RouteConstant.favorites)}>
+          <DropdownMenuItem onClick={() => handleNavigate(RouteConstant.personal_bookmark)}>
             {t('profile.favorites')}
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleNavigate(RouteConstant.transactions)}>
+          <DropdownMenuItem onClick={() => handleNavigate(RouteConstant.personal_transaction)}>
             {t('profile.transactions')}
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleNavigate(RouteConstant.editProfile)}>
+          <DropdownMenuItem onClick={() => handleNavigate(RouteConstant.personal_account)}>
             {t('profile.edit_profile')}
           </DropdownMenuItem>
           <DropdownMenuSeparator />

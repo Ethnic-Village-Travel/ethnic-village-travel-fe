@@ -1,39 +1,51 @@
 'use client';
 
+import { useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
-import { cn } from '@/utils';
+import { useAuthStore } from '@/store/useAuthStore';
+import { cn, getInitialName } from '@/utils';
 import { Bookmark, LogOut, ScrollText, Settings } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { logout } from '@/lib/auth';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-const navigationItems = [
-  {
-    href: RouteConstant.personal_bookmark,
-    label: 'Bookmark',
-    icon: Bookmark,
-    badge: 5,
-  },
-  {
-    href: RouteConstant.personal_transaction,
-    label: 'Transaction',
-    icon: ScrollText,
-    badge: 2,
-  },
-  {
-    href: RouteConstant.personal_account,
-    label: 'Account',
-    icon: Settings,
-  },
-];
-
 export default function PersonalNavigationTab() {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('personal.navigation');
+  const { user } = useAuthStore();
+
+  const firstName = useMemo(() => user?.personal?.firstName || '', [user]);
+  const lastName = useMemo(() => user?.personal?.lastName || '', [user]);
+
+  const navigationItems = useMemo(
+    () => [
+      {
+        href: RouteConstant.personal_bookmark,
+        label: t('bookmark'),
+        icon: Bookmark,
+        badge: user?.details?.bookmarks?.length || 0,
+      },
+      {
+        href: RouteConstant.personal_transaction,
+        label: t('transaction'),
+        icon: ScrollText,
+        badge: 2,
+      },
+      {
+        href: RouteConstant.personal_account,
+        label: t('account'),
+        icon: Settings,
+      },
+    ],
+    [user?.details?.bookmarks?.length],
+  );
 
   const handleLogout = () => {
     logout();
@@ -41,9 +53,18 @@ export default function PersonalNavigationTab() {
   };
 
   return (
-    <Card className="h-fit w-full rounded-lg border shadow-md">
-      <CardHeader>
-        <h2 className="text-lg font-semibold text-gray-900">Navigation</h2>
+    <Card className="sticky top-24 w-full rounded-lg border shadow-md">
+      <CardHeader className="flex flex-row gap-4 space-y-0">
+        <Avatar className="h-12 w-12 rounded-lg">
+          <AvatarImage src={user?.personal?.avatar} alt={[firstName, lastName].filter(Boolean).join(' ') || 'User'} />
+          <AvatarFallback className="rounded-lg text-primary">
+            {getInitialName(firstName, lastName) || 'U'}
+          </AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col">
+          <h2 className="text-base font-semibold text-gray-900">{`${firstName} ${lastName}`}</h2>
+          <p className="text-sm text-gray-500">{user?.email}</p>
+        </div>
       </CardHeader>
       <CardContent className="space-y-2">
         {navigationItems.map(item => {
@@ -55,7 +76,7 @@ export default function PersonalNavigationTab() {
               <Button
                 variant="ghost"
                 className={cn(
-                  'flex w-full items-center justify-between rounded-lg px-3 py-2 font-semibold text-gray-700 transition-colors',
+                  'mb-2 flex w-full items-center justify-between rounded-lg px-3 py-2 font-semibold text-gray-700 transition-colors',
                   'hover:bg-primary-5 hover:text-primary-button',
                   {
                     'bg-primary-5 text-primary-button': isActive,
@@ -67,7 +88,10 @@ export default function PersonalNavigationTab() {
                   <span className="text-base">{item.label}</span>
                 </div>
                 {item.badge && (
-                  <Badge variant="outline" className="h-5 w-5 rounded-full p-0 text-xs">
+                  <Badge
+                    variant="outline"
+                    className="flex h-5 w-5 items-center justify-center rounded-full p-0 text-xs"
+                  >
                     {item.badge}
                   </Badge>
                 )}
@@ -79,13 +103,13 @@ export default function PersonalNavigationTab() {
         <Button
           variant="ghost"
           className={cn(
-            'flex items-center justify-start rounded-lg px-3 py-2 font-semibold text-gray-700 transition-colors',
+            'flex w-full items-center justify-start rounded-lg px-3 py-2 font-semibold text-gray-700 transition-colors',
             'hover:bg-primary-5 hover:text-primary-button',
           )}
           onClick={handleLogout}
         >
-          <LogOut className="!h-5 !w-5" />
-          <span className="text-base">Logout</span>
+          <LogOut className="mr-3 !h-5 !w-5" />
+          <span className="text-base">{t('logout')}</span>
         </Button>
       </CardContent>
     </Card>

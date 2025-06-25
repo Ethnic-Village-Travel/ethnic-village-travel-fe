@@ -7,4 +7,16 @@ export interface Bookmark {
   entityId: number;
   status: BookmarkStatus;
   createdAt: string;
+  updatedAt: string;
+}
+
+export interface BookmarkRequest {
+  entityId: string;
+  entityType: EntityType;
+}
+
+export interface BookmarkResponse {
+  bookmarks: Bookmark[];
+  total: number;
+  isBookmarked: boolean;
 }

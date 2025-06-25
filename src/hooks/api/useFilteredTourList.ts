@@ -1,9 +1,7 @@
 import { FilterConfig, FILTERS } from '@/data/filters';
-import { toSnakeCase } from '@/utils';
 import { omitBy } from 'lodash';
 
-import { TourListParams } from '@/types/tour.type';
-import { SORT_OPTIONS } from '@/components/features/tour/header-section';
+import { TourListRequest } from '@/types/tour.type';
 
 import { useQueryConfig } from '../use-query-config';
 import { useEthnicList } from './useEthnic';
@@ -50,7 +48,7 @@ export const useFilteredTourList = (pageSize: number = 12) => {
   const { data: ethnicRes } = useEthnicList();
   const { data: locationRes } = useLocationList();
 
-  const filterParams: TourListParams = omitBy(
+  const filterParams: TourListRequest = omitBy(
     {
       page: queryConfig.page || 0,
       size: pageSize,

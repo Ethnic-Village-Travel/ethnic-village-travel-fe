@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 
 import { LoginFormValues, loginSchema } from '@/lib/schemas/auth';
 import { useLogin } from '@/hooks/api/useAuth';
+import { useApiUserDetailsGet } from '@/hooks/api/useUser';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -19,6 +20,7 @@ export function LoginPopup() {
   const t = useTranslations('auth.login');
   const { loginOpen, setAuth, setLoginOpen, setSignupOpen, setForgotPasswordOpen } = useAuthStore();
   const { mutateAsync: login, isPending } = useLogin();
+  const { refetch: refetchUserDetails } = useApiUserDetailsGet();
 
   const { toast } = useToast();
 
@@ -44,6 +46,8 @@ export function LoginPopup() {
           refreshToken,
           user,
         });
+
+        refetchUserDetails();
 
         setLoginOpen(false);
         toast({
