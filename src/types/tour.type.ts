@@ -44,7 +44,7 @@ export interface TourTimeLine {
   }[];
 }
 
-export interface TourListParams {
+export interface TourListRequest {
   page?: number;
   size?: number;
   sortBy?: string;

@@ -328,5 +328,29 @@
       "promotion_code": "Promotion code",
       "apply": "Apply"
     }
+  },
+  "personal": {
+    "navigation": {
+      "title": "Navigation",
+      "bookmark": "Bookmark",
+      "transaction": "Transaction",
+      "account": "Account",
+      "logout": "Logout"
+    },
+    "bookmark": {
+      "title": "Bookmarks",
+      "saved_tours": "Saved Tours",
+      "saved_articles": "Saved Articles",
+      "view_more": "View more"
+    },
+    "transaction": {
+      "title": "Transactions",
+      "no_transactions": "No transactions found"
+    },
+    "account": {
+      "title": "Account Settings",
+      "profile": "Profile Settings",
+      "security": "Security Settings"
+    }
   }
 }

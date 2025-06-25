@@ -7,6 +7,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { Progress } from '@/components/base/progress';
+import { UserDetailsLoader } from '@/components/features/auth/user-details-loader';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const setIsAnimating = useProgressStore(state => state.setIsAnimating);
@@ -37,6 +38,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <Progress isAnimating={isAnimating} />
+      <UserDetailsLoader />
       {children}
       <ReactQueryDevtools />
     </QueryClientProvider>

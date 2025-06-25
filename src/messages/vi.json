@@ -346,5 +346,29 @@
     "button": {
       "apply": "Áp dụng"
     }
+  },
+  "personal": {
+    "navigation": {
+      "title": "Điều hướng",
+      "bookmark": "Đã lưu",
+      "transaction": "Giao dịch",
+      "account": "Tài khoản",
+      "logout": "Đăng xuất"
+    },
+    "bookmark": {
+      "title": "Danh sách đã lưu",
+      "saved_tours": "Tours đã lưu",
+      "saved_articles": "Bài viết đã lưu",
+      "view_more": "Xem thêm"
+    },
+    "transaction": {
+      "title": "Lịch sử giao dịch",
+      "no_transactions": "Không có giao dịch nào"
+    },
+    "account": {
+      "title": "Cài đặt tài khoản",
+      "profile": "Cài đặt hồ sơ",
+      "security": "Cài đặt bảo mật"
+    }
   }
 }

@@ -1,70 +1,91 @@
 'use client';
 
-import { useState } from 'react';
-import { MOCK_ARTICLES } from '@/data/articles';
-import { MOCK_TOURS } from '@/data/tours';
-import { cn } from '@/utils';
-import { ArrowRight } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { EntityType } from '@/constants/entity';
+import { useAuthStore } from '@/store/useAuthStore';
+import { useTranslations } from 'next-intl';
 
-import { Button } from '@/components/ui/button';
-import ArticleItem from '@/components/features/article/article-item';
-import { TourItem } from '@/components/features/tour';
+import { Bookmark } from '@/types/bookmark.type';
+import { Tabs, TabsContent, TabsContents, TabsList, TabsTrigger } from '@/components/animate-ui/radix/tabs';
 
-const ITEMS_PER_PAGE = 3;
+import ArticleBookmarksTab from './article-bookmarks-tab';
+import TourBookmarksTab from './tour-bookmarks-tab';
+
+const ITEMS_PER_PAGE = 5;
+
+type BookmarkMap = {
+  [EntityType.TOUR]: Bookmark[];
+  [EntityType.ARTICLE]: Bookmark[];
+};
 
 export default function BookmarkTabContent() {
-  const [visibleTours, setVisibleTours] = useState(ITEMS_PER_PAGE);
-  const [visibleArticles, setVisibleArticles] = useState(ITEMS_PER_PAGE);
+  const t = useTranslations('personal.bookmark');
+  const [visibleTourItems, setVisibleTourItems] = useState(ITEMS_PER_PAGE);
+  const [visibleArticleItems, setVisibleArticleItems] = useState(ITEMS_PER_PAGE);
+  const { user } = useAuthStore();
 
-  // Mock bookmarked items - this would come from an API in reality
-  const bookmarkedTours = MOCK_TOURS.slice(0, 8); // Mock 8 bookmarked tours
-  const bookmarkedArticles = MOCK_ARTICLES.slice(0, 6); // Mock 6 bookmarked articles
+  // Sử dụng useMemo thay vì useEffect + useState
+  const sortedBookmarks = useMemo(() => {
+    if (!user?.details?.bookmarks) {
+      return {
+        [EntityType.TOUR]: [],
+        [EntityType.ARTICLE]: [],
+      };
+    }
+
+    // Group and sort bookmarks by entity type
+    const bookmarks = user.details.bookmarks.reduce((acc, bookmark) => {
+      if (!acc[bookmark.entityType]) {
+        acc[bookmark.entityType] = [];
+      }
+
+      acc[bookmark.entityType].push(bookmark);
+      return acc;
+    }, {} as BookmarkMap) || { [EntityType.TOUR]: [], [EntityType.ARTICLE]: [] };
+
+    // Sort bookmarks by updated date
+    Object.keys(bookmarks).forEach(type => {
+      bookmarks[type as EntityType].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+    });
+
+    return bookmarks;
+  }, [user?.details?.bookmarks]);
 
   const handleLoadMoreTours = () => {
-    setVisibleTours(prev => prev + ITEMS_PER_PAGE);
+    setVisibleTourItems(prev => prev + ITEMS_PER_PAGE);
   };
 
   const handleLoadMoreArticles = () => {
-    setVisibleArticles(prev => prev + ITEMS_PER_PAGE);
+    setVisibleArticleItems(prev => prev + ITEMS_PER_PAGE);
   };
 
   return (
-    <div className="flex flex-col items-start gap-10 px-4">
-      {/* Tours Section */}
-      <section className="w-full">
-        <h2 className="mb-6 text-2xl font-bold">Tours Đã Lưu</h2>
-        <div className="flex flex-col gap-3">
-          {bookmarkedTours.slice(0, visibleTours).map(tour => (
-            <TourItem key={tour.id} tour={tour} layout="horizontal" />
-          ))}
-        </div>
-        {visibleTours < bookmarkedTours.length && (
-          <div className="mt-8 flex justify-center">
-            <Button onClick={handleLoadMoreTours} variant="outline" className="gap-2 px-8">
-              Xem thêm
-              <ArrowRight className="size-4" />
-            </Button>
-          </div>
-        )}
-      </section>
+    <div className="w-full">
+      <h1 className="mb-6 text-2xl font-bold">{t('title')}</h1>
+      <Tabs defaultValue="tours" className="w-full">
+        <TabsList className="mb-6 grid w-full grid-cols-2">
+          <TabsTrigger value="tours">{t('saved_tours')}</TabsTrigger>
+          <TabsTrigger value="articles">{t('saved_articles')}</TabsTrigger>
+        </TabsList>
 
-      {/* Articles Section */}
-      <section className="w-full">
-        <h2 className="mb-6 text-2xl font-bold">Bài Viết Đã Lưu</h2>
-        <div className="flex flex-col gap-3">
-          {bookmarkedArticles.slice(0, visibleArticles).map(article => (
-            <ArticleItem key={article.id} {...article} layout="horizontal" />
-          ))}
-        </div>
-        {visibleArticles < bookmarkedArticles.length && (
-          <div className="mt-8 flex justify-center">
-            <Button onClick={handleLoadMoreArticles} variant="outline" className="gap-2 px-8">
-              Xem thêm
-              <ArrowRight className="size-4" />
-            </Button>
-          </div>
-        )}
-      </section>
+        <TabsContents>
+          <TabsContent value="tours" className="w-full">
+            <TourBookmarksTab
+              bookmarks={sortedBookmarks[EntityType.TOUR]}
+              visibleItems={visibleTourItems}
+              onLoadMore={handleLoadMoreTours}
+            />
+          </TabsContent>
+
+          <TabsContent value="articles" className="w-full">
+            <ArticleBookmarksTab
+              bookmarks={sortedBookmarks[EntityType.ARTICLE]}
+              visibleItems={visibleArticleItems}
+              onLoadMore={handleLoadMoreArticles}
+            />
+          </TabsContent>
+        </TabsContents>
+      </Tabs>
     </div>
   );
 }

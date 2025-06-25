@@ -18,6 +18,7 @@ export const API = {
   },
   TOUR: {
     SEARCH: '/tour',
+    GET_BY_IDS: '/tour/ids',
     DETAIL: '/tour',
     FILTER_TAB: '/tour/filter-tab',
     GET_BOOKMARK_STATUS: '/tours/bookmark/status',

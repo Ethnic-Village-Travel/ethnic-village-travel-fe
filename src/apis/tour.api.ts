@@ -3,12 +3,12 @@ import api from '@/core/api/api';
 import { encodeQueryData } from '@/core/api/utils';
 
 import { ApiResponse } from '@/types/api.type';
-import { Tour, TourListParams, TourListResponse } from '@/types/tour.type';
+import { Tour, TourListRequest, TourListResponse } from '@/types/tour.type';
 
 export type TabType = 'popular' | 'outstanding' | 'best_price';
 
 export const tourApi = {
-  getTourList: async (params: TourListParams): Promise<ApiResponse<TourListResponse>> => {
+  getTourList: async (params: TourListRequest): Promise<ApiResponse<TourListResponse>> => {
     try {
       const queryParams = {
         ...params,
@@ -22,6 +22,15 @@ export const tourApi = {
       return data;
     } catch {
       throw new Error('Failed to get tour list');
+    }
+  },
+
+  getTourListByIds: async (ids: number[]): Promise<ApiResponse<Tour[]>> => {
+    try {
+      const { data } = await api.get<ApiResponse<Tour[]>>(`${API.TOUR.GET_BY_IDS}?ids=${ids.join(',')}`);
+      return data;
+    } catch {
+      throw new Error('Failed to get tour list by ids');
     }
   },
 

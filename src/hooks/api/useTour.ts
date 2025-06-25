@@ -1,18 +1,35 @@
-import { TabType, tourApi, TourListParams } from '@/apis/tour.api';
+import { TabType, tourApi } from '@/apis/tour.api';
 import { useQuery } from '@tanstack/react-query';
 
 import { ApiResponse } from '@/types/api.type';
-import { Tour } from '@/types/tour.type';
+import { Tour, TourListRequest } from '@/types/tour.type';
 
 export const TOUR_QUERY_KEY = {
   LIST: 'tour-list',
   DETAIL: 'tour-detail',
 };
 
-export const useTourList = (params: TourListParams) => {
+export const useTourList = (params: TourListRequest) => {
   return useQuery({
     queryKey: [TOUR_QUERY_KEY.LIST, params],
     queryFn: () => tourApi.getTourList(params),
+  });
+};
+
+export const useTourListByIds = (ids: number[]) => {
+  return useQuery({
+    queryKey: [TOUR_QUERY_KEY.LIST, ids],
+    queryFn: async () => {
+      if (ids.length === 0) return [];
+
+      const response = await tourApi.getTourListByIds(ids);
+
+      if (!response.data) {
+        throw new Error('Failed to get tour list');
+      }
+
+      return response.data;
+    },
   });
 };
 
