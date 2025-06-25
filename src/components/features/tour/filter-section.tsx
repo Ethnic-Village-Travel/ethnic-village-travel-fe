@@ -30,10 +30,12 @@ export default function FilterSection() {
     location: {
       ...FILTERS.location,
       items: locationItems,
+      isTranslated: true,
     },
     ethnic: {
       ...FILTERS.ethnic,
       items: ethnicItems,
+      isTranslated: true,
     },
   };
 

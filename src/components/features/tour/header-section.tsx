@@ -50,7 +50,7 @@ export function TourHeader({ sortBy, onSortByChange, viewMode, onViewModeChange,
           </SelectTrigger>
           <SelectContent>
             {Object.values(SORT_OPTIONS).map(option => (
-              <SelectItem key={option.sortBy} value={`${option.sortBy}-${option.order}`}>
+              <SelectItem key={option.sortBy + option.order} value={`${option.sortBy}-${option.order}`}>
                 {t(option.labelKey)}
               </SelectItem>
             ))}
