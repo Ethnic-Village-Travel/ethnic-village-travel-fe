@@ -12,6 +12,7 @@ import { ClassNameValue } from 'tailwind-merge';
 
 import { Button } from '@/components/ui/button';
 import { AuthPopup } from '@/components/features/auth/auth-popup';
+import { UserMenu } from '@/components/features/user/user-menu';
 import LanguageSwitcher from '@/components/shared/language-switcher';
 
 interface HeaderProps {
@@ -23,7 +24,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasBackdrop, setHasBackdrop] = useState(false);
-  const { setLoginOpen, setSignupOpen } = useAuthStore();
+  const { user, setLoginOpen, setSignupOpen } = useAuthStore();
 
   const navLinks = [
     { name: t('nav.home'), href: '/' },
@@ -99,18 +100,24 @@ const Header = ({ navItemClassName }: HeaderProps) => {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-4 text-sm">
+          <div className="flex items-center gap-1 text-sm">
             <LanguageSwitcher />
-            <Button
-              variant="outline"
-              className="border-primary-500 text-primary-500 hover:text-primary-500"
-              onClick={handleSignInClick}
-            >
-              {t('auth.sign_in')}
-            </Button>
-            <Button className="bg-primary-500 text-white" onClick={handleSignUpClick}>
-              {t('auth.sign_up')}
-            </Button>
+            {user ? (
+              <UserMenu />
+            ) : (
+              <>
+                <Button
+                  variant="outline"
+                  className="border-primary-500 text-primary-500 hover:text-primary-500"
+                  onClick={handleSignInClick}
+                >
+                  {t('auth.sign_in')}
+                </Button>
+                <Button className="bg-primary-500 text-white" onClick={handleSignUpClick}>
+                  {t('auth.sign_up')}
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </header>

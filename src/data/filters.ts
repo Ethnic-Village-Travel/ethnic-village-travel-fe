@@ -18,6 +18,7 @@ export type FilterConfig = {
   items: FilterItem[];
   maxVisible: number;
   isMultiSelect?: boolean;
+  isTranslated?: boolean;
 };
 
 export const FILTERS: Record<string, FilterConfig> = {

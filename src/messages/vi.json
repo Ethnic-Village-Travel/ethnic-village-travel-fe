@@ -205,7 +205,7 @@
     "header": {
       "nav": {
         "home": "Trang chủ",
-        "about": "Về chúng tôi",
+        "about": "Giới thiệu",
         "services": "Dịch vụ",
         "destinations": "Điểm đến",
         "blog": "Blog",
@@ -214,6 +214,17 @@
       "auth": {
         "sign_in": "Đăng nhập",
         "sign_up": "Đăng ký"
+      },
+      "user_menu": {
+        "notifications": "Thông báo",
+        "no_notifications": "Không có thông báo",
+        "unread_notifications": "{count} thông báo chưa đọc",
+        "profile": {
+          "favorites": "Yêu thích",
+          "transactions": "Lịch sử giao dịch",
+          "edit_profile": "Chỉnh sửa hồ sơ",
+          "logout": "Đăng xuất"
+        }
       }
     },
     "footer": {

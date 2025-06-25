@@ -7,6 +7,9 @@ export const API = {
     SIGNIN: '/auth/signin',
     SIGNUP: '/auth/signup',
   },
+  USER: {
+    DETAILS: '/user/details',
+  },
   CONTACT: {
     SEND: '/contact',
   },

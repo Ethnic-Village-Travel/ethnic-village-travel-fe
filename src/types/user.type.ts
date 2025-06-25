@@ -1,12 +1,19 @@
-export interface Personal {
-  firstName: string;
-  lastName: string;
-  avatar?: string;
-}
+import { ApiResponse } from './api.type';
+import { Personal } from './auth.type';
+import { Bookmark } from './bookmark.type';
 
 export interface User {
   id: number;
   email: string;
+  roles: string[];
+  permissions: string[];
+  createdAt: string;
   avatar?: string;
   personal?: Personal;
+  details?: UserDetailsResponse;
+}
+
+export interface UserDetailsResponse extends ApiResponse {
+  bookmarks: Bookmark[];
+  lastUpdated: string;
 }

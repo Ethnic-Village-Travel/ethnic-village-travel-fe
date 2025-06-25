@@ -19,6 +19,11 @@ export const RouteConstant = {
   personal_transaction: '/personal/transaction',
   personal_account: '/personal/account',
 
+  // User menu routes
+  favorites: '/personal/favorites',
+  transactions: '/personal/transactions',
+  editProfile: '/personal/profile',
+
   //Admin
   admin_auth: '/admin/auth',
   admin_dashboard: '/admin',

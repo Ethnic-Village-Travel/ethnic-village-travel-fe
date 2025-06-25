@@ -44,6 +44,7 @@ export function LoginPopup() {
           refreshToken,
           user,
         });
+
         setLoginOpen(false);
         toast({
           title: t('login_success'),

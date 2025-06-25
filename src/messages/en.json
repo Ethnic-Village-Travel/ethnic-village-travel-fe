@@ -205,15 +205,26 @@
     "header": {
       "nav": {
         "home": "Home",
-        "about": "About Us",
+        "about": "About",
         "services": "Services",
         "destinations": "Destinations",
         "blog": "Blog",
-        "contact": "Contact Us"
+        "contact": "Contact"
       },
       "auth": {
-        "sign_in": "Sign in",
-        "sign_up": "Sign up"
+        "sign_in": "Sign In",
+        "sign_up": "Sign Up"
+      },
+      "user_menu": {
+        "notifications": "Notifications",
+        "no_notifications": "No notifications",
+        "unread_notifications": "{count} unread notifications",
+        "profile": {
+          "favorites": "My Favorites",
+          "transactions": "Transaction List",
+          "edit_profile": "Edit Profile",
+          "logout": "Logout"
+        }
       }
     },
     "footer": {
