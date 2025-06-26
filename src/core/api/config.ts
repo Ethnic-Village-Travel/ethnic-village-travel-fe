@@ -38,6 +38,7 @@ export const API = {
     REPORT: '/review/report',
   },
   BOOKING: {
+    SEARCH: '/booking',
     GET: '/booking/{id}',
     STORE: '/booking/store',
     UPDATE: '/booking/update',

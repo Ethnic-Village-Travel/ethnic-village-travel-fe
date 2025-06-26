@@ -1,0 +1,106 @@
+'use client';
+
+import { getStatusBadgeVariant } from '@/constants/enum/booking.enum';
+import { formatCurrency } from '@/utils/number';
+import { format } from 'date-fns';
+import { CalendarDays, Clock, MapPin } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import { BookingListResponse as BookingListItem } from '@/types/booking';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+
+interface BookingCardProps {
+  booking: BookingListItem;
+}
+
+export default function BookingCard({ booking }: BookingCardProps) {
+  const t = useTranslations('personal.transaction');
+
+  // Guest count
+  const guestCount = booking.personCount
+    ? Object.values(booking.personCount).reduce((sum, v) => sum + (typeof v === 'number' ? v : 0), 0)
+    : 1;
+  // Location
+  const location =
+    booking.tour?.locations && booking.tour.locations.length > 0
+      ? booking.tour.locations[0].city || booking.tour.locations[0].province
+      : 'Unknown';
+
+  return (
+    <Card className="flex w-full flex-row items-center gap-4 rounded-xl bg-white p-2 shadow-[1px_1px_2px_0px_rgba(105,197,249,0.25),-1px_-1px_2px_0px_rgba(105,197,249,0.25)]">
+      {/* Image section */}
+      <div className="flex h-32 w-32 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#EDFAF3]">
+        <img
+          src={booking.tour?.imageUrl || '/images/placeholder.jpg'}
+          alt={booking.tour?.title}
+          className="h-full w-full rounded-lg object-cover"
+        />
+      </div>
+      {/* Info section */}
+      <CardContent className="flex flex-1 flex-col gap-2 p-0">
+        {/* Title */}
+        <h3 className="text-lg font-bold leading-tight text-black">{booking.tour?.title}</h3>
+        {/* Location, Date, Duration, Guest count */}
+        <div className="flex flex-wrap gap-4 text-sm text-gray-700">
+          <div className="flex items-center gap-1">
+            <MapPin className="h-4 w-4 text-gray-400" aria-label="Location" />
+            <span>{location}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <CalendarDays className="h-4 w-4 text-gray-400" aria-label="Date" />
+            <span>
+              {format(new Date(booking.startDate), 'dd MMM yyyy')} - {format(new Date(booking.endDate), 'dd MMM yyyy')}
+            </span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Clock className="h-4 w-4 text-gray-400" aria-label="Duration" />
+            <span>
+              {booking.tour?.duration} {t('days')}
+            </span>
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="inline-block h-4 w-4 rounded-full bg-gray-300 text-center text-xs leading-4">👤</span>
+            <span>{guestCount} People</span>
+          </div>
+        </div>
+        {/* Price and Status */}
+        <div className="mt-2 flex items-center justify-between">
+          <div className="flex flex-col">
+            <span className="text-xl font-semibold text-primary">{formatCurrency(booking.totalPrice)}</span>
+            {booking.discountAmountApplied && booking.discountAmountApplied > 0 && (
+              <span className="text-base font-semibold text-gray-500 line-through">
+                {formatCurrency(booking.totalPrice + booking.discountAmountApplied)}
+              </span>
+            )}
+          </div>
+          <div className="flex flex-col items-end gap-1">
+            <Badge variant={getStatusBadgeVariant(booking.status)} className="px-3 py-1 text-xs">
+              {t(`status.${booking.status.toLowerCase()}` as any)}
+            </Badge>
+            {booking.paymentMethod && (
+              <span className="text-xs text-gray-500">
+                {t('payment_method_label')}: {t(`payment_method.${booking.paymentMethod.toLowerCase()}` as any)}
+              </span>
+            )}
+            {booking.paymentDate && (
+              <span className="text-xs text-gray-500">
+                {t('payment_date')}: {format(new Date(booking.paymentDate), 'dd MMM yyyy HH:mm')}
+              </span>
+            )}
+          </div>
+        </div>
+        {/* Action Buttons */}
+        <div className="mt-4 flex justify-end gap-2">
+          {booking.status === 'PENDING_PAYMENT' && <Button variant="default">{t('actions.pay_now' as any)}</Button>}
+          {['PENDING_PAYMENT', 'PAID', 'CONFIRMED'].includes(booking.status) && (
+            <Button variant="outline">{t('actions.cancel' as any)}</Button>
+          )}
+          {booking.status === 'COMPLETED' && <Button variant="outline">{t('actions.review' as any)}</Button>}
+          <Button variant="outline">{t('actions.view_details' as any)}</Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

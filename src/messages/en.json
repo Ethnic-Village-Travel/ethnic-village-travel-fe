@@ -344,13 +344,80 @@
       "view_more": "View more"
     },
     "transaction": {
-      "title": "Transactions",
-      "no_transactions": "No transactions found"
+      "title": "My Bookings",
+      "tabs": {
+        "pending": "Pending Payment",
+        "other": "Other Bookings"
+      },
+      "no_transactions": "No bookings found",
+      "error_loading": "Error loading bookings",
+      "details": "Details",
+      "booking_id": "Booking ID",
+      "duration": "Duration",
+      "days": "days",
+      "payment_method_label": "Payment Method",
+      "payment_date": "Payment Date",
+      "discount": "Discount",
+      "booked_on": "Booked on",
+      "status": {
+        "darft": "Draft",
+        "pending_payment": "Pending Payment",
+        "failed_payment": "Failed Payment",
+        "paid": "Paid",
+        "confirmed": "Confirmed",
+        "assigned_guide": "Guide Assigned",
+        "in_progress": "In Progress",
+        "cancelled_by_user": "Cancelled by User",
+        "cancelled_by_admin": "Cancelled by Admin",
+        "completed": "Completed",
+        "refunded": "Refunded",
+        "expired": "Expired"
+      },
+      "payment_method": {
+        "bank_transfer": "Bank Transfer",
+        "credit_card": "Credit Card",
+        "paypal": "PayPal",
+        "cash": "Cash",
+        "momo": "MoMo",
+        "zalopay": "ZaloPay",
+        "vnpay": "VNPay"
+      },
+      "filters": {
+        "date_range": "Date range",
+        "start_date": "Start date",
+        "end_date": "End date",
+        "status": "Status",
+        "all_statuses": "All statuses",
+        "selected": "selected",
+        "search_status": "Search status",
+        "no_results": "No results",
+        "clear": "Clear filters"
+      },
+      "actions": {
+        "pay_now": "Pay Now",
+        "cancel": "Cancel",
+        "review": "Review",
+        "view_details": "View Details"
+      },
+      "pending_tab": "Pending Payment",
+      "other_tab": "Other",
+      "no_pending": "No pending bookings",
+      "no_other": "No other bookings"
     },
     "account": {
       "title": "Account Settings",
       "profile": "Profile Settings",
       "security": "Security Settings"
+    },
+    "booking_pending_list": {
+      "loading": "Loading pending bookings...",
+      "error": "Error loading pending bookings",
+      "empty": "No pending bookings"
+    },
+    "booking_other_list": {
+      "loading": "Loading other bookings...",
+      "error": "Error loading other bookings",
+      "empty": "No other bookings"
     }
   }
 }

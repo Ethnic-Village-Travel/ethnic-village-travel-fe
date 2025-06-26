@@ -1,19 +1,41 @@
 import { API } from '@/core/api';
 import api from '@/core/api/api';
-import { PersonInfo } from '@/store/useBookingStore';
+import { encodeQueryData } from '@/core/api/utils';
 
 import { ApiResponse } from '@/types/api.type';
 import {
   BookingConfirmRequest,
   BookingGetResponse,
+  BookingListRequest,
+  BookingListResponse,
   BookingStoreRequest,
   BookingStoreResponse,
   BookingUpdateRequest,
   BookingUpdateResponse,
-  TourInfo,
 } from '@/types/booking';
+import { PageResponse } from '@/types/page.type';
 
 export const bookingApi = {
+  list: async (request: BookingListRequest) => {
+    try {
+      const queryParams = {
+        ...request,
+        status: request.status?.join(','),
+        ethnicIds: request.ethnicIds?.join(','),
+        page: request.page - 1,
+      };
+
+      const queryString = encodeQueryData(queryParams);
+
+      const { data } = await api.get<ApiResponse<PageResponse<BookingListResponse>>>(
+        `${API.BOOKING.SEARCH}?${queryString}`,
+      );
+
+      return data;
+    } catch {
+      throw new Error('Failed to get bookings');
+    }
+  },
   get: async (id: string) => {
     try {
       const { data } = await api.get<ApiResponse<BookingGetResponse>>(API.BOOKING.GET.replace('{id}', id));

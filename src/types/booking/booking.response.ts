@@ -41,3 +41,18 @@ export interface BookingGetResponse {
   additionalInformation?: string;
   paymentExpiredDate: string;
 }
+
+export interface BookingListResponse {
+  id: string;
+  personCount: Record<string, any>;
+  status: string;
+  totalPrice: number;
+  bookingDate: string;
+  startDate: string;
+  endDate: string;
+  paymentExpiredDate: string;
+  paymentMethod?: string;
+  paymentDate?: string;
+  discountAmountApplied?: number;
+  tour: TourInfo;
+}
