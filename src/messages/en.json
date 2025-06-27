@@ -7,8 +7,8 @@
   "admin": {
     "sidebar": {
       "section": {
-        "General": "General",
-        "Functions": "Functions"
+        "general": "General",
+        "functions": "Functions"
       },
       "dashboard": "Dashboard",
       "user": "User",

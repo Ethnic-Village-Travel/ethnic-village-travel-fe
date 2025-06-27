@@ -7,8 +7,8 @@
   "admin": {
     "sidebar": {
       "section": {
-        "General": "Chung",
-        "Functions": "Chức năng"
+        "general": "Chung",
+        "functions": "Chức năng"
       },
       "dashboard": "Bảng điều khiển",
       "user": "Người dùng",

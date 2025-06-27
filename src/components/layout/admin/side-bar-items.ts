@@ -30,7 +30,7 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       permission: PermissionMap[RouteConstant.admin_role],
     },
   ],
-  Functions: [
+  'section.functions': [
     {
       label: 'tour',
       icon: MapPin,
