@@ -4,6 +4,24 @@
     "no_results": "No results found",
     "view_more": "View more"
   },
+  "admin": {
+    "sidebar": {
+      "section": {
+        "General": "General",
+        "Functions": "Functions"
+      },
+      "dashboard": "Dashboard",
+      "user": "User",
+      "role": "Role",
+      "tour": "Tour",
+      "order": "Order",
+      "article": "Article",
+      "notification": "Notification",
+      "report": "Report",
+      "chatbot": "Chatbot",
+      "logout": "Logout"
+    }
+  },
   "home": {
     "title": "Hello world!",
     "about": "Go to about page",

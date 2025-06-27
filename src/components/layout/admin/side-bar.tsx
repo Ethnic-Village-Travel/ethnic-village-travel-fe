@@ -1,20 +1,13 @@
 'use client';
 
+import { useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { ADMIN_DASHBOARD_READ } from '@/constants/permission-map';
 import { RouteConstant } from '@/constants/route';
+import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/utils';
-import {
-  Bell,
-  Book,
-  FileText,
-  LayoutGrid,
-  LogOut,
-  MapPin,
-  MessageCircle,
-  ShieldCheck,
-  ShoppingCart,
-  User,
-} from 'lucide-react';
+import { LogOut } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { logout } from '@/lib/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -31,27 +24,21 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-const NAV_ITEMS = {
-  General: [
-    { label: 'Dashboard', icon: LayoutGrid, href: RouteConstant.admin_dashboard },
-    { label: 'User', icon: User, href: RouteConstant.admin_user },
-    { label: 'Role', icon: ShieldCheck, href: RouteConstant.admin_role },
-  ],
-  Functions: [
-    { label: 'Tour', icon: MapPin, href: RouteConstant.admin_tour },
-    { label: 'Order', icon: ShoppingCart, href: RouteConstant.admin_order },
-    { label: 'Article', icon: Book, href: RouteConstant.admin_article },
-    { label: 'Notification', icon: Bell, href: RouteConstant.admin_notification },
-    { label: 'Report', icon: FileText, href: RouteConstant.admin_report },
-    { label: 'Chatbot', icon: MessageCircle, href: RouteConstant.admin_chatbot },
-  ],
-} as const;
+import { SIDEBAR_NAV_ITEMS } from './side-bar-items';
 
 export default function AdminSidebar() {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('admin.sidebar');
+  const { user } = useAuthStore();
   const userName = 'dirtylesc';
   const userEmail = 'dirtylesc@gmail.com';
+
+  const permissions = useMemo(() => {
+    if (!user) return [];
+
+    return user.permissions;
+  }, [user]);
 
   const handleLogout = () => {
     logout();
@@ -78,25 +65,31 @@ export default function AdminSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-        {Object.entries(NAV_ITEMS).map(([section, items]) => (
+        {Object.entries(SIDEBAR_NAV_ITEMS).map(([section, items]) => (
           <SidebarGroup key={section}>
-            <SidebarGroupLabel>{section}</SidebarGroupLabel>
+            <SidebarGroupLabel>{t(section as any)}</SidebarGroupLabel>
             <SidebarGroupContent className="flex list-none flex-col gap-2">
               <SidebarMenu>
-                {items.map(item => (
-                  <SidebarMenuItem key={item.label}>
-                    <SidebarMenuButton
-                      className={cn({
-                        'bg-primary-500 text-sidebar-primary-foreground hover:bg-primary-500 hover:text-sidebar-primary-foreground':
-                          pathname === item.href,
-                      })}
-                      onClick={() => router.push(item.href)}
-                    >
-                      <item.icon className="h-4 w-4" />
-                      {item.label}
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {items.map(item => {
+                  if (item.href.startsWith('/admin') && !permissions.includes(ADMIN_DASHBOARD_READ)) return null;
+
+                  if (!item.permission || !item.permission.some(p => permissions.includes(p))) return null;
+
+                  return (
+                    <SidebarMenuItem key={item.label}>
+                      <SidebarMenuButton
+                        className={cn({
+                          'bg-primary-500 text-sidebar-primary-foreground hover:bg-primary-500 hover:text-sidebar-primary-foreground':
+                            pathname === item.href,
+                        })}
+                        onClick={() => router.push(item.href)}
+                      >
+                        <item.icon className="h-4 w-4" />
+                        {t(item.label as any)}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

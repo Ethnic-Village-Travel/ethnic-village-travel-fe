@@ -37,3 +37,8 @@ export const createSearchParams = (init: QueryConfig): URLSearchParams => {
 
   return new URLSearchParams(entries);
 };
+
+export const normalizePath = (path: string): string => {
+  // Thay thế các đoạn động (:id, :slug, v.v.) bằng định dạng chung
+  return path.replace(/\/:[^/]+/g, '/[^/]+');
+};

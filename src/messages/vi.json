@@ -4,6 +4,24 @@
     "no_results": "Không có kết quả",
     "view_more": "Xem thêm"
   },
+  "admin": {
+    "sidebar": {
+      "section": {
+        "General": "Chung",
+        "Functions": "Chức năng"
+      },
+      "dashboard": "Bảng điều khiển",
+      "user": "Người dùng",
+      "role": "Vai trò",
+      "tour": "Tour",
+      "order": "Đơn hàng",
+      "article": "Bài viết",
+      "notification": "Thông báo",
+      "report": "Báo cáo",
+      "chatbot": "Chatbot",
+      "logout": "Đăng xuất"
+    }
+  },
   "home": {
     "title": "Xin chào thế giới!",
     "about": "Đi đến trang giới thiệu",
