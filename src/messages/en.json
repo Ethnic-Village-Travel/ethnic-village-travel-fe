@@ -5,6 +5,19 @@
     "view_more": "View more"
   },
   "admin": {
+    "status": {
+      "DRAFT": "Draft",
+      "REVIEWING": "Pending Review",
+      "REJECTED": "Rejected",
+      "APPROVED": "Approved",
+      "SCHEDULED": "Scheduled",
+      "PUBLISHED": "Published",
+      "FULLY_BOOKED": "Fully Booked",
+      "ONGOING": "Ongoing",
+      "PAUSED": "Paused",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
     "sidebar": {
       "section": {
         "general": "General",
@@ -20,6 +33,42 @@
       "report": "Report",
       "chatbot": "Chatbot",
       "logout": "Logout"
+    },
+    "tour": {
+      "list": {
+        "tour": "Tour",
+        "ethnic": "Ethnic",
+        "rating": "Rating",
+        "price": "Price",
+        "status": "Status",
+        "adult": "Adult",
+        "child": "Child",
+        "duration": "Duration",
+        "day": "day",
+        "night": "night",
+        "average_rating": "Average Rating",
+        "reviews_count": "Reviews Count",
+        "edit": "Edit",
+        "delete": "Delete",
+        "change_status": "Change Status",
+        "no_title": "No Title",
+        "search_tour": "Search tour...",
+        "tour_list_title": "Tour List",
+        "tour_list_description": "Manage tour details, availability, and booking status in one place.",
+        "import": "Import",
+        "add_tour": "Add Tour",
+        "update_status": "Update status",
+        "export_tasks": "Export tasks",
+        "delete_tasks": "Delete tasks",
+        "are_you_sure": "Are you absolutely sure?",
+        "delete_warning": "This action cannot be undone. This will permanently delete your {count} tours from our servers.",
+        "cancel": "Cancel",
+        "reset_filters": "Reset filters",
+        "published_utc": "Published(UTC)",
+        "created_utc": "Created(UTC)",
+        "updated_utc": "Updated(UTC)",
+        "open_menu": "Open menu"
+      }
     }
   },
   "home": {

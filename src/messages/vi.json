@@ -5,6 +5,19 @@
     "view_more": "Xem thêm"
   },
   "admin": {
+    "status": {
+      "DRAFT": "Nháp",
+      "REVIEWING": "Chờ duyệt",
+      "REJECTED": "Từ chối",
+      "APPROVED": "Đã duyệt",
+      "SCHEDULED": "Đã lên lịch",
+      "PUBLISHED": "Đã xuất bản",
+      "FULLY_BOOKED": "Đã kín chỗ",
+      "ONGOING": "Đang diễn ra",
+      "PAUSED": "Tạm dừng",
+      "COMPLETED": "Đã hoàn thành",
+      "CANCELLED": "Đã hủy"
+    },
     "sidebar": {
       "section": {
         "general": "Chung",
@@ -20,6 +33,42 @@
       "report": "Báo cáo",
       "chatbot": "Chatbot",
       "logout": "Đăng xuất"
+    },
+    "tour": {
+      "list": {
+        "tour": "Tour",
+        "ethnic": "Dân tộc",
+        "rating": "Đánh giá",
+        "price": "Giá",
+        "status": "Trạng thái",
+        "adult": "Người lớn",
+        "child": "Trẻ em",
+        "duration": "Thời lượng",
+        "day": "ngày",
+        "night": "đêm",
+        "average_rating": "Đánh giá trung bình",
+        "reviews_count": "Số đánh giá",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "change_status": "Đổi trạng thái",
+        "no_title": "Không có tiêu đề",
+        "search_tour": "Tìm kiếm tour...",
+        "tour_list_title": "Danh sách tour",
+        "tour_list_description": "Quản lý chi tiết tour, tình trạng và trạng thái đặt chỗ tại một nơi.",
+        "import": "Nhập dữ liệu",
+        "add_tour": "Thêm tour",
+        "update_status": "Cập nhật trạng thái",
+        "export_tasks": "Xuất dữ liệu",
+        "delete_tasks": "Xóa mục đã chọn",
+        "are_you_sure": "Bạn có chắc chắn không?",
+        "delete_warning": "Hành động này không thể hoàn tác. Điều này sẽ xóa vĩnh viễn {count} tour khỏi hệ thống.",
+        "cancel": "Hủy",
+        "reset_filters": "Đặt lại bộ lọc",
+        "published_utc": "Ngày xuất bản (UTC)",
+        "created_utc": "Ngày tạo (UTC)",
+        "updated_utc": "Ngày cập nhật (UTC)",
+        "open_menu": "Mở menu"
+      }
     }
   },
   "home": {

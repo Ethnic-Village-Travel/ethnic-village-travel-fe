@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { TourStatusEnum } from '@/constants/enum/tour';
+import { TourStatusEnum } from '@/constants/enum/tour.enum';
 import { MOCK_ETHNICS } from '@/data/ethnics';
 import { MOCK_LOCATIONS } from '@/data/locations';
 import { currencyToNumber, formatCurrency } from '@/utils';

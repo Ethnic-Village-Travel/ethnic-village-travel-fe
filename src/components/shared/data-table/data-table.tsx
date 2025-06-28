@@ -7,9 +7,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 
 import { DataTablePagination } from './data-table-pagination';
 
-interface DataTableProps<TData> extends React.ComponentProps<'div'> {
+export interface DataTableProps<TData> extends React.ComponentProps<'div'> {
   table: TanstackTable<TData>;
   actionBar?: React.ReactNode;
+  loading?: boolean;
 }
 
 export function DataTable<TData>({ table, actionBar, children, className, ...props }: DataTableProps<TData>) {

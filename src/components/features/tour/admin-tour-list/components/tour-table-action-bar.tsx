@@ -1,9 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { TourStatusEnum } from '@/constants/enum/tour';
+import { TourStatusEnum } from '@/constants/enum/tour.enum';
 import type { Table } from '@tanstack/react-table';
 import { CheckCircle2, Download, Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
 import { exportTableToCSV } from '@/lib/export';
@@ -25,6 +26,7 @@ interface ToursTableActionBarProps {
 
 export function ToursTableActionBar({ table }: ToursTableActionBarProps) {
   const rows = table.getFilteredSelectedRowModel().rows;
+  const t = useTranslations('admin');
   const [isPending, startTransition] = React.useTransition();
   const [currentAction, setCurrentAction] = React.useState<Action | null>(null);
 
@@ -102,7 +104,7 @@ export function ToursTableActionBar({ table }: ToursTableActionBarProps) {
           <DataTableActionBarAction
             asChild
             size="icon"
-            tooltip="Update status"
+            tooltip={t('tour.list.update_status')}
             isPending={getIsActionPending('update-status')}
           >
             <SelectTrigger className="min-w-fit">
@@ -113,7 +115,7 @@ export function ToursTableActionBar({ table }: ToursTableActionBarProps) {
             <SelectGroup>
               {Object.values(TourStatusEnum).map(status => (
                 <SelectItem key={status.value} value={status.value} className="capitalize">
-                  {status.label}
+                  {t(status.value as any)}
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -121,7 +123,7 @@ export function ToursTableActionBar({ table }: ToursTableActionBarProps) {
         </Select>
         <DataTableActionBarAction
           size="icon"
-          tooltip="Export tasks"
+          tooltip={t('tour.list.export_tasks')}
           isPending={getIsActionPending('export')}
           onClick={onTourExport}
         >
@@ -129,7 +131,7 @@ export function ToursTableActionBar({ table }: ToursTableActionBarProps) {
         </DataTableActionBarAction>
         <DataTableActionBarAction
           size="icon"
-          tooltip="Delete tasks"
+          tooltip={t('tour.list.delete_tasks')}
           isPending={getIsActionPending('delete')}
           onClick={onTourDelete}
         >

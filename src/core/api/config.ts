@@ -53,3 +53,9 @@ export const API = {
     CHECK: '/bookmark/check',
   },
 };
+
+export const AdminAPI = {
+  TOUR: {
+    SEARCH: '/tour/admin',
+  },
+};

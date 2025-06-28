@@ -3,6 +3,7 @@
 import * as React from 'react';
 import type { Row } from '@tanstack/react-table';
 import { Loader, Trash } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
 import { useMediaQuery } from '@/hooks/use-media-query';
@@ -41,6 +42,7 @@ export default function DeleteTourDialog({ tours, showTrigger = true, onSuccess,
   const [isDeletePending, startDeleteTransition] = React.useTransition();
   const { toast } = useToast();
   const isDesktop = useMediaQuery('(min-width: 640px)');
+  const t = useTranslations('admin.tour.list');
 
   function onDelete() {
     // startDeleteTransition(async () => {
@@ -64,31 +66,22 @@ export default function DeleteTourDialog({ tours, showTrigger = true, onSuccess,
           <DialogTrigger asChild>
             <Button variant="outline" size="sm">
               <Trash className="mr-2 size-4" aria-hidden="true" />
-              Delete ({tours.length})
+              {t('delete')} ({tours.length})
             </Button>
           </DialogTrigger>
         ) : null}
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your{' '}
-              <span className="font-medium">{tours.length}</span>
-              {tours.length === 1 ? ' task' : ' tours'} from our servers.
-            </DialogDescription>
+            <DialogTitle>{t('are_you_sure')}</DialogTitle>
+            <DialogDescription>{t('delete_warning', { count: tours.length })}</DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:space-x-0">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">{t('cancel')}</Button>
             </DialogClose>
-            <Button
-              aria-label="Delete selected rows"
-              variant="destructive"
-              onClick={onDelete}
-              disabled={isDeletePending}
-            >
+            <Button aria-label={t('delete')} variant="destructive" onClick={onDelete} disabled={isDeletePending}>
               {isDeletePending && <Loader className="mr-2 size-4 animate-spin" aria-hidden="true" />}
-              Delete
+              {t('delete')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -102,26 +95,22 @@ export default function DeleteTourDialog({ tours, showTrigger = true, onSuccess,
         <DrawerTrigger asChild>
           <Button variant="outline" size="sm">
             <Trash className="mr-2 size-4" aria-hidden="true" />
-            Delete ({tours.length})
+            {t('delete')} ({tours.length})
           </Button>
         </DrawerTrigger>
       ) : null}
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>
-            This action cannot be undone. This will permanently delete your{' '}
-            <span className="font-medium">{tours.length}</span>
-            {tours.length === 1 ? ' task' : ' tours'} from our servers.
-          </DrawerDescription>
+          <DrawerTitle>{t('are_you_sure')}</DrawerTitle>
+          <DrawerDescription>{t('delete_warning', { count: tours.length })}</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter className="gap-2 sm:space-x-0">
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline">{t('cancel')}</Button>
           </DrawerClose>
-          <Button aria-label="Delete selected rows" variant="destructive" onClick={onDelete} disabled={isDeletePending}>
+          <Button aria-label={t('delete')} variant="destructive" onClick={onDelete} disabled={isDeletePending}>
             {isDeletePending && <Loader className="mr-2 size-4 animate-spin" aria-hidden="true" />}
-            Delete
+            {t('delete')}
           </Button>
         </DrawerFooter>
       </DrawerContent>
