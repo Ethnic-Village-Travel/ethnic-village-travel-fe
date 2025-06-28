@@ -57,6 +57,7 @@ export const tourApi = {
         ethnicIds: params.ethnicIds?.join(','),
         locationIds: params.locationIds?.join(','),
         status: params.status?.join(','),
+        sortBy: params.sortBy === 'price' ? 'adultPrice' : params.sortBy,
       };
 
       const queryString = encodeQueryData(queryParams);
