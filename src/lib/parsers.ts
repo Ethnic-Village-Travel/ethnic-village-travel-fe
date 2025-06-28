@@ -35,3 +35,33 @@ export const getSortingStateParser = <TData>(columnIds?: string[] | Set<string>)
       a.length === b.length && a.every((item, index) => item.id === b[index]?.id && item.desc === b[index]?.desc),
   });
 };
+
+/**
+ * Custom parser for react-table sorting state <-> query params: sort_by & order
+ *
+ * - Parse: "sort_by=status&order=asc" => [{ id: 'status', desc: false }]
+ * - Serialize: [{ id: 'status', desc: false }] => "sort_by=status&order=asc"
+ */
+export const getSortingStateParserQuery = <TData>(columnIds?: string[] | Set<string>) => {
+  const validKeys = columnIds ? (columnIds instanceof Set ? columnIds : new Set(columnIds)) : null;
+
+  return createParser({
+    parse: value => {
+      if (!value) return [];
+      // value: "sort_by=status&order=asc"
+      const params = new URLSearchParams(value);
+      const sort_by = params.get('sort_by');
+      const order = params.get('order');
+      if (!sort_by) return [];
+      if (validKeys && !validKeys.has(sort_by)) return [];
+      return [{ id: sort_by, desc: order === 'desc' }] as ExtendedColumnSort<TData>[];
+    },
+    serialize: (sorting: ExtendedColumnSort<TData>[]) => {
+      if (!sorting || sorting.length === 0) return '';
+      const { id, desc } = sorting[0];
+      return `sort_by=${encodeURIComponent(id)}&order=${desc ? 'desc' : 'asc'}`;
+    },
+    eq: (a, b) =>
+      a.length === b.length && a.every((item, index) => item.id === b[index]?.id && item.desc === b[index]?.desc),
+  });
+};
