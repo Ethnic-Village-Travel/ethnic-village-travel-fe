@@ -2,10 +2,11 @@ import { TabType, tourApi } from '@/apis/tour.api';
 import { useQuery } from '@tanstack/react-query';
 
 import { ApiResponse } from '@/types/api.type';
-import { Tour, TourListRequest } from '@/types/tour.type';
+import { Tour, TourAdminListRequest, TourListRequest } from '@/types/tour.type';
 
 export const TOUR_QUERY_KEY = {
   LIST: 'tour-list',
+  ADMIN_LIST: 'admin-tour-list',
   DETAIL: 'tour-detail',
 };
 
@@ -45,5 +46,13 @@ export const useFilteredTours = (tabType: TabType) => {
   return useQuery({
     queryKey: ['filtered-tours', tabType],
     queryFn: () => tourApi.getFilteredTours(tabType),
+  });
+};
+
+//-------------------------ADMIN--------------------------------
+export const useAdminTourList = (params: TourAdminListRequest) => {
+  return useQuery({
+    queryKey: [TOUR_QUERY_KEY.ADMIN_LIST, params],
+    queryFn: () => tourApi.getAdminTourList(params),
   });
 };

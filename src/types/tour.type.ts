@@ -1,3 +1,5 @@
+import { TourStatus } from '@/constants/enum/tour.enum';
+
 import { Ethnic } from './ethnic.type';
 import { Location } from './location.type';
 import { Promotion } from './promotion.type';
@@ -26,6 +28,8 @@ export interface Tour {
   promotions?: Promotion[];
   availableDates?: TourAvailableDate[];
   publishedAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface TourAvailableDate {
@@ -57,6 +61,17 @@ export interface TourListRequest {
   rating?: number;
   minDuration?: number;
   maxDuration?: number;
+}
+
+export interface TourAdminListRequest {
+  page?: number;
+  size?: number;
+  sortBy?: string;
+  order?: 'asc' | 'desc';
+  ethnicIds?: number[];
+  locationIds?: number[];
+  onSale?: boolean;
+  status?: TourStatus[];
 }
 
 export interface TourListResponse {

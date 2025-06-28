@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { FilterConfig, FILTERS } from '@/data/filters';
 import { useMetaStore } from '@/store/useMetaStore';
 import { omitBy } from 'lodash';
 
@@ -7,20 +6,7 @@ import { TourListRequest } from '@/types/tour.type';
 
 import { useQueryConfig } from '../use-query-config';
 import { fetchEthnics, fetchLocations } from './useMetaData';
-import { useTourList } from './useTour';
-
-const getFilterValue = <T>(
-  filterConfig: FilterConfig,
-  value: string | undefined,
-  typeCheck: (value: unknown) => value is T,
-): T | undefined => {
-  if (!value) return undefined;
-
-  const filterItem = filterConfig.items.find(item => item.value === value);
-  if (!filterItem?.apiValue) return undefined;
-
-  return typeCheck(filterItem.apiValue) ? filterItem.apiValue : undefined;
-};
+import { useAdminTourList, useTourList } from './useTour';
 
 type EntityWithId = {
   id: number;
@@ -44,7 +30,7 @@ const getFilterIds = <T extends EntityWithId>(
   );
 };
 
-export const useFilteredTourList = (pageSize: number = 12) => {
+export const useAdminFilteredTourList = (pageSize: number = 12) => {
   const queryConfig = useQueryConfig();
   const ethnics = useMetaStore(state => state.ethnics);
   const locations = useMetaStore(state => state.locations);
@@ -60,24 +46,11 @@ export const useFilteredTourList = (pageSize: number = 12) => {
       size: pageSize,
       ethnicIds: getFilterIds(queryConfig.e, ethnics, ethnic => ethnic.code),
       locationIds: getFilterIds(queryConfig.l, locations, location => location.city),
-      minPrice: queryConfig.min,
-      maxPrice: queryConfig.max,
+      status: queryConfig.status,
       onSale: queryConfig.p
         ? (Array.isArray(queryConfig.p) ? queryConfig.p : [queryConfig.p]).includes('on_sale')
         : false,
-      rating: getFilterValue(FILTERS.rating, queryConfig.r, (value): value is number => typeof value === 'number'),
-      minDuration: getFilterValue(
-        FILTERS.duration,
-        queryConfig.d,
-        (value): value is { min: number; max?: number } => typeof value === 'object' && value !== null,
-      )?.min,
-      maxDuration: getFilterValue(
-        FILTERS.duration,
-        queryConfig.d,
-        (value): value is { min: number; max?: number } => typeof value === 'object' && value !== null,
-      )?.max,
       searchKey: queryConfig.search,
-      date: queryConfig.date,
       order: queryConfig.order,
       sortBy: queryConfig.sort_by,
     },
@@ -86,7 +59,10 @@ export const useFilteredTourList = (pageSize: number = 12) => {
     },
   );
 
-  const { data: tourRes, isLoading } = useTourList(filterParams);
+  console.log('useFilteredTourList - queryConfig:', queryConfig);
+  console.log('useFilteredTourList - filterParams:', filterParams);
+
+  const { data: tourRes, isLoading } = useAdminTourList(filterParams);
 
   return {
     tours: tourRes?.data?.content || [],
