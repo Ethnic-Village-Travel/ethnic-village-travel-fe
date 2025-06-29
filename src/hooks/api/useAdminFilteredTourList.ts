@@ -1,12 +1,10 @@
-import { useEffect } from 'react';
-import { useMetaStore } from '@/store/useMetaStore';
 import { omitBy } from 'lodash';
 
 import { TourListRequest } from '@/types/tour.type';
 
 import { useQueryConfig } from '../use-query-config';
-import { fetchEthnics, fetchLocations } from './useMetaData';
-import { useAdminTourList, useTourList } from './useTour';
+import { useFetchEthnics, useFetchLocations } from './useMetaData';
+import { useAdminTourList } from './useTour';
 
 type EntityWithId = {
   id: number;
@@ -32,13 +30,8 @@ const getFilterIds = <T extends EntityWithId>(
 
 export const useAdminFilteredTourList = (pageSize: number = 12) => {
   const queryConfig = useQueryConfig();
-  const ethnics = useMetaStore(state => state.ethnics);
-  const locations = useMetaStore(state => state.locations);
-
-  useEffect(() => {
-    if (useMetaStore.getState().ethnics.length === 0) fetchEthnics();
-    if (useMetaStore.getState().locations.length === 0) fetchLocations();
-  }, []);
+  const { data: ethnics } = useFetchEthnics();
+  const { data: locations } = useFetchLocations();
 
   const filterParams: TourListRequest = omitBy(
     {

@@ -1,16 +1,34 @@
-import { useEffect } from 'react';
 import { ethnicApi } from '@/apis/ethnic.api';
 import { locationApi } from '@/apis/location.api';
 import { useMetaStore } from '@/store/useMetaStore';
+import { useQuery } from '@tanstack/react-query';
 
-export const fetchEthnics = async () => {
-  const res = await ethnicApi.getEthnicAll();
-  useMetaStore.getState().setEthnics(res.data || []);
-  return res.data || [];
+export const useFetchEthnics = () => {
+  const setEthnics = useMetaStore(state => state.setEthnics);
+
+  return useQuery({
+    queryKey: ['ethnics'],
+    queryFn: async () => {
+      const res = await ethnicApi.getEthnicAll();
+      const data = res.data || [];
+      setEthnics(data);
+      return data;
+    },
+    staleTime: Infinity,
+  });
 };
 
-export const fetchLocations = async () => {
-  const res = await locationApi.getLocationAll();
-  useMetaStore.getState().setLocations(res.data || []);
-  return res.data || [];
+export const useFetchLocations = () => {
+  const setLocations = useMetaStore(state => state.setLocations);
+
+  return useQuery({
+    queryKey: ['locations'],
+    queryFn: async () => {
+      const res = await locationApi.getLocationAll();
+      const data = res.data || [];
+      setLocations(data);
+      return data;
+    },
+    staleTime: Infinity,
+  });
 };

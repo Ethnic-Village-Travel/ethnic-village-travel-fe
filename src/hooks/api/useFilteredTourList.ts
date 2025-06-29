@@ -6,7 +6,7 @@ import { omitBy } from 'lodash';
 import { TourListRequest } from '@/types/tour.type';
 
 import { useQueryConfig } from '../use-query-config';
-import { fetchEthnics, fetchLocations } from './useMetaData';
+import { useFetchEthnics, useFetchLocations } from './useMetaData';
 import { useTourList } from './useTour';
 
 const getFilterValue = <T>(
@@ -46,13 +46,8 @@ const getFilterIds = <T extends EntityWithId>(
 
 export const useFilteredTourList = (pageSize: number = 12) => {
   const queryConfig = useQueryConfig();
-  const ethnics = useMetaStore(state => state.ethnics);
-  const locations = useMetaStore(state => state.locations);
-
-  useEffect(() => {
-    if (useMetaStore.getState().ethnics.length === 0) fetchEthnics();
-    if (useMetaStore.getState().locations.length === 0) fetchLocations();
-  }, []);
+  const { data: ethnics } = useFetchEthnics();
+  const { data: locations } = useFetchLocations();
 
   const filterParams: TourListRequest = omitBy(
     {
