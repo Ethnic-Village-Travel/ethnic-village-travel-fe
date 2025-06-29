@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { UseFormReturn } from 'react-hook-form';
 
+import { TourFormValues } from '@/lib/schemas/tour.schema';
 import { Button } from '@/components/ui/button';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
 
-import { TourFormValues } from '.';
-
 type TourItineraryProps = {
   form: UseFormReturn<TourFormValues>;
 };
 
 export default function TourItinerary({ form }: TourItineraryProps) {
+  const t = useTranslations();
   const [itineraryTitle, setItineraryTitle] = useState('');
   const [itineraryDesc, setItineraryDesc] = useState('');
 
@@ -32,9 +33,7 @@ export default function TourItinerary({ form }: TourItineraryProps) {
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
-        <FormLabel className="font-semibold">
-          Tour Itinerary<span className="text-destructive"> *</span>
-        </FormLabel>
+        <FormLabel className="font-semibold">{t('tourCreate.itinerary')}</FormLabel>
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="ghost" size="sm" className="px-2">
@@ -43,14 +42,18 @@ export default function TourItinerary({ form }: TourItineraryProps) {
           </PopoverTrigger>
           <PopoverContent>
             <div className="space-y-2">
-              <Input placeholder="Day title" value={itineraryTitle} onChange={e => setItineraryTitle(e.target.value)} />
+              <Input
+                placeholder={t('tourCreate.itinerary')}
+                value={itineraryTitle}
+                onChange={e => setItineraryTitle(e.target.value)}
+              />
               <Textarea
-                placeholder="Day description"
+                placeholder={t('tourCreate.overview')}
                 value={itineraryDesc}
                 onChange={e => setItineraryDesc(e.target.value)}
               />
               <Button type="button" onClick={addItinerary}>
-                Add
+                {t('tourCreate.addItinerary')}
               </Button>
             </div>
           </PopoverContent>

@@ -56,6 +56,10 @@ export const API = {
 
 export const AdminAPI = {
   TOUR: {
-    SEARCH: '/tour/admin',
+    SEARCH: '/admin/tour',
+    STORE: '/admin/tour/store',
+  },
+  ServiceInfo: {
+    ALL: '/admin/service',
   },
 };
