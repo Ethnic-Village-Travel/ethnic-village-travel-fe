@@ -1,11 +1,11 @@
 import { Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
 
+import { TourFormValues } from '@/lib/schemas/tour.schema';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-
-import { TourFormValues } from '.';
 
 type ContactNumberProps = {
   form: UseFormReturn<TourFormValues>;
@@ -17,6 +17,8 @@ export default function ContactNumber({ form }: ContactNumberProps) {
     name: 'contactNumbers',
   });
 
+  const t = useTranslations();
+
   const addContactNumber = () => {
     if (contactFields.length < 3) {
       appendContact({ name: '', phone: '' });
@@ -26,7 +28,7 @@ export default function ContactNumber({ form }: ContactNumberProps) {
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
-        <FormLabel className="font-semibold">Contact number</FormLabel>
+        <FormLabel className="font-semibold">{t('tourCreate.contactNumber')}</FormLabel>
         <Button
           type="button"
           variant="ghost"
@@ -35,7 +37,7 @@ export default function ContactNumber({ form }: ContactNumberProps) {
           disabled={form.getValues('contactNumbers').length >= 3}
           className="px-2"
         >
-          <Plus className="h-4 w-4" />
+          <Plus className="h-4 w-4" /> {t('tourCreate.add')}
         </Button>
       </div>
       {contactFields.map((field, index) => (
@@ -46,7 +48,7 @@ export default function ContactNumber({ form }: ContactNumberProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Guide name" {...field} />
+                  <Input placeholder={t('tourCreate.contactPerson')} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -58,7 +60,7 @@ export default function ContactNumber({ form }: ContactNumberProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Phone number" {...field} />
+                  <Input placeholder={t('tourCreate.contactNumber')} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

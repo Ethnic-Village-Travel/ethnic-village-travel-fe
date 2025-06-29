@@ -1,10 +1,11 @@
 import { TourStatus } from '@/constants/enum/tour.enum';
+import * as z from 'zod';
 
 import { Ethnic } from './ethnic.type';
 import { Location } from './location.type';
 import { Promotion } from './promotion.type';
 import { Review } from './review.type';
-import { TourService } from './service,type';
+import { TourServiceInfo } from './service-info.type';
 
 export interface Tour {
   id: number;
@@ -21,7 +22,7 @@ export interface Tour {
   timeline?: TourTimeLine[];
   ethnics?: Ethnic[];
   locations?: Location[];
-  services?: TourService[];
+  services?: TourServiceInfo[];
   ratingCount?: number;
   avgRating?: number;
   reviews?: Review[];
@@ -85,3 +86,30 @@ export interface TourListResponse {
   numberOfElements: number;
   empty: boolean;
 }
+
+export type TourCreateRequest = {
+  title: string;
+  imageUrl: string;
+  overview?: string;
+  status?: string; // TourStatus, dùng string cho linh hoạt
+  duration: number;
+  pickUpLocationId: string;
+  adultPrice: number;
+  childPrice: number;
+  contacts: any; // JsonNode, dùng any hoặc object tuỳ UI
+  timeline: any; // JsonNode, dùng any hoặc object tuỳ UI
+  availableSlots?: any;
+  ethnicIds?: string[];
+  locationIds?: string[];
+  tagIds?: string[];
+  tourIncludedServices?: string[];
+  tourExcludedServices?: string[];
+  availableDates?: {
+    startDate: Date; // ISO date string
+    endDate: Date; // ISO date string
+    maxSlots: number;
+  }[];
+  publishedDate: Date;
+};
+
+export type TourResponse = Tour;

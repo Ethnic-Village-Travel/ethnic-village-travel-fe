@@ -3,7 +3,14 @@ import api from '@/core/api/api';
 import { encodeQueryData } from '@/core/api/utils';
 
 import { ApiResponse } from '@/types/api.type';
-import { Tour, TourAdminListRequest, TourListRequest, TourListResponse } from '@/types/tour.type';
+import {
+  Tour,
+  TourAdminListRequest,
+  TourCreateRequest,
+  TourListRequest,
+  TourListResponse,
+  TourResponse,
+} from '@/types/tour.type';
 
 export type TabType = 'popular' | 'outstanding' | 'best_price';
 
@@ -66,6 +73,14 @@ export const tourApi = {
       return data;
     } catch {
       throw new Error('Failed to get tour list');
+    }
+  },
+  createTour: async (data: TourCreateRequest): Promise<ApiResponse<TourResponse>> => {
+    try {
+      const res = await api.post(AdminAPI.TOUR.STORE, data);
+      return res.data;
+    } catch {
+      throw new Error('Failed to store tour');
     }
   },
 };

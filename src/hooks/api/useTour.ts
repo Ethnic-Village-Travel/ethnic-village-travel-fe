@@ -1,8 +1,8 @@
 import { TabType, tourApi } from '@/apis/tour.api';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { ApiResponse } from '@/types/api.type';
-import { Tour, TourAdminListRequest, TourListRequest } from '@/types/tour.type';
+import { Tour, TourAdminListRequest, TourCreateRequest, TourListRequest, TourResponse } from '@/types/tour.type';
 
 export const TOUR_QUERY_KEY = {
   LIST: 'tour-list',
@@ -54,5 +54,14 @@ export const useAdminTourList = (params: TourAdminListRequest) => {
   return useQuery({
     queryKey: [TOUR_QUERY_KEY.ADMIN_LIST, params],
     queryFn: () => tourApi.getAdminTourList(params),
+  });
+};
+
+export const useAdminCreateTour = () => {
+  return useMutation({
+    mutationFn: async (request: TourCreateRequest) => {
+      const res = await tourApi.createTour(request);
+      return res;
+    },
   });
 };
