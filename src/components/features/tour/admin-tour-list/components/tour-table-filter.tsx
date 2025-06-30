@@ -16,7 +16,7 @@ interface TourTableFilterProps {
 }
 
 export function TourTableFilter({ className }: TourTableFilterProps) {
-  const t = useTranslations('admin.tour.list');
+  const t = useTranslations('admin');
   const router = useRouter();
   const searchParams = useSearchParams();
   const ethnics = useMetaStore(state => state.ethnics);
@@ -96,11 +96,11 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
     <div className={`flex w-full items-start justify-between gap-2 p-1 ${className || ''}`}>
       <div className="flex flex-1 flex-wrap items-center gap-2">
         {/* Search Input */}
-        <SearchFilter title={t('search_tour')} defaultValue={currentSearch} onChange={updateFilters} />
+        <SearchFilter title={t('tour.list.search_tour')} defaultValue={currentSearch} onChange={updateFilters} />
 
         {/* Status Filter */}
         <StatusFilter
-          title={t('status')}
+          title={t('tour.list.status')}
           options={statusOptions}
           selectedValues={currentStatus}
           onSelectionChange={handleStatusChange}
@@ -108,7 +108,7 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
 
         {/* Ethnic Filter */}
         <EthnicFilter
-          title={t('ethnic')}
+          title={t('tour.list.ethnic')}
           options={ethnicOptions}
           selectedValues={currentEthnic}
           onSelectionChange={handleEthnicChange}
@@ -117,7 +117,7 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
         {/* Reset Button */}
         {hasActiveFilters && (
           <Button
-            aria-label={t('reset_filters')}
+            aria-label={t('tour.list.reset_filters')}
             variant="outline"
             size="sm"
             className="border-dashed"
