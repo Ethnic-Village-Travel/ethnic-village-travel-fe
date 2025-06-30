@@ -69,6 +69,9 @@ interface MultiSelectProps
   /** The default selected values when the component mounts. */
   defaultValue?: string[];
 
+  /** The controlled selected values. When provided, the component becomes controlled. */
+  value?: string[];
+
   /**
    * Placeholder text to be displayed when no values are selected.
    * Optional, defaults to "Select options".
@@ -120,6 +123,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
       onValueChange,
       variant,
       defaultValue = [],
+      value,
       placeholder = 'Select options',
       animation = 0,
       maxCount = 3,
@@ -131,8 +135,11 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
     },
     ref,
   ) => {
-    const [selectedValues, setSelectedValues] = React.useState<string[]>(defaultValue);
+    const [internalSelectedValues, setInternalSelectedValues] = React.useState<string[]>(defaultValue);
     const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
+
+    // Use controlled value if provided, otherwise use internal state
+    const selectedValues = value !== undefined ? value : internalSelectedValues;
 
     const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
@@ -140,21 +147,28 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
       } else if (event.key === 'Backspace' && !event.currentTarget.value) {
         const newSelectedValues = [...selectedValues];
         newSelectedValues.pop();
-        setSelectedValues(newSelectedValues);
+        if (value === undefined) {
+          setInternalSelectedValues(newSelectedValues);
+        }
         onValueChange(newSelectedValues);
       }
     };
 
     const toggleOption = (option: string) => {
       const newSelectedValues = selectedValues.includes(option)
-        ? selectedValues.filter(value => value !== option)
+        ? selectedValues.filter(v => v !== option)
         : [...selectedValues, option];
-      setSelectedValues(newSelectedValues);
+
+      if (value === undefined) {
+        setInternalSelectedValues(newSelectedValues);
+      }
       onValueChange(newSelectedValues);
     };
 
     const handleClear = () => {
-      setSelectedValues([]);
+      if (value === undefined) {
+        setInternalSelectedValues([]);
+      }
       onValueChange([]);
     };
 
@@ -164,7 +178,9 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
 
     const clearExtraOptions = () => {
       const newSelectedValues = selectedValues.slice(0, maxCount);
-      setSelectedValues(newSelectedValues);
+      if (value === undefined) {
+        setInternalSelectedValues(newSelectedValues);
+      }
       onValueChange(newSelectedValues);
     };
 
@@ -173,7 +189,9 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
         handleClear();
       } else {
         const allValues = options.map(option => option.id);
-        setSelectedValues(allValues);
+        if (value === undefined) {
+          setInternalSelectedValues(allValues);
+        }
         onValueChange(allValues);
       }
     };

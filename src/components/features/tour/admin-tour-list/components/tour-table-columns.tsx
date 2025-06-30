@@ -27,7 +27,7 @@ interface GetTourTableColumnsProps {
   setRowAction: React.Dispatch<
     React.SetStateAction<{
       id: number;
-      action: 'edit' | 'delete' | 'status';
+      action: 'edit' | 'delete' | 'status' | 'assign';
       row?: Tour;
     } | null>
   >;
@@ -258,6 +258,10 @@ export function getTourTableColumns({ setRowAction, t }: GetTourTableColumnsProp
                 className="text-destructive"
               >
                 {t('tour.list.delete')}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setRowAction({ id: tour.id, action: 'assign', row: tour })}>
+                Chọn người dẫn tour
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
