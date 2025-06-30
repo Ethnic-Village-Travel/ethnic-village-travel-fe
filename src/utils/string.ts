@@ -57,3 +57,11 @@ export function toSnakeCase(str: string): string {
     .trim()
     .replace(/\s+/g, '_'); // Replace spaces with underscore
 }
+
+export function getInitialName(firstName: string, lastName: string): string {
+  return [firstName, lastName]
+    .filter(Boolean)
+    .map(word => word[0])
+    .join('')
+    .toUpperCase();
+}

@@ -1,5 +1,7 @@
 'use client';
 
+import { EntityType } from '@/constants/entity';
+import { useAuthStore } from '@/store/useAuthStore';
 import { calculateRatingStats } from '@/utils';
 import { BookmarkIcon, Share2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -7,6 +9,7 @@ import { useTranslations } from 'next-intl';
 import { Tour } from '@/types/tour.type';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { BookmarkButton } from '@/components/shared/bookmark-button';
 import StarRating from '@/components/shared/star-rating';
 
 import AvailableTickets from './available-tickets';
@@ -14,6 +17,8 @@ import AvailableTickets from './available-tickets';
 const TourDetailHeader = (tour: Tour) => {
   const t = useTranslations('tour.detail');
   const ratingObj = calculateRatingStats(tour.reviews || []);
+  const { user } = useAuthStore();
+  const isBookmarked = user?.details?.bookmarks?.some(bookmark => bookmark.entityId === tour.id);
 
   return (
     <div className="flex flex-col gap-2.5">
@@ -48,13 +53,14 @@ const TourDetailHeader = (tour: Tour) => {
 
         {/* Action Buttons */}
         <div className="flex gap-4">
-          <Button
+          <BookmarkButton
             variant="outline"
             size="icon"
-            className="hover:border-primary-500/80 h-[38px] w-[38px] border-primary-500 [&_svg]:size-5"
-          >
-            <BookmarkIcon className="text-primary-500" />
-          </Button>
+            entityId={tour.id.toString()}
+            entityType={EntityType.TOUR}
+            isBookmarkedDefault={isBookmarked}
+          />
+
           <Button
             variant="outline"
             className="hover:border-primary-500/80 hover:text-primary-500/80 h-[38px] border-primary-500 text-primary-500 [&_svg]:size-5"

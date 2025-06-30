@@ -29,10 +29,10 @@ export const useApiBookmarkRemove = () => {
   });
 };
 
-export const useApiBookmarkList = (type: EntityType) => {
+export const useApiBookmarkList = () => {
   return useQuery({
-    queryKey: BOOKMARK_QUERY_KEYS.list(type),
-    queryFn: () => bookmarkApi.getBookmarks(type),
+    queryKey: BOOKMARK_QUERY_KEYS.lists(),
+    queryFn: () => bookmarkApi.getBookmarks(),
     select: response => response.data as BookmarkResponse,
   });
 };

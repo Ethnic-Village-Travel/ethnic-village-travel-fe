@@ -30,7 +30,6 @@ import {
 } from 'nuqs';
 
 import type { ExtendedColumnSort } from '@/types/data-table';
-import { getSortingStateParser } from '@/lib/parsers';
 
 import { useDebouncedCallback } from './use-debounced-callback';
 
@@ -58,6 +57,7 @@ interface UseDataTableProps<TData>
   scroll?: boolean;
   shallow?: boolean;
   startTransition?: React.TransitionStartFunction;
+  queryConfig?: { sort_by?: string; order?: 'asc' | 'desc' };
 }
 
 export function useDataTable<TData>(props: UseDataTableProps<TData>) {
@@ -73,6 +73,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     scroll = false,
     shallow = true,
     startTransition,
+    queryConfig,
     ...tableProps
   } = props;
 
@@ -123,23 +124,31 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     return new Set(columns.map(column => column.id).filter(Boolean) as string[]);
   }, [columns]);
 
-  const [sorting, setSorting] = useQueryState(
-    SORT_KEY,
-    getSortingStateParser<TData>(columnIds)
-      .withOptions(queryStateOptions)
-      .withDefault(initialState?.sorting ?? []),
-  );
+  const [sortBy, setSortBy] = useQueryState('sort_by');
+  const [order, setOrder] = useQueryState('order');
+
+  // Khởi tạo sorting từ sortBy và order
+  const sorting = React.useMemo(() => {
+    return sortBy ? [{ id: sortBy, desc: order === 'desc' }] : [];
+  }, [sortBy, order]);
 
   const onSortingChange = React.useCallback(
     (updaterOrValue: Updater<SortingState>) => {
+      let newSorting: SortingState;
       if (typeof updaterOrValue === 'function') {
-        const newSorting = updaterOrValue(sorting);
-        setSorting(newSorting as ExtendedColumnSort<TData>[]);
+        newSorting = updaterOrValue(sorting);
       } else {
-        setSorting(updaterOrValue as ExtendedColumnSort<TData>[]);
+        newSorting = updaterOrValue;
+      }
+      if (!newSorting || newSorting.length === 0) {
+        setSortBy(null);
+        setOrder(null);
+      } else {
+        setSortBy(newSorting[0].id);
+        setOrder(newSorting[0].desc ? 'desc' : 'asc');
       }
     },
-    [sorting, setSorting],
+    [sorting, setSortBy, setOrder],
   );
 
   const filterableColumns = React.useMemo(() => {

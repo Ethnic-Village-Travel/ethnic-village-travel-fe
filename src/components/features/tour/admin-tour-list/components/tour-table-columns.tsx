@@ -1,11 +1,14 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
-import { TourStatusEnum } from '@/constants/enum/tour';
+import { TourStatusEnum } from '@/constants/enum/tour.enum';
 import { RouteConstant } from '@/constants/route';
 import { splitDateStr } from '@/utils/date';
+import { formatCurrency } from '@/utils/number';
 import type { ColumnDef } from '@tanstack/react-table';
-import { CircleDashed, MoreHorizontal, Text } from 'lucide-react';
+import { MoreHorizontal, Star } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
 import { Badge } from '@/components/ui/badge';
@@ -28,9 +31,10 @@ interface GetTourTableColumnsProps {
       row?: Tour;
     } | null>
   >;
+  t: ReturnType<typeof useTranslations>;
 }
 
-export function getTourTableColumns({ setRowAction }: GetTourTableColumnsProps): ColumnDef<Tour>[] {
+export function getTourTableColumns({ setRowAction, t }: GetTourTableColumnsProps): ColumnDef<Tour>[] {
   return [
     {
       id: 'select',
@@ -55,23 +59,54 @@ export function getTourTableColumns({ setRowAction }: GetTourTableColumnsProps):
       size: 40,
     },
     {
+      id: 'image',
+      header: () => null,
+      cell: ({ row }) => {
+        const tour = row.original;
+        return (
+          <div className="flex min-w-[48px] items-center justify-center">
+            <img
+              src={tour.imageUrl}
+              alt={tour.title || 'Tour image'}
+              className="h-10 w-10 rounded-md border object-cover"
+              width={40}
+              height={40}
+              loading="lazy"
+            />
+          </div>
+        );
+      },
+      enableSorting: false,
+      size: 48,
+    },
+    {
       id: 'title',
       accessorKey: 'title',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Title" />,
-      cell: ({ row }) => <div className="line-clamp-2 min-w-[200px]">{row.getValue('title')}</div>,
-      enableColumnFilter: true,
-      meta: {
-        label: 'Title',
-        placeholder: 'Search titles...',
-        variant: 'text',
-        icon: Text,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.tour')} />,
+      cell: ({ row }) => {
+        const tour = row.original;
+        const cities = tour.locations?.map(loc => loc.city).join(' - ');
+        const duration = tour.duration
+          ? `${tour.duration} ${t('tour.list.day')} ${tour.duration - 1} ${t('tour.list.night')}`
+          : '';
+        return (
+          <div className="min-w-[220px]">
+            <div className="mb-1 line-clamp-2 text-base font-semibold">
+              {tour.title || <span className="italic text-gray-400">({t('tour.list.no_title')})</span>}
+            </div>
+            <div className="flex flex-wrap items-center gap-2 text-xs text-gray-600">
+              {cities && <Badge variant="default">{cities}</Badge>}
+              {tour.duration && <Badge variant="green">{duration}</Badge>}
+            </div>
+          </div>
+        );
       },
     },
     {
       accessorKey: 'ethnics',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Ethnic" />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.ethnic')} />,
       cell: ({ row }) => (
-        <div className="flex min-w-[200px] flex-wrap gap-2">
+        <div className="flex min-w-[120px] flex-wrap gap-2">
           {row.original.ethnics?.map(ethnic => (
             <Badge key={ethnic.id} variant="outline" className="bg-gray-100">
               {ethnic.name}
@@ -80,51 +115,84 @@ export function getTourTableColumns({ setRowAction }: GetTourTableColumnsProps):
         </div>
       ),
       enableSorting: false,
-      enableColumnFilter: true,
-      // meta: {
-      //   label: 'Ethnics',
-      //   variant: 'multiSelect',
-      //   options: Object.values(TourStatusEnum).map(status => ({
-      //     label: status.label,
-      //     value: status.value,
-      //     // count: statusCounts[status],
-      //     // icon: getStatusIcon(status),
-      //   })),
-      //   icon: CircleDashed,
-      // },
+    },
+    {
+      id: 'rating',
+      accessorKey: 'avgRating',
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.rating')} />,
+      cell: ({ row }) => (
+        <div className="flex min-w-[100px] items-center gap-1">
+          <Star className="mr-1 h-4 w-4 fill-yellow-300 text-yellow-400" aria-label={t('tour.list.average_rating')} />
+          <span className="font-medium">{row.original.avgRating?.toFixed(1) ?? '0.0'}</span>
+          <span className="text-xs text-gray-500">({row.original.ratingCount ?? 0})</span>
+        </div>
+      ),
+      enableSorting: true,
+      sortingFn: (a, b) => (a.original.avgRating || 0) - (b.original.avgRating || 0),
+    },
+    {
+      id: 'price',
+      accessorKey: 'adultPrice',
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.price')} />,
+      cell: ({ row }) => {
+        const tour = row.original;
+        const promo = tour.promotions && tour.promotions.length > 0 ? tour.promotions[0] : undefined;
+        return (
+          <div className="flex min-w-[140px] flex-col gap-1">
+            <div>
+              <span className="mr-1 text-xs text-gray-500">{t('tour.list.adult')}:</span>
+              {promo ? (
+                <>
+                  <span className="mr-1 text-gray-400 line-through">{formatCurrency(tour.adultPrice)}</span>
+                  <span className="font-semibold text-red-600">
+                    {formatCurrency(tour.adultPrice, {
+                      discount_percent: promo.discountPercent,
+                      max_discount_amount: promo.maxDiscountAmount,
+                    })}
+                  </span>
+                </>
+              ) : (
+                <span className="font-semibold">{formatCurrency(tour.adultPrice)}</span>
+              )}
+            </div>
+            <div>
+              <span className="mr-1 text-xs text-gray-500">{t('tour.list.child')}:</span>
+              {promo ? (
+                <>
+                  <span className="mr-1 text-gray-400 line-through">{formatCurrency(tour.childPrice)}</span>
+                  <span className="font-semibold text-red-600">
+                    {formatCurrency(tour.childPrice, {
+                      discount_percent: promo.discountPercent,
+                      max_discount_amount: promo.maxDiscountAmount,
+                    })}
+                  </span>
+                </>
+              ) : (
+                <span className="font-semibold">{formatCurrency(tour.childPrice)}</span>
+              )}
+            </div>
+          </div>
+        );
+      },
+      enableSorting: true,
+      sortingFn: (a, b) => (a.original.adultPrice || 0) - (b.original.adultPrice || 0),
     },
     {
       id: 'status',
       accessorKey: 'status',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+      header: ({ column }) => (
+        <DataTableColumnHeader className="min-w-[120px]" column={column} title={t('tour.list.status')} />
+      ),
       cell: ({ row }) => {
         const statusInfo = Object.values(TourStatusEnum).find(s => s.value === row.original.status);
-        return statusInfo ? <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge> : null;
+        return statusInfo ? (
+          <Badge variant={statusInfo.variant}>{t(('status.' + statusInfo.value) as any)}</Badge>
+        ) : null;
       },
-      enableColumnFilter: true,
-      meta: {
-        label: 'Status',
-        variant: 'multiSelect',
-        options: Object.values(TourStatusEnum).map(status => ({
-          label: status.label,
-          value: status.value,
-          // count: statusCounts[status],
-          // icon: getStatusIcon(status),
-        })),
-        icon: CircleDashed,
-      },
-    },
-    {
-      accessorKey: 'slots',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Slots" />,
-      cell: ({ row }) => <span>{row.original.maxSlot || 0}</span>,
-      enableSorting: false,
-      enableColumnFilter: true,
-      filterFn: 'inNumberRange',
     },
     {
       accessorKey: 'publishedAt',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Publish(UTC)" />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.published_utc')} />,
       cell: ({ row }) => {
         const [date, time] = splitDateStr(row.original.publishedAt);
         return (
@@ -136,13 +204,12 @@ export function getTourTableColumns({ setRowAction }: GetTourTableColumnsProps):
         );
       },
       enableSorting: true,
-      enableColumnFilter: true,
     },
     {
       accessorKey: 'start_date',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Start(UTC)" />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.created_utc')} />,
       cell: ({ row }) => {
-        const [date, time] = splitDateStr(row.original.publishedAt);
+        const [date, time] = splitDateStr(row.original.createdAt);
         return (
           <div className="whitespace-pre">
             {date}
@@ -154,9 +221,9 @@ export function getTourTableColumns({ setRowAction }: GetTourTableColumnsProps):
     },
     {
       accessorKey: 'end_date',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="End(UTC)" />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.updated_utc')} />,
       cell: ({ row }) => {
-        const [date, time] = splitDateStr(row.original.publishedAt);
+        const [date, time] = splitDateStr(row.original.updatedAt);
         return (
           <div className="whitespace-pre">
             {date}
@@ -170,28 +237,27 @@ export function getTourTableColumns({ setRowAction }: GetTourTableColumnsProps):
       id: 'actions',
       cell: ({ row }) => {
         const tour = row.original;
-
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">{t('tour.list.open_menu')}</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => setRowAction({ id: tour.id, action: 'edit', row: tour })}>
-                <Link href={RouteConstant.admin_tour_edit.replace(':slug', tour.slug)}>Edit</Link>
+                <Link href={RouteConstant.admin_tour_edit.replace(':slug', tour.slug)}>{t('tour.list.edit')}</Link>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setRowAction({ id: tour.id, action: 'status', row: tour })}>
-                Change Status
+                {t('tour.list.change_status')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => setRowAction({ id: tour.id, action: 'delete', row: tour })}
                 className="text-destructive"
               >
-                Delete
+                {t('tour.list.delete')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

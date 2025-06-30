@@ -4,6 +4,73 @@
     "no_results": "No results found",
     "view_more": "View more"
   },
+  "admin": {
+    "status": {
+      "DRAFT": "Draft",
+      "REVIEWING": "Pending Review",
+      "REJECTED": "Rejected",
+      "APPROVED": "Approved",
+      "SCHEDULED": "Scheduled",
+      "PUBLISHED": "Published",
+      "FULLY_BOOKED": "Fully Booked",
+      "ONGOING": "Ongoing",
+      "PAUSED": "Paused",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "sidebar": {
+      "section": {
+        "general": "General",
+        "functions": "Functions"
+      },
+      "dashboard": "Dashboard",
+      "user": "User",
+      "role": "Role",
+      "tour": "Tour",
+      "order": "Order",
+      "article": "Article",
+      "notification": "Notification",
+      "report": "Report",
+      "chatbot": "Chatbot",
+      "logout": "Logout"
+    },
+    "tour": {
+      "list": {
+        "tour": "Tour",
+        "ethnic": "Ethnic",
+        "rating": "Rating",
+        "price": "Price",
+        "status": "Status",
+        "adult": "Adult",
+        "child": "Child",
+        "duration": "Duration",
+        "day": "day",
+        "night": "night",
+        "average_rating": "Average Rating",
+        "reviews_count": "Reviews Count",
+        "edit": "Edit",
+        "delete": "Delete",
+        "change_status": "Change Status",
+        "no_title": "No Title",
+        "search_tour": "Search tour...",
+        "tour_list_title": "Tour List",
+        "tour_list_description": "Manage tour details, availability, and booking status in one place.",
+        "import": "Import",
+        "add_tour": "Add Tour",
+        "update_status": "Update status",
+        "export_tasks": "Export tasks",
+        "delete_tasks": "Delete tasks",
+        "are_you_sure": "Are you absolutely sure?",
+        "delete_warning": "This action cannot be undone. This will permanently delete your {count} tours from our servers.",
+        "cancel": "Cancel",
+        "reset_filters": "Reset filters",
+        "published_utc": "Published(UTC)",
+        "created_utc": "Created(UTC)",
+        "updated_utc": "Updated(UTC)",
+        "open_menu": "Open menu"
+      }
+    }
+  },
   "home": {
     "title": "Hello world!",
     "about": "Go to about page",
@@ -92,7 +159,7 @@
       "not_found": "Tour not found",
       "overview": {
         "title": "Trip Overview",
-        "included_excluded": "Included/Excluded",
+        "included_excluded": "Included/Excluded Services",
         "trip_plan": "Trip Plan",
         "no_overview": "No overview available"
       },
@@ -205,15 +272,26 @@
     "header": {
       "nav": {
         "home": "Home",
-        "about": "About Us",
+        "about": "About",
         "services": "Services",
         "destinations": "Destinations",
         "blog": "Blog",
-        "contact": "Contact Us"
+        "contact": "Contact"
       },
       "auth": {
-        "sign_in": "Sign in",
-        "sign_up": "Sign up"
+        "sign_in": "Sign In",
+        "sign_up": "Sign Up"
+      },
+      "user_menu": {
+        "notifications": "Notifications",
+        "no_notifications": "No notifications",
+        "unread_notifications": "{count} unread notifications",
+        "profile": {
+          "favorites": "My Favorites",
+          "transactions": "Transaction List",
+          "edit_profile": "Edit Profile",
+          "logout": "Logout"
+        }
       }
     },
     "footer": {
@@ -316,6 +394,152 @@
       "max": "Max",
       "promotion_code": "Promotion code",
       "apply": "Apply"
+    }
+  },
+  "personal": {
+    "navigation": {
+      "title": "Navigation",
+      "bookmark": "Bookmark",
+      "transaction": "Transaction",
+      "account": "Account",
+      "logout": "Logout"
+    },
+    "bookmark": {
+      "title": "Bookmarks",
+      "saved_tours": "Saved Tours",
+      "saved_articles": "Saved Articles",
+      "view_more": "View more"
+    },
+    "transaction": {
+      "title": "My Bookings",
+      "tabs": {
+        "pending": "Pending Payment",
+        "other": "Other Bookings"
+      },
+      "no_transactions": "No bookings found",
+      "error_loading": "Error loading bookings",
+      "details": "Details",
+      "booking_id": "Booking ID",
+      "duration": "Duration",
+      "days": "days",
+      "payment_method_label": "Payment Method",
+      "payment_date": "Payment Date",
+      "discount": "Discount",
+      "booked_on": "Booked on",
+      "status": {
+        "darft": "Draft",
+        "pending_payment": "Pending Payment",
+        "failed_payment": "Failed Payment",
+        "paid": "Paid",
+        "confirmed": "Confirmed",
+        "assigned_guide": "Guide Assigned",
+        "in_progress": "In Progress",
+        "cancelled_by_user": "Cancelled by User",
+        "cancelled_by_admin": "Cancelled by Admin",
+        "completed": "Completed",
+        "refunded": "Refunded",
+        "expired": "Expired"
+      },
+      "payment_method": {
+        "bank_transfer": "Bank Transfer",
+        "credit_card": "Credit Card",
+        "paypal": "PayPal",
+        "cash": "Cash",
+        "momo": "MoMo",
+        "zalopay": "ZaloPay",
+        "vnpay": "VNPay"
+      },
+      "filters": {
+        "date_range": "Date range",
+        "start_date": "Start date",
+        "end_date": "End date",
+        "status": "Status",
+        "all_statuses": "All statuses",
+        "selected": "selected",
+        "search_status": "Search status",
+        "no_results": "No results",
+        "clear": "Clear filters"
+      },
+      "actions": {
+        "pay_now": "Pay Now",
+        "cancel": "Cancel",
+        "review": "Review",
+        "view_details": "View Details"
+      },
+      "pending_tab": "Pending Payment",
+      "other_tab": "Other",
+      "no_pending": "No pending bookings",
+      "no_other": "No other bookings"
+    },
+    "account": {
+      "title": "Account Settings",
+      "profile": "Profile Settings",
+      "security": "Security Settings"
+    },
+    "booking_pending_list": {
+      "loading": "Loading pending bookings...",
+      "error": "Error loading pending bookings",
+      "empty": "No pending bookings"
+    },
+    "booking_other_list": {
+      "loading": "Loading other bookings...",
+      "error": "Error loading other bookings",
+      "empty": "No other bookings"
+    }
+  },
+  "tourCreate": {
+    "title": "Create New Tour",
+    "image": "Image",
+    "required": "*",
+    "selectImage": "Select image",
+    "overview": "Overview",
+    "submit": "Submit",
+    "contactNumber": "Contact number",
+    "contactPerson": "Contact person",
+    "add": "Add",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "maxSlots": "Max Slots",
+    "availableDates": "Available Dates",
+    "included": "Included Services",
+    "excluded": "Excluded Services",
+    "itinerary": "Itinerary",
+    "addItinerary": "Add itinerary",
+    "remove": "Remove",
+    "ethnic": "Ethnic",
+    "location": "Location",
+    "status": "Status",
+    "pickupLocation": "Pick-up location",
+    "publishedDate": "Published Date",
+    "adultPrice": "Adult price",
+    "childPrice": "Child price",
+    "select": "Select",
+    "selectEthnic": "Select ethnic",
+    "selectLocation": "Select locations",
+    "selectPickupLocation": "Select pick-up location",
+    "chooseDate": "Choose date",
+    "validation": {
+      "imageRequired": "Image is required",
+      "titleRequired": "Title is required",
+      "locationRequired": "Location is required",
+      "ethnicRequired": "At least one ethnic is required",
+      "statusInvalid": "Invalid status value",
+      "pickupLocationRequired": "Pick-up location is required",
+      "publishedDateRequired": "Published date must be today or in the future",
+      "adultPriceMin": "Adult price must be at least 0",
+      "childPriceMin": "Child price must be at least 0",
+      "contactNameRequired": "Name is required",
+      "contactPhoneInvalid": "Invalid phone number",
+      "includedRequired": "Included services required",
+      "excludedRequired": "Excluded services required",
+      "overviewRequired": "Overview is required",
+      "itineraryTitleRequired": "Itinerary title is required",
+      "itineraryDescriptionRequired": "Itinerary description is required",
+      "availableDatesRequired": "At least one available date is required",
+      "startDateRequired": "Start date is required",
+      "endDateRequired": "End date is required",
+      "maxSlotsMin": "Max slots must be at least 1",
+      "endDateAfterStart": "End date must be after or equal to start date"
     }
   }
 }

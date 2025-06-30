@@ -1,4 +1,4 @@
-import { TourStatusEnum } from '@/constants/enum/tour';
+import { TourStatusEnum } from '@/constants/enum/tour.enum';
 
 import { Tour } from '@/types/tour.type';
 

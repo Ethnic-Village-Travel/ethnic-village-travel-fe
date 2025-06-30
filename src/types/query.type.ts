@@ -14,6 +14,22 @@ export type QueryConfig = Partial<{
   min: number;
   max: number;
   date: string;
+  start_date: string;
+  end_date: string;
+}>;
+
+export type BookingQueryConfig = Partial<{
+  page: number;
+  pending_page: number;
+  other_page: number;
+  perPage: number;
+  limit: string;
+  sort_by: string;
+  order: 'asc' | 'desc';
+  status: string[];
+  e: string[];
+  start_date: string;
+  end_date: string;
 }>;
 
 export type OrderTourQueryConfig = Partial<{

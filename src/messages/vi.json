@@ -4,6 +4,73 @@
     "no_results": "Không có kết quả",
     "view_more": "Xem thêm"
   },
+  "admin": {
+    "status": {
+      "DRAFT": "Nháp",
+      "REVIEWING": "Chờ duyệt",
+      "REJECTED": "Từ chối",
+      "APPROVED": "Đã duyệt",
+      "SCHEDULED": "Đã lên lịch",
+      "PUBLISHED": "Đã xuất bản",
+      "FULLY_BOOKED": "Đã kín chỗ",
+      "ONGOING": "Đang diễn ra",
+      "PAUSED": "Tạm dừng",
+      "COMPLETED": "Đã hoàn thành",
+      "CANCELLED": "Đã hủy"
+    },
+    "sidebar": {
+      "section": {
+        "general": "Chung",
+        "functions": "Chức năng"
+      },
+      "dashboard": "Bảng điều khiển",
+      "user": "Người dùng",
+      "role": "Vai trò",
+      "tour": "Tour",
+      "order": "Đơn hàng",
+      "article": "Bài viết",
+      "notification": "Thông báo",
+      "report": "Báo cáo",
+      "chatbot": "Chatbot",
+      "logout": "Đăng xuất"
+    },
+    "tour": {
+      "list": {
+        "tour": "Tour",
+        "ethnic": "Dân tộc",
+        "rating": "Đánh giá",
+        "price": "Giá",
+        "status": "Trạng thái",
+        "adult": "Người lớn",
+        "child": "Trẻ em",
+        "duration": "Thời lượng",
+        "day": "ngày",
+        "night": "đêm",
+        "average_rating": "Đánh giá trung bình",
+        "reviews_count": "Số đánh giá",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "change_status": "Đổi trạng thái",
+        "no_title": "Không có tiêu đề",
+        "search_tour": "Tìm kiếm tour...",
+        "tour_list_title": "Danh sách tour",
+        "tour_list_description": "Quản lý chi tiết tour, tình trạng và trạng thái đặt chỗ tại một nơi.",
+        "import": "Nhập dữ liệu",
+        "add_tour": "Thêm tour",
+        "update_status": "Cập nhật trạng thái",
+        "export_tasks": "Xuất dữ liệu",
+        "delete_tasks": "Xóa mục đã chọn",
+        "are_you_sure": "Bạn có chắc chắn không?",
+        "delete_warning": "Hành động này không thể hoàn tác. Điều này sẽ xóa vĩnh viễn {count} tour khỏi hệ thống.",
+        "cancel": "Hủy",
+        "reset_filters": "Đặt lại bộ lọc",
+        "published_utc": "Ngày xuất bản (UTC)",
+        "created_utc": "Ngày tạo (UTC)",
+        "updated_utc": "Ngày cập nhật (UTC)",
+        "open_menu": "Mở menu"
+      }
+    }
+  },
   "home": {
     "title": "Xin chào thế giới!",
     "about": "Đi đến trang giới thiệu",
@@ -92,7 +159,7 @@
       "not_found": "Không tìm thấy tour",
       "overview": {
         "title": "Tổng quan chuyến đi",
-        "included_excluded": "Bao gồm/Không bao gồm",
+        "included_excluded": "Dịch vụ bao gồm/Không bao gồm",
         "trip_plan": "Lịch trình chuyến đi",
         "no_overview": "Chưa có thông tin tổng quan"
       },
@@ -205,7 +272,7 @@
     "header": {
       "nav": {
         "home": "Trang chủ",
-        "about": "Về chúng tôi",
+        "about": "Giới thiệu",
         "services": "Dịch vụ",
         "destinations": "Điểm đến",
         "blog": "Blog",
@@ -214,6 +281,17 @@
       "auth": {
         "sign_in": "Đăng nhập",
         "sign_up": "Đăng ký"
+      },
+      "user_menu": {
+        "notifications": "Thông báo",
+        "no_notifications": "Không có thông báo",
+        "unread_notifications": "{count} thông báo chưa đọc",
+        "profile": {
+          "favorites": "Yêu thích",
+          "transactions": "Lịch sử giao dịch",
+          "edit_profile": "Chỉnh sửa hồ sơ",
+          "logout": "Đăng xuất"
+        }
       }
     },
     "footer": {
@@ -334,6 +412,152 @@
     "title": "Bộ lọc",
     "button": {
       "apply": "Áp dụng"
+    }
+  },
+  "personal": {
+    "navigation": {
+      "title": "Điều hướng",
+      "bookmark": "Đã lưu",
+      "transaction": "Giao dịch",
+      "account": "Tài khoản",
+      "logout": "Đăng xuất"
+    },
+    "bookmark": {
+      "title": "Danh sách đã lưu",
+      "saved_tours": "Tours đã lưu",
+      "saved_articles": "Bài viết đã lưu",
+      "view_more": "Xem thêm"
+    },
+    "transaction": {
+      "title": "Đơn Đặt Của Tôi",
+      "tabs": {
+        "pending": "Chờ Thanh Toán",
+        "other": "Các Đơn Khác"
+      },
+      "no_transactions": "Không tìm thấy đơn đặt nào",
+      "error_loading": "Lỗi tải đơn đặt",
+      "details": "Chi tiết",
+      "booking_id": "Mã đặt tour",
+      "duration": "Thời gian",
+      "days": "ngày",
+      "payment_method_label": "Phương thức thanh toán",
+      "payment_date": "Ngày thanh toán",
+      "discount": "Giảm giá",
+      "booked_on": "Đặt vào ngày",
+      "status": {
+        "darft": "Nháp",
+        "pending_payment": "Chờ thanh toán",
+        "failed_payment": "Thanh toán thất bại",
+        "paid": "Đã thanh toán",
+        "confirmed": "Đã xác nhận",
+        "assigned_guide": "Đã chỉ định HDV",
+        "in_progress": "Đang diễn ra",
+        "cancelled_by_user": "Khách hàng hủy",
+        "cancelled_by_admin": "Quản trị viên hủy",
+        "completed": "Hoàn thành",
+        "refunded": "Đã hoàn tiền",
+        "expired": "Hết hạn"
+      },
+      "payment_method": {
+        "bank_transfer": "Chuyển khoản ngân hàng",
+        "credit_card": "Thẻ tín dụng",
+        "paypal": "PayPal",
+        "cash": "Tiền mặt",
+        "momo": "MoMo",
+        "zalopay": "ZaloPay",
+        "vnpay": "VNPay"
+      },
+      "filters": {
+        "date_range": "Khoảng thời gian",
+        "start_date": "Ngày bắt đầu",
+        "end_date": "Ngày kết thúc",
+        "status": "Trạng thái",
+        "all_statuses": "Tất cả trạng thái",
+        "selected": "đã chọn",
+        "search_status": "Tìm kiếm trạng thái",
+        "no_results": "Không có kết quả",
+        "clear": "Xóa bộ lọc"
+      },
+      "actions": {
+        "pay_now": "Thanh toán",
+        "cancel": "Hủy",
+        "review": "Đánh giá",
+        "view_details": "Xem chi tiết"
+      },
+      "pending_tab": "Chờ thanh toán",
+      "other_tab": "Khác",
+      "no_pending": "Không có booking chờ thanh toán",
+      "no_other": "Không có booking khác"
+    },
+    "account": {
+      "title": "Cài đặt tài khoản",
+      "profile": "Cài đặt hồ sơ",
+      "security": "Cài đặt bảo mật"
+    },
+    "booking_pending_list": {
+      "loading": "Đang tải đơn chờ thanh toán...",
+      "error": "Lỗi tải đơn chờ thanh toán",
+      "empty": "Không có đơn chờ thanh toán"
+    },
+    "booking_other_list": {
+      "loading": "Đang tải các đơn khác...",
+      "error": "Lỗi tải các đơn khác",
+      "empty": "Không có đơn khác"
+    }
+  },
+  "tourCreate": {
+    "title": "Tạo tour mới",
+    "image": "Hình ảnh",
+    "required": "*",
+    "selectImage": "Chọn hình ảnh",
+    "overview": "Tổng quan",
+    "submit": "Tạo mới",
+    "contactNumber": "Số liên hệ",
+    "contactPerson": "Người liên hệ",
+    "add": "Thêm",
+    "startDate": "Ngày bắt đầu",
+    "endDate": "Ngày kết thúc",
+    "maxSlots": "Số lượng tối đa",
+    "availableDates": "Ngày mở đặt",
+    "included": "Các dịch vụ bao gồm",
+    "excluded": "Các dịch vụ không có",
+    "itinerary": "Lịch trình",
+    "addItinerary": "Thêm lịch trình",
+    "remove": "Xóa",
+    "ethnic": "Dân tộc",
+    "location": "Địa điểm",
+    "status": "Trạng thái",
+    "pickupLocation": "Điểm đón",
+    "publishedDate": "Ngày hiển thị",
+    "adultPrice": "Giá người lớn",
+    "childPrice": "Giá trẻ em",
+    "select": "Chọn",
+    "selectEthnic": "Chọn dân tộc",
+    "selectLocation": "Chọn địa điểm",
+    "selectPickupLocation": "Chọn điểm đón",
+    "chooseDate": "Chọn ngày",
+    "validation": {
+      "imageRequired": "Bắt buộc chọn hình ảnh",
+      "titleRequired": "Bắt buộc nhập tiêu đề",
+      "locationRequired": "Bắt buộc chọn địa điểm",
+      "ethnicRequired": "Phải chọn ít nhất một dân tộc",
+      "statusInvalid": "Trạng thái không hợp lệ",
+      "pickupLocationRequired": "Bắt buộc chọn điểm đón",
+      "publishedDateRequired": "Ngày hiển thị phải là hôm nay hoặc tương lai",
+      "adultPriceMin": "Giá người lớn phải lớn hơn hoặc bằng 0",
+      "childPriceMin": "Giá trẻ em phải lớn hơn hoặc bằng 0",
+      "contactNameRequired": "Bắt buộc nhập tên",
+      "contactPhoneInvalid": "Số điện thoại không hợp lệ",
+      "includedRequired": "Phải chọn dịch vụ bao gồm",
+      "excludedRequired": "Phải chọn dịch vụ không bao gồm",
+      "overviewRequired": "Bắt buộc nhập tổng quan",
+      "itineraryTitleRequired": "Bắt buộc nhập tiêu đề lịch trình",
+      "itineraryDescriptionRequired": "Bắt buộc nhập mô tả lịch trình",
+      "availableDatesRequired": "Phải có ít nhất một ngày mở đặt",
+      "startDateRequired": "Bắt buộc chọn ngày bắt đầu",
+      "endDateRequired": "Bắt buộc chọn ngày kết thúc",
+      "maxSlotsMin": "Số lượng tối đa phải lớn hơn 0",
+      "endDateAfterStart": "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu"
     }
   }
 }

@@ -1,7 +1,26 @@
+import { useRef } from 'react';
 import { bookingApi } from '@/apis/booking.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { BookingConfirmRequest, BookingGetResponse, BookingStoreRequest, BookingUpdateRequest } from '@/types/booking';
+import {
+  BookingConfirmRequest,
+  BookingGetResponse,
+  BookingListRequest,
+  BookingListResponse,
+  BookingStoreRequest,
+  BookingUpdateRequest,
+} from '@/types/booking';
+import { PageResponse } from '@/types/page.type';
+
+export const useApiBookingList = (request: BookingListRequest) => {
+  return useQuery({
+    queryKey: ['bookings', request],
+    queryFn: () => bookingApi.list(request),
+    select: response => response.data as PageResponse<BookingListResponse>,
+    placeholderData: previousData => previousData,
+    staleTime: 5 * 60 * 1000,
+  });
+};
 
 export const useApiBookingGet = (id: string) => {
   return useQuery({

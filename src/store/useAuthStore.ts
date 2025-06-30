@@ -2,7 +2,7 @@ import { setCookie } from '@/utils/cookie';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { User } from '@/types/auth.type';
+import { User, UserDetailsResponse } from '@/types/user.type';
 
 interface AuthState {
   accessToken: string;
@@ -15,6 +15,7 @@ interface AuthState {
   enterOtpOpen: boolean;
   otpEmail: string;
   setAuth: (data: { accessToken: string; refreshToken: string; user: User | null }) => void;
+  setUserDetails: (details: UserDetailsResponse) => void;
   setLoginOpen: (open: boolean) => void;
   setSignupOpen: (open: boolean) => void;
   setForgotPasswordOpen: (open: boolean) => void;
@@ -43,6 +44,7 @@ export const useAuthStore = create<AuthState>()(
           setCookie('userRoles', JSON.stringify(user?.roles || []), 7);
           setCookie('userPermissions', JSON.stringify(user?.permissions || []), 7);
           setCookie('userId', user?.id?.toString() || '', 7);
+          setCookie('userPersonal', JSON.stringify(user?.personal || {}), 7);
         }
 
         set({
@@ -52,7 +54,11 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: !!accessToken && !!user,
         });
       },
-
+      setUserDetails: (details: UserDetailsResponse) =>
+        set(state => ({
+          ...state,
+          user: state.user ? { ...state.user, details } : null,
+        })),
       setLoginOpen: open => set({ loginOpen: open }),
       setSignupOpen: open => set({ signupOpen: open }),
       setForgotPasswordOpen: open => set({ forgotPasswordOpen: open }),

@@ -12,7 +12,7 @@ const FilterCardGroup = ({ filters }: FilterCardGroupProps) => {
   return (
     <div className="flex flex-col gap-4">
       {filters.map((filter, index) => (
-        <FilterCard key={index} filter={filter} />
+        <FilterCard key={index} filter={filter} isTranslated={filter.isTranslated} />
       ))}
     </div>
   );

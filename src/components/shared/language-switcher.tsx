@@ -50,9 +50,15 @@ export default function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="hover:bg-white-20 focus-visible:ring-0">
-          <Image src={`/icons/${locale}.svg`} alt={locale} width={20} height={20} />
-          <ChevronDown className={cn('h-4 w-4', { 'text-white': pathname.includes(RouteConstant.home) })} />
+        <Button variant="ghost" size="icon" className="hover:bg-white/10 h-12 w-12 focus-visible:ring-0">
+          <div className="flex items-center">
+            <Image src={`/icons/${locale}.svg`} alt={locale} width={28} height={28} />
+            <ChevronDown
+              className={cn('ml-1 h-5 w-5', {
+                'text-white': pathname.includes(RouteConstant.home),
+              })}
+            />
+          </div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -64,7 +70,7 @@ export default function LanguageSwitcher() {
               'bg-primary-500 font-semibold text-white focus:bg-primary-500 focus:text-white': loc === locale,
             })}
           >
-            <Image src={`/icons/${loc}.svg`} alt={loc} width={20} height={20} />
+            <Image src={`/icons/${loc}.svg`} alt={loc} width={28} height={28} />
             {AppConstant.locales[loc as keyof typeof AppConstant.locales]}
           </DropdownMenuItem>
         ))}

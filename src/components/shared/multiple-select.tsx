@@ -57,6 +57,7 @@ interface MultiSelectProps
     id: string;
     /** Optional icon component to display alongside the option. */
     icon?: React.ComponentType<{ className?: string }>;
+    [key: string]: any;
   }[];
 
   /**
@@ -104,6 +105,12 @@ interface MultiSelectProps
    * Optional, can be used to add custom styles.
    */
   className?: string;
+
+  /**
+   * A function to render a custom option.
+   * Optional, can be used to render custom option components.
+   */
+  renderOption?: (option: any) => React.ReactNode;
 }
 
 export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
@@ -119,6 +126,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
       modalPopover = false,
       asChild = false,
       className,
+      renderOption,
       ...props
     },
     ref,
@@ -277,7 +285,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                         <CheckIcon className="h-4 w-4" />
                       </div>
                       {option.icon && <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />}
-                      <span>{option.name}</span>
+                      {renderOption ? renderOption(option) : <span>{option.name}</span>}
                     </CommandItem>
                   );
                 })}

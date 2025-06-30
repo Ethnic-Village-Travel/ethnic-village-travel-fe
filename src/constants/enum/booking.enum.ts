@@ -24,3 +24,26 @@ export enum PaymentStatus {
   FAILED = 'FAILED',
   REFUNDED = 'REFUNDED',
 }
+
+export const getStatusBadgeVariant = (status: string) => {
+  switch (status) {
+    case BookingStatus.PENDING_PAYMENT:
+      return 'amber';
+    case BookingStatus.PAID:
+    case BookingStatus.CONFIRMED:
+    case BookingStatus.ASSIGNED_GUIDE:
+    case BookingStatus.COMPLETED:
+      return 'green';
+    case BookingStatus.IN_PROGRESS:
+      return 'blue';
+    case BookingStatus.CANCELLED_BY_USER:
+    case BookingStatus.CANCELLED_BY_ADMIN:
+    case BookingStatus.FAILED_PAYMENT:
+    case BookingStatus.EXPIRED:
+      return 'destructive';
+    case BookingStatus.REFUNDED:
+      return 'secondary';
+    default:
+      return 'default';
+  }
+};

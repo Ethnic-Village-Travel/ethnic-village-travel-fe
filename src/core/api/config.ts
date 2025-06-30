@@ -7,6 +7,9 @@ export const API = {
     SIGNIN: '/auth/signin',
     SIGNUP: '/auth/signup',
   },
+  USER: {
+    DETAILS: '/user/details',
+  },
   CONTACT: {
     SEND: '/contact',
   },
@@ -15,6 +18,7 @@ export const API = {
   },
   TOUR: {
     SEARCH: '/tour',
+    GET_BY_IDS: '/tour/ids',
     DETAIL: '/tour',
     FILTER_TAB: '/tour/filter-tab',
     GET_BOOKMARK_STATUS: '/tours/bookmark/status',
@@ -34,6 +38,7 @@ export const API = {
     REPORT: '/review/report',
   },
   BOOKING: {
+    SEARCH: '/booking',
     GET: '/booking/{id}',
     STORE: '/booking/store',
     UPDATE: '/booking/update',
@@ -46,5 +51,15 @@ export const API = {
   BOOKMARK: {
     BASE: '/bookmark',
     CHECK: '/bookmark/check',
+  },
+};
+
+export const AdminAPI = {
+  TOUR: {
+    SEARCH: '/admin/tour',
+    STORE: '/admin/tour/store',
+  },
+  ServiceInfo: {
+    ALL: '/admin/service',
   },
 };

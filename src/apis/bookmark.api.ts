@@ -3,25 +3,7 @@ import { API } from '@/core/api';
 import api from '@/core/api/api';
 
 import { ApiResponse } from '@/types/api.type';
-
-export interface BookmarkRequest {
-  entityId: string;
-  entityType: EntityType;
-}
-
-export interface BookmarkBasicInfo {
-  id: string;
-  entityType: EntityType;
-  entityId: string;
-  status: 'ACTIVE' | 'INACTIVE';
-  createdAt: string;
-}
-
-export interface BookmarkResponse {
-  bookmarks: BookmarkBasicInfo[];
-  total: number;
-  isBookmarked: boolean;
-}
+import { BookmarkRequest, BookmarkResponse } from '@/types/bookmark.type';
 
 export const bookmarkApi = {
   /**
@@ -57,11 +39,9 @@ export const bookmarkApi = {
    * @param type EntityType
    * @returns Promise<ApiResponse<BookmarkResponse>>
    */
-  getBookmarks: async (type: EntityType) => {
+  getBookmarks: async () => {
     try {
-      const response = await api.get<ApiResponse<BookmarkResponse>>(API.BOOKMARK.BASE, {
-        params: { type },
-      });
+      const response = await api.get<ApiResponse<BookmarkResponse>>(API.BOOKMARK.BASE);
       return response.data;
     } catch (error) {
       throw error;

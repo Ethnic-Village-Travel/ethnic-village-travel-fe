@@ -1,13 +1,12 @@
+import { useEffect } from 'react';
 import { FilterConfig, FILTERS } from '@/data/filters';
-import { toSnakeCase } from '@/utils';
+import { useMetaStore } from '@/store/useMetaStore';
 import { omitBy } from 'lodash';
 
-import { TourListParams } from '@/types/tour.type';
-import { SORT_OPTIONS } from '@/components/features/tour/header-section';
+import { TourListRequest } from '@/types/tour.type';
 
 import { useQueryConfig } from '../use-query-config';
-import { useEthnicList } from './useEthnic';
-import { useLocationList } from './useLocation';
+import { useFetchEthnics, useFetchLocations } from './useMetaData';
 import { useTourList } from './useTour';
 
 const getFilterValue = <T>(
@@ -47,15 +46,15 @@ const getFilterIds = <T extends EntityWithId>(
 
 export const useFilteredTourList = (pageSize: number = 12) => {
   const queryConfig = useQueryConfig();
-  const { data: ethnicRes } = useEthnicList();
-  const { data: locationRes } = useLocationList();
+  const { data: ethnics } = useFetchEthnics();
+  const { data: locations } = useFetchLocations();
 
-  const filterParams: TourListParams = omitBy(
+  const filterParams: TourListRequest = omitBy(
     {
       page: queryConfig.page || 0,
       size: pageSize,
-      ethnicIds: getFilterIds(queryConfig.e, ethnicRes?.data, ethnic => ethnic.code),
-      locationIds: getFilterIds(queryConfig.l, locationRes?.data, location => location.city),
+      ethnicIds: getFilterIds(queryConfig.e, ethnics, ethnic => ethnic.code),
+      locationIds: getFilterIds(queryConfig.l, locations, location => location.city),
       minPrice: queryConfig.min,
       maxPrice: queryConfig.max,
       onSale: queryConfig.p

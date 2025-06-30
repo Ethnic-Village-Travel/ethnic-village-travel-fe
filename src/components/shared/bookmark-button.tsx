@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import { EntityType } from '@/constants/entity';
+import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/utils/classnames';
 import { Bookmark } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { useApiBookmarkAdd, useApiBookmarkRemove } from '@/hooks/api/useBookmark';
-import { useAuthentication } from '@/hooks/use-authentication';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -12,7 +13,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 interface BookmarkButtonProps {
   entityId: string;
   entityType: EntityType;
-  isBookmarked?: boolean;
+  isBookmarkedDefault?: boolean;
   className?: string;
   variant?: 'default' | 'outline' | 'ghost';
   size?: 'icon' | 'default' | 'sm' | 'lg';
@@ -22,24 +23,26 @@ interface BookmarkButtonProps {
 export const BookmarkButton = ({
   entityId,
   entityType,
-  isBookmarked = false,
+  isBookmarkedDefault = false,
   className,
   variant = 'ghost',
   size = 'icon',
   showText = false,
 }: BookmarkButtonProps) => {
+  const t = useTranslations('bookmark');
+  const [isBookmarked, setIsBookmarked] = useState(isBookmarkedDefault);
+
   const { mutate: addBookmark, isPending: isAdding } = useApiBookmarkAdd();
   const { mutate: removeBookmark, isPending: isRemoving } = useApiBookmarkRemove();
   const { toast } = useToast();
-  const { isAuthenticated } = useAuthentication();
-  const t = useTranslations('bookmark');
+  const { user } = useAuthStore();
 
   const isLoading = isAdding || isRemoving;
 
   const handleToggleBookmark = () => {
     if (isLoading) return;
 
-    if (!isAuthenticated) {
+    if (!user) {
       toast({
         title: t('auth_required'),
         variant: 'destructive',
@@ -51,6 +54,7 @@ export const BookmarkButton = ({
     if (isBookmarked) {
       removeBookmark(request, {
         onSuccess: response => {
+          setIsBookmarked(false);
           toast({
             title: response.message,
           });
@@ -65,6 +69,7 @@ export const BookmarkButton = ({
     } else {
       addBookmark(request, {
         onSuccess: response => {
+          setIsBookmarked(true);
           toast({
             title: response.message,
           });
@@ -89,7 +94,8 @@ export const BookmarkButton = ({
             className={cn(
               'group gap-2 transition-all duration-300',
               {
-                'text-primary': isBookmarked,
+                'border-primary text-primary hover:text-primary': isBookmarked,
+                'hover:border-primary-500/80 hover:text-primary': variant === 'outline',
                 'hover:text-primary': !isBookmarked,
               },
               className,

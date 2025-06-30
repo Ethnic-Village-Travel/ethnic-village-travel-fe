@@ -1,24 +1,25 @@
 import { useState } from 'react';
+import { TourServiceInfoType } from '@/constants/enum/tour-service-info.enum';
+import { useTranslations } from 'next-intl';
 import { UseFormReturn } from 'react-hook-form';
 
+import { ServiceInfoBasic } from '@/types/service-info.type';
+import { TourFormValues } from '@/lib/schemas/tour.schema';
+import { useServiceInfoList } from '@/hooks/api/useServiceInfo';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { MultiSelect } from '@/components/shared/multiple-select';
 
-import { TourFormValues } from '.';
+export type ServiceWithType = ServiceInfoBasic & { type: TourServiceInfoType };
 
 type InExServiceProps = {
   form: UseFormReturn<TourFormValues>;
 };
 
-const mockServiceData = [
-  { id: '1', name: 'Flight Ticket' },
-  { id: '2', name: 'Cab Transportation' },
-  { id: '3', name: 'Hotel' },
-];
-
 export default function InExService({ form }: InExServiceProps) {
   const [includedServices, setIncludedServices] = useState<string[]>([]);
   const [excludedServices, setExcludedServices] = useState<string[]>([]);
+  const { data: serviceInfoList = [], isLoading } = useServiceInfoList();
+  const t = useTranslations();
 
   return (
     <>
@@ -27,17 +28,19 @@ export default function InExService({ form }: InExServiceProps) {
         name="included"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="font-semibold">Included</FormLabel>
+            <FormLabel className="font-semibold">{t('tourCreate.included')}</FormLabel>
             <MultiSelect
-              options={mockServiceData.filter(service => !excludedServices?.includes(service.name))}
+              options={serviceInfoList.filter(service => !excludedServices.includes(service.id))}
               onValueChange={values => {
-                field.onChange(values);
+                field.onChange(values.map((id: string) => id));
                 setIncludedServices(values);
               }}
-              placeholder="Select included services"
+              value={includedServices}
+              placeholder={t('tourCreate.included')}
               variant="inverted"
               animation={2}
               maxCount={3}
+              disabled={isLoading}
             />
             <FormMessage />
           </FormItem>
@@ -50,19 +53,20 @@ export default function InExService({ form }: InExServiceProps) {
         name="excluded"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="font-semibold">Excluded</FormLabel>
+            <FormLabel className="font-semibold">{t('tourCreate.excluded')}</FormLabel>
             <FormControl>
               <MultiSelect
-                options={mockServiceData.filter(service => !includedServices.includes(service.id))}
+                options={serviceInfoList.filter(service => !includedServices.includes(service.id))}
                 onValueChange={values => {
-                  field.onChange(values);
+                  field.onChange(values.map((id: string) => id));
                   setExcludedServices(values);
                 }}
-                placeholder="Select excluded services"
+                value={excludedServices}
+                placeholder={t('tourCreate.excluded')}
                 variant="destructive"
                 animation={2}
                 maxCount={3}
-                {...field}
+                disabled={isLoading}
               />
             </FormControl>
             <FormMessage />

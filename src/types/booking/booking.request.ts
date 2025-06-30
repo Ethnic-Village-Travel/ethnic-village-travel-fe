@@ -35,3 +35,14 @@ export interface BookingConfirmRequest {
   totalPrice: number;
   tourData: TourInfo;
 }
+
+export interface BookingListRequest {
+  status?: BookingStatus[];
+  startDate?: string;
+  endDate?: string;
+  ethnicIds?: number[];
+  sortBy?: string;
+  order?: 'asc' | 'desc';
+  page: number;
+  size: number;
+}

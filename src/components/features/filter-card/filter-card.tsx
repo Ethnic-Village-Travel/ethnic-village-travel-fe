@@ -16,13 +16,13 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 interface FilterCardProps {
   filter: FilterConfig;
+  isTranslated?: boolean;
   className?: string;
 }
 
-export function FilterCard({ filter, className }: FilterCardProps) {
+export function FilterCard({ filter, isTranslated = false, className }: FilterCardProps) {
   const t = useTranslations();
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [showAll, setShowAll] = useState(false);
   const queryConfig = useQueryConfig();
@@ -69,7 +69,7 @@ export function FilterCard({ filter, className }: FilterCardProps) {
             onClick={() => handleFilterChange(item.value, !isSelected)}
           />
           <Label htmlFor={item.value} className="text-sm font-normal">
-            {t(item.label as any)}
+            {isTranslated ? item.label : t(item.label as any)}
           </Label>
         </div>
       );
@@ -83,7 +83,7 @@ export function FilterCard({ filter, className }: FilterCardProps) {
           onCheckedChange={checked => handleFilterChange(item.value, checked as boolean)}
         />
         <Label htmlFor={item.value} className="text-sm font-normal">
-          {t(item.label as any)}
+          {isTranslated ? item.label : t(item.label as any)}
         </Label>
       </div>
     );

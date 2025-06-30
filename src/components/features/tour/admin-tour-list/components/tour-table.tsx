@@ -1,48 +1,27 @@
 'use client';
 
 import * as React from 'react';
+import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
-import { fetchTours } from '@/lib/mock-api';
+import { useAdminFilteredTourList } from '@/hooks/api/useAdminFilteredTourList';
 import { useDataTable } from '@/hooks/use-data-table';
 import { useQueryConfig } from '@/hooks/use-query-config';
-import { DataTable } from '@/components/shared/data-table/data-table';
-import { DataTableToolbar } from '@/components/shared/data-table/data-table-toolbar';
+import { DataTable, DataTableProps } from '@/components/shared/data-table/data-table';
+import { DataTableViewOptions } from '@/components/shared/data-table/data-table-view-options';
 
 import DeleteTourDialog from './tour-delete-dialog';
 import { ToursTableActionBar } from './tour-table-action-bar';
 import { getTourTableColumns } from './tour-table-columns';
+import { TourTableFilter } from './tour-table-filter';
 
-interface ToursTableProps {
-  data?: Tour[];
-  pageCount?: number;
-}
-
+// Local interface for DataTable props
 export function ToursTable() {
   const queryConfig = useQueryConfig();
-  const [tourData, setTourData] = React.useState<{
-    data: Tour[];
-    pageCount: number;
-    statusCounts: Record<string, number>;
-  }>({
-    data: [],
-    pageCount: 0,
-    statusCounts: {},
-  });
+  const t = useTranslations('admin');
 
-  // Fetch data when filters change
-  React.useEffect(() => {
-    const loadData = async () => {
-      const result = await fetchTours({
-        searchTerm: queryConfig.search,
-        status: queryConfig.status,
-        page: queryConfig.page,
-        pageSize: queryConfig.perPage,
-      });
-      setTourData(result);
-    };
-    loadData();
-  }, [queryConfig]);
+  // Use useFilteredTourList with a custom page size for admin table
+  const { tours, totalPages, isLoading } = useAdminFilteredTourList(queryConfig.perPage || 10);
 
   const [rowAction, setRowAction] = React.useState<{
     id: number;
@@ -54,26 +33,38 @@ export function ToursTable() {
     () =>
       getTourTableColumns({
         setRowAction,
+        t,
       }),
     [],
   );
 
   const { table } = useDataTable<Tour>({
-    data: tourData.data,
+    data: tours,
     columns,
-    pageCount: tourData.pageCount,
+    pageCount: totalPages,
     initialState: {
       columnPinning: { right: ['actions'] },
     },
-    getRowId: originalRow => originalRow.id.toString(),
+    getRowId: (originalRow: Tour) => originalRow.id.toString(),
     shallow: false,
     clearOnDefault: true,
   });
 
+  const dataTableProps: Partial<DataTableProps<Tour>> = {
+    loading: isLoading ?? false,
+  };
+
   return (
     <>
-      <DataTable table={table} actionBar={<ToursTableActionBar table={table} />}>
-        <DataTableToolbar table={table} />
+      <DataTable {...dataTableProps} table={table} actionBar={<ToursTableActionBar table={table} />}>
+        <div className="flex w-full items-start justify-between gap-2 p-1">
+          <TourTableFilter
+            key={JSON.stringify({ search: queryConfig.search, status: queryConfig.status, e: queryConfig.e })}
+          />
+          <div className="flex items-center gap-2">
+            <DataTableViewOptions table={table} />
+          </div>
+        </div>
       </DataTable>
       {/* TODO: Implement UpdateTourSheet
       <UpdateTourSheet

@@ -1,9 +1,9 @@
 'use client';
 
+import { TourServiceInfoType } from '@/constants/enum/tour-service-info.enum';
 import { CircleCheck, CircleMinus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { ServiceEnum } from '@/types/service,type';
 import { Tour } from '@/types/tour.type';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
@@ -29,7 +29,7 @@ export function TourDetailOverview({ tour }: TourDetailOverviewProps) {
         <div className="grid grid-cols-2 gap-x-[30px]">
           <div className="space-y-[10px]">
             {tour.services
-              ?.filter(service => service.type === ServiceEnum.INCLUDED)
+              ?.filter(service => service.type === TourServiceInfoType.INCLUDED)
               .map((service, index) => (
                 <div key={service.id} className="flex items-center gap-[10px]">
                   <CircleCheck className="size-[24px] text-primary" />
@@ -39,7 +39,7 @@ export function TourDetailOverview({ tour }: TourDetailOverviewProps) {
           </div>
           <div className="space-y-[10px]">
             {tour.services
-              ?.filter(service => service.type !== ServiceEnum.INCLUDED)
+              ?.filter(service => service.type !== TourServiceInfoType.INCLUDED)
               .map((service, index) => (
                 <div key={service.id} className="flex items-center gap-[10px]">
                   <CircleMinus className="size-[24px] text-secondary-500" />

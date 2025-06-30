@@ -1,7 +1,9 @@
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
+import { ACCOUNT_LOCKED, ADMIN_DASHBOARD_READ, DeniedPermissionMap, PermissionMap } from './constants/permission-map';
 import { routing } from './lib/i18n-navigation';
+import { normalizePath } from './utils';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -22,11 +24,41 @@ function extractLocaleFromPath(pathname: string): { locale: string; pathWithoutL
   };
 }
 
-function hasAccess(userRoles: string[], path: string): boolean {
-  if (path.startsWith('/admin')) {
-    return userRoles.some(role => role.includes('ADMIN'));
+function hasAccess(userPermissions: string[], path: string): boolean {
+  // Kiểm tra tài khoản bị khóa
+  if (userPermissions.includes(ACCOUNT_LOCKED)) {
+    return false;
   }
-  return userRoles.length > 0;
+
+  const matchedDeniedPermission = Object.keys(DeniedPermissionMap).find(route => {
+    const normalizedRoute = normalizePath(route);
+    const regex = new RegExp(`^${normalizedRoute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`);
+    return regex.test(normalizePath(path));
+  });
+  console.log(userPermissions);
+
+  if (matchedDeniedPermission && userPermissions.includes(DeniedPermissionMap[matchedDeniedPermission])) {
+    return false;
+  }
+
+  if (path.startsWith('/admin') && !userPermissions.includes(ADMIN_DASHBOARD_READ)) {
+    return false;
+  }
+
+  // Kiểm tra permissions cụ thể cho các route /admin
+  const matchedRoute = Object.keys(PermissionMap).find(route => {
+    const normalizedRoute = normalizePath(route);
+    const regex = new RegExp(`^${normalizedRoute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`);
+    return regex.test(normalizePath(path));
+  });
+
+  // Nếu không có permissions yêu cầu cụ thể, chỉ cần ADMIN_DASHBOARD_READ cho /admin
+  if (!matchedRoute) {
+    return !path.startsWith('/admin') || userPermissions.includes(ADMIN_DASHBOARD_READ);
+  }
+
+  const requiredPermissions = PermissionMap[matchedRoute];
+  return requiredPermissions.some(permission => userPermissions.includes(permission));
 }
 
 function requiresAuth(path: string): boolean {
@@ -37,13 +69,15 @@ function getAuthData(request: NextRequest) {
   try {
     const accessToken = request.cookies.get('accessToken')?.value;
     const userRoles = request.cookies.get('userRoles')?.value;
+    const userPermissions = request.cookies.get('userPermissions')?.value;
     console.log('🚀 ~ getAuthData ~ userRoles:', userRoles);
 
-    if (!accessToken || !userRoles) return null;
+    if (!accessToken || !userRoles || !userPermissions) return null;
 
     return {
       accessToken,
       roles: JSON.parse(userRoles),
+      permissions: JSON.parse(userPermissions),
     };
   } catch {
     return null;
@@ -71,7 +105,7 @@ export default async function middleware(request: NextRequest, event: NextFetchE
     return NextResponse.redirect(loginUrl);
   }
 
-  if (!hasAccess(authData.roles, pathWithoutLocale)) {
+  if (!hasAccess(authData.permissions, pathWithoutLocale)) {
     return NextResponse.redirect(new URL(`/${locale}/403`, request.url));
   }
   const response = intlMiddleware(request);
