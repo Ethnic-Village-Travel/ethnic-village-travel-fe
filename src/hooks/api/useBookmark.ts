@@ -1,7 +1,8 @@
 import { bookmarkApi } from '@/apis/bookmark.api';
-import type { BookmarkRequest, BookmarkResponse } from '@/apis/bookmark.api';
 import { EntityType } from '@/constants/entity';
 import { useMutation, useQuery } from '@tanstack/react-query';
+
+import { BookmarkRequest, BookmarkResponse } from '@/types/bookmark.type';
 
 export const BOOKMARK_QUERY_KEYS = {
   all: ['bookmarks'] as const,

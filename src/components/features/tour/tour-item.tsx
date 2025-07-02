@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { EntityType } from '@/constants/entity';
+import { BookmarkStatus } from '@/constants/enum/bookmark.enum';
 import { RouteConstant } from '@/constants/route';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useUserStore } from '@/store/useUserStore';
 import { calculateRatingStats, cn } from '@/utils';
 import { formatCurrency } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
@@ -24,8 +26,10 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
     ? { average: tour.avgRating, total: tour.ratingCount }
     : calculateRatingStats(tour.reviews || []);
   const t = useTranslations('tour.item');
-  const { user } = useAuthStore();
-  const isBookmarked = user?.details?.bookmarks?.some(b => b.entityType === EntityType.TOUR && b.entityId === tour.id);
+  const { details } = useUserStore();
+  const isBookmarked = details?.bookmarks?.some(
+    b => b.entityType === EntityType.TOUR && b.status === BookmarkStatus.ACTIVE && b.entityId === tour.id,
+  );
 
   return (
     <Card

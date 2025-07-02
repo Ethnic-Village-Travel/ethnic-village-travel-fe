@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { EntityType } from '@/constants/entity';
+import { BookmarkStatus } from '@/constants/enum/bookmark.enum';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useUserStore } from '@/store/useUserStore';
 import { cn } from '@/utils/classnames';
 import { Bookmark } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -36,6 +38,7 @@ export const BookmarkButton = ({
   const { mutate: removeBookmark, isPending: isRemoving } = useApiBookmarkRemove();
   const { toast } = useToast();
   const { user } = useAuthStore();
+  const { setUserBookmark } = useUserStore();
 
   const isLoading = isAdding || isRemoving;
 
@@ -58,6 +61,9 @@ export const BookmarkButton = ({
           toast({
             title: response.message,
           });
+
+          if (!response.data) return;
+          setUserBookmark(response.data.bookmark);
         },
         onError: (error: any) => {
           toast({
@@ -73,6 +79,9 @@ export const BookmarkButton = ({
           toast({
             title: response.message,
           });
+
+          if (!response.data) return;
+          setUserBookmark(response.data.bookmark);
         },
         onError: (error: any) => {
           toast({

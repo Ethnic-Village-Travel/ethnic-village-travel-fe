@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { EntityType } from '@/constants/entity';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useUserStore } from '@/store/useUserStore';
 import { useTranslations } from 'next-intl';
 
 import { Bookmark } from '@/types/bookmark.type';
@@ -22,11 +22,11 @@ export default function BookmarkTabContent() {
   const t = useTranslations('personal.bookmark');
   const [visibleTourItems, setVisibleTourItems] = useState(ITEMS_PER_PAGE);
   const [visibleArticleItems, setVisibleArticleItems] = useState(ITEMS_PER_PAGE);
-  const { user } = useAuthStore();
+  const { details } = useUserStore();
 
   // Sử dụng useMemo thay vì useEffect + useState
   const sortedBookmarks = useMemo(() => {
-    if (!user?.details?.bookmarks) {
+    if (!details?.bookmarks) {
       return {
         [EntityType.TOUR]: [],
         [EntityType.ARTICLE]: [],
@@ -34,7 +34,7 @@ export default function BookmarkTabContent() {
     }
 
     // Group and sort bookmarks by entity type
-    const bookmarks = user.details.bookmarks.reduce((acc, bookmark) => {
+    const bookmarks = details.bookmarks.reduce((acc, bookmark) => {
       if (!acc[bookmark.entityType]) {
         acc[bookmark.entityType] = [];
       }
@@ -49,7 +49,7 @@ export default function BookmarkTabContent() {
     });
 
     return bookmarks;
-  }, [user?.details?.bookmarks]);
+  }, [details?.bookmarks]);
 
   const handleLoadMoreTours = () => {
     setVisibleTourItems(prev => prev + ITEMS_PER_PAGE);
