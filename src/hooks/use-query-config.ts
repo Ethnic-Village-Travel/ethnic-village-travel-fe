@@ -1,7 +1,7 @@
 import { isUndefined } from 'lodash';
 import omitBy from 'lodash/omitBy';
 
-import { BookingQueryConfig, OrderTourQueryConfig, QueryConfig } from '@/types/query.type';
+import { QueryConfig } from '@/types/query.type';
 
 import { useQueryParams } from './use-query-params';
 
