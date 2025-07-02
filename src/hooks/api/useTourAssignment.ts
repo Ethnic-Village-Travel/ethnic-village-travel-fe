@@ -1,7 +1,7 @@
 import { tourAssignmentApi } from '@/apis/tour-assignment.api';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import type { TourAssignmentRequest } from '@/types/tour-assignment.type';
+import type { AssignedAvailableDatesRequest, TourAssignmentRequest } from '@/types/tour-assignment.type';
 
 export const useAssignTourEmployees = () => {
   return useMutation({
@@ -14,5 +14,34 @@ export const useTourAssignments = (payload: any) => {
     queryKey: ['tour-assignments', payload],
     queryFn: () => tourAssignmentApi.search(payload),
     enabled: !!payload,
+  });
+};
+
+/**
+ * Hook for fetching assigned available dates with role-based filtering
+ * Tour Agency: only see their own assignments
+ * Admin: see all assignments with optional filters
+ */
+export const useAssignedAvailableDates = (
+  params: AssignedAvailableDatesRequest,
+  options?: {
+    enabled?: boolean;
+    staleTime?: number;
+    refetchOnWindowFocus?: boolean;
+  },
+) => {
+  return useQuery({
+    queryKey: ['assigned-available-dates', params],
+    queryFn: () => tourAssignmentApi.getAssignedAvailableDates(params),
+    enabled: options?.enabled ?? true,
+    staleTime: options?.staleTime ?? 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: options?.refetchOnWindowFocus ?? false,
+    retry: (failureCount, error) => {
+      // Don't retry on 4xx errors (client errors)
+      if (error instanceof Error && error.message.includes('4')) {
+        return false;
+      }
+      return failureCount < 3;
+    },
   });
 };

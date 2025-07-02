@@ -50,4 +50,6 @@ export const RouteConstant = {
   admin_chatbot: '/admin/chatbot',
   admin_chatbot_create: '/admin/chatbot/create',
   admin_chatbot_edit: '/admin/chatbot/edit/:slug',
+
+  admin_assigned_available_dates: '/admin/assigned-available-dates',
 };

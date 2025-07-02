@@ -70,5 +70,6 @@ export const AdminAPI = {
   TOUR_ASSIGNMENT: {
     ASSIGN: '/admin/tour-assignments/assign',
     SEARCH: '/admin/tour-assignments/search',
+    ASSIGNED_AVAILABLE_DATES: '/admin/tour-assignments/assigned-available-dates',
   },
 };
