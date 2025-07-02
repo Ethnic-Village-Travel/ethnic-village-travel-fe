@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { cn } from '@/utils';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { cn, createSearchParams } from '@/utils';
 import { formatCurrency } from '@/utils/number';
 import { ChevronDown } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -16,6 +17,7 @@ const MAX_PRICE_RANGE = 20000000;
 
 const PriceFilterCard = () => {
   const queryConfig = useQueryConfig();
+  const router = useRouter();
 
   const t = useTranslations('filters.price');
 
@@ -24,6 +26,15 @@ const PriceFilterCard = () => {
     queryConfig.min ?? MIN_PRICE_RANGE,
     queryConfig.max ?? MAX_PRICE_RANGE,
   ]);
+
+  useEffect(() => {
+    const query = createSearchParams({
+      ...queryConfig,
+      min: priceRange[0] !== MIN_PRICE_RANGE ? priceRange[0].toString() : undefined,
+      max: priceRange[1] !== MAX_PRICE_RANGE ? priceRange[1].toString() : undefined,
+    });
+    router.replace(`?${query.toString()}`);
+  }, [priceRange]);
 
   return (
     <Card className="mb-4 w-64 rounded-2xl border-none bg-primary-10 px-0.5 pb-0.5 shadow-none">
@@ -53,7 +64,7 @@ const PriceFilterCard = () => {
           <CardContent className="rounded-[14px] bg-white px-4 py-4">
             <div className="space-y-6">
               <p className="font-medium text-black">
-                {formatCurrency(queryConfig.min)} - {formatCurrency(queryConfig.max)}
+                {formatCurrency(priceRange[0])} - {formatCurrency(priceRange[1])}
               </p>
               <RangeSlider
                 value={priceRange}
