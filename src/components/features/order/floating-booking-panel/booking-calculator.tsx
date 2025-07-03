@@ -1,16 +1,15 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { RouteConstant } from '@/constants/route';
 import { useBookingStore } from '@/store/useBookingStore';
 import { applyPromotionToTotal, calculateTotalPrice, calculateTotalPriceWithPromotion, formatCurrency } from '@/utils';
 import { cn } from '@/utils/classnames';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { BookingGetResponse, BookingStoreResponse } from '@/types/booking/booking.response';
+import { BookingGetResponse } from '@/types/booking/booking.response';
 import { PromotionValidateResponse } from '@/types/promotion.type';
 import { useApiBookingConfirm } from '@/hooks/api/useBooking';
+import { usePayment } from '@/hooks/api/usePayment';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -45,7 +44,6 @@ interface BookingCalculatorProps {
 
 export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
   const t = useTranslations('order');
-  const router = useRouter();
   const locale = useLocale() as 'vi' | 'en' | 'ko';
   const { toast } = useToast();
 
@@ -54,7 +52,8 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
     child: booking.personCount?.child || 0,
   });
   const [promotion, setPromotion] = useState<PromotionValidateResponse | null>(null);
-  const { mutate: confirmBooking } = useApiBookingConfirm(booking.id);
+  const { mutateAsync: confirmBooking } = useApiBookingConfirm(booking.id);
+  const { createPayment } = usePayment();
   const { contactInfo, guestInfo, additionalInfo } = useBookingStore();
 
   const totalPrice = useMemo(() => calculateTotalPrice(quantities, booking.tour), [quantities, booking.tour]);
@@ -86,7 +85,8 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
         return;
       }
 
-      confirmBooking({
+      // Đợi confirm booking hoàn thành
+      await confirmBooking({
         promotionId: promotion?.id,
         discountAmountApplied: totalPrice,
         guestInformation: guestInfo,
@@ -94,7 +94,17 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
         totalPrice: discountPrice,
         tourData: booking.tour,
       });
-      router.push(RouteConstant.payment.replace(':id', booking.id));
+
+      // Tạo payment link và redirect
+      const paymentData = await createPayment(booking.id);
+      console.log('Payment data received:', paymentData);
+
+      if (paymentData?.checkoutUrl) {
+        window.location.href = paymentData.checkoutUrl;
+      } else {
+        console.error('Invalid payment data:', paymentData);
+        throw new Error('Không thể tạo link thanh toán');
+      }
     } catch (error) {
       console.error('Failed to confirm booking:', error);
       toast({

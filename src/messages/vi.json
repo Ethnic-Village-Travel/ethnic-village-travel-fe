@@ -375,7 +375,10 @@
       "book_now": "Đặt ngay",
       "confirm_failed": "Đặt tour thất bại",
       "contact_info_required": "Thông tin liên hệ là bắt buộc",
-      "guest_info_required": "Thông tin khách là bắt buộc"
+      "guest_info_required": "Thông tin khách là bắt buộc",
+      "payment_success": "Thanh toán thành công",
+      "payment_success_description": "Đơn hàng của bạn đã được thanh toán thành công",
+      "payment_cancelled": "Thanh toán đã bị hủy"
     },
     "pick_drop_location": {
       "title": "Điểm đón/trả khách",
@@ -503,6 +506,24 @@
       "loading": "Đang tải các đơn khác...",
       "error": "Lỗi tải các đơn khác",
       "empty": "Không có đơn khác"
+    }
+  },
+  "payment": {
+    "success": {
+      "title": "Thanh toán thành công!",
+      "description": "Cảm ơn bạn đã đặt tour. Chúng tôi sẽ liên hệ với bạn sớm nhất có thể.",
+      "order_code": "Mã đơn hàng",
+      "view_orders": "Xem đơn hàng",
+      "back_home": "Về trang chủ",
+      "auto_redirect": "Tự động chuyển hướng sau {seconds} giây"
+    },
+    "cancel": {
+      "title": "Thanh toán đã bị hủy",
+      "description": "Đơn hàng của bạn chưa được thanh toán. Bạn có thể thử lại hoặc liên hệ với chúng tôi để được hỗ trợ.",
+      "order_code": "Mã đơn hàng",
+      "retry_payment": "Thử lại thanh toán",
+      "back_home": "Về trang chủ",
+      "auto_redirect": "Tự động chuyển hướng sau {seconds} giây"
     }
   },
   "tourCreate": {

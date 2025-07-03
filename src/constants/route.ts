@@ -13,6 +13,8 @@ export const RouteConstant = {
   order_detail: '/order/:id',
 
   payment: '/payment/:id',
+  payment_success: '/payment/success',
+  payment_cancel: '/payment/cancel',
 
   // Protected routes (require authentication)
 
