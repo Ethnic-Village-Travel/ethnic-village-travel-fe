@@ -3,7 +3,7 @@ import { API } from '@/core/api';
 import api from '@/core/api/api';
 
 import { ApiResponse } from '@/types/api.type';
-import { BookmarkRequest, BookmarkResponse } from '@/types/bookmark.type';
+import { Bookmark, BookmarkRequest, BookmarkResponse, BookmarkUpdateResponse } from '@/types/bookmark.type';
 
 export const bookmarkApi = {
   /**
@@ -13,7 +13,7 @@ export const bookmarkApi = {
    */
   addBookmark: async (data: BookmarkRequest) => {
     try {
-      const response = await api.post<ApiResponse<BookmarkResponse>>(API.BOOKMARK.BASE, data);
+      const response = await api.post<ApiResponse<BookmarkUpdateResponse>>(API.BOOKMARK.BASE, data);
       return response.data;
     } catch (error) {
       throw error;
@@ -27,7 +27,7 @@ export const bookmarkApi = {
    */
   removeBookmark: async (data: BookmarkRequest) => {
     try {
-      const response = await api.delete<ApiResponse<BookmarkResponse>>(API.BOOKMARK.BASE, { data });
+      const response = await api.delete<ApiResponse<BookmarkUpdateResponse>>(API.BOOKMARK.BASE, { data });
       return response.data;
     } catch (error) {
       throw error;

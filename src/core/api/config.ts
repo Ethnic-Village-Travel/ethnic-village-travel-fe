@@ -59,7 +59,17 @@ export const AdminAPI = {
     SEARCH: '/admin/tour',
     STORE: '/admin/tour/store',
   },
-  ServiceInfo: {
+  SERVICE_INFO: {
     ALL: '/admin/service',
+  },
+  EMPLOYEE: {
+    AVAILABLE: '/admin/employee/available',
+    AVAILABLE_BY_DATE_RANGE: '/admin/employee/available-by-date-range',
+    ASSIGNED_BY_DATES: '/admin/employee/assigned-by-dates',
+  },
+  TOUR_ASSIGNMENT: {
+    ASSIGN: '/admin/tour-assignments/assign',
+    SEARCH: '/admin/tour-assignments/search',
+    ASSIGNED_AVAILABLE_DATES: '/admin/tour-assignments/assigned-available-dates',
   },
 };

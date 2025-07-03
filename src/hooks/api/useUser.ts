@@ -1,9 +1,11 @@
 import { getUserDetails } from '@/apis/user.api';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useUserStore } from '@/store/useUserStore';
 import { useQuery } from '@tanstack/react-query';
 
 export const useApiUserDetailsGet = () => {
-  const { user, setUserDetails } = useAuthStore();
+  const { user } = useAuthStore();
+  const { setUserDetails } = useUserStore();
 
   return useQuery({
     queryKey: ['user-details', user?.id],

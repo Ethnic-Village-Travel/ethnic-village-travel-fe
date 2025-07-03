@@ -12,6 +12,15 @@ export enum TourStatus {
   CANCELLED = 'CANCELLED',
 }
 
+export enum TourAvailableDateStatus {
+  AVAILABLE,
+  FULLY_BOOKED,
+  ONGOING,
+  PAUSED,
+  COMPLETED,
+  CANCELLED,
+}
+
 export const TourStatusEnum = {
   DRAFT: {
     value: 'DRAFT',

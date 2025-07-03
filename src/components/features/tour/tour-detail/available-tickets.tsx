@@ -26,12 +26,24 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
 
+  // Calculate booked slots from bookedPersonCounts
+  const calculateBookedSlots = (bookedPersonCounts: { adult: number; child: number }[]) => {
+    if (!bookedPersonCounts || bookedPersonCounts.length === 0) return 0;
+    return bookedPersonCounts.reduce((total, booking) => {
+      return total + (booking.adult || 0) + (booking.child || 0);
+    }, 0);
+  };
+
   useEffect(() => {
     // Select first available date by default
     if (tour?.availableDates && tour?.availableDates.length > 0) {
-      const firstAvailableDate = tour.availableDates.find(date => date.bookedSlots < date.maxSlots);
+      const firstAvailableDate = tour.availableDates.find(date => {
+        const bookedSlots = calculateBookedSlots(date.bookedPersonCounts);
+        return bookedSlots < date.maxSlots;
+      });
       if (firstAvailableDate) {
-        setSelectedDate(firstAvailableDate.id, firstAvailableDate.maxSlots - firstAvailableDate.bookedSlots);
+        const bookedSlots = calculateBookedSlots(firstAvailableDate.bookedPersonCounts);
+        setSelectedDate(firstAvailableDate.id, firstAvailableDate.maxSlots - bookedSlots);
       }
     }
   }, [tour?.availableDates, setSelectedDate]);
@@ -88,12 +100,14 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
           {tour?.availableDates?.map(date => {
             const startDate = new Date(date.startDate);
             const isSpecial = false;
+            const bookedSlots = calculateBookedSlots(date.bookedPersonCounts);
+            const availableSlots = date.maxSlots - bookedSlots;
 
             return (
               <Button
                 key={date.id}
                 variant={selectedDateId === date.id ? 'default' : 'outline'}
-                onClick={() => handleDateClick(date.id, date.maxSlots - date.bookedSlots)}
+                onClick={() => handleDateClick(date.id, availableSlots)}
                 className={cn(
                   'flex h-auto min-w-[120px] flex-col items-center gap-1 border-gray-500 px-4 py-2 transition-all duration-200',
                   {
@@ -117,9 +131,7 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
                     'text-white': selectedDateId === date.id,
                   })}
                 >
-                  {date.bookedSlots < date.maxSlots
-                    ? t('available_slots', { count: date.maxSlots - date.bookedSlots })
-                    : t('no_slots')}
+                  {availableSlots > 0 ? t('available_slots', { count: availableSlots }) : t('no_slots')}
                 </span>
                 {isSpecial && (
                   <span

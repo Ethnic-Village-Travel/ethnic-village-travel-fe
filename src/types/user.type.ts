@@ -10,7 +10,6 @@ export interface User {
   createdAt: string;
   avatar?: string;
   personal?: Personal;
-  details?: UserDetailsResponse;
 }
 
 export interface UserDetailsResponse extends ApiResponse {

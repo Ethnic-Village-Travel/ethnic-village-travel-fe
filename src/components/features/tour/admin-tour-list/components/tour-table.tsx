@@ -10,6 +10,7 @@ import { useQueryConfig } from '@/hooks/use-query-config';
 import { DataTable, DataTableProps } from '@/components/shared/data-table/data-table';
 import { DataTableViewOptions } from '@/components/shared/data-table/data-table-view-options';
 
+import { TourAssignmentDialog } from './tour-assignment-dialog';
 import DeleteTourDialog from './tour-delete-dialog';
 import { ToursTableActionBar } from './tour-table-action-bar';
 import { getTourTableColumns } from './tour-table-columns';
@@ -25,7 +26,7 @@ export function ToursTable() {
 
   const [rowAction, setRowAction] = React.useState<{
     id: number;
-    action: 'edit' | 'delete' | 'status';
+    action: 'edit' | 'delete' | 'status' | 'assign';
     row?: Tour;
   } | null>(null);
 
@@ -81,6 +82,15 @@ export function ToursTable() {
         onSuccess={() => {
           // TODO: Implement refresh logic here
           setRowAction(null);
+        }}
+      />
+      <TourAssignmentDialog
+        tour={rowAction?.row}
+        open={rowAction?.action === 'assign'}
+        onOpenChange={open => {
+          if (!open) {
+            setRowAction(null);
+          }
         }}
       />
     </>

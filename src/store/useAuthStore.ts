@@ -2,7 +2,7 @@ import { setCookie } from '@/utils/cookie';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { User, UserDetailsResponse } from '@/types/user.type';
+import { User } from '@/types/user.type';
 
 interface AuthState {
   accessToken: string;
@@ -15,12 +15,12 @@ interface AuthState {
   enterOtpOpen: boolean;
   otpEmail: string;
   setAuth: (data: { accessToken: string; refreshToken: string; user: User | null }) => void;
-  setUserDetails: (details: UserDetailsResponse) => void;
   setLoginOpen: (open: boolean) => void;
   setSignupOpen: (open: boolean) => void;
   setForgotPasswordOpen: (open: boolean) => void;
   setEnterOtpOpen: (open: boolean) => void;
   setOtpEmail: (email: string) => void;
+  logout: () => void;
   closeAllPopups: () => void;
 }
 
@@ -54,16 +54,29 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: !!accessToken && !!user,
         });
       },
-      setUserDetails: (details: UserDetailsResponse) =>
-        set(state => ({
-          ...state,
-          user: state.user ? { ...state.user, details } : null,
-        })),
       setLoginOpen: open => set({ loginOpen: open }),
       setSignupOpen: open => set({ signupOpen: open }),
       setForgotPasswordOpen: open => set({ forgotPasswordOpen: open }),
       setEnterOtpOpen: open => set({ enterOtpOpen: open }),
       setOtpEmail: email => set({ otpEmail: email }),
+      logout: () => {
+        // Clear cookies
+        if (typeof window !== 'undefined') {
+          setCookie('accessToken', '', -1);
+          setCookie('refreshToken', '', -1);
+          setCookie('userRoles', '', -1);
+          setCookie('userPermissions', '', -1);
+          setCookie('userId', '', -1);
+          setCookie('userPersonal', '', -1);
+        }
+
+        set({
+          accessToken: '',
+          refreshToken: '',
+          user: null,
+          isAuthenticated: false,
+        });
+      },
       closeAllPopups: () =>
         set({
           loginOpen: false,

@@ -15,6 +15,10 @@ export interface BookmarkRequest {
   entityType: EntityType;
 }
 
+export interface BookmarkUpdateResponse {
+  bookmark: Bookmark;
+}
+
 export interface BookmarkResponse {
   bookmarks: Bookmark[];
   total: number;
