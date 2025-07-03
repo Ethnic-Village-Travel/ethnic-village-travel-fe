@@ -8,8 +8,7 @@ import { useQueryConfig } from '@/hooks/use-query-config';
 import PaginationClient from '@/components/shared/pagination-client';
 
 import BookingCard from './booking-card';
-
-const BOOKING_STATUS = Object.values(BookingStatus).filter(status => status !== BookingStatus.PENDING_PAYMENT);
+import { TABS } from './booking-tab';
 
 export default function BookingOtherList() {
   const t = useTranslations('personal.booking_other_list');
@@ -17,7 +16,8 @@ export default function BookingOtherList() {
 
   const request = useMemo(() => {
     return {
-      status: queryConfig.status?.length ? queryConfig.status : BOOKING_STATUS,
+      bookingTab: TABS.OTHERS,
+      status: queryConfig.status?.length ? queryConfig.status : Object.values(BookingStatus),
       start_date: queryConfig.start_date,
       end_date: queryConfig.end_date,
       sortBy: queryConfig.sort_by || 'bookingDate',

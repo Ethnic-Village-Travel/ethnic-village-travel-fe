@@ -22,7 +22,7 @@ interface BookingFiltersProps {
   showStatusFilter?: boolean;
 }
 
-const FILTER_BOOKING_STATUS = Object.values(BookingStatus).filter(status => status !== BookingStatus.PENDING_PAYMENT);
+const FILTER_BOOKING_STATUS = Object.values(BookingStatus);
 
 export default function BookingFilters({ onFilterChange, showStatusFilter = true }: BookingFiltersProps) {
   const t = useTranslations('personal.transaction');
@@ -49,7 +49,7 @@ export default function BookingFilters({ onFilterChange, showStatusFilter = true
   const [statusesOpen, setStatusesOpen] = useState(false);
 
   const statusOptions = FILTER_BOOKING_STATUS.map(status => {
-    const statusKey = status.toLowerCase();
+    const statusKey = status === BookingStatus.PENDING_PAYMENT ? 'expired_payment' : status.toLowerCase();
     return {
       value: status,
       label: t(`status.${statusKey}` as any),
@@ -92,13 +92,11 @@ export default function BookingFilters({ onFilterChange, showStatusFilter = true
   const clearFilters = () => {
     setStartDate(startDateStr ? parse(startDateStr, 'yyyy-MM-dd', new Date()) : undefined);
     setEndDate(endDateStr ? parse(endDateStr, 'yyyy-MM-dd', new Date()) : undefined);
-    setSelectedStatuses(
-      queryConfig.status ? (queryConfig.status as string[]).map(status => status as BookingStatus) : [],
-    );
+    setSelectedStatuses([]);
     onFilterChange({
       startDate: startDateStr,
       endDate: endDateStr,
-      status: queryConfig.status ? (queryConfig.status as string[]).map(status => status as BookingStatus) : undefined,
+      status: undefined,
     });
   };
 

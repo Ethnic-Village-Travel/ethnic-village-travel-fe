@@ -3,13 +3,11 @@ export enum BookingStatus {
   FAILED_PAYMENT = 'FAILED_PAYMENT',
   PAID = 'PAID',
   CONFIRMED = 'CONFIRMED',
-  ASSIGNED_GUIDE = 'ASSIGNED_GUIDE',
   IN_PROGRESS = 'IN_PROGRESS',
   CANCELLED_BY_USER = 'CANCELLED_BY_USER',
   CANCELLED_BY_ADMIN = 'CANCELLED_BY_ADMIN',
   COMPLETED = 'COMPLETED',
   REFUNDED = 'REFUNDED',
-  EXPIRED = 'EXPIRED',
 }
 
 export enum PaymentMethod {
@@ -31,7 +29,6 @@ export const getStatusBadgeVariant = (status: string) => {
       return 'amber';
     case BookingStatus.PAID:
     case BookingStatus.CONFIRMED:
-    case BookingStatus.ASSIGNED_GUIDE:
     case BookingStatus.COMPLETED:
       return 'green';
     case BookingStatus.IN_PROGRESS:
@@ -39,7 +36,6 @@ export const getStatusBadgeVariant = (status: string) => {
     case BookingStatus.CANCELLED_BY_USER:
     case BookingStatus.CANCELLED_BY_ADMIN:
     case BookingStatus.FAILED_PAYMENT:
-    case BookingStatus.EXPIRED:
       return 'destructive';
     case BookingStatus.REFUNDED:
       return 'secondary';

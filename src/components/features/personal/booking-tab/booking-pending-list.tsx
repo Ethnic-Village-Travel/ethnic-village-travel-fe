@@ -8,6 +8,7 @@ import { useQueryConfig } from '@/hooks/use-query-config';
 import PaginationClient from '@/components/shared/pagination-client';
 
 import BookingCard from './booking-card';
+import { TABS } from './booking-tab';
 
 export default function BookingPendingList() {
   const t = useTranslations('personal.booking_pending_list');
@@ -15,6 +16,7 @@ export default function BookingPendingList() {
 
   const request = useMemo(() => {
     return {
+      bookingTab: TABS.PENDING,
       status: [BookingStatus.PENDING_PAYMENT],
       start_date: queryConfig.start_date,
       end_date: queryConfig.end_date,

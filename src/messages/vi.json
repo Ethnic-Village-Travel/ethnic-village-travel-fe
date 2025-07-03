@@ -451,6 +451,7 @@
         "darft": "Nháp",
         "pending_payment": "Chờ thanh toán",
         "failed_payment": "Thanh toán thất bại",
+        "expired_payment": "Hết hạn thanh toán",
         "paid": "Đã thanh toán",
         "confirmed": "Đã xác nhận",
         "assigned_guide": "Đã chỉ định HDV",

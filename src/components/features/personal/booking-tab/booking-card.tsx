@@ -28,6 +28,20 @@ export default function BookingCard({ booking }: BookingCardProps) {
       ? booking.tour.locations[0].city || booking.tour.locations[0].province
       : 'Unknown';
 
+  // Check if payment is expired
+  const isPaymentExpired =
+    booking.status === 'PENDING_PAYMENT' &&
+    booking.paymentExpiredDate &&
+    new Date(booking.paymentExpiredDate) <= new Date();
+
+  // Get display status
+  const getDisplayStatus = () => {
+    if (isPaymentExpired) {
+      return 'expired_payment';
+    }
+    return booking.status.toLowerCase();
+  };
+
   return (
     <Card className="flex w-full flex-row items-center gap-4 rounded-xl bg-white p-2 shadow-[1px_1px_2px_0px_rgba(105,197,249,0.25),-1px_-1px_2px_0px_rgba(105,197,249,0.25)]">
       {/* Image section */}
@@ -76,8 +90,11 @@ export default function BookingCard({ booking }: BookingCardProps) {
             )}
           </div>
           <div className="flex flex-col items-end gap-1">
-            <Badge variant={getStatusBadgeVariant(booking.status)} className="px-3 py-1 text-xs">
-              {t(`status.${booking.status.toLowerCase()}` as any)}
+            <Badge
+              variant={isPaymentExpired ? 'destructive' : getStatusBadgeVariant(booking.status)}
+              className="px-3 py-1 text-xs"
+            >
+              {t(`status.${getDisplayStatus()}` as any)}
             </Badge>
             {booking.paymentMethod && (
               <span className="text-xs text-gray-500">
@@ -93,8 +110,10 @@ export default function BookingCard({ booking }: BookingCardProps) {
         </div>
         {/* Action Buttons */}
         <div className="mt-4 flex justify-end gap-2">
-          {booking.status === 'PENDING_PAYMENT' && <Button variant="default">{t('actions.pay_now' as any)}</Button>}
-          {['PENDING_PAYMENT', 'PAID', 'CONFIRMED'].includes(booking.status) && (
+          {booking.status === 'PENDING_PAYMENT' && !isPaymentExpired && (
+            <Button variant="default">{t('actions.pay_now' as any)}</Button>
+          )}
+          {['PENDING_PAYMENT', 'PAID', 'CONFIRMED'].includes(booking.status) && !isPaymentExpired && (
             <Button variant="outline">{t('actions.cancel' as any)}</Button>
           )}
           {booking.status === 'COMPLETED' && <Button variant="outline">{t('actions.review' as any)}</Button>}

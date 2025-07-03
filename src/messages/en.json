@@ -433,6 +433,7 @@
         "darft": "Draft",
         "pending_payment": "Pending Payment",
         "failed_payment": "Failed Payment",
+        "expired_payment": "Expired Payment",
         "paid": "Paid",
         "confirmed": "Confirmed",
         "assigned_guide": "Guide Assigned",

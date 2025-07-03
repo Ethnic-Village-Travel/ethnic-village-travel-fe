@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { createSearchParams } from '@/utils';
 import { useTranslations } from 'next-intl';
 
@@ -13,17 +13,16 @@ import BookingFilters from './booking-filters';
 import BookingOtherList from './booking-other-list';
 import BookingPendingList from './booking-pending-list';
 
-const TABS = {
-  pending: 'pending',
-  other: 'other',
+export const TABS = {
+  PENDING: 'PENDING',
+  OTHERS: 'OTHERS',
 } as const;
 
 export default function BookingTabContent() {
   const t = useTranslations('personal.transaction');
   const router = useRouter();
-  const searchParams = useSearchParams();
   const queryConfig = useQueryConfig();
-  const [activeTab, setActiveTab] = useState<keyof typeof TABS>(TABS.pending);
+  const [activeTab, setActiveTab] = useState<keyof typeof TABS>(TABS.PENDING);
 
   useEffect(() => {
     if (queryConfig.page === 0) return;
@@ -61,21 +60,21 @@ export default function BookingTabContent() {
   return (
     <div className="w-full space-y-4">
       <h1 className="mb-6 text-2xl font-bold">{t('title')}</h1>
-      <BookingFilters onFilterChange={handleFilterChange} showStatusFilter={activeTab === 'other'} />
+      <BookingFilters onFilterChange={handleFilterChange} showStatusFilter={activeTab === TABS.OTHERS} />
       <Tabs
-        defaultValue={TABS.pending}
+        defaultValue={TABS.PENDING}
         className="w-full"
         onValueChange={value => setActiveTab(value as keyof typeof TABS)}
         value={activeTab}
       >
         <TabsList>
-          <TabsTrigger value={TABS.pending}>{t('tabs.pending')}</TabsTrigger>
-          <TabsTrigger value={TABS.other}>{t('tabs.other')}</TabsTrigger>
+          <TabsTrigger value={TABS.PENDING}>{t('tabs.pending')}</TabsTrigger>
+          <TabsTrigger value={TABS.OTHERS}>{t('tabs.other')}</TabsTrigger>
         </TabsList>
-        <TabsContent value={TABS.pending}>
+        <TabsContent value={TABS.PENDING}>
           <BookingPendingList />
         </TabsContent>
-        <TabsContent value={TABS.other}>
+        <TabsContent value={TABS.OTHERS}>
           <BookingOtherList />
         </TabsContent>
       </Tabs>
