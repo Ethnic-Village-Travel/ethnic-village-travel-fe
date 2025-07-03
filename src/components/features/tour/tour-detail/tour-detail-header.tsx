@@ -1,9 +1,9 @@
 'use client';
 
 import { EntityType } from '@/constants/entity';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useUserStore } from '@/store/useUserStore';
 import { calculateRatingStats } from '@/utils';
-import { BookmarkIcon, Share2 } from 'lucide-react';
+import { Share2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
@@ -17,8 +17,8 @@ import AvailableTickets from './available-tickets';
 const TourDetailHeader = (tour: Tour) => {
   const t = useTranslations('tour.detail');
   const ratingObj = calculateRatingStats(tour.reviews || []);
-  const { user } = useAuthStore();
-  const isBookmarked = user?.details?.bookmarks?.some(bookmark => bookmark.entityId === tour.id);
+  const { details } = useUserStore();
+  const isBookmarked = details?.bookmarks?.some(bookmark => bookmark.entityId === tour.id);
 
   return (
     <div className="flex flex-col gap-2.5">

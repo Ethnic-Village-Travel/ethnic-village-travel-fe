@@ -1,4 +1,4 @@
-import { TourStatus } from '@/constants/enum/tour.enum';
+import { TourAvailableDateStatus, TourStatus } from '@/constants/enum/tour.enum';
 import * as z from 'zod';
 
 import { Ethnic } from './ethnic.type';
@@ -37,8 +37,12 @@ export interface TourAvailableDate {
   id: number;
   startDate: string;
   endDate: string;
-  bookedSlots: number;
   maxSlots: number;
+  status: TourAvailableDateStatus;
+  bookedPersonCounts: {
+    adult: number;
+    child: number;
+  }[];
 }
 
 export interface TourTimeLine {
