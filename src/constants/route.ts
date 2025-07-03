@@ -14,12 +14,14 @@ export const RouteConstant = {
 
   payment: '/payment/:id',
 
+  // Protected routes (require authentication)
+
   personal: '/personal',
   personal_bookmark: '/personal/bookmark',
   personal_transaction: '/personal/transaction',
   personal_account: '/personal/account',
 
-  //Admin
+  //Admin routes (require admin permissions)
   admin_auth: '/admin/auth',
   admin_dashboard: '/admin',
 
