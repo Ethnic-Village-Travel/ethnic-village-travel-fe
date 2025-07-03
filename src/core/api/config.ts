@@ -52,6 +52,10 @@ export const API = {
     BASE: '/bookmark',
     CHECK: '/bookmark/check',
   },
+  PAYMENT: {
+    CREATE: '/payments/create/{id}',
+    GET_PAYMENT_LINK: '/payments/booking/{id}/payment-link',
+  },
 };
 
 export const AdminAPI = {

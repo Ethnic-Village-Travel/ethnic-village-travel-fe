@@ -375,7 +375,10 @@
       "book_now": "Book Now",
       "confirm_failed": "Booking failed",
       "contact_info_required": "Contact information is required",
-      "guest_info_required": "Guest information is required"
+      "guest_info_required": "Guest information is required",
+      "payment_success": "Payment successful",
+      "payment_success_description": "Your order has been paid successfully",
+      "payment_cancelled": "Payment cancelled"
     },
     "pick_drop_location": {
       "title": "Pick-up/Drop-off location",
@@ -485,6 +488,24 @@
       "loading": "Loading other bookings...",
       "error": "Error loading other bookings",
       "empty": "No other bookings"
+    }
+  },
+  "payment": {
+    "success": {
+      "title": "Payment Successful!",
+      "description": "Thank you for booking the tour. We will contact you as soon as possible.",
+      "order_code": "Order Code",
+      "view_orders": "View Orders",
+      "back_home": "Back to Home",
+      "auto_redirect": "Auto redirect in {seconds} seconds"
+    },
+    "cancel": {
+      "title": "Payment Cancelled",
+      "description": "Your order has not been paid. You can try again or contact us for support.",
+      "order_code": "Order Code",
+      "retry_payment": "Retry Payment",
+      "back_home": "Back to Home",
+      "auto_redirect": "Auto redirect in {seconds} seconds"
     }
   },
   "tourCreate": {
