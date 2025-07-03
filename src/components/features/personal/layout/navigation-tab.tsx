@@ -3,8 +3,10 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { BookmarkStatus } from '@/constants/enum/bookmark.enum';
 import { RouteConstant } from '@/constants/route';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useUserStore } from '@/store/useUserStore';
 import { cn, getInitialName } from '@/utils';
 import { Bookmark, LogOut, ScrollText, Settings } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -20,6 +22,7 @@ export default function PersonalNavigationTab() {
   const pathname = usePathname();
   const t = useTranslations('personal.navigation');
   const { user } = useAuthStore();
+  const { details } = useUserStore();
 
   const firstName = useMemo(() => user?.personal?.firstName || '', [user]);
   const lastName = useMemo(() => user?.personal?.lastName || '', [user]);
@@ -30,13 +33,13 @@ export default function PersonalNavigationTab() {
         href: RouteConstant.personal_bookmark,
         label: t('bookmark'),
         icon: Bookmark,
-        badge: user?.details?.bookmarks?.length || 0,
+        badge: details?.bookmarks?.filter(b => b.status === BookmarkStatus.ACTIVE).length || 0,
       },
       {
         href: RouteConstant.personal_transaction,
         label: t('transaction'),
         icon: ScrollText,
-        badge: 2,
+        badge: details?.pendingPaymentBookingsCount || 0,
       },
       {
         href: RouteConstant.personal_account,
@@ -44,7 +47,7 @@ export default function PersonalNavigationTab() {
         icon: Settings,
       },
     ],
-    [user?.details?.bookmarks?.length],
+    [details?.bookmarks, details?.pendingPaymentBookingsCount],
   );
 
   const handleLogout = () => {
