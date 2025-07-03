@@ -107,36 +107,43 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
               <Button
                 key={date.id}
                 variant={selectedDateId === date.id ? 'default' : 'outline'}
-                onClick={() => handleDateClick(date.id, availableSlots)}
+                onClick={() => availableSlots > 0 && handleDateClick(date.id, availableSlots)}
+                disabled={availableSlots <= 0}
                 className={cn(
                   'flex h-auto min-w-[120px] flex-col items-center gap-1 border-gray-500 px-4 py-2 transition-all duration-200',
                   {
-                    'border-secondary-600 text-secondary-600': isSpecial,
-                    'hover:bg-primary-500/90 bg-primary-500 text-white': selectedDateId === date.id,
+                    'border-secondary-600 text-secondary-600': isSpecial && availableSlots > 0,
+                    'hover:bg-primary-500/90 bg-primary-500 text-white': selectedDateId === date.id && availableSlots > 0,
+                    'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed hover:bg-gray-100': availableSlots <= 0,
                   },
                 )}
               >
                 <span
                   className={cn('text-lg', {
-                    'text-[#FF9665]': isSpecial,
-                    'text-white': selectedDateId === date.id,
+                    'text-[#FF9665]': isSpecial && availableSlots > 0,
+                    'text-white': selectedDateId === date.id && availableSlots > 0,
+                    'text-gray-400': availableSlots <= 0,
                   })}
                 >
-                  {isSpecial ? '🔥 ' : ''}
+                  {isSpecial && availableSlots > 0 ? '🔥 ' : ''}
                   {format(startDate, 'EEEE', { locale: vi })}
                 </span>
-                <span className="text-xl font-bold">{format(startDate, 'dd/MM', { locale: vi })}</span>
+                <span className={cn('text-xl font-bold', {
+                  'text-white': selectedDateId === date.id && availableSlots > 0,
+                  'text-gray-400': availableSlots <= 0,
+                })}>{format(startDate, 'dd/MM', { locale: vi })}</span>
                 <span
                   className={cn('text-sm font-bold', {
-                    'text-white': selectedDateId === date.id,
+                    'text-white': selectedDateId === date.id && availableSlots > 0,
+                    'text-gray-400': availableSlots <= 0,
                   })}
                 >
                   {availableSlots > 0 ? t('available_slots', { count: availableSlots }) : t('no_slots')}
                 </span>
-                {isSpecial && (
+                {isSpecial && availableSlots > 0 && (
                   <span
                     className={cn('text-sm font-bold text-[#FF9665]', {
-                      'text-white': selectedDateId === date.id,
+                      'text-white': selectedDateId === date.id && availableSlots > 0,
                     })}
                   >
                     {t('special_price')}
