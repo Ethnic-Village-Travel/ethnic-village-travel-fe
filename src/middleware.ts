@@ -4,6 +4,7 @@ import createMiddleware from 'next-intl/middleware';
 import { ACCOUNT_LOCKED, ADMIN_DASHBOARD_READ, DeniedPermissionMap, PermissionMap } from './constants/permission-map';
 import { routing } from './lib/i18n-navigation';
 import { normalizePath } from './utils';
+import { PROTECTED_ROUTES } from './utils/route-guard';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -35,12 +36,12 @@ function hasAccess(userPermissions: string[], path: string): boolean {
     const regex = new RegExp(`^${normalizedRoute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`);
     return regex.test(normalizePath(path));
   });
-  console.log(userPermissions);
 
   if (matchedDeniedPermission && userPermissions.includes(DeniedPermissionMap[matchedDeniedPermission])) {
     return false;
   }
 
+  // Check admin dashboard access first
   if (path.startsWith('/admin') && !userPermissions.includes(ADMIN_DASHBOARD_READ)) {
     return false;
   }
@@ -49,20 +50,28 @@ function hasAccess(userPermissions: string[], path: string): boolean {
   const matchedRoute = Object.keys(PermissionMap).find(route => {
     const normalizedRoute = normalizePath(route);
     const regex = new RegExp(`^${normalizedRoute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`);
-    return regex.test(normalizePath(path));
+    const isMatch = regex.test(normalizePath(path));
+    return isMatch;
   });
 
   // Nếu không có permissions yêu cầu cụ thể, chỉ cần ADMIN_DASHBOARD_READ cho /admin
   if (!matchedRoute) {
-    return !path.startsWith('/admin') || userPermissions.includes(ADMIN_DASHBOARD_READ);
+    const result = !path.startsWith('/admin') || userPermissions.includes(ADMIN_DASHBOARD_READ);
+    return result;
   }
 
   const requiredPermissions = PermissionMap[matchedRoute];
+
   return requiredPermissions.some(permission => userPermissions.includes(permission));
 }
 
 function requiresAuth(path: string): boolean {
-  return path.startsWith('/admin') || path.startsWith('/personal');
+  // Admin routes always require authentication
+  if (path.startsWith('/admin')) {
+    return true;
+  }
+
+  return PROTECTED_ROUTES.some(protectedPath => path.includes(protectedPath));
 }
 
 function getAuthData(request: NextRequest) {
@@ -70,7 +79,6 @@ function getAuthData(request: NextRequest) {
     const accessToken = request.cookies.get('accessToken')?.value;
     const userRoles = request.cookies.get('userRoles')?.value;
     const userPermissions = request.cookies.get('userPermissions')?.value;
-    console.log('🚀 ~ getAuthData ~ userRoles:', userRoles);
 
     if (!accessToken || !userRoles || !userPermissions) return null;
 
@@ -100,12 +108,14 @@ export default async function middleware(request: NextRequest, event: NextFetchE
   const authData = getAuthData(request);
 
   if (!authData) {
-    const loginUrl = new URL(`/${locale}/auth/login`, request.url);
+    const loginUrl = new URL(`/${locale}/`, request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  if (!hasAccess(authData.permissions, pathWithoutLocale)) {
+  const hasPermission = hasAccess(authData.permissions, pathWithoutLocale);
+
+  if (authData.permissions.length <= 0 || !hasPermission) {
     return NextResponse.redirect(new URL(`/${locale}/403`, request.url));
   }
   const response = intlMiddleware(request);
