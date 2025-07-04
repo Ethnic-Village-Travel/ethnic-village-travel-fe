@@ -9,6 +9,7 @@ interface UserState {
   details: UserDetailsResponse | null;
   setUserDetails: (details: UserDetailsResponse) => void;
   setUserBookmark: (bookmark: Bookmark) => void;
+  setPendingPaymentBookingCount: (count: number) => void;
   clearUserData: () => void;
 }
 
@@ -44,6 +45,18 @@ export const useUserStore = create<UserState>()(
             details: {
               ...state.details,
               bookmarks: updatedBookmarks,
+            },
+          };
+        }),
+      setPendingPaymentBookingCount: (count: number) =>
+        set(state => {
+          if (!state.details) return state;
+
+          return {
+            ...state,
+            details: {
+              ...state.details,
+              pendingPaymentBookingsCount: count,
             },
           };
         }),
