@@ -107,6 +107,11 @@ export default function TourCreateContent() {
     });
   };
 
+  const onError = (errors: any) => {
+    console.log('❌ Form validation errors:', errors);
+    console.log('Form state:', form.formState);
+  };
+
   return (
     <div className="p-6">
       <div className="rounded-lg border shadow-sm">
@@ -114,7 +119,7 @@ export default function TourCreateContent() {
           <h2 className="mb-6 text-2xl font-bold">{t('tourCreate.title')}</h2>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-6">
+            <form onSubmit={form.handleSubmit(onSubmit, onError)} className="grid grid-cols-2 gap-6">
               {/* Left Column */}
               <div className="space-y-4">
                 {/* Image Upload */}

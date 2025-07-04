@@ -8,6 +8,15 @@ export interface EmployeeBasicResponse {
   personal?: PersonalBasicInfo;
 }
 
+export interface EmployeeSelectedResponse {
+  id: string;
+  email: string;
+  personal?: {
+    firstName: string;
+    lastName: string;
+  } | null;
+}
+
 export interface EmployeeDateRangeRequest {
   startDate: string;
   endDate: string;

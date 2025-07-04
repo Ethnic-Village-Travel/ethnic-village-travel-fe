@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import dayjs from 'dayjs';
 import { Plus, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useFieldArray, UseFormReturn, useWatch } from 'react-hook-form';
@@ -233,8 +234,8 @@ export default function AvailableDates({ form }: AvailableDatesProps) {
                     <FormControl>
                       {currentStartDate && endDate ? (
                         <AvailableEmployeeSelect
-                          startDate={currentStartDate.toISOString().split('T')[0]}
-                          endDate={endDate.toISOString().split('T')[0]}
+                          startDate={currentStartDate.toLocaleString()}
+                          endDate={endDate.toLocaleString()}
                           value={field.value || []}
                           onChange={employees => field.onChange(employees)}
                           placeholder={t('tourCreate.selectEmployee')}

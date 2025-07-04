@@ -3,7 +3,7 @@ import { cn } from '@/utils';
 import dayjs from 'dayjs';
 import { CalendarDays, Clock, Loader2 } from 'lucide-react';
 
-import { EmployeeBasicResponse } from '@/types/employee.type';
+import { EmployeeBasicResponse, EmployeeSelectedResponse } from '@/types/employee.type';
 import { useAvailableEmployeesByDateRange } from '@/hooks/api/useEmployee';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,8 +13,8 @@ import { MultiSelect } from '@/components/shared/multiple-select';
 interface AvailableEmployeeSelectProps {
   startDate: string;
   endDate: string;
-  value: EmployeeBasicResponse[];
-  onChange: (employees: EmployeeBasicResponse[]) => void;
+  value: EmployeeSelectedResponse[];
+  onChange: (employees: EmployeeSelectedResponse[]) => void;
   placeholder?: string;
   className?: string;
   dateIndex?: number;
@@ -35,7 +35,13 @@ export function AvailableEmployeeSelect({
 
   // Memoize API params để tránh re-fetch không cần thiết
   const apiParams = useMemo(
-    () => (open && startDate && endDate ? { startDate, endDate } : undefined),
+    () =>
+      open && startDate && endDate
+        ? {
+            startDate: dayjs(startDate).format('YYYY-MM-DD'),
+            endDate: dayjs(endDate).format('YYYY-MM-DD'),
+          }
+        : undefined,
     [open, startDate, endDate],
   );
 
@@ -71,7 +77,7 @@ export function AvailableEmployeeSelect({
             assignedEmp.id &&
             !employees.some(emp => emp && emp.id && String(emp.id) === String(assignedEmp.id)),
         )
-        .map((e: EmployeeBasicResponse) => {
+        .map((e: EmployeeSelectedResponse) => {
           console.log('Creating option for assigned employee:', e);
           return {
             id: String(e.id),

@@ -5,5 +5,5 @@ export interface PersonalBasicInfo {
   avatar?: string;
   phone?: string;
   address?: string;
-  createdAt: string;
+  createdAt?: string;
 }

@@ -61,19 +61,13 @@ export const createTourSchema = (t: (key: string) => string) =>
                 z.object({
                   id: z.string(),
                   email: z.string(),
-                  description: z.string(),
-                  isActive: z.boolean(),
                   personal: z
                     .object({
-                      id: z.string(),
                       firstName: z.string(),
                       lastName: z.string(),
-                      avatar: z.string().optional(),
-                      phone: z.string().optional(),
-                      address: z.string().optional(),
-                      createdAt: z.string(),
                     })
-                    .optional(),
+                    .optional()
+                    .nullable(),
                 }),
               )
               .min(1, { message: t('tourCreate.validation.assignedEmployeesRequired') }), // Require at least 1 employee
