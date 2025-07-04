@@ -192,7 +192,9 @@ export function getTourTableColumns({ setRowAction, t }: GetTourTableColumnsProp
     },
     {
       accessorKey: 'publishedAt',
-      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.published_utc')} />,
+      header: ({ column }) => (
+        <DataTableColumnHeader className="min-w-[120px]" column={column} title={t('tour.list.published_utc')} />
+      ),
       cell: ({ row }) => {
         const [date, time] = splitDateStr(row.original.publishedAt);
         return (
@@ -207,7 +209,9 @@ export function getTourTableColumns({ setRowAction, t }: GetTourTableColumnsProp
     },
     {
       accessorKey: 'start_date',
-      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.created_utc')} />,
+      header: ({ column }) => (
+        <DataTableColumnHeader className="min-w-[120px]" column={column} title={t('tour.list.created_utc')} />
+      ),
       cell: ({ row }) => {
         const [date, time] = splitDateStr(row.original.createdAt);
         return (
@@ -221,7 +225,9 @@ export function getTourTableColumns({ setRowAction, t }: GetTourTableColumnsProp
     },
     {
       accessorKey: 'end_date',
-      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.updated_utc')} />,
+      header: ({ column }) => (
+        <DataTableColumnHeader className="min-w-[120px]" column={column} title={t('tour.list.updated_utc')} />
+      ),
       cell: ({ row }) => {
         const [date, time] = splitDateStr(row.original.updatedAt);
         return (
