@@ -549,6 +549,7 @@
     "ethnic": "Dân tộc",
     "location": "Địa điểm",
     "status": "Trạng thái",
+    "duration": "Thời gian tour (ngày)",
     "pickupLocation": "Điểm đón",
     "publishedDate": "Ngày hiển thị",
     "adultPrice": "Giá người lớn",
@@ -558,6 +559,13 @@
     "selectLocation": "Chọn địa điểm",
     "selectPickupLocation": "Chọn điểm đón",
     "chooseDate": "Chọn ngày",
+    "selectEmployee": "Chọn nhân viên",
+    "selectStartDateFirst": "Chọn ngày bắt đầu trước",
+    "dateConflictWarning": "Cảnh báo xung đột ngày",
+    "publishedDateConflictMessage": "Ngày xuất bản phải trước ngày bắt đầu tour ít nhất 1 tuần. Vui lòng kiểm tra lại các ngày đã chọn.",
+    "availableDatesConflictMessage": "Các ngày tour bị trùng lặp. Vui lòng chọn ngày khác.",
+    "itineraryTitle": "Tiêu đề lịch trình",
+    "itineraryDescription": "Mô tả lịch trình",
     "validation": {
       "imageRequired": "Bắt buộc chọn hình ảnh",
       "titleRequired": "Bắt buộc nhập tiêu đề",
@@ -566,6 +574,10 @@
       "statusInvalid": "Trạng thái không hợp lệ",
       "pickupLocationRequired": "Bắt buộc chọn điểm đón",
       "publishedDateRequired": "Ngày hiển thị phải là hôm nay hoặc tương lai",
+      "publishedDateMinWeek": "Ngày xuất bản phải sau ngày hiện tại ít nhất 1 tuần",
+      "duration": "Thời gian tour",
+      "durationMin": "Thời gian tour từ 1 ngày",
+      "durationMax": "Thời gian tour tối đa 30 ngày",
       "adultPriceMin": "Giá người lớn phải lớn hơn hoặc bằng 0",
       "childPriceMin": "Giá trẻ em phải lớn hơn hoặc bằng 0",
       "contactNameRequired": "Bắt buộc nhập tên",
@@ -577,9 +589,12 @@
       "itineraryDescriptionRequired": "Bắt buộc nhập mô tả lịch trình",
       "availableDatesRequired": "Phải có ít nhất một ngày mở đặt",
       "startDateRequired": "Bắt buộc chọn ngày bắt đầu",
+      "startDateAfterPublished": "Ngày bắt đầu phải sau ngày xuất bản ít nhất 1 tuần",
+      "dateConflict": "Ngày bắt đầu bị trùng với tour đã có",
       "endDateRequired": "Bắt buộc chọn ngày kết thúc",
       "maxSlotsMin": "Số lượng tối đa phải lớn hơn 0",
-      "endDateAfterStart": "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu"
+      "endDateAfterStart": "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu",
+      "assignedEmployeesRequired": "Phải chọn ít nhất một nhân viên cho ngày này"
     }
   }
 }

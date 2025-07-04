@@ -531,6 +531,7 @@
     "ethnic": "Ethnic",
     "location": "Location",
     "status": "Status",
+    "duration": "Tour Duration (days)",
     "pickupLocation": "Pick-up location",
     "publishedDate": "Published Date",
     "adultPrice": "Adult price",
@@ -540,6 +541,13 @@
     "selectLocation": "Select locations",
     "selectPickupLocation": "Select pick-up location",
     "chooseDate": "Choose date",
+    "selectEmployee": "Select employee",
+    "selectStartDateFirst": "Select start date first",
+    "dateConflictWarning": "Date Conflict Warning",
+    "publishedDateConflictMessage": "Published date must be at least 1 week before tour start date. Please check your selected dates.",
+    "availableDatesConflictMessage": "Tour dates are overlapping. Please select different dates.",
+    "itineraryTitle": "Itinerary title",
+    "itineraryDescription": "Itinerary description",
     "validation": {
       "imageRequired": "Image is required",
       "titleRequired": "Title is required",
@@ -548,6 +556,10 @@
       "statusInvalid": "Invalid status value",
       "pickupLocationRequired": "Pick-up location is required",
       "publishedDateRequired": "Published date must be today or in the future",
+      "publishedDateMinWeek": "Published date must be at least 1 week after current date",
+      "duration": "Tour Duration",
+      "durationMin": "Tour duration must be at least 1 day",
+      "durationMax": "Tour duration must be at most 30 days",
       "adultPriceMin": "Adult price must be at least 0",
       "childPriceMin": "Child price must be at least 0",
       "contactNameRequired": "Name is required",
@@ -559,9 +571,12 @@
       "itineraryDescriptionRequired": "Itinerary description is required",
       "availableDatesRequired": "At least one available date is required",
       "startDateRequired": "Start date is required",
+      "startDateAfterPublished": "Start date must be at least 1 week after published date",
+      "dateConflict": "Start date conflicts with existing tour dates",
       "endDateRequired": "End date is required",
       "maxSlotsMin": "Max slots must be at least 1",
-      "endDateAfterStart": "End date must be after or equal to start date"
+      "endDateAfterStart": "End date must be after or equal to start date",
+      "assignedEmployeesRequired": "At least one employee must be assigned for this date"
     }
   }
 }

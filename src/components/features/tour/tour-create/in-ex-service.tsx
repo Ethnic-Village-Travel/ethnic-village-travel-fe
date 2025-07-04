@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { UseFormReturn } from 'react-hook-form';
 
 import { ServiceInfoBasic } from '@/types/service-info.type';
-import { TourFormValues } from '@/lib/schemas/tour.schema';
+import { TourCreateFormValues } from '@/lib/schemas/tour.schema';
 import { useServiceInfoList } from '@/hooks/api/useServiceInfo';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { MultiSelect } from '@/components/shared/multiple-select';
@@ -12,7 +12,7 @@ import { MultiSelect } from '@/components/shared/multiple-select';
 export type ServiceWithType = ServiceInfoBasic & { type: TourServiceInfoType };
 
 type InExServiceProps = {
-  form: UseFormReturn<TourFormValues>;
+  form: UseFormReturn<TourCreateFormValues>;
 };
 
 export default function InExService({ form }: InExServiceProps) {

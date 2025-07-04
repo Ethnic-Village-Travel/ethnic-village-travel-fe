@@ -1,18 +1,18 @@
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
 
-import { TourFormValues } from '@/lib/schemas/tour.schema';
+import { TourCreateFormValues } from '@/lib/schemas/tour.schema';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
 type ContactNumberProps = {
-  form: UseFormReturn<TourFormValues>;
+  form: UseFormReturn<TourCreateFormValues>;
 };
 
 export default function ContactNumber({ form }: ContactNumberProps) {
-  const { fields: contactFields, append: appendContact } = useFieldArray({
+  const { fields: contactFields, append: appendContact, remove: removeContact } = useFieldArray({
     control: form.control,
     name: 'contactNumbers',
   });
@@ -22,6 +22,12 @@ export default function ContactNumber({ form }: ContactNumberProps) {
   const addContactNumber = () => {
     if (contactFields.length < 3) {
       appendContact({ name: '', phone: '' });
+    }
+  };
+
+  const removeContactNumber = (index: number) => {
+    if (contactFields.length > 1) {
+      removeContact(index);
     }
   };
 
@@ -60,7 +66,20 @@ export default function ContactNumber({ form }: ContactNumberProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder={t('tourCreate.contactNumber')} {...field} />
+                  <div className="flex items-center gap-1">
+                    <Input placeholder={t('tourCreate.contactNumber')} {...field} />
+                    {contactFields.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeContactNumber(index)}
+                        className="px-2 text-destructive hover:bg-destructive/10"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

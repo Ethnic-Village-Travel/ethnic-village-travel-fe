@@ -110,8 +110,9 @@ export type TourCreateRequest = {
   tourExcludedServices?: string[];
   availableDates?: {
     startDate: Date; // ISO date string
-    endDate: Date; // ISO date string
+    endDate: Date; // Calculated from startDate + duration
     maxSlots: number;
+    employeeIds?: string[]; // NEW: Employee IDs for assignment
   }[];
   publishedDate: Date;
 };
