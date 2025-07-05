@@ -6,7 +6,7 @@ import { ServiceInfoBasic } from '@/types/service-info.type';
 
 export const getAllServiceInfo = async (): Promise<ApiResponse<ServiceInfoBasic[]>> => {
   try {
-    const { data } = await api.get<ApiResponse<ServiceInfoBasic[]>>(AdminAPI.ServiceInfo.ALL);
+    const { data } = await api.get<ApiResponse<ServiceInfoBasic[]>>(AdminAPI.SERVICE_INFO.ALL);
 
     return data;
   } catch {

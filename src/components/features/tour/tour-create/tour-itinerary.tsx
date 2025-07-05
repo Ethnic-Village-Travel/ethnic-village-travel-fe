@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { UseFormReturn } from 'react-hook-form';
 
-import { TourFormValues } from '@/lib/schemas/tour.schema';
+import { TourCreateFormValues } from '@/lib/schemas/tour.schema';
 import { Button } from '@/components/ui/button';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -11,7 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Textarea } from '@/components/ui/textarea';
 
 type TourItineraryProps = {
-  form: UseFormReturn<TourFormValues>;
+  form: UseFormReturn<TourCreateFormValues>;
 };
 
 export default function TourItinerary({ form }: TourItineraryProps) {
@@ -43,12 +43,12 @@ export default function TourItinerary({ form }: TourItineraryProps) {
           <PopoverContent>
             <div className="space-y-2">
               <Input
-                placeholder={t('tourCreate.itinerary')}
+                placeholder={t('tourCreate.itineraryTitle')}
                 value={itineraryTitle}
                 onChange={e => setItineraryTitle(e.target.value)}
               />
               <Textarea
-                placeholder={t('tourCreate.overview')}
+                placeholder={t('tourCreate.itineraryDescription')}
                 value={itineraryDesc}
                 onChange={e => setItineraryDesc(e.target.value)}
               />

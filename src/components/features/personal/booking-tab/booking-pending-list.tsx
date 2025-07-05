@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { BookingStatus } from '@/constants/enum/booking.enum';
+import { useUserStore } from '@/store/useUserStore';
 import { useTranslations } from 'next-intl';
 
 import { BookingListRequest } from '@/types/booking';
@@ -8,13 +9,16 @@ import { useQueryConfig } from '@/hooks/use-query-config';
 import PaginationClient from '@/components/shared/pagination-client';
 
 import BookingCard from './booking-card';
+import { TABS } from './booking-tab';
 
 export default function BookingPendingList() {
   const t = useTranslations('personal.booking_pending_list');
   const queryConfig = useQueryConfig();
+  const { details, setPendingPaymentBookingCount } = useUserStore();
 
   const request = useMemo(() => {
     return {
+      bookingTab: TABS.PENDING,
       status: [BookingStatus.PENDING_PAYMENT],
       start_date: queryConfig.start_date,
       end_date: queryConfig.end_date,
@@ -26,6 +30,12 @@ export default function BookingPendingList() {
   }, [queryConfig]);
 
   const { data, isLoading, isError } = useApiBookingList(request as BookingListRequest);
+
+  useEffect(() => {
+    if (!data || data.totalElements === details?.pendingPaymentBookingsCount) {
+      setPendingPaymentBookingCount(data?.totalElements || 0);
+    }
+  }, []);
 
   if (isLoading) return <div className="flex items-center justify-center py-8">{t('loading')}</div>;
   if (isError) return <div className="flex items-center justify-center py-8 text-red-500">{t('error')}</div>;

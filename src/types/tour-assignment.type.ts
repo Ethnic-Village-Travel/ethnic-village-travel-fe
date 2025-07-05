@@ -1,6 +1,8 @@
 import { TourStatus } from '@/constants/enum/tour.enum';
 
 import type { EmployeeBasicResponse } from './employee.type';
+import { Location } from './location.type';
+import { TourAvailableDate } from './tour.type';
 
 export interface TourAssignmentRequest {
   assignments: {
@@ -34,14 +36,6 @@ export interface AssignedAvailableDatesRequest {
   employeeIds?: string[]; // Filter by specific employees (Admin only)
 }
 
-export interface TourAvailableDateInfo {
-  id: string;
-  startDate: string; // ISO date string
-  endDate: string; // ISO date string
-  bookedSlots: number;
-  maxSlots: number;
-}
-
 export interface TourBasicInfo {
   id: string;
   title: string;
@@ -49,6 +43,7 @@ export interface TourBasicInfo {
   imageUrl: string;
   status: TourStatus;
   duration: number;
+  pickUpLocation?: Location;
 }
 
 export interface AssignedAvailableDateResponse {
@@ -57,13 +52,13 @@ export interface AssignedAvailableDateResponse {
   assignedBy: string;
 
   // Tour Available Date Information
-  tourAvailableDate: TourAvailableDateInfo;
+  tourAvailableDate: TourAvailableDate;
 
   // Tour Information
   tour: TourBasicInfo;
 
   // Employee Information (only visible to Admin)
-  assignedEmployee?: EmployeeBasicResponse;
+  assignedTo?: EmployeeBasicResponse;
 }
 
 export interface AssignedAvailableDateListResponse {

@@ -47,12 +47,12 @@ export interface BookingListResponse {
   personCount: Record<string, any>;
   status: string;
   totalPrice: number;
-  bookingDate: string;
-  startDate: string;
-  endDate: string;
-  paymentExpiredDate: string;
+  bookingDate: Date;
+  startDate: Date;
+  endDate: Date;
+  paymentExpiredDate: Date;
   paymentMethod?: string;
-  paymentDate?: string;
+  paymentDate?: Date;
   discountAmountApplied?: number;
   tour: TourInfo;
 }

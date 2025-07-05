@@ -38,6 +38,12 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       permission: PermissionMap[RouteConstant.admin_tour],
     },
     {
+      label: 'tour_assigned_available_dates',
+      icon: MapPin,
+      href: RouteConstant.admin_assigned_available_dates,
+      permission: PermissionMap[RouteConstant.admin_assigned_available_dates],
+    },
+    {
       label: 'order',
       icon: ShoppingCart,
       href: RouteConstant.admin_order,

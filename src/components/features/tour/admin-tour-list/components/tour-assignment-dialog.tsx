@@ -41,7 +41,7 @@ export function TourAssignmentDialog({ tour, open, onOpenChange }: TourAssignmen
 
   // Get current assignments for this tour với selector ổn định
   const assignedEmployeesByDate = useTourAssignmentStore(
-    useShallow(state => tourId ? (state.tourAssignments[tourId] || {}) : {})
+    useShallow(state => (tourId ? state.tourAssignments[tourId] || {} : {})),
   ) as { [dateId: string]: EmployeeBasicResponse[] };
 
   // Get available date IDs for fetching assigned employees - memoize để tránh tạo array mới
@@ -97,18 +97,19 @@ export function TourAssignmentDialog({ tour, open, onOpenChange }: TourAssignmen
 
     // Nếu có dữ liệu từ API response, ưu tiên dùng đó
     const dataToUse = assignedEmployeesData?.assignedEmployeesByDate || assignedEmployeesByDate || {};
-    
+
     console.log('Using assignedEmployees from store for tour:', tourId, dataToUse);
-    
-    const formAssignments = tour?.availableDates?.reduce(
-      (acc, date) => {
-        const dateId = String(date.id);
-        const assignedEmployees = dataToUse[dateId] || [];
-        acc[dateId] = assignedEmployees;
-        return acc;
-      },
-      {} as { [dateId: string]: EmployeeBasicResponse[] },
-    ) || {};
+
+    const formAssignments =
+      tour?.availableDates?.reduce(
+        (acc, date) => {
+          const dateId = String(date.id);
+          const assignedEmployees = dataToUse[dateId] || [];
+          acc[dateId] = assignedEmployees;
+          return acc;
+        },
+        {} as { [dateId: string]: EmployeeBasicResponse[] },
+      ) || {};
 
     console.log('Setting form assignments:', formAssignments);
 

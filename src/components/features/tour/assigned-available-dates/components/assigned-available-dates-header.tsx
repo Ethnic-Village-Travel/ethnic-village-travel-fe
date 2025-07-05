@@ -9,10 +9,10 @@ export const AssignedAvailableDatesHeader = () => {
 
   // Determine title based on user role
   const isAdmin = user?.roles?.includes('ADMIN');
-  const title = isAdmin ? 'Tất cả ngày được phân công' : 'Ngày được phân công của tôi';
+  const title = isAdmin ? t('tour.assigned_dates.all_assignments') : t('tour.assigned_dates.my_assignments');
   const description = isAdmin
-    ? 'Xem tất cả ngày khả dụng được phân công cho nhân viên'
-    : 'Xem các ngày khả dụng được phân công cho bạn';
+    ? t('tour.assigned_dates.all_assignments_description')
+    : t('tour.assigned_dates.my_assignments_description');
 
   return (
     <div className="mb-3 flex items-start justify-between">

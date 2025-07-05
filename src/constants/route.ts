@@ -31,6 +31,10 @@ export const RouteConstant = {
   admin_user_create: '/admin/user/create',
   admin_user_edit: '/admin/user/edit/:username',
 
+  admin_employee: '/admin/employee',
+  admin_employee_create: '/admin/employee/create',
+  admin_employee_edit: '/admin/employee/edit/:username',
+
   admin_role: '/admin/role',
   admin_role_create: '/admin/role/create',
   admin_role_edit: '/admin/role/edit/:id',
@@ -38,6 +42,8 @@ export const RouteConstant = {
   admin_tour: '/admin/tour',
   admin_tour_create: '/admin/tour/create',
   admin_tour_edit: '/admin/tour/edit/:slug',
+
+  admin_assigned_available_dates: '/admin/assigned-available-dates',
 
   admin_article: '/admin/article',
   admin_article_create: '/admin/article/create',
@@ -54,6 +60,4 @@ export const RouteConstant = {
   admin_chatbot: '/admin/chatbot',
   admin_chatbot_create: '/admin/chatbot/create',
   admin_chatbot_edit: '/admin/chatbot/edit/:slug',
-
-  admin_assigned_available_dates: '/admin/assigned-available-dates',
 };

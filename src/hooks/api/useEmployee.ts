@@ -1,7 +1,7 @@
 import { employeeApi } from '@/apis/employee.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { EmployeeDateRangeRequest, AssignedEmployeesByDatesRequest } from '@/types/employee.type';
+import { AssignedEmployeesByDatesRequest, EmployeeDateRangeRequest } from '@/types/employee.type';
 
 export const useAvailableEmployees = (availableDateId?: string) => {
   return useQuery({
@@ -24,6 +24,11 @@ export const useAvailableEmployeesByDateRange = (params?: EmployeeDateRangeReque
       return res.data || [];
     },
     enabled: !!params?.startDate && !!params?.endDate,
+    staleTime: 0, // Always consider data stale - refetch when needed
+    gcTime: 0, // Don't cache at all (garbage collect immediately)
+    refetchOnMount: true, // Always refetch on mount
+    refetchOnWindowFocus: true, // Refetch on window focus
+    refetchOnReconnect: true, // Refetch on reconnect
   });
 };
 

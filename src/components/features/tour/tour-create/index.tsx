@@ -11,7 +11,7 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 import { TourCreateRequest } from '@/types/tour.type';
-import { createTourSchema, TourFormValues } from '@/lib/schemas/tour.schema';
+import { createTourSchema, TourCreateFormValues } from '@/lib/schemas/tour.schema';
 import { useFetchEthnics, useFetchLocations } from '@/hooks/api/useMetaData';
 import { useAdminCreateTour } from '@/hooks/api/useTour';
 import { useToast } from '@/hooks/use-toast';
@@ -34,17 +34,18 @@ export default function TourCreateContent() {
   const t = useTranslations();
   const router = useRouter();
   const { toast } = useToast();
-  const form = useForm<TourFormValues>({
+  const form = useForm<TourCreateFormValues>({
     resolver: zodResolver(createTourSchema((key: string) => t.raw(key as any))),
     defaultValues: {
       image: '',
       status: TourStatusEnum.DRAFT.value,
+      duration: 3, // Default 3 days
       contactNumbers: [{ name: '', phone: '' }],
       itinerary: [],
       ethnic: [],
       included: [],
       excluded: [],
-      availableDates: [{ startDate: new Date(), endDate: new Date(), maxSlots: 1 }],
+      availableDates: [{ startDate: new Date(), maxSlots: 1, assignedEmployees: [] }],
       overview: '',
       adultPrice: 0,
       childPrice: 0,
@@ -54,13 +55,11 @@ export default function TourCreateContent() {
   const { data: ethnics } = useFetchEthnics();
   const { data: locations } = useFetchLocations();
 
-  const onSubmit = async (data: TourFormValues) => {
+  const onSubmit = async (data: TourCreateFormValues) => {
     if (!data) return;
 
-    // Tính duration đơn giản bằng phép trừ Date
-    const start = new Date(data.availableDates[0].startDate);
-    const end = new Date(data.availableDates[0].endDate);
-    const duration = Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    // Use form duration instead of calculating
+    const duration = data.duration;
 
     // Map form data to TourCreateRequest
     const payload: TourCreateRequest = {
@@ -80,8 +79,9 @@ export default function TourCreateContent() {
       tourExcludedServices: data.excluded,
       availableDates: data.availableDates.map(date => ({
         startDate: date.startDate,
-        endDate: date.endDate,
+        endDate: new Date(date.startDate.getTime() + (duration - 1) * 24 * 60 * 60 * 1000), // Calculate end date
         maxSlots: date.maxSlots,
+        employeeIds: date.assignedEmployees?.map(emp => emp.id) || [], // Map employee IDs
       })),
       publishedDate: data.publishedDate,
     };
@@ -107,6 +107,11 @@ export default function TourCreateContent() {
     });
   };
 
+  const onError = (errors: any) => {
+    console.log('❌ Form validation errors:', errors);
+    console.log('Form state:', form.formState);
+  };
+
   return (
     <div className="p-6">
       <div className="rounded-lg border shadow-sm">
@@ -114,7 +119,7 @@ export default function TourCreateContent() {
           <h2 className="mb-6 text-2xl font-bold">{t('tourCreate.title')}</h2>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-6">
+            <form onSubmit={form.handleSubmit(onSubmit, onError)} className="grid grid-cols-2 gap-6">
               {/* Left Column */}
               <div className="space-y-4">
                 {/* Image Upload */}
@@ -217,6 +222,38 @@ export default function TourCreateContent() {
                   )}
                 />
 
+                {/* Duration */}
+                <FormField
+                  control={form.control}
+                  name="duration"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-semibold">
+                        {t('tourCreate.duration')}
+                        <span className="text-destructive"> {t('tourCreate.required')}</span>
+                      </FormLabel>
+                      <FormControl>
+                        <div className="space-y-2">
+                          <Input
+                            type="number"
+                            min={1}
+                            max={30}
+                            {...field}
+                            onChange={e => field.onChange(Number(e.target.value))}
+                            placeholder="Nhập số ngày"
+                          />
+                          {field.value && (
+                            <div className="text-sm text-muted-foreground">
+                              {field.value} ngày {field.value - 1} đêm
+                            </div>
+                          )}
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <div className="grid grid-cols-2 gap-4">
                   {/* Status */}
                   <FormField
@@ -257,11 +294,21 @@ export default function TourCreateContent() {
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button variant="outline" className="justify-start">
-                              {field.value ? field.value.toLocaleDateString() : 'Choose date'}
+                              {field.value ? field.value.toLocaleDateString('vi-VN') : t('tourCreate.chooseDate')}
                             </Button>
                           </PopoverTrigger>
                           <PopoverContent>
-                            <Calendar mode="single" selected={field.value} onSelect={field.onChange} />
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              disabled={date => {
+                                const currentDate = new Date();
+                                const minDate = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+                                return date < minDate;
+                              }}
+                              initialFocus
+                            />
                           </PopoverContent>
                         </Popover>
                         <FormMessage />
@@ -347,7 +394,10 @@ export default function TourCreateContent() {
                     name="childPrice"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="font-semibold">{t('tourCreate.childPrice')}</FormLabel>
+                        <FormLabel className="font-semibold">
+                          {t('tourCreate.childPrice')}
+                          <span className="text-destructive"> {t('tourCreate.required')}</span>
+                        </FormLabel>
                         <FormControl>
                           <Input
                             type="text"

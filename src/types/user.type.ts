@@ -14,5 +14,7 @@ export interface User {
 
 export interface UserDetailsResponse extends ApiResponse {
   bookmarks: Bookmark[];
+  pendingPaymentBookingsCount: number;
+  // notifications: Notification[];
   lastUpdated: string;
 }

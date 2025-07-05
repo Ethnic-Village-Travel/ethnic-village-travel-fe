@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useTranslations } from 'next-intl';
 
@@ -19,6 +19,13 @@ export function AssignedAvailableDatesTable() {
   const t = useTranslations('admin');
   const { user } = useAuthStore();
   const isAdmin = Boolean(user?.roles?.includes('ADMIN'));
+
+  // State for row actions
+  const [rowAction, setRowAction] = useState<{
+    id: string;
+    action: 'cancel';
+    row?: AssignedAvailableDateResponse;
+  } | null>(null);
 
   // Build request params from URL query config
   const requestParams = useMemo(() => {
@@ -72,6 +79,7 @@ export function AssignedAvailableDatesTable() {
       getAssignedAvailableDatesTableColumns({
         t,
         isAdmin,
+        setRowAction,
       }),
     [t, isAdmin], // Add proper dependencies
   );
@@ -100,7 +108,7 @@ export function AssignedAvailableDatesTable() {
     return (
       <div className="flex h-32 items-center justify-center">
         <div className="text-center">
-          <p className="text-sm text-destructive">Không thể tải dữ liệu</p>
+          <p className="text-sm text-destructive">{t('tour.assigned_dates.error_loading')}</p>
           <p className="text-xs text-muted-foreground">{error.message}</p>
         </div>
       </div>
@@ -124,6 +132,34 @@ export function AssignedAvailableDatesTable() {
           </div>
         </div>
       </DataTable>
+
+      {/* Handle Cancel Action */}
+      {rowAction?.action === 'cancel' && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="mx-4 w-full max-w-md rounded-lg bg-white p-6">
+            <h3 className="mb-4 text-lg font-semibold">{t('tour.assigned_dates.cancel_confirm_title')}</h3>
+            <p className="mb-6 text-sm text-muted-foreground">{t('tour.assigned_dates.cancel_confirm_message')}</p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setRowAction(null)}
+                className="rounded-md border px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                {t('tour.assigned_dates.cancel')}
+              </button>
+              <button
+                onClick={() => {
+                  // TODO: Implement cancel assignment API call
+                  console.log('Cancel assignment:', rowAction.id);
+                  setRowAction(null);
+                }}
+                className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+              >
+                {t('tour.assigned_dates.confirm')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

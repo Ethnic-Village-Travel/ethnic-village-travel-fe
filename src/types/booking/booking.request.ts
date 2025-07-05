@@ -37,6 +37,7 @@ export interface BookingConfirmRequest {
 }
 
 export interface BookingListRequest {
+  bookingTab: 'PENDING' | 'OTHERS';
   status?: BookingStatus[];
   startDate?: string;
   endDate?: string;
