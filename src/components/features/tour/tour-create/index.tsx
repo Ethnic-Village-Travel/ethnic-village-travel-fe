@@ -394,7 +394,10 @@ export default function TourCreateContent() {
                     name="childPrice"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="font-semibold">{t('tourCreate.childPrice')}</FormLabel>
+                        <FormLabel className="font-semibold">
+                          {t('tourCreate.childPrice')}
+                          <span className="text-destructive"> {t('tourCreate.required')}</span>
+                        </FormLabel>
                         <FormControl>
                           <Input
                             type="text"

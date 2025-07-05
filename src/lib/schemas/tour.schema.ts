@@ -32,7 +32,7 @@ export const createTourSchema = (t: (key: string) => string) =>
         .min(1, { message: t('tourCreate.validation.durationMin') })
         .max(30, { message: t('tourCreate.validation.durationMax') }),
       adultPrice: z.number().min(0, { message: t('tourCreate.validation.adultPriceMin') }),
-      childPrice: z.number(),
+      childPrice: z.number().min(0, { message: t('tourCreate.validation.childPriceMin') }),
       contactNumbers: z
         .array(
           z.object({
