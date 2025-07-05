@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TourServiceInfoType } from '@/constants/enum/tour-service-info.enum';
 import { useTranslations } from 'next-intl';
 import { UseFormReturn } from 'react-hook-form';
@@ -16,52 +16,74 @@ type InExServiceProps = {
 };
 
 export default function InExService({ form }: InExServiceProps) {
-  const [includedServices, setIncludedServices] = useState<string[]>([]);
-  const [excludedServices, setExcludedServices] = useState<string[]>([]);
-  const { data: serviceInfoList = [], isLoading } = useServiceInfoList();
+  const { data: serviceInfoList = [], isLoading, error } = useServiceInfoList();
   const t = useTranslations();
+
+  // Watch form values to get current state
+  const includedValue = form.watch('included') || [];
+  const excludedValue = form.watch('excluded') || [];
 
   return (
     <>
+      {/* Debug info */}
+      {isLoading && <div className="text-sm text-gray-500">Loading services...</div>}
+      {error && <div className="text-sm text-red-500">Error loading services: {error.message}</div>}
+      {!isLoading && serviceInfoList.length === 0 && <div className="text-sm text-yellow-600">No services found</div>}
+
+      {/* Included Services */}
       <FormField
         control={form.control}
         name="included"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="font-semibold">{t('tourCreate.included')}</FormLabel>
-            <MultiSelect
-              options={serviceInfoList.filter(service => !excludedServices.includes(service.id))}
-              onValueChange={values => {
-                field.onChange(values.map((id: string) => id));
-                setIncludedServices(values);
-              }}
-              value={includedServices}
-              placeholder={t('tourCreate.included')}
-              variant="inverted"
-              animation={2}
-              maxCount={3}
-              disabled={isLoading}
-            />
+            <FormLabel className="font-semibold">
+              {t('tourCreate.included')} ({serviceInfoList.length} services available)
+            </FormLabel>
+            <FormControl>
+              <MultiSelect
+                options={serviceInfoList
+                  .filter(service => !excludedValue.includes(service.id))
+                  .map(service => ({
+                    id: service.id,
+                    name: service.name,
+                  }))}
+                onValueChange={values => {
+                  field.onChange(values);
+                }}
+                value={field.value || []}
+                placeholder={t('tourCreate.included')}
+                variant="inverted"
+                animation={2}
+                maxCount={3}
+                disabled={isLoading}
+              />
+            </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
 
-      {/* Excluded */}
+      {/* Excluded Services */}
       <FormField
         control={form.control}
         name="excluded"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="font-semibold">{t('tourCreate.excluded')}</FormLabel>
+            <FormLabel className="font-semibold">
+              {t('tourCreate.excluded')} ({serviceInfoList.length} services available)
+            </FormLabel>
             <FormControl>
               <MultiSelect
-                options={serviceInfoList.filter(service => !includedServices.includes(service.id))}
+                options={serviceInfoList
+                  .filter(service => !includedValue.includes(service.id))
+                  .map(service => ({
+                    id: service.id,
+                    name: service.name,
+                  }))}
                 onValueChange={values => {
-                  field.onChange(values.map((id: string) => id));
-                  setExcludedServices(values);
+                  field.onChange(values);
                 }}
-                value={excludedServices}
+                value={field.value || []}
                 placeholder={t('tourCreate.excluded')}
                 variant="destructive"
                 animation={2}
