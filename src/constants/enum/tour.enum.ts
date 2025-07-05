@@ -13,12 +13,12 @@ export enum TourStatus {
 }
 
 export enum TourAvailableDateStatus {
-  AVAILABLE,
-  FULLY_BOOKED,
-  ONGOING,
-  PAUSED,
-  COMPLETED,
-  CANCELLED,
+  AVAILABLE = 'AVAILABLE',
+  FULLY_BOOKED = 'FULLY_BOOKED',
+  ONGOING = 'ONGOING',
+  PAUSED = 'PAUSED',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
 }
 
 export const TourStatusEnum = {
@@ -44,6 +44,33 @@ export const TourStatusEnum = {
   },
   PUBLISHED: {
     value: 'PUBLISHED',
+    variant: 'teal',
+  },
+  FULLY_BOOKED: {
+    value: 'FULLY_BOOKED',
+    variant: 'amber',
+  },
+  ONGOING: {
+    value: 'ONGOING',
+    variant: 'green',
+  },
+  PAUSED: {
+    value: 'PAUSED',
+    variant: 'orange',
+  },
+  COMPLETED: {
+    value: 'COMPLETED',
+    variant: 'blue',
+  },
+  CANCELLED: {
+    value: 'CANCELLED',
+    variant: 'red',
+  },
+} as const;
+
+export const TourAvailableDateStatusEnum = {
+  AVAILABLE: {
+    value: 'AVAILABLE',
     variant: 'teal',
   },
   FULLY_BOOKED: {

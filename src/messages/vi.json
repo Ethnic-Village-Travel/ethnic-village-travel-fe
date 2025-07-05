@@ -12,6 +12,7 @@
       "APPROVED": "Đã duyệt",
       "SCHEDULED": "Đã lên lịch",
       "PUBLISHED": "Đã xuất bản",
+      "AVAILABLE": "Sẵn sàng",
       "FULLY_BOOKED": "Đã kín chỗ",
       "ONGOING": "Đang diễn ra",
       "PAUSED": "Tạm dừng",
@@ -69,16 +70,58 @@
         "created_utc": "Ngày tạo (UTC)",
         "updated_utc": "Ngày cập nhật (UTC)",
         "open_menu": "Mở menu"
+      },
+      "assigned_dates": {
+        "tour": "Tour",
+        "available_date": "Ngày khả dụng",
+        "assigned_date": "Ngày phân công",
+        "status": "Trạng thái",
+        "assigned_employee": "Nhân viên được phân công",
+        "assigned_by": "Bởi",
+        "no_employee": "Không có nhân viên",
+        "pickup_location": "Nơi đón khách",
+        "request_cancel": "Yêu cầu hủy",
+        "open_menu": "Mở menu",
+        "cancel_confirm_title": "Xác nhận yêu cầu hủy",
+        "cancel_confirm_message": "Bạn có chắc chắn muốn gửi yêu cầu hủy phân công tour này không?",
+        "cancel": "Hủy",
+        "confirm": "Xác nhận",
+        "booked_slots": "{count} chỗ",
+        "duration": "{days} ngày - {nights} đêm",
+        "no_title": "Không có tiêu đề",
+        "all_assignments": "Tất cả ngày được phân công",
+        "my_assignments": "Ngày được phân công của tôi",
+        "all_assignments_description": "Xem tất cả ngày khả dụng được phân công cho nhân viên",
+        "my_assignments_description": "Xem các ngày khả dụng được phân công cho bạn",
+        "search_tour": "Tìm kiếm theo tên tour...",
+        "date_range": "Khoảng thời gian",
+        "from_date": "Từ ngày",
+        "to_date": "Đến ngày",
+        "clear_filters": "Xóa bộ lọc",
+        "filter_status": "Trạng thái",
+        "filter_employee": "Bộ lọc nhân viên sẽ được thêm vào sau",
+        "error_loading": "Không thể tải dữ liệu",
+        "no_data": "Không có dữ liệu",
+        "actions": "Hành động",
+        "not_available": "Không có"
       }
+    },
+    "available_date_status": {
+      "AVAILABLE": "Khả dụng",
+      "FULLY_BOOKED": "Đã đầy",
+      "ONGOING": "Đang diễn ra",
+      "COMPLETED": "Hoàn thành",
+      "CANCELLED": "Đã hủy",
+      "PAUSED": "Tạm dừng"
     }
   },
   "home": {
-    "title": "Xin chào thế giới!",
-    "about": "Đi đến trang giới thiệu",
+    "title": "Xin chào!",
+    "about": "Đi tới trang giới thiệu",
     "tour": {
       "popular": "Phổ biến",
-      "outstanding": "Đặc sắc",
-      "best_price": "Giá tốt"
+      "outstanding": "Nổi bật",
+      "best_price": "Giá tốt nhất"
     }
   },
   "bookmark": {
@@ -93,7 +136,7 @@
     "no_results": "Không tìm thấy kết quả",
     "results_count": "Tìm thấy {count} tour",
     "clear_search": "Xóa bộ lọc",
-    "search_error": "Có lỗi xảy ra khi tìm kiếm"
+    "search_error": "Đã xảy ra lỗi khi tìm kiếm"
   },
   "filters": {
     "ethnic": {
@@ -116,8 +159,8 @@
     "rating": {
       "title": "Đánh giá",
       "5_stars": "5 sao",
-      "4_stars_up": "4 sao trở lên",
-      "3_stars_up": "3 sao trở lên"
+      "4_stars_up": "Từ 4 sao trở lên",
+      "3_stars_up": "Từ 3 sao trở lên"
     },
     "price": {
       "title": "Giá"
@@ -131,13 +174,13 @@
       "price": "{price}/người"
     },
     "list": {
-      "title": "Tour du lịch",
+      "title": "Tours",
       "search_results": "Kết quả tìm kiếm cho \"{keyword}\"",
       "filter_by": "Lọc theo",
       "clear_filters": "Xóa bộ lọc",
       "empty": {
         "title": "Không tìm thấy tour nào",
-        "description": "Hãy thử điều chỉnh bộ lọc để tìm thấy những gì bạn đang tìm kiếm."
+        "description": "Hãy thử điều chỉnh bộ lọc để tìm thấy điều bạn đang tìm kiếm."
       },
       "sort": {
         "placeholder": "Sắp xếp theo",
@@ -160,30 +203,30 @@
       "not_found": "Không tìm thấy tour",
       "overview": {
         "title": "Tổng quan chuyến đi",
-        "included_excluded": "Dịch vụ bao gồm/Không bao gồm",
-        "trip_plan": "Lịch trình chuyến đi",
-        "no_overview": "Chưa có thông tin tổng quan"
+        "included_excluded": "Dịch vụ bao gồm/không bao gồm",
+        "trip_plan": "Lịch trình",
+        "no_overview": "Không có thông tin tổng quan"
       },
       "similar": {
         "title": "Tour tương tự",
         "empty": {
-          "title": "Không có tour tương tự nào",
-          "description": "Hiện tại chưa có tour tương tự nào cho tour này."
+          "title": "Không tìm thấy tour tương tự",
+          "description": "Hiện tại không có tour tương tự nào cho tour này."
         }
       },
       "booking": {
-        "title": "Đặt Tour Này",
+        "title": "Đặt tour này",
         "adult": "Người lớn",
         "child": "Trẻ em",
         "adult_price": "${price}/người lớn",
         "child_price": "${price}/trẻ em",
         "total": "Tổng cộng",
         "book_now": "Đặt ngay",
-        "available_slots": "Còn {count} chỗ trống",
+        "available_slots": "Còn {count} chỗ",
         "no_slots": "Hết chỗ",
         "select_date": "Vui lòng chọn ngày",
         "booking_failed": "Đặt tour thất bại",
-        "booking_failed_out_of_stock": "Số lượng chỗ trống không đủ",
+        "booking_failed_out_of_stock": "Hết chỗ",
         "booking_failed_invalid_data": "Dữ liệu không hợp lệ",
         "discount": "Giảm giá",
         "max": "Tối đa"
@@ -529,21 +572,21 @@
     }
   },
   "tourCreate": {
-    "title": "Tạo tour mới",
+    "title": "Tạo Tour Mới",
     "image": "Hình ảnh",
     "required": "*",
     "selectImage": "Chọn hình ảnh",
     "overview": "Tổng quan",
-    "submit": "Tạo mới",
-    "contactNumber": "Số liên hệ",
+    "submit": "Gửi",
+    "contactNumber": "Số điện thoại liên hệ",
     "contactPerson": "Người liên hệ",
     "add": "Thêm",
     "startDate": "Ngày bắt đầu",
     "endDate": "Ngày kết thúc",
-    "maxSlots": "Số lượng tối đa",
-    "availableDates": "Ngày mở đặt",
-    "included": "Các dịch vụ bao gồm",
-    "excluded": "Các dịch vụ không có",
+    "maxSlots": "Số chỗ tối đa",
+    "availableDates": "Ngày khả dụng",
+    "included": "Dịch vụ bao gồm",
+    "excluded": "Dịch vụ không bao gồm",
     "itinerary": "Lịch trình",
     "addItinerary": "Thêm lịch trình",
     "remove": "Xóa",
@@ -552,7 +595,7 @@
     "status": "Trạng thái",
     "duration": "Thời gian tour (ngày)",
     "pickupLocation": "Điểm đón",
-    "publishedDate": "Ngày hiển thị",
+    "publishedDate": "Ngày xuất bản",
     "adultPrice": "Giá người lớn",
     "childPrice": "Giá trẻ em",
     "select": "Chọn",
@@ -561,41 +604,41 @@
     "selectPickupLocation": "Chọn điểm đón",
     "chooseDate": "Chọn ngày",
     "selectEmployee": "Chọn nhân viên",
-    "selectStartDateFirst": "Chọn ngày bắt đầu trước",
+    "selectStartDateFirst": "Vui lòng chọn ngày bắt đầu trước",
     "dateConflictWarning": "Cảnh báo xung đột ngày",
-    "publishedDateConflictMessage": "Ngày xuất bản phải trước ngày bắt đầu tour ít nhất 1 tuần. Vui lòng kiểm tra lại các ngày đã chọn.",
-    "availableDatesConflictMessage": "Các ngày tour bị trùng lặp. Vui lòng chọn ngày khác.",
+    "publishedDateConflictMessage": "Ngày xuất bản phải sớm hơn ngày bắt đầu tour ít nhất 1 tuần. Vui lòng kiểm tra lại ngày đã chọn.",
+    "availableDatesConflictMessage": "Các ngày tour đang bị trùng lặp. Vui lòng chọn ngày khác.",
     "itineraryTitle": "Tiêu đề lịch trình",
     "itineraryDescription": "Mô tả lịch trình",
     "validation": {
-      "imageRequired": "Bắt buộc chọn hình ảnh",
-      "titleRequired": "Bắt buộc nhập tiêu đề",
-      "locationRequired": "Bắt buộc chọn địa điểm",
-      "ethnicRequired": "Phải chọn ít nhất một dân tộc",
+      "imageRequired": "Yêu cầu hình ảnh",
+      "titleRequired": "Yêu cầu tiêu đề",
+      "locationRequired": "Yêu cầu địa điểm",
+      "ethnicRequired": "Yêu cầu chọn ít nhất một dân tộc",
       "statusInvalid": "Trạng thái không hợp lệ",
-      "pickupLocationRequired": "Bắt buộc chọn điểm đón",
-      "publishedDateRequired": "Ngày hiển thị phải là hôm nay hoặc tương lai",
+      "pickupLocationRequired": "Yêu cầu điểm đón",
+      "publishedDateRequired": "Ngày xuất bản phải từ hôm nay trở đi",
       "publishedDateMinWeek": "Ngày xuất bản phải sau ngày hiện tại ít nhất 1 tuần",
       "duration": "Thời gian tour",
-      "durationMin": "Thời gian tour từ 1 ngày",
-      "durationMax": "Thời gian tour tối đa 30 ngày",
+      "durationMin": "Thời gian tour phải ít nhất 1 ngày",
+      "durationMax": "Thời gian tour không được quá 30 ngày",
       "adultPriceMin": "Giá người lớn phải lớn hơn hoặc bằng 0",
       "childPriceMin": "Giá trẻ em phải lớn hơn hoặc bằng 0",
-      "contactNameRequired": "Bắt buộc nhập tên",
+      "contactNameRequired": "Yêu cầu tên",
       "contactPhoneInvalid": "Số điện thoại không hợp lệ",
-      "includedRequired": "Phải chọn dịch vụ bao gồm",
-      "excludedRequired": "Phải chọn dịch vụ không bao gồm",
-      "overviewRequired": "Bắt buộc nhập tổng quan",
-      "itineraryTitleRequired": "Bắt buộc nhập tiêu đề lịch trình",
-      "itineraryDescriptionRequired": "Bắt buộc nhập mô tả lịch trình",
-      "availableDatesRequired": "Phải có ít nhất một ngày mở đặt",
-      "startDateRequired": "Bắt buộc chọn ngày bắt đầu",
+      "includedRequired": "Yêu cầu dịch vụ bao gồm",
+      "excludedRequired": "Yêu cầu dịch vụ không bao gồm",
+      "overviewRequired": "Yêu cầu tổng quan",
+      "itineraryTitleRequired": "Yêu cầu tiêu đề lịch trình",
+      "itineraryDescriptionRequired": "Yêu cầu mô tả lịch trình",
+      "availableDatesRequired": "Yêu cầu ít nhất một ngày khả dụng",
+      "startDateRequired": "Yêu cầu ngày bắt đầu",
       "startDateAfterPublished": "Ngày bắt đầu phải sau ngày xuất bản ít nhất 1 tuần",
-      "dateConflict": "Ngày bắt đầu bị trùng với tour đã có",
-      "endDateRequired": "Bắt buộc chọn ngày kết thúc",
-      "maxSlotsMin": "Số lượng tối đa phải lớn hơn 0",
+      "dateConflict": "Ngày bắt đầu trùng với các ngày tour hiện có",
+      "endDateRequired": "Yêu cầu ngày kết thúc",
+      "maxSlotsMin": "Số chỗ tối đa phải ít nhất là 1",
       "endDateAfterStart": "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu",
-      "assignedEmployeesRequired": "Phải chọn ít nhất một nhân viên cho ngày này"
+      "assignedEmployeesRequired": "Yêu cầu phân công ít nhất một nhân viên cho ngày này"
     }
   }
 }

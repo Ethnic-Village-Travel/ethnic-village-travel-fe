@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TourStatusEnum } from '@/constants/enum/tour.enum';
+import { TourAvailableDateStatusEnum } from '@/constants/enum/tour.enum';
 import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/utils';
 import { format } from 'date-fns';
@@ -42,8 +42,8 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
   const [toDate, setToDate] = useState<Date | undefined>(currentToDate ? new Date(currentToDate) : undefined);
 
   // Create status options
-  const statusOptions: Option[] = Object.values(TourStatusEnum).map(status => ({
-    label: t(`status.${status.value}` as any) || status.value,
+  const statusOptions: Option[] = Object.values(TourAvailableDateStatusEnum).map(status => ({
+    label: t(`available_date_status.${status.value}` as any) || status.value,
     value: status.value,
   }));
 
@@ -119,11 +119,11 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
         {/* Search Filter */}
         <div className="flex-1 space-y-2">
-          <Label htmlFor="search">Tìm kiếm tour</Label>
+          <Label htmlFor="search">{t('tour.assigned_dates.search_tour')}</Label>
           <form onSubmit={handleSearchSubmit} className="flex gap-2">
             <Input
               id="search"
-              placeholder="Tìm kiếm theo tên tour..."
+              placeholder={t('tour.assigned_dates.search_tour')}
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
               className="max-w-xs"
@@ -133,7 +133,7 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
 
         {/* Date Range Filter */}
         <div className="space-y-2">
-          <Label>Khoảng thời gian</Label>
+          <Label>{t('tour.assigned_dates.date_range')}</Label>
           <div className="flex gap-2">
             <Popover>
               <PopoverTrigger asChild>
@@ -142,7 +142,7 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
                   className={cn('w-[130px] justify-start text-left font-normal', !fromDate && 'text-muted-foreground')}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {fromDate ? format(fromDate, 'dd/MM/yyyy') : 'Từ ngày'}
+                  {fromDate ? format(fromDate, 'dd/MM/yyyy') : t('tour.assigned_dates.from_date')}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -157,7 +157,7 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
                   className={cn('w-[130px] justify-start text-left font-normal', !toDate && 'text-muted-foreground')}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {toDate ? format(toDate, 'dd/MM/yyyy') : 'Đến ngày'}
+                  {toDate ? format(toDate, 'dd/MM/yyyy') : t('tour.assigned_dates.to_date')}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -170,7 +170,7 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
         {/* Status Filter */}
         <div className="space-y-2">
           <StatusFilter
-            title="Trạng thái"
+            title={t('tour.assigned_dates.filter_status')}
             options={statusOptions}
             selectedValues={currentStatus}
             onSelectionChange={handleStatusChange}
@@ -180,7 +180,7 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
         {/* Clear Filters Button */}
         {hasActiveFilters && (
           <Button variant="ghost" size="sm" onClick={clearFilters} className="h-9 px-2 lg:px-3">
-            Xóa bộ lọc
+            {t('tour.assigned_dates.clear_filters')}
             <X className="ml-2 h-4 w-4" />
           </Button>
         )}
@@ -189,7 +189,7 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
       {/* TODO: Add Employee Filter for Admin */}
       {isAdmin && (
         <div className="border-t pt-4">
-          <div className="text-sm text-muted-foreground">Bộ lọc nhân viên sẽ được thêm vào sau</div>
+          <div className="text-sm text-muted-foreground">{t('tour.assigned_dates.filter_employee')}</div>
         </div>
       )}
     </div>

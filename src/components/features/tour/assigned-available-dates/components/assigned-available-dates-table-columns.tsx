@@ -2,36 +2,63 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { TourAvailableDateStatus, TourAvailableDateStatusEnum } from '@/constants/enum/tour.enum';
 import { RouteConstant } from '@/constants/route';
 import { formatDate } from '@/utils/date';
 import type { ColumnDef } from '@tanstack/react-table';
-import { CalendarDays, Clock, Users } from 'lucide-react';
+import { format } from 'date-fns';
+import { CalendarDays, Clock, MapPin, MoreHorizontal, Users, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { AssignedAvailableDateResponse } from '@/types/tour-assignment.type';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { DataTableColumnHeader } from '@/components/shared/data-table/data-table-column-header';
 
 interface GetAssignedAvailableDatesTableColumnsProps {
   t: ReturnType<typeof useTranslations>;
   isAdmin: boolean;
+  setRowAction?: React.Dispatch<
+    React.SetStateAction<{
+      id: string;
+      action: 'cancel';
+      row?: AssignedAvailableDateResponse;
+    } | null>
+  >;
 }
 
 export function getAssignedAvailableDatesTableColumns({
   t,
   isAdmin,
+  setRowAction,
 }: GetAssignedAvailableDatesTableColumnsProps): ColumnDef<AssignedAvailableDateResponse>[] {
+  // Calculate booked slots from bookedPersonCounts
+  const calculateBookedSlots = (bookedPersonCounts: { adult: number; child: number }[]) => {
+    if (!bookedPersonCounts || bookedPersonCounts.length === 0) return 0;
+    return bookedPersonCounts.reduce((total, booking) => {
+      return total + (booking.adult || 0) + (booking.child || 0);
+    }, 0);
+  };
 
   const columns: ColumnDef<AssignedAvailableDateResponse>[] = [
     {
-      id: 'tour',
+      id: 'title',
       // accessorKey: 'tour.title',
       accessorFn: row => row.tour?.title,
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Tour" />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.assigned_dates.tour')} />,
       cell: ({ row }) => {
         const assignment = row.original;
         const tour = assignment.tour;
-        const duration = tour.duration ? `${tour.duration} ngày ${tour.duration - 1} đêm` : '';
+        const duration = tour.duration
+          ? t('tour.assigned_dates.duration', { days: tour.duration, nights: tour.duration - 1 })
+          : '';
 
         return (
           <div className="min-w-[200px]">
@@ -49,7 +76,7 @@ export function getAssignedAvailableDatesTableColumns({
                   href={`${RouteConstant.admin_tour}/${tour.id}`}
                   className="mb-1 line-clamp-2 text-sm font-semibold hover:text-primary"
                 >
-                  {tour.title || <span className="italic text-gray-400">(Không có tiêu đề)</span>}
+                  {tour.title || <span className="italic text-gray-400">({t('tour.assigned_dates.no_title')})</span>}
                 </Link>
                 <div className="flex flex-wrap items-center gap-1 text-xs">
                   {duration && (
@@ -57,6 +84,26 @@ export function getAssignedAvailableDatesTableColumns({
                       <Clock className="h-3 w-3" />
                       {duration}
                     </Badge>
+                  )}
+                  {tour?.pickUpLocation && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Badge variant="outline" className="gap-1">
+                            <MapPin className="h-3 w-3" />
+                            {tour?.pickUpLocation?.address && tour.pickUpLocation.address + ', '}
+                            {tour?.pickUpLocation?.city || t('tour.assigned_dates.not_available')}
+                          </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>
+                            {t('tour.assigned_dates.pickup_location')}:{' '}
+                            {tour?.pickUpLocation?.address && tour.pickUpLocation.address + ', '}
+                            {tour?.pickUpLocation?.city || t('tour.assigned_dates.not_available')}
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   )}
                 </div>
               </div>
@@ -66,16 +113,17 @@ export function getAssignedAvailableDatesTableColumns({
       },
     },
     {
-      id: 'availableDate',
+      id: 'startDate',
       // accessorKey: 'tourAvailableDate.startDate',
       accessorFn: row => row.tourAvailableDate?.startDate,
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Ngày khả dụng" />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.assigned_dates.available_date')} />,
       cell: ({ row }) => {
         const assignment = row.original;
         const availableDate = assignment.tourAvailableDate;
-        const startDate = formatDate(availableDate.startDate, { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const endDate = formatDate(availableDate.endDate, { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const startDate = format(new Date(availableDate.startDate), 'dd/MM/yyyy');
+        const endDate = format(new Date(availableDate.endDate), 'dd/MM/yyyy');
         const isMultiDay = availableDate.startDate !== availableDate.endDate;
+        const bookedSlots = calculateBookedSlots(availableDate.bookedPersonCounts);
 
         return (
           <div className="min-w-[120px]">
@@ -85,7 +133,7 @@ export function getAssignedAvailableDatesTableColumns({
             </div>
             <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
               <Users className="h-3 w-3" />
-              {availableDate.bookedSlots}/{availableDate.maxSlots} chỗ
+              {t('tour.assigned_dates.booked_slots', { count: `${bookedSlots}/${availableDate.maxSlots}` })}
             </div>
           </div>
         );
@@ -95,48 +143,33 @@ export function getAssignedAvailableDatesTableColumns({
     {
       id: 'assignedDate',
       accessorKey: 'assignedDate',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Ngày phân công" />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.assigned_dates.assigned_date')} />,
       cell: ({ row }) => {
         const assignment = row.original;
-        const assignedDate = formatDate(assignment.assignedDate, {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        });
+        const assignedDate = format(new Date(assignment.assignedDate), 'dd/MM/yyyy HH:mm');
 
         return (
           <div className="min-w-[100px]">
             <div className="text-sm font-medium">{assignedDate}</div>
-            <div className="text-xs text-muted-foreground">Bởi {assignment.assignedBy}</div>
+            <div className="text-xs text-muted-foreground">
+              {t('tour.assigned_dates.assigned_by')} {assignment.assignedBy}
+            </div>
           </div>
         );
       },
     },
     {
       id: 'status',
-      // accessorKey: 'tour.status',
-      accessorFn: row => row.tour?.status,
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Trạng thái" />,
+      // accessorKey: 'tourAvailableDate.status',
+      accessorFn: row => row.tourAvailableDate?.status,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.assigned_dates.status')} />,
       cell: ({ row }) => {
         const assignment = row.original;
-        const status = assignment.tour.status;
+        const status = assignment.tourAvailableDate.status;
 
-        const getStatusVariant = (status: string) => {
-          switch (status) {
-            case 'ACTIVE':
-              return 'success';
-            case 'INACTIVE':
-              return 'secondary';
-            case 'CANCELLED':
-              return 'destructive';
-            default:
-              return 'default';
-          }
-        };
-
-        return <Badge variant={getStatusVariant(status) as any}>{t(`status.${status}`)}</Badge>;
+        return (
+          <Badge variant={TourAvailableDateStatusEnum[status].variant}>{t(`available_date_status.${status}`)}</Badge>
+        );
       },
       filterFn: (row, id, value) => {
         return value.includes(row.getValue(id));
@@ -147,25 +180,29 @@ export function getAssignedAvailableDatesTableColumns({
   // Add employee column only for Admin
   if (isAdmin) {
     columns.push({
-      id: 'assignedEmployee',
+      id: 'assignedTo',
       // accessorKey: 'assignedEmployee.user.personal.fullName',
       accessorFn: row =>
-        row.assignedEmployee?.personal
-          ? `${row.assignedEmployee.personal.firstName} ${row.assignedEmployee.personal.lastName}`
+        row.assignedTo?.personal
+          ? `${row.assignedTo.personal.firstName} ${row.assignedTo.personal.lastName}`
           : undefined,
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Nhân viên được phân công" />,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('tour.assigned_dates.assigned_employee')} />
+      ),
       cell: ({ row }) => {
         const assignment = row.original;
-        const employee = assignment.assignedEmployee;
+        const employee = assignment.assignedTo;
 
         if (!employee) {
-          return <span className="text-xs text-muted-foreground">Không có nhân viên</span>;
+          return <span className="text-xs text-muted-foreground">{t('tour.assigned_dates.no_employee')}</span>;
         }
 
         return (
           <div className="min-w-[120px]">
             <div className="text-sm font-medium">
-              {employee.personal ? `${employee.personal.firstName} ${employee.personal.lastName}` : 'N/A'}
+              {employee.personal
+                ? `${employee.personal.firstName} ${employee.personal.lastName}`
+                : t('tour.assigned_dates.not_available')}
             </div>
             <div className="text-xs text-muted-foreground">{employee.email}</div>
           </div>
@@ -173,6 +210,46 @@ export function getAssignedAvailableDatesTableColumns({
       },
     });
   }
+
+  // Add Actions column
+  columns.push({
+    id: 'actions',
+    header: () => <span className="sr-only">{t('tour.assigned_dates.actions')}</span>,
+    cell: ({ row }) => {
+      const assignment = row.original;
+
+      if (!setRowAction) {
+        return null;
+      }
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">{t('tour.assigned_dates.open_menu')}</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              onClick={() =>
+                setRowAction({
+                  id: assignment.assignmentId,
+                  action: 'cancel',
+                  row: assignment,
+                })
+              }
+              className="text-destructive"
+            >
+              <X className="mr-2 h-4 w-4" />
+              {t('tour.assigned_dates.request_cancel')}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+    size: 40,
+  });
 
   return columns;
 }
