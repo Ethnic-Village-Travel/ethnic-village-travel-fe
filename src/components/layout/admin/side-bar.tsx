@@ -31,8 +31,8 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const t = useTranslations('admin.sidebar');
   const { user } = useAuthStore();
-  const userName = 'dirtylesc';
-  const userEmail = 'dirtylesc@gmail.com';
+  const userName = user?.personal ? user?.personal?.firstName + user?.personal?.lastName : user?.roles[0] + ' User';
+  const userEmail = user?.email;
 
   const permissions = useMemo(() => {
     if (!user) return [];

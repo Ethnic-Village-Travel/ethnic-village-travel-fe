@@ -27,6 +27,7 @@
       "user": "Người dùng",
       "role": "Vai trò",
       "tour": "Tour",
+      "tour_assigned_available_dates": "Lịch phân công",
       "order": "Đơn hàng",
       "article": "Bài viết",
       "notification": "Thông báo",

@@ -14,6 +14,7 @@ export const PermissionMap: { [key: string]: string[] } = {
   [RouteConstant.admin_tour]: ['ADMIN_TOUR_READ'],
   [RouteConstant.admin_tour_create]: ['ADMIN_TOUR_WRITE'],
   [RouteConstant.admin_tour_edit]: ['ADMIN_TOUR_WRITE'],
+  [RouteConstant.admin_assigned_available_dates]: ['ADMIN_TOUR_ASSIGNMENT_READ'],
   [RouteConstant.admin_article]: ['ADMIN_ARTICLE_READ'],
   [RouteConstant.admin_article_create]: ['ADMIN_ARTICLE_WRITE'],
   [RouteConstant.admin_article_edit]: ['ADMIN_ARTICLE_WRITE'],
@@ -27,7 +28,7 @@ export const PermissionMap: { [key: string]: string[] } = {
   [RouteConstant.admin_chatbot_edit]: ['ADMIN_CHATBOT_WRITE'],
 
   //function
-  ['ADMIN_EMPLOYEE_READ']: 'ADMIN_EMPLOYEE_READ',
+  [RouteConstant.admin_employee]: ['ADMIN_EMPLOYEE_READ'],
 };
 
 export const DeniedPermissionMap: { [key: string]: string } = {

@@ -27,6 +27,7 @@
       "user": "User",
       "role": "Role",
       "tour": "Tour",
+      "tour_assigned_available_dates": "Tour Guide Assignments",
       "order": "Order",
       "article": "Article",
       "notification": "Notification",
