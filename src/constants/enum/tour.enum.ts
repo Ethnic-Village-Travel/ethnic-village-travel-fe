@@ -21,6 +21,12 @@ export enum TourAvailableDateStatus {
   CANCELLED = 'CANCELLED',
 }
 
+export enum TourFilterTabType {
+  POPULAR = 'POPULAR',
+  OUTSTANDING = 'OUTSTANDING',
+  BEST_PRICE = 'BEST_PRICE',
+}
+
 export const TourStatusEnum = {
   DRAFT: {
     value: 'DRAFT',

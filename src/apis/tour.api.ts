@@ -1,3 +1,4 @@
+import { TourFilterTabType } from '@/constants/enum/tour.enum';
 import { AdminAPI, API } from '@/core/api';
 import api from '@/core/api/api';
 import { encodeQueryData } from '@/core/api/utils';
@@ -13,6 +14,16 @@ import {
 } from '@/types/tour.type';
 
 export type TabType = 'popular' | 'outstanding' | 'best_price';
+
+// Map frontend TabType to backend enum values
+const mapTabTypeToBackend = (tabType: TabType): TourFilterTabType => {
+  const mapping: Record<TabType, TourFilterTabType> = {
+    popular: TourFilterTabType.POPULAR,
+    outstanding: TourFilterTabType.OUTSTANDING,
+    best_price: TourFilterTabType.BEST_PRICE,
+  };
+  return mapping[tabType];
+};
 
 export const tourApi = {
   getTourList: async (params: TourListRequest): Promise<ApiResponse<TourListResponse>> => {
@@ -50,9 +61,30 @@ export const tourApi = {
     }
   },
 
-  getFilteredTours: async (tabType: TabType = 'popular'): Promise<ApiResponse<Tour[]>> => {
-    const response = await api.get<ApiResponse<Tour[]>>(`${API.TOUR.FILTER_TAB}?tabType=${tabType}`);
-    return response.data;
+  getFilteredTours: async (
+    tabType: TabType = 'popular',
+    page: number = 0,
+    size: number = 10,
+  ): Promise<ApiResponse<Tour[]>> => {
+    try {
+      const requestBody = {
+        tabType: mapTabTypeToBackend(tabType),
+        page,
+        size,
+      };
+
+      const queryString = encodeQueryData(requestBody);
+      const { data } = await api.get<ApiResponse<TourListResponse>>(`${API.TOUR.FILTER_TAB}?${queryString}`);
+
+      // Extract tours from pagination response and return in expected format
+      return {
+        success: data.success,
+        message: data.message,
+        data: data.data?.content || [],
+      };
+    } catch {
+      throw new Error('Failed to get filtered tours');
+    }
   },
 
   //-------------------------Admin------------------------------------------------

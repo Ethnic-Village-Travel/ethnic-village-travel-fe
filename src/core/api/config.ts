@@ -20,7 +20,7 @@ export const API = {
     SEARCH: '/tour',
     GET_BY_IDS: '/tour/ids',
     DETAIL: '/tour',
-    FILTER_TAB: '/tour/filter-tab',
+    FILTER_TAB: '/tour/filtered',
     GET_BOOKMARK_STATUS: '/tours/bookmark/status',
     TOGGLE_BOOKMARK: '/tours/bookmark',
   },
