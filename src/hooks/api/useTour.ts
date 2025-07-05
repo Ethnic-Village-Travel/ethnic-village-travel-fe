@@ -2,7 +2,7 @@ import { TabType, tourApi } from '@/apis/tour.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { ApiResponse } from '@/types/api.type';
-import { Tour, TourAdminListRequest, TourCreateRequest, TourListRequest, TourResponse } from '@/types/tour.type';
+import { Tour, TourAdminListRequest, TourCreateRequest, TourListRequest } from '@/types/tour.type';
 
 export const TOUR_QUERY_KEY = {
   LIST: 'tour-list',
@@ -42,10 +42,10 @@ export const useTourDetail = (slug: string) => {
   });
 };
 
-export const useFilteredTours = (tabType: TabType) => {
+export const useFilteredTours = (tabType: TabType, page: number = 0, size: number = 10) => {
   return useQuery({
-    queryKey: ['filtered-tours', tabType],
-    queryFn: () => tourApi.getFilteredTours(tabType),
+    queryKey: ['filtered-tours', tabType, page, size],
+    queryFn: () => tourApi.getFilteredTours(tabType, page, size),
   });
 };
 
