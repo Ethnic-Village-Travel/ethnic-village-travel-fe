@@ -88,7 +88,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
                       'before:absolute before:bottom-[-2px] before:left-0 before:h-[2px] before:w-0 before:bg-primary-500 before:transition-all before:duration-300 before:ease-in-out',
                       navItemClassName,
                       {
-                        'text-white': pathname === RouteConstant.home,
+                        'text-white': pathname === RouteConstant.home || pathname === '/en' + RouteConstant.home,
                         'text-primary-500 before:w-full': pathname.includes(link.href),
                       },
                     )}
