@@ -18,7 +18,7 @@ import { Input } from '@/components/ui/input';
 
 export function LoginPopup() {
   const t = useTranslations('auth.login');
-  const { loginOpen, setAuth, setLoginOpen, setSignupOpen, setForgotPasswordOpen } = useAuthStore();
+  const { loginOpen, setAuth, setLoginOpen, setSignupOpen, setForgotPasswordOpen, closeAllPopups } = useAuthStore();
   const { mutateAsync: login, isPending } = useLogin();
   const { refetch: refetchUserDetails } = useApiUserDetailsGet();
 
@@ -41,6 +41,10 @@ export function LoginPopup() {
 
       if (response.success && response.data) {
         const { accessToken, refreshToken, user } = response.data;
+
+        // Đóng tất cả popup auth ngay lập tức
+        closeAllPopups();
+
         setAuth({
           accessToken,
           refreshToken,
@@ -49,7 +53,6 @@ export function LoginPopup() {
 
         refetchUserDetails();
 
-        setLoginOpen(false);
         toast({
           title: t('login_success'),
           variant: 'default',
@@ -57,7 +60,7 @@ export function LoginPopup() {
         form.reset();
       } else {
         toast({
-          title: response.message,
+          title: response.message || 'Đăng nhập thất bại',
           variant: 'destructive',
         });
       }
@@ -135,14 +138,19 @@ export function LoginPopup() {
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col">
                     <div className="flex items-center">
-                      <Button variant="link" className="p-0 text-sm font-normal" onClick={handleForgotPasswordClick}>
+                      <Button
+                        type="button"
+                        variant="link"
+                        className="p-0 text-sm font-normal"
+                        onClick={handleForgotPasswordClick}
+                      >
                         {t('forgot_password')}
                       </Button>
                     </div>
 
                     <div className="flex items-center justify-end gap-1 text-sm">
                       <span className="text-dark-900">{t('no_account')}</span>
-                      <Button variant="link" className="p-0 font-bold" onClick={handleSignupClick}>
+                      <Button type="button" variant="link" className="p-0 font-bold" onClick={handleSignupClick}>
                         {t('signup')}
                       </Button>
                     </div>

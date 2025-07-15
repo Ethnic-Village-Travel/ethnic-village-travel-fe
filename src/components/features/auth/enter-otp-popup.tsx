@@ -25,8 +25,12 @@ export function EnterOtpPopup() {
   });
 
   const handleSubmit = (values: OtpFormValues) => {
-    // TODO: Implement OTP verification logic
-    console.log({ email: otpEmail, otp: values.otp });
+    // TODO: Implement OTP verification logic - COMMENTED OUT FOR NOW
+    // console.log({ email: otpEmail, otp: values.otp });
+    // setEnterOtpOpen(false);
+
+    // Tạm thời bỏ qua OTP verification
+    console.log('OTP verification temporarily disabled');
     setEnterOtpOpen(false);
   };
 
