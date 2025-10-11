@@ -78,6 +78,7 @@ export const tourApi = {
 
       // Extract tours from pagination response and return in expected format
       return {
+        code: data.code,
         success: data.success,
         message: data.message,
         data: data.data?.content || [],

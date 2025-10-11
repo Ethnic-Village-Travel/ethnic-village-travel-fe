@@ -5,7 +5,7 @@ import { ArticleItemProps } from '@/components/features/article/article-item';
  */
 export const MOCK_ARTICLES: ArticleItemProps[] = [
   {
-    id: '1',
+    id: 1,
     title: 'Các nguồn tài nguyên hữu ích cho 1 front-end developer',
     author: 'Doan Tran',
     readTime: 12,
@@ -17,7 +17,7 @@ export const MOCK_ARTICLES: ArticleItemProps[] = [
     date: '15 Tháng 6, 2023',
   },
   {
-    id: '2',
+    id: 2,
     title: 'Khám phá vẻ đẹp văn hóa dân tộc vùng cao Tây Bắc',
     author: 'Minh Anh',
     readTime: 8,
@@ -28,7 +28,7 @@ export const MOCK_ARTICLES: ArticleItemProps[] = [
     date: '03 Tháng 5, 2023',
   },
   {
-    id: '3',
+    id: 3,
     title: 'Ẩm thực đặc trưng của các dân tộc thiểu số Việt Nam',
     author: 'Thu Hà',
     readTime: 15,
@@ -39,7 +39,7 @@ export const MOCK_ARTICLES: ArticleItemProps[] = [
     date: '21 Tháng 4, 2023',
   },
   {
-    id: '4',
+    id: 4,
     title: 'Những điểm du lịch văn hóa bạn nên ghé thăm trong năm 2023',
     author: 'Quang Dũng',
     readTime: 10,
