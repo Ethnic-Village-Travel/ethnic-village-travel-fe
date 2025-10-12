@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Next Deployment
 
 on:
   push:
@@ -20,31 +20,8 @@ jobs:
             cd /home/ubuntu/ethnic-village-travel-fe
             git fetch origin
             git checkout dev
-            git pull origin dev
-            # Build new image with timestamp tag
-            IMAGE_TAG="ethnic-village-travel-fe:$(date +%Y%m%d-%H%M%S)"
-            docker build -t $IMAGE_TAG .
-            docker tag $IMAGE_TAG ethnic-village-travel-fe:latest
-
-            # Test new container first on different port
-            docker run -d --name ethnic-village-travel-fe-new -p 3001:3000 --restart unless-stopped $IMAGE_TAG
-
-            # Wait for container to start and health check
-            sleep 15
-            if curl -f http://localhost:3001 > /dev/null 2>&1; then
-              echo "New container is healthy, switching traffic..."
-
-              # Switch port mapping (zero-downtime)
-              docker stop ethnic-village-travel-fe || true
-              docker rm ethnic-village-travel-fe || true
-              docker stop ethnic-village-travel-fe-new
-              docker run -d --name ethnic-village-travel-fe -p 3000:3000 --restart unless-stopped $IMAGE_TAG
-
-              # Cleanup old images (keep last 3)
-              docker images ethnic-village-travel-fe --format "table {{.Tag}}" | grep -E '^[0-9]' | tail -n +4 | xargs -r docker rmi ethnic-village-travel-fe: 2>/dev/null || true
-            else
-              echo "New container failed health check, rolling back..."
-              docker stop ethnic-village-travel-fe-new || true
-              docker rm ethnic-village-travel-fe-new || true
-              exit 1
-            fi
+            git pull
+            docker build -t ethnic-village-travel-fe .
+            docker stop ethnic-village-travel-fe || true
+            docker rm ethnic-village-travel-fe || true
+            docker run -d --name ethnic-village-travel-fe -p 3000:3000 ethnic-village-travel-fe
