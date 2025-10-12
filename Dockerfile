@@ -14,7 +14,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Handle environment file
-ARG ENV_FILE=.env.prod
+ARG ENV_FILE=.env.dev
 RUN if [ -f "$ENV_FILE" ]; then mv $ENV_FILE .env; fi
 
 # Next.js collects completely anonymous telemetry data about general usage.
