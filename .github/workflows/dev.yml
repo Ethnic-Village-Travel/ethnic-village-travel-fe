@@ -20,7 +20,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/ethnic-village-travel-fe
+          IMAGE_NAME=ghcr.io/${{ github.repository_owner | lower }}/ethnic-village-travel-fe
           docker build -t $IMAGE_NAME:${GITHUB_SHA} .
           docker push $IMAGE_NAME:${GITHUB_SHA}
 
