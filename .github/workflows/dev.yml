@@ -17,7 +17,6 @@ jobs:
       - name: Compute lowercase repo owner
         id: set-repo-lower
         run: |
-          # Convert repository owner to lowercase and expose as step output
           REPO_LOWER=$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')
           echo "repo_lower=$REPO_LOWER" >> $GITHUB_OUTPUT
 
@@ -31,12 +30,19 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }} # dùng PAT nếu push vào org
+          password: ${{ secrets.GHCR_TOKEN }} # nếu push vào org, dùng PAT; nếu personal repo có thể dùng GITHUB_TOKEN
 
       - name: Build and push Docker image
         run: |
-          IMAGE_NAME=ghcr.io/${{ needs.build-and-push.outputs.repo_lower }}/ethnic-village-travel-fe
+          REPO_LOWER=${{ steps.set-repo-lower.outputs.repo_lower }}
           TAG=${{ steps.set-image-tag.outputs.image_tag }}
+          IMAGE_NAME=ghcr.io/${REPO_LOWER}/ethnic-village-travel-fe
+
+          if [ -z "$REPO_LOWER" ]; then
+            echo "ERROR: repo_lower is empty. GITHUB_REPOSITORY_OWNER='${GITHUB_REPOSITORY_OWNER}'"
+            exit 1
+          fi
+
           echo "Building and pushing $IMAGE_NAME:$TAG"
           docker build -t $IMAGE_NAME:$TAG .
           docker push $IMAGE_NAME:$TAG
@@ -51,10 +57,9 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          port: 22
+          port: ${{ secrets.PORT || '22' }}
           debug: true
           script_stop: true
-          # Truyền IMAGE_NAME và TAG trực tiếp trong script dùng values đã tính ở job trước
           script: |
             set -e
             REPO_LOWER="${{ needs.build-and-push.outputs.repo_lower }}"
