@@ -640,5 +640,18 @@
       "endDateAfterStart": "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu",
       "assignedEmployeesRequired": "Yêu cầu phân công ít nhất một nhân viên cho ngày này"
     }
+  },
+  "chatbot": {
+    "title": "Trợ lý ảo Du lịch",
+    "placeholder": "Nhập câu hỏi về du lịch...",
+    "welcome_message": "Xin chào! Tôi có thể giúp bạn tìm hiểu về các tour du lịch làng dân tộc. Bạn muốn biết gì?",
+    "error_message": "Xin lỗi, có lỗi xảy ra. Vui lòng thử lại.",
+    "typing_message": "Đang trả lời...",
+    "send_button": "Gửi tin nhắn",
+    "open_button": "Mở chatbot",
+    "close_button": "Đóng chatbot",
+    "minimize_button": "Thu nhỏ",
+    "expand_button": "Mở rộng",
+    "guest_label": "Khách"
   }
 }
