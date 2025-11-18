@@ -2,11 +2,14 @@
 
 import Image from 'next/image';
 import { useAuthStore } from '@/store/useAuthStore';
+import { getErrorMessage } from '@/utils/handle-error';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 import { SignupFormValues, signupSchema } from '@/lib/schemas/auth';
+import { useSignup } from '@/hooks/api/useAuth';
+import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -14,7 +17,9 @@ import { Input } from '@/components/ui/input';
 
 export function SignupPopup() {
   const t = useTranslations('auth.signup');
-  const { signupOpen, setSignupOpen, setLoginOpen, setEnterOtpOpen, setOtpEmail } = useAuthStore();
+  const { signupOpen, setSignupOpen, setLoginOpen } = useAuthStore();
+  const { mutateAsync: signup, isPending } = useSignup();
+  const { toast } = useToast();
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -26,11 +31,38 @@ export function SignupPopup() {
     },
   });
 
-  const handleSubmit = (values: SignupFormValues) => {
-    // TODO: Implement signup logic
-    setOtpEmail(values.email);
-    setSignupOpen(false);
-    setEnterOtpOpen(true);
+  const handleSubmit = async (values: SignupFormValues) => {
+    try {
+      const response = await signup({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password,
+      });
+
+      if (response.success) {
+        toast({
+          title: 'Đăng ký thành công!',
+          description: 'Vui lòng đăng nhập để tiếp tục.',
+          variant: 'default',
+        });
+
+        // Đóng popup đăng ký và mở popup đăng nhập
+        setSignupOpen(false);
+        setLoginOpen(true);
+        form.reset();
+      } else {
+        toast({
+          title: response.message || 'Đăng ký thất bại',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      toast({
+        title: getErrorMessage(error),
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleBackToLogin = () => {
@@ -132,14 +164,15 @@ export function SignupPopup() {
                 <Button
                   type="submit"
                   className="hover:bg-primary/90 h-14 w-full rounded-[10px] bg-primary text-base font-normal text-white"
+                  disabled={isPending}
                 >
-                  {t('sign_up')}
+                  {isPending ? 'Đang đăng ký...' : t('sign_up')}
                 </Button>
               </form>
 
               <div className="flex items-center gap-2">
                 <p className="text-sm text-gray-500">{t('already_have_account')}</p>
-                <Button variant="link" onClick={handleBackToLogin} className="p-0 text-sm text-primary">
+                <Button type="button" variant="link" onClick={handleBackToLogin} className="p-0 text-sm text-primary">
                   {t('go_to_login')}
                 </Button>
               </div>

@@ -42,7 +42,7 @@ const TourSection = () => {
       <TabsList tabs={tourTabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <TourList tours={tours} isLoading={isLoading} isError={isError} />
       <Button asChild>
-        <Link href={`${RouteConstant.article}`}>
+        <Link href={`${RouteConstant.tour}`}>
           {t('view_more')}
           <ArrowRight className="size-4" />
         </Link>

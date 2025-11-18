@@ -1,28 +1,19 @@
 'use client';
 
 import * as React from 'react';
-import { Tabs as TabsPrimitive } from 'radix-ui';
-import { type HTMLMotionProps, type Transition, motion } from 'motion/react';
-
 import { cn } from '@/utils/classnames';
-import {
-  MotionHighlight,
-  MotionHighlightItem,
-} from '@/components/animate-ui/effects/motion-highlight';
+import { motion, type HTMLMotionProps, type Transition } from 'motion/react';
+import { Tabs as TabsPrimitive } from 'radix-ui';
+
+import { MotionHighlight, MotionHighlightItem } from '@/components/animate-ui/effects/motion-highlight';
 
 type TabsProps = React.ComponentProps<typeof TabsPrimitive.Root>;
 
 function Tabs({ className, ...props }: TabsProps) {
-  return (
-    <TabsPrimitive.Root
-      data-slot="tabs"
-      className={cn('flex flex-col gap-2', className)}
-      {...props}
-    />
-  );
+  return <TabsPrimitive.Root data-slot="tabs" className={cn('flex flex-col gap-2', className)} {...props} />;
 }
 
-type TabsListProps = React.ComponentProps<typeof TabsPrimitive.List> & {
+type TabsListProps = React.ComponentPropsWithRef<typeof TabsPrimitive.List> & {
   activeClassName?: string;
   transition?: Transition;
 };
@@ -42,15 +33,11 @@ function TabsList({
   const localRef = React.useRef<HTMLDivElement | null>(null);
   React.useImperativeHandle(ref, () => localRef.current as HTMLDivElement);
 
-  const [activeValue, setActiveValue] = React.useState<string | undefined>(
-    undefined,
-  );
+  const [activeValue, setActiveValue] = React.useState<string | undefined>(undefined);
 
   const getActiveValue = React.useCallback(() => {
     if (!localRef.current) return;
-    const activeTab = localRef.current.querySelector<HTMLElement>(
-      '[data-state="active"]',
-    );
+    const activeTab = localRef.current.querySelector<HTMLElement>('[data-state="active"]');
     if (!activeTab) return;
     setActiveValue(activeTab.getAttribute('data-value') ?? undefined);
   }, []);
@@ -84,7 +71,7 @@ function TabsList({
         ref={localRef}
         data-slot="tabs-list"
         className={cn(
-          'bg-muted text-muted-foreground inline-flex h-10 w-fit items-center justify-center rounded-lg p-[4px]',
+          'inline-flex h-10 w-fit items-center justify-center rounded-lg bg-muted p-[4px] text-muted-foreground',
           className,
         )}
         {...props}
@@ -103,7 +90,7 @@ function TabsTrigger({ className, value, ...props }: TabsTriggerProps) {
       <TabsPrimitive.Trigger
         data-slot="tabs-trigger"
         className={cn(
-          'inline-flex cursor-pointer items-center size-full justify-center whitespace-nowrap rounded-sm px-2 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground z-[1]',
+          'z-[1] inline-flex size-full cursor-pointer items-center justify-center whitespace-nowrap rounded-sm px-2 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground',
           className,
         )}
         value={value}
@@ -164,7 +151,7 @@ function TabsContents({
   React.useEffect(() => {
     if (!containerRef.current) return;
 
-    const resizeObserver = new ResizeObserver((entries) => {
+    const resizeObserver = new ResizeObserver(entries => {
       const newHeight = entries?.[0]?.contentRect.height;
       if (!newHeight) return;
       requestAnimationFrame(() => {
@@ -202,13 +189,13 @@ function TabsContents({
 
 export {
   Tabs,
-  TabsList,
-  TabsTrigger,
   TabsContent,
   TabsContents,
-  type TabsProps,
-  type TabsListProps,
-  type TabsTriggerProps,
+  TabsList,
+  TabsTrigger,
   type TabsContentProps,
   type TabsContentsProps,
+  type TabsListProps,
+  type TabsProps,
+  type TabsTriggerProps,
 };

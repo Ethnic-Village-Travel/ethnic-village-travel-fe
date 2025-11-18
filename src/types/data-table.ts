@@ -1,7 +1,6 @@
-import type { ColumnSort, Row, RowData } from '@tanstack/react-table';
+import type { ColumnSort, RowData } from '@tanstack/react-table';
 
 import { DataTableConfig } from '@/lib/data-table-config';
-import { FilterItemSchema } from '@/lib/parsers';
 
 declare module '@tanstack/react-table' {
   // biome-ignore lint/correctness/noUnusedVariables: <explanation>
@@ -29,13 +28,4 @@ export type JoinOperator = DataTableConfig['joinOperators'][number];
 
 export interface ExtendedColumnSort<TData> extends Omit<ColumnSort, 'id'> {
   id: Extract<keyof TData, string>;
-}
-
-export interface ExtendedColumnFilter<TData> extends FilterItemSchema {
-  id: Extract<keyof TData, string>;
-}
-
-export interface DataTableRowAction<TData> {
-  row: Row<TData>;
-  variant: 'update' | 'delete';
 }

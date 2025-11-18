@@ -1,6 +1,4 @@
-import { Rating } from '@/types/ratings.type';
-
-export function calculateRatingStats(ratings: Rating[]) {
+export function calculateRatingStats(ratings: any) {
   const total = ratings.length;
 
   if (total === 0) {
@@ -10,7 +8,7 @@ export function calculateRatingStats(ratings: Rating[]) {
     };
   }
 
-  const sum = ratings.reduce((acc, curr) => acc + curr.rating, 0);
+  const sum = ratings.reduce((acc: number, curr: any) => acc + curr.rating, 0) as number;
   const average = parseFloat((sum / total).toFixed(1));
 
   return {

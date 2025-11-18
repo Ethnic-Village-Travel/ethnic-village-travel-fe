@@ -1,5 +1,4 @@
 import { TourAvailableDateStatus, TourStatus } from '@/constants/enum/tour.enum';
-import * as z from 'zod';
 
 import { Ethnic } from './ethnic.type';
 import { Location } from './location.type';

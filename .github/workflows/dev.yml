@@ -1,0 +1,80 @@
+name: Next Deployment
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    outputs:
+      repo_lower: ${{ steps.set-repo-lower.outputs.repo_lower }}
+      image_tag: ${{ steps.set-image-tag.outputs.image_tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Compute lowercase repo owner
+        id: set-repo-lower
+        run: |
+          REPO_LOWER=$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')
+          echo "repo_lower=$REPO_LOWER" >> $GITHUB_OUTPUT
+
+      - name: Set image tag (commit SHA)
+        id: set-image-tag
+        run: |
+          echo "image_tag=${GITHUB_SHA}" >> $GITHUB_OUTPUT
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_TOKEN }} # nếu push vào org, dùng PAT; nếu personal repo có thể dùng GITHUB_TOKEN
+
+      - name: Build and push Docker image
+        run: |
+          REPO_LOWER=${{ steps.set-repo-lower.outputs.repo_lower }}
+          TAG=${{ steps.set-image-tag.outputs.image_tag }}
+          IMAGE_NAME=ghcr.io/${REPO_LOWER}/ethnic-village-travel-fe
+
+          if [ -z "$REPO_LOWER" ]; then
+            echo "ERROR: repo_lower is empty. GITHUB_REPOSITORY_OWNER='${GITHUB_REPOSITORY_OWNER}'"
+            exit 1
+          fi
+
+          echo "Building and pushing $IMAGE_NAME:$TAG"
+          docker build -t $IMAGE_NAME:$TAG .
+          docker push $IMAGE_NAME:$TAG
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT || '22' }}
+          debug: true
+          script_stop: true
+          script: |
+            set -e
+            REPO_LOWER="${{ needs.build-and-push.outputs.repo_lower }}"
+            TAG="${{ needs.build-and-push.outputs.image_tag }}"
+            IMAGE_NAME="ghcr.io/${REPO_LOWER}/ethnic-village-travel-fe"
+
+            echo "Pulling $IMAGE_NAME:$TAG"
+            docker pull $IMAGE_NAME:$TAG
+
+            docker stop ethnic-village-travel-fe || true
+            docker rm ethnic-village-travel-fe || true
+
+            docker run -d --name ethnic-village-travel-fe \
+              -p 3000:3000 \
+              --restart unless-stopped \
+              $IMAGE_NAME:$TAG
+
+            echo "Deployment finished!"
