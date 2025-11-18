@@ -621,5 +621,18 @@
       "endDateAfterStart": "End date must be after or equal to start date",
       "assignedEmployeesRequired": "At least one employee must be assigned for this date"
     }
+  },
+  "chatbot": {
+    "title": "Travel Virtual Assistant",
+    "placeholder": "Ask about tours, destinations, culture...",
+    "welcome_message": "Hello! I'm a travel virtual assistant. I can help you learn about ethnic village tours, interesting destinations, and unique cultural experiences. What would you like to know?",
+    "error_message": "Sorry, an error occurred. Please try again.",
+    "typing_message": "Typing...",
+    "send_button": "Send message",
+    "open_button": "Open chatbot",
+    "close_button": "Close chatbot",
+    "minimize_button": "Minimize",
+    "expand_button": "Expand",
+    "guest_label": "Guest"
   }
 }

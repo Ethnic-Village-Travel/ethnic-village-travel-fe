@@ -115,7 +115,8 @@ export default async function middleware(request: NextRequest, event: NextFetchE
 
   const hasPermission = hasAccess(authData.permissions, pathWithoutLocale);
 
-  if (authData.permissions.length <= 0 || !hasPermission) {
+  // if (authData.permissions.length <= 0 || !hasPermission) {
+  if (!hasPermission) {
     return NextResponse.redirect(new URL(`/${locale}/403`, request.url));
   }
   const response = intlMiddleware(request);

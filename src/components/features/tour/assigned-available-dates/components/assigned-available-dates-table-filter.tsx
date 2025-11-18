@@ -119,7 +119,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
         {/* Search Filter */}
         <div className="flex-1 space-y-2">
-          <Label htmlFor="search">{t('tour.assigned_dates.search_tour')}</Label>
           <form onSubmit={handleSearchSubmit} className="flex gap-2">
             <Input
               id="search"
@@ -133,7 +132,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
 
         {/* Date Range Filter */}
         <div className="space-y-2">
-          <Label>{t('tour.assigned_dates.date_range')}</Label>
           <div className="flex gap-2">
             <Popover>
               <PopoverTrigger asChild>

@@ -1,7 +1,10 @@
 import React from 'react';
 
+import { MarketingChatbot } from '@/components/chatbot';
 import Footer from '@/components/layout/marketing/footer';
 import Header from '@/components/layout/marketing/header';
+
+import '@/styles/chatbot.css';
 
 const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -11,6 +14,7 @@ const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </main>
       <Footer />
+      <MarketingChatbot />
     </div>
   );
 };
