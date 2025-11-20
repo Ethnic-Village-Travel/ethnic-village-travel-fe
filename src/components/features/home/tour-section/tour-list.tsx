@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Tour } from '@/types/tour.type';
 import { useMediaQuery } from '@/hooks/use-media-query';
 
-import { TourItem } from '../../tour';
+import { TourItem } from '../../tour/tour-card';
 
 interface TourListProps {
   tours: Tour[];

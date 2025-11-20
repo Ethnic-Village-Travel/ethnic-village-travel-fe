@@ -2,10 +2,10 @@
 
 import { useAuthStore } from '@/stores/useAuthStore';
 
-import { EnterOtpPopup } from './enter-otp-popup';
 import { ForgotPasswordPopup } from './forgot-password-popup';
-import { LoginPopup } from './login-popup';
-import { SignupPopup } from './signup-popup';
+import { LoginPopup } from './login/login-popup';
+import { EnterOtpPopup } from './otp/enter-otp-popup';
+import { SignupPopup } from './signup/signup-popup';
 
 export function AuthPopup() {
   const { loginOpen, signupOpen, forgotPasswordOpen, enterOtpOpen } = useAuthStore();

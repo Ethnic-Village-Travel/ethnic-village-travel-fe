@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { BookingType } from '@/components/features/order/contact-information-card';
+import { BookingType } from '@/components/features/booking/order-detail/contact-information-card';
 
 export type PersonInfo = {
   name: string;

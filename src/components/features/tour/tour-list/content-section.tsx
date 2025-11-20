@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 
 import { useFilteredTourList } from '@/hooks/api/useFilteredTourList';
 import { useQueryConfig } from '@/hooks/use-query-config';
-import { TourItem } from '@/components/features/tour';
+import { TourItem } from '@/components/features/tour/tour-card';
 import PaginationClient from '@/components/shared/pagination-client';
 
 import { EmptyState } from './empty-state';

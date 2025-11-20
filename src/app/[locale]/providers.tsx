@@ -6,7 +6,7 @@ import { useNProgress } from '@tanem/react-nprogress';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { UserDetailsLoader } from '@/components/features/auth/user-details-loader';
+import { UserDetailsLoader } from '@/components/features/auth';
 
 export interface ProgressProps {
   isAnimating: boolean;

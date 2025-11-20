@@ -1,4 +1,4 @@
-import { OrderDetail } from '@/components/features/order';
+import OrderDetail from '@/components/features/booking/order-detail';
 
 export default function OrderPage() {
   return (

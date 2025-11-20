@@ -8,7 +8,7 @@ import { Bookmark } from '@/types/bookmark.type';
 import { Tour } from '@/types/tour.type';
 import { useTourListByIds } from '@/hooks/api/useTour';
 import { Button } from '@/components/ui/button';
-import { TourItem } from '@/components/features/tour';
+import { TourItem } from '@/components/features/tour/tour-card';
 
 interface TourBookmarksTabProps {
   bookmarks?: Bookmark[];

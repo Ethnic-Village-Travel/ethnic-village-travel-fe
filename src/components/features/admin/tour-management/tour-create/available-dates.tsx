@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react';
-import { TourCreateFormValues } from '@/libs/schemas/tour.schema';
 import { Plus, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useFieldArray, UseFormReturn, useWatch } from 'react-hook-form';
 
+import { TourCreateFormValues } from '@/libs/schemas/tour.schema';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -11,7 +11,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
-import { AvailableEmployeeSelect } from '../admin-tour-list/components/available-employee-select';
+import { AvailableEmployeeSelect } from '../tour-list/components/available-employee-select';
 
 type AvailableDatesProps = {
   form: UseFormReturn<TourCreateFormValues>;

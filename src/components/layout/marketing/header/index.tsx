@@ -11,8 +11,8 @@ import { useTranslations } from 'next-intl';
 import { ClassNameValue } from 'tailwind-merge';
 
 import { Button } from '@/components/ui/button';
-import { AuthPopup } from '@/components/features/auth/auth-popup';
-import { UserMenu } from '@/components/features/user/user-menu';
+import { AuthPopup } from '@/components/features/auth';
+import { UserMenu } from '@/components/features/user';
 import LanguageSwitcher from '@/components/shared/language-switcher';
 
 interface HeaderProps {

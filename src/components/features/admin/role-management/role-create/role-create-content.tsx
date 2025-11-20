@@ -5,11 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as zod from 'zod';
 
-import { FormActions } from '@/components/features/role/role-create/FormActions';
-import { PermissionListSection } from '@/components/features/role/role-create/PermissionListSection';
-import { RoleNameSection } from '@/components/features/role/role-create/RoleNameSection';
-import { SelectedPermissionsSidebar } from '@/components/features/role/role-create/SelectedPermissionsSidebar';
 import { FormErrors } from '@/components/shared/form-errors';
+
+import { FormActions } from './FormActions';
+import { PermissionListSection } from './PermissionListSection';
+import { RoleNameSection } from './RoleNameSection';
+import { SelectedPermissionsSidebar } from './SelectedPermissionsSidebar';
 
 const createRoleSchema = zod.object({
   roleName: zod
