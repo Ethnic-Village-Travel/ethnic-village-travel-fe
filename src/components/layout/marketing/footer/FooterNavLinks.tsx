@@ -59,7 +59,7 @@ const FooterNavLinks: React.FC = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-8 lg:gap-16">
+    <div className="grid min-w-[200px] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-8 lg:gap-16">
       <FooterLinkGroup title={t('about.title')} links={aboutUsLinks} />
       <FooterLinkGroup title={t('support.title')} links={supportLinks} />
       <FooterLinkGroup title={t('destinations.title')} links={destinationLinks} />

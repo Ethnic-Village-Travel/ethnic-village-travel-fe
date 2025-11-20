@@ -21,7 +21,7 @@ const TourList = ({ tours, isLoading, isError, className }: TourListProps) => {
 
   if (isLoading) {
     return (
-      <div className={cn(`grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3`, className)}>
+      <div className={cn(`grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`, className)}>
         {Array.from({ length: 12 }).map((_, index) => (
           <div key={index} className="h-80 w-full animate-pulse rounded-lg bg-gray-200"></div>
         ))}
@@ -46,7 +46,7 @@ const TourList = ({ tours, isLoading, isError, className }: TourListProps) => {
   }
 
   return (
-    <div className={cn(`grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3`, className)}>
+    <div className={cn(`grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`, className)}>
       {tours.map(tour => (
         <TourItem key={tour.id} tour={tour} layout={isHorizontal ? 'horizontal' : 'vertical'} />
       ))}

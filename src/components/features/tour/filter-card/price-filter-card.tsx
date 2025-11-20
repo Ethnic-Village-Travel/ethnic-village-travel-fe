@@ -37,7 +37,7 @@ const PriceFilterCard = () => {
   }, [priceRange]);
 
   return (
-    <Card className="mb-4 w-64 rounded-2xl border-none bg-primary-10 px-0.5 pb-0.5 shadow-none">
+    <Card className="mb-4 w-full rounded-2xl border-none bg-primary-10 px-0.5 pb-0.5 shadow-none">
       <CardHeader
         className="flex cursor-pointer flex-row items-center justify-between rounded-t-2xl px-3 py-2"
         onClick={() => setOpen(o => !o)}
