@@ -5,7 +5,7 @@ import { useProgressStore } from '@/stores/useProgressStore';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { Progress } from '@/components/base/progress';
+import { Progress } from '@/components/ui/progress';
 import { UserDetailsLoader } from '@/components/features/auth/user-details-loader';
 
 export default function Providers({ children }: { children: React.ReactNode }) {

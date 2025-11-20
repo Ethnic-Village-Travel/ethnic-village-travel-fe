@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 
 import { BookingListRequest } from '@/types/booking';
 import { useQueryConfig } from '@/hooks/use-query-config';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/animate-ui/radix/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/radix/tabs';
 
 import BookingFilters from './booking-filters';
 import BookingOtherList from './booking-other-list';

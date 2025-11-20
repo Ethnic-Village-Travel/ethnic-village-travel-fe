@@ -6,7 +6,7 @@ import { useUserStore } from '@/stores/useUserStore';
 import { useTranslations } from 'next-intl';
 
 import { Bookmark } from '@/types/bookmark.type';
-import { Tabs, TabsContent, TabsContents, TabsList, TabsTrigger } from '@/components/animate-ui/radix/tabs';
+import { Tabs, TabsContent, TabsContents, TabsList, TabsTrigger } from '@/components/ui/radix/tabs';
 
 import ArticleBookmarksTab from './article-bookmarks-tab';
 import TourBookmarksTab from './tour-bookmarks-tab';

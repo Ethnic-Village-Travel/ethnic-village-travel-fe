@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { MarketingChatbot } from '@/components/chatbot';
 import Footer from '@/components/layout/marketing/footer';
 import Header from '@/components/layout/marketing/header';
+import { MarketingChatbot } from '@/components/shared/chatbot';
 
 import '@/styles/chatbot.css';
 

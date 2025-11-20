@@ -1,28 +1,23 @@
-"use client"
+import React from 'react';
+import { useNProgress } from '@tanem/react-nprogress';
 
-import * as React from "react"
-import * as ProgressPrimitive from "@radix-ui/react-progress"
+export interface ProgressProps {
+  isAnimating: boolean;
+}
 
-import { cn } from "@/utils/classnames"
-
-const Progress = React.forwardRef<
-  React.ElementRef<typeof ProgressPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
->(({ className, value, ...props }, ref) => (
-  <ProgressPrimitive.Root
-    ref={ref}
-    className={cn(
-      "relative h-2 w-full overflow-hidden rounded-full bg-primary/20",
-      className
-    )}
-    {...props}
-  >
-    <ProgressPrimitive.Indicator
-      className="h-full w-full flex-1 bg-primary transition-all"
-      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-    />
-  </ProgressPrimitive.Root>
-))
-Progress.displayName = ProgressPrimitive.Root.displayName
-
-export { Progress }
+export const Progress: React.FC<ProgressProps> = ({ isAnimating }) => {
+  const { animationDuration, isFinished, progress } = useNProgress({
+    isAnimating,
+  });
+  return (
+    <div
+      className="pointer-events-none"
+      style={{ opacity: isFinished ? 0 : 1, transition: `opacity ${animationDuration}ms linear` }}
+    >
+      <div
+        className="fixed top-0 left-0 z-50 h-0.5 w-full bg-[#3399dd]"
+        style={{ marginLeft: `${(-1 + progress) * 100}%`, transition: `margin-left ${animationDuration}ms linear` }}
+      />
+    </div>
+  );
+};
