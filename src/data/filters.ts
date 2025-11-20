@@ -28,6 +28,12 @@ export const FILTERS: Record<string, FilterConfig> = {
     items: [],
     maxVisible: 4,
   },
+  location: {
+    titleKey: 'filters.location.title',
+    name: 'l',
+    items: [],
+    maxVisible: 5,
+  },
   popular: {
     titleKey: 'filters.popular.title',
     name: 'p',
@@ -38,12 +44,6 @@ export const FILTERS: Record<string, FilterConfig> = {
       // { label: '7+ Days', value: 'duration_gte_7' },
     ],
     maxVisible: 4,
-  },
-  location: {
-    titleKey: 'filters.location.title',
-    name: 'l',
-    items: [],
-    maxVisible: 5,
   },
   duration: {
     titleKey: 'filters.duration.title',

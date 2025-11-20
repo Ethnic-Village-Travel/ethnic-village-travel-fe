@@ -10,7 +10,7 @@ export const useQueryConfig = () => {
 
   const queryConfig: QueryConfig = omitBy(
     {
-      page: queryParams.page || 0,
+      page: queryParams.page,
       status: queryParams.status?.split(',') || [],
       e: queryParams.e?.split(',') || [],
       p: queryParams.p?.split(',') || [],

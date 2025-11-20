@@ -34,6 +34,10 @@ export function SearchBar({ className }: SearchBarProps) {
   const queryConfig = useQueryConfig();
   const pathname = usePathname();
 
+  const [isOpenDate, setIsOpenDate] = useState(false);
+
+  const isHome = pathname.endsWith(RouteConstant.home) || pathname === RouteConstant.home;
+
   const { data: locationRes } = useLocationList();
 
   const [searchData, setSearchData] = useState<SearchData>({
@@ -63,57 +67,60 @@ export function SearchBar({ className }: SearchBarProps) {
     <div
       className={cn('flex items-center gap-2 rounded-xl border-[1px] border-primary-400 bg-white p-2 px-4', className)}
     >
-      <Select
-        value={queryConfig.l?.[0]}
-        onValueChange={value => {
-          setSearchData({ ...searchData, location: value });
-        }}
-      >
-        <SelectTrigger className="flex h-fit max-w-60 gap-4 border-0 bg-transparent p-2 py-1 text-left font-semibold shadow-none focus:ring-0 focus-visible:ring-0">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-5">
-            <MapPin className="h-6 w-6 text-primary-500" />
-          </div>
-          <SelectValue placeholder={t('location_placeholder')} className="text-base font-semibold" color="dark" />
-        </SelectTrigger>
-        <SelectContent>
-          {locationRes?.data?.map(location => (
-            <SelectItem key={location.id} value={location.city} className="text-base font-semibold">
-              {location.city}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      {isHome && (
+        <>
+          <Select
+            value={searchData.location}
+            onValueChange={value => {
+              setSearchData({ ...searchData, location: value });
+            }}
+          >
+            <SelectTrigger className="flex h-fit max-w-60 gap-4 border-0 bg-transparent p-2 py-1 text-left font-semibold shadow-none focus:ring-0 focus-visible:ring-0">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-5">
+                <MapPin className="h-6 w-6 text-primary-500" />
+              </div>
+              <SelectValue placeholder={t('location_placeholder')} className="text-base font-semibold" color="dark" />
+            </SelectTrigger>
+            <SelectContent>
+              {locationRes?.data?.map(location => (
+                <SelectItem key={location.id} value={location.city} className="text-base font-semibold">
+                  {location.city}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Separator className="mx-1 h-full w-[0.5px] bg-gray-20" />
+        </>
+      )}
 
-      <Separator className="mx-1 h-full w-[0.5px] bg-gray-20" />
-
-      <Popover>
+      <Popover open={isOpenDate} onOpenChange={setIsOpenDate}>
         <PopoverTrigger asChild className="h-fit max-w-44 py-1 shadow-none hover:bg-primary-5">
           <Button
             variant="outline"
             className={cn(
               'w-full justify-start border-0 bg-transparent px-2 text-left font-normal',
-              !queryConfig.date && 'text-muted-foreground',
+              !searchData.date && 'text-muted-foreground',
             )}
           >
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-5">
               <CalendarIcon className="h-6 w-6 text-primary-500" />
             </div>
-            {queryConfig.date ? (
-              format(parseISO(queryConfig.date), 'dd/MM/yyyy', { locale: vi })
+            {searchData.date ? (
+              format(searchData.date, 'dd/MM/yyyy', { locale: vi })
             ) : (
               <span>{t('date_placeholder')}</span>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="p-0 font-semibold text-dark" align="start">
+        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
           <Calendar
             mode="single"
             selected={searchData.date}
             onSelect={newDate => {
               setSearchData({ ...searchData, date: newDate });
+              setIsOpenDate(false);
             }}
             locale={vi}
-            initialFocus
           />
         </PopoverContent>
       </Popover>
@@ -129,7 +136,7 @@ export function SearchBar({ className }: SearchBarProps) {
           type="text"
           placeholder={t('keyword_placeholder')}
           className="border-0 bg-transparent shadow-none focus-visible:ring-0"
-          value={queryConfig.search}
+          value={searchData.keyword}
           onChange={e => {
             setSearchData({ ...searchData, keyword: e.target.value });
           }}

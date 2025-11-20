@@ -27,7 +27,6 @@ export default function TourContentSection() {
   const sortBy = searchParams.get('sort_by') || 'default';
   const order = searchParams.get('order') || 'desc';
   const currentSort = `${sortBy}-${order}`;
-  const searchKeyword = searchParams.get('search');
 
   const handleSortChange = (value: string) => {
     const newParams = new URLSearchParams(searchParams.toString());
