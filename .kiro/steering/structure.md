@@ -1,131 +1,229 @@
-# Project Structure
+---
+inclusion: always
+---
 
-## Root Configuration
+# Project Structure & Architecture
 
-- `next.config.mjs` - Next.js configuration with next-intl plugin
-- `tailwind.config.ts` - Tailwind CSS with custom theme and color system
-- `tsconfig.json` - TypeScript config with `@/*` path alias to `src/*`
-- `.env` / `.env.dev` - Environment variables
+## Directory Structure
 
-## App Directory (`src/app/[locale]`)
+### App Router (`src/app/[locale]`)
 
-Next.js App Router with locale-based routing:
+Next.js 14 App Router with i18n routing. All routes are locale-prefixed (`/vi/*`, `/en/*`).
 
-- `(marketing)/` - Public-facing pages (tours, articles, homepage)
+**Route Groups:**
 
-  - `page.tsx` - Homepage
-  - `tour/` - Tour listing and detail pages
-  - `article/` - Blog/article pages
-  - `order/[id]/` - Order confirmation pages
-  - `payment/` - Payment success/cancel pages
-  - `personal/` - User dashboard (account, bookmarks, transactions)
+- `(marketing)/` - Public pages (no auth required)
 
-- `admin/` - Protected admin dashboard
+  - `/` - Homepage with tour discovery
+  - `/tour` - Tour listing and `/tour/[slug]` - Tour details
+  - `/article` - Blog listing and `/article/[slug]` - Article details
+  - `/order/[id]` - Order confirmation after booking
+  - `/payment/success|cancel` - Payment callback pages
+  - `/personal/*` - User dashboard (auth required: account, bookmarks, transactions)
 
-  - `tour/` - Tour management
-  - `role/` - Role and permission management
-  - `assigned-available-dates/` - Employee assignment management
+- `admin/` - Admin dashboard (role-based access)
+
+  - `/admin/tour` - Tour CRUD and `/admin/tour/create` - Tour creation
+  - `/admin/role/create` - Role and permission management
+  - `/admin/assigned-available-dates` - Employee tour assignments
 
 - `403/` - Access denied page
-- `layout.tsx` - Root layout with providers
-- `providers.tsx` - React Query and other providers
+- `layout.tsx` - Root layout with providers (React Query, i18n, auth)
+- `providers.tsx` - Client-side provider setup
 
-## Source Structure (`src/`)
+### Core Directories (`src/`)
 
-### `apis/`
+**`data/apis/`** - API client functions
 
-API client functions organized by domain (auth, tour, booking, etc.)
+- One file per domain: `tour.api.ts`, `booking.api.ts`, `auth.api.ts`, etc.
+- Use centralized Axios instance from `src/core/api/api.ts`
+- Return raw API responses (no transformation here)
 
-- Uses Axios with centralized config in `src/core/api/`
+**`hooks/api/`** - React Query hooks
 
-### `components/`
+- Wrap API calls with `useQuery` or `useMutation`
+- Handle caching, refetching, optimistic updates
+- Transform API responses to frontend types
+- Example: `useTour.ts` exports `useGetTourDetail`, `useGetTourList`, etc.
 
-- `ui/` - Base UI components (shadcn/ui style)
-- `shared/` - Reusable components (data-table, filters, form fields)
-- `features/` - Feature-specific components organized by domain
-  - `auth/` - Authentication popups
-  - `tour/` - Tour-related components
-  - `order/` - Booking flow components
-  - `personal/` - User dashboard components
-  - `admin/` - Admin-specific components
-- `layout/` - Layout components (headers, footers, sidebars)
-- `animate-ui/` - Animation wrappers and effects
+**`components/`** - Component hierarchy
 
-### `hooks/`
+- `ui/` - Primitive components (Button, Input, Dialog) - shadcn/ui style
+- `shared/` - Cross-feature reusable components (DataTable, Filters, FormField)
+- `features/` - Domain-specific components (tour, booking, auth, admin)
+- `layout/` - Layout components (Header, Footer, Sidebar, Navigation)
 
-- `api/` - React Query hooks (useTour, useBooking, useAuth, etc.)
-- Custom hooks (use-data-table, use-query-params, use-mobile, etc.)
+**`types/`** - TypeScript definitions
 
-### `types/`
+- Organized by domain: `tour.type.ts`, `booking/`, `user.type.ts`
+- Separate request/response types: `booking.request.ts`, `booking.response.ts`
+- Use `.type.ts` suffix for type-only files
 
-TypeScript type definitions organized by domain
+**`stores/`** - Zustand global state
 
-- Request/response types
-- Entity types
-- Enums in `src/constants/enum/`
+- Use for cross-component state (auth, booking flow, UI state)
+- Keep stores small and focused on single domain
+- Prefer React Query for server state
 
-### `lib/`
+**`libs/`** - Utilities and configurations
 
-Utility libraries and configurations
+- `i18n*.ts` - Internationalization setup (next-intl)
+- `schemas/` - Zod validation schemas for forms
+- `auth.ts` - Auth utilities and session management
+- `data-table.ts` - Data table configuration helpers
 
-- `i18n.ts`, `i18n-navigation.ts`, `i18n-url.ts` - Internationalization setup
-- `schemas/` - Zod validation schemas
-- `auth.ts` - Authentication utilities
-- `data-table.ts` - Data table helpers
+**`utils/`** - Pure helper functions
 
-### `store/`
+- Organized by type: `date.ts`, `string.ts`, `number.ts`, `url.ts`
+- No side effects, easily testable
 
-Zustand stores for global state
+**`core/`** - Core business logic
 
-- `useAuthStore` - Authentication state
-- `useBookingStore` - Booking flow state
-- `useUserStore` - User profile state
-- `useTourAssignmentStore` - Admin tour assignment state
+- `api/` - Axios configuration and interceptors
+- `constants/` - App-wide constants (routes, permissions, entity names)
+- `enum/` - TypeScript enums for status codes, types
 
-### `utils/`
+## Architecture Patterns
 
-Helper functions (date, string, number formatting, route guards, etc.)
+### Data Flow
 
-### `constants/`
+1. **Page/Component** → calls hook from `hooks/api/`
+2. **React Query Hook** → calls function from `data/apis/`
+3. **API Function** → makes HTTP request via Axios
+4. **Response** → transformed in hook → returned to component
 
-- `route.ts` - Route definitions
-- `permission-map.ts` - Permission and role mappings
-- `enum/` - Enums for booking, tour, bookmark statuses
+### Component Patterns
 
-### `middleware.ts`
+- **Server Components** (default): Use for static content, SEO-critical pages
+- **Client Components** (`'use client'`): Use for interactivity, hooks, browser APIs
+- **Feature Components**: Group related components in subdirectories with `index.tsx` as main export
 
-Next.js middleware for:
+### State Management Strategy
 
-- Locale routing (next-intl)
-- Authentication checks
-- Permission-based access control
+- **Server State**: React Query (API data, caching, background refetch)
+- **Global Client State**: Zustand (auth, multi-step forms, UI preferences)
+- **Local State**: `useState` (component-specific, ephemeral)
+- **Form State**: React Hook Form + Zod (validation, submission)
+
+### API Integration
+
+- Base URL: `process.env.NEXT_PUBLIC_SERVER_URI`
+- Timeout: 150 seconds
+- Auth: JWT tokens in cookies, auto-attached via interceptors
+- Error handling: Centralized in `utils/handle-error.ts`
 
 ## Naming Conventions
 
-- **Files**: kebab-case (`tour-detail.tsx`, `use-booking.ts`)
-- **Components**: PascalCase (`TourDetail`, `BookingCard`)
-- **Hooks**: camelCase with `use` prefix (`useTour`, `useBooking`)
-- **Types**: PascalCase (`Tour`, `BookingRequest`)
-- **Constants**: UPPER_SNAKE_CASE (`API_ROOT`, `TOUR_QUERY_KEY`)
+**Files & Folders:**
 
-## Import Patterns
+- Components: `kebab-case.tsx` (e.g., `tour-detail-header.tsx`)
+- Hooks: `use-kebab-case.ts` (e.g., `use-tour.ts`)
+- Types: `kebab-case.type.ts` (e.g., `booking.type.ts`)
+- APIs: `kebab-case.api.ts` (e.g., `tour.api.ts`)
+- Utils: `kebab-case.ts` (e.g., `date.ts`)
 
-- Use `@/` alias for absolute imports from `src/`
-- Group imports: external → internal → relative
-- Prettier handles import sorting automatically
+**Code:**
+
+- Components: `PascalCase` (e.g., `TourDetailHeader`)
+- Hooks: `camelCase` with `use` prefix (e.g., `useTourDetail`)
+- Functions: `camelCase` (e.g., `formatCurrency`)
+- Types/Interfaces: `PascalCase` (e.g., `Tour`, `BookingRequest`)
+- Constants: `UPPER_SNAKE_CASE` (e.g., `API_TIMEOUT`, `TOUR_STATUS`)
+- Enums: `PascalCase` for enum, `UPPER_SNAKE_CASE` for values
+
+## Import Rules
+
+**Path Aliases:**
+
+- Use `@/` for all imports from `src/` (e.g., `@/components/ui/button`)
+- Never use relative imports across directories (e.g., `../../../components`)
+
+**Import Order** (auto-sorted by Prettier):
+
+1. External packages (react, next, etc.)
+2. Internal absolute imports (`@/components`, `@/hooks`, etc.)
+3. Relative imports (`./`, `../`)
+4. Type imports (use `import type` when possible)
+
+**Example:**
+
+```typescript
+import { useState } from 'react';
+import { formatDate } from '@/utils/date';
+import { useQuery } from '@tanstack/react-query';
+
+import type { Tour } from '@/types/tour.type';
+import { useTour } from '@/hooks/api/useTour';
+import { Button } from '@/components/ui/button';
+```
 
 ## Component Organization
 
-Feature components follow this pattern:
+**Feature Component Structure:**
 
 ```
 features/
   tour/
     tour-detail/
-      index.tsx              # Main component export
-      tour-detail-header.tsx # Sub-components
+      index.tsx                    # Main component, re-exports
+      tour-detail-header.tsx       # Sub-components
       tour-detail-content.tsx
-      floating-booking-panel/
+      tour-detail-overview.tsx
+      floating-booking-panel/      # Nested feature
         index.tsx
         booking-calculator.tsx
 ```
+
+**Component File Template:**
+
+```typescript
+'use client' // Only if needed
+
+import { ... } from 'react'
+import { ... } from '@/...'
+
+import type { ... } from '@/types/...'
+
+interface ComponentNameProps {
+  // Props definition
+}
+
+export function ComponentName({ ...props }: ComponentNameProps) {
+  // Component logic
+  return (...)
+}
+```
+
+## Creating New Features
+
+**When adding a new feature (e.g., "reviews"):**
+
+1. **API Layer**: `src/data/apis/review.api.ts`
+
+   - Export functions: `getReviews`, `createReview`, etc.
+
+2. **Types**: `src/types/review.type.ts`
+
+   - Define `Review`, `ReviewRequest`, `ReviewResponse`
+
+3. **React Query Hook**: `src/hooks/api/useReview.ts`
+
+   - Export `useGetReviews`, `useCreateReview`, etc.
+
+4. **Components**: `src/components/features/review/`
+
+   - Create feature-specific components
+
+5. **Page**: `src/app/[locale]/(marketing)/review/page.tsx`
+   - Use hooks and components to build page
+
+## Key Architectural Rules
+
+- **Separation of Concerns**: Keep API logic, business logic, and UI separate
+- **Type Safety**: Define types for all API requests/responses
+- **Reusability**: Extract shared logic to hooks, shared components to `shared/`
+- **Colocation**: Keep related files close (components, types, hooks for a feature)
+- **Server-First**: Use Server Components by default, add `'use client'` only when needed
+- **Internationalization**: All user-facing text must use `next-intl` (no hardcoded strings)
+- **Error Handling**: Use try-catch in API calls, display user-friendly errors via toast
+- **Loading States**: Always handle loading and error states in components

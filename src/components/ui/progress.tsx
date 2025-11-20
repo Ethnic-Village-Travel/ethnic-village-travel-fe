@@ -1,23 +1,22 @@
-import React from 'react';
-import { useNProgress } from '@tanem/react-nprogress';
+'use client';
 
-export interface ProgressProps {
-  isAnimating: boolean;
-}
+import * as React from 'react';
+import { cn } from '@/utils';
+import * as ProgressPrimitive from '@radix-ui/react-progress';
 
-export const Progress: React.FC<ProgressProps> = ({ isAnimating }) => {
-  const { animationDuration, isFinished, progress } = useNProgress({
-    isAnimating,
-  });
+function Progress({ className, value, ...props }: React.ComponentProps<typeof ProgressPrimitive.Root>) {
   return (
-    <div
-      className="pointer-events-none"
-      style={{ opacity: isFinished ? 0 : 1, transition: `opacity ${animationDuration}ms linear` }}
+    <ProgressPrimitive.Root
+      data-slot="progress"
+      className={cn('bg-primary/20 relative h-2 w-full overflow-hidden rounded-full', className)}
+      {...props}
     >
-      <div
-        className="fixed top-0 left-0 z-50 h-0.5 w-full bg-[#3399dd]"
-        style={{ marginLeft: `${(-1 + progress) * 100}%`, transition: `margin-left ${animationDuration}ms linear` }}
+      <ProgressPrimitive.Indicator
+        data-slot="progress-indicator"
+        className="h-full w-full flex-1 bg-primary transition-all"
+        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
       />
-    </div>
+    </ProgressPrimitive.Root>
   );
-};
+}
+export { Progress };
