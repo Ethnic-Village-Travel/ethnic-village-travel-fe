@@ -1,13 +1,14 @@
+import { envConfig } from '@/core/configs/env.config';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { getCookie } from '@/utils/cookie';
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { logout } from '@/libs/auth';
 
-import { API_ROOT, TIMEOUT } from './define';
+import { TIMEOUT } from './define';
 
 const instance = axios.create({
-  baseURL: API_ROOT + '/api/v1',
+  baseURL: envConfig.SERVER_URI + '/api/v1',
   timeout: TIMEOUT,
   headers: {
     'Content-Type': 'application/json',

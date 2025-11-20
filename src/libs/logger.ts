@@ -1,4 +1,6 @@
-const isDev = process.env.NODE_ENV === 'development';
+import { envConfig } from '@/core/configs/env.config';
+
+const isDev = envConfig.isDevelopment;
 
 interface Logger {
   info: (message: string, ...args: any[]) => void;

@@ -1,3 +1,5 @@
+import { envConfig } from '@/core/configs/env.config';
+
 export interface ChatbotConfig {
   apiUrl: string | undefined;
   title: string;
@@ -14,7 +16,7 @@ export interface ChatbotConfig {
 }
 
 export const defaultChatbotConfig: ChatbotConfig = {
-  apiUrl: process.env.NEXT_PUBLIC_CHATBOT_API_URL,
+  apiUrl: envConfig.CHATBOT_API_URL,
   title: 'Trợ lý ảo Du lịch',
   placeholder: 'Nhập câu hỏi về du lịch...',
   welcomeMessage: 'Xin chào! Tôi có thể giúp bạn tìm hiểu về các tour du lịch làng dân tộc. Bạn muốn biết gì?',

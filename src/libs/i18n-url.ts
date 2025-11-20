@@ -1,16 +1,21 @@
+import { envConfig } from '@/core/configs/env.config';
+
 import { routing } from '@/libs/i18n-navigation';
 
 export const getBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    return process.env.NEXT_PUBLIC_APP_URL;
+  const clientUri = envConfig.CLIENT_URI;
+  const vercelProdUrl = envConfig.VERCEL_PROJECT_PRODUCTION_URL;
+  const vercelUrl = envConfig.VERCEL_URL;
+  if (clientUri) {
+    return clientUri;
   }
 
-  if (process.env.VERCEL_ENV === 'production' && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  if (envConfig.isProduction && vercelProdUrl) {
+    return `https://${vercelProdUrl}`;
   }
 
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+  if (vercelUrl) {
+    return `https://${vercelUrl}`;
   }
 
   return 'http://localhost:3000';
