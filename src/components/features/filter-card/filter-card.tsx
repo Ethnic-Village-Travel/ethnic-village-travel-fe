@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { FilterConfig, FilterItem } from '@/data/filters';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { FilterConfig, FilterItem } from '@/data/mocks/filters';
 import { cn, createSearchParams } from '@/utils';
 import { ChevronDown } from 'lucide-react';
 import { useTranslations } from 'next-intl';

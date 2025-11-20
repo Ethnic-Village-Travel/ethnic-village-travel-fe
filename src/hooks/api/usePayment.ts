@@ -1,10 +1,10 @@
+import { paymentApi } from '@/data/apis/payment.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { paymentApi, PaymentLinkResponse } from '@/apis/payment.api';
 
 export function usePayment() {
   const createPaymentMutation = useMutation({
     mutationFn: (bookingId: string) => paymentApi.createPayment(bookingId),
-    onError: (error) => {
+    onError: error => {
       console.error('Payment creation failed:', error);
     },
   });

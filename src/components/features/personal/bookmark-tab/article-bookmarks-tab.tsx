@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useMemo } from 'react';
-import { MOCK_ARTICLES } from '@/data/articles';
+import { MOCK_ARTICLES } from '@/data/mocks/articles';
 import { ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

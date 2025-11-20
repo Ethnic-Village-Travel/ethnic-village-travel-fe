@@ -1,5 +1,5 @@
-import { ethnicApi } from '@/apis/ethnic.api';
-import { locationApi } from '@/apis/location.api';
+import { ethnicApi } from '@/data/apis/ethnic.api';
+import { locationApi } from '@/data/apis/location.api';
 import { useMetaStore } from '@/stores/useMetaStore';
 import { useQuery } from '@tanstack/react-query';
 

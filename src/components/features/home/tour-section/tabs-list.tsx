@@ -1,4 +1,4 @@
-import { TabType } from '@/apis/tour.api';
+import { TabType } from '@/data/apis/tour.api';
 import { cn } from '@/utils/classnames';
 import { useTranslations } from 'next-intl';
 

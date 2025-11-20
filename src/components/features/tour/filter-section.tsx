@@ -1,6 +1,6 @@
 'use client';
 
-import { FilterItem, FILTERS } from '@/data/filters';
+import { FilterItem, FILTERS } from '@/data/mocks/filters';
 
 import { useEthnicList } from '@/hooks/api/useEthnic';
 import { useLocationList } from '@/hooks/api/useLocation';

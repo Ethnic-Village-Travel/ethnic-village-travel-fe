@@ -1,4 +1,4 @@
-import { FilterConfig, FILTERS } from '@/data/filters';
+import { FilterConfig, FILTERS } from '@/data/mocks/filters';
 import { omitBy } from 'lodash';
 
 import { TourListRequest } from '@/types/tour.type';

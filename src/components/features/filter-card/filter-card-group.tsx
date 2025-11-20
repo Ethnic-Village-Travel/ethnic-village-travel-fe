@@ -1,6 +1,6 @@
 'use client';
 
-import { FilterConfig } from '@/data/filters';
+import { FilterConfig } from '@/data/mocks/filters';
 
 import { FilterCard } from './filter-card';
 

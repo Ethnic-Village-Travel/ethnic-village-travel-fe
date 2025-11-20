@@ -1,4 +1,4 @@
-import { getUserDetails } from '@/apis/user.api';
+import { getUserDetails } from '@/data/apis/user.api';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useUserStore } from '@/stores/useUserStore';
 import { useQuery } from '@tanstack/react-query';

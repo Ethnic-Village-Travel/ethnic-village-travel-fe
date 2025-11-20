@@ -1,6 +1,6 @@
 'use client';
 
-import { PERMISSION_CATEGORIES } from '@/data/roles';
+import { PERMISSION_CATEGORIES } from '@/data/mocks/roles';
 import { useFormContext } from 'react-hook-form';
 
 import { Permission } from '@/types/role.type';

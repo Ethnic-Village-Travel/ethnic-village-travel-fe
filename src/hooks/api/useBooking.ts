@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import { bookingApi } from '@/apis/booking.api';
+import { bookingApi } from '@/data/apis/booking.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import {
