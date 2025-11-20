@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TourStatusEnum } from '@/constants/enum/tour.enum';
-import { useMetaStore } from '@/store/useMetaStore';
+import { TourStatusEnum } from '@/core/enum/tour.enum';
+import { useMetaStore } from '@/stores/useMetaStore';
 import { X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

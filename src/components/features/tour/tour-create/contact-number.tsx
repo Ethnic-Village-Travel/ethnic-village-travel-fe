@@ -1,8 +1,8 @@
+import { TourCreateFormValues } from '@/libs/schemas/tour.schema';
 import { Plus, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
 
-import { TourCreateFormValues } from '@/lib/schemas/tour.schema';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -12,7 +12,11 @@ type ContactNumberProps = {
 };
 
 export default function ContactNumber({ form }: ContactNumberProps) {
-  const { fields: contactFields, append: appendContact, remove: removeContact } = useFieldArray({
+  const {
+    fields: contactFields,
+    append: appendContact,
+    remove: removeContact,
+  } = useFieldArray({
     control: form.control,
     name: 'contactNumbers',
   });

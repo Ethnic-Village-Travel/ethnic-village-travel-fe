@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { useTranslations } from 'next-intl';
 
 export const AssignedAvailableDatesHeader = () => {

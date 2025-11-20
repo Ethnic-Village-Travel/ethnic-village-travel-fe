@@ -1,9 +1,9 @@
-import { EntityType } from '@/constants/entity';
 import { API } from '@/core/api';
 import api from '@/core/api/api';
+import { EntityType } from '@/core/constants/entity';
 
 import { ApiResponse } from '@/types/api.type';
-import { Bookmark, BookmarkRequest, BookmarkResponse, BookmarkUpdateResponse } from '@/types/bookmark.type';
+import { BookmarkRequest, BookmarkResponse, BookmarkUpdateResponse } from '@/types/bookmark.type';
 
 export const bookmarkApi = {
   /**

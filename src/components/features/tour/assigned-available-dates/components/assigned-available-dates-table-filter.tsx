@@ -2,8 +2,8 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TourAvailableDateStatusEnum } from '@/constants/enum/tour.enum';
-import { useAuthStore } from '@/store/useAuthStore';
+import { TourAvailableDateStatusEnum } from '@/core/enum/tour.enum';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
 import { format } from 'date-fns';
 import { CalendarIcon, X } from 'lucide-react';
@@ -13,7 +13,6 @@ import type { Option } from '@/types/data-table';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { StatusFilter } from '@/components/shared/filter';
 

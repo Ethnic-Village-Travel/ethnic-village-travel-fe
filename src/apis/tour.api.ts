@@ -1,7 +1,7 @@
-import { TourFilterTabType } from '@/constants/enum/tour.enum';
 import { AdminAPI, API } from '@/core/api';
 import api from '@/core/api/api';
 import { encodeQueryData } from '@/core/api/utils';
+import { TourFilterTabType } from '@/core/enum/tour.enum';
 
 import { ApiResponse } from '@/types/api.type';
 import {

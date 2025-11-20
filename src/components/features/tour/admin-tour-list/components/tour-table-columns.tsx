@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { TourStatusEnum } from '@/constants/enum/tour.enum';
-import { RouteConstant } from '@/constants/route';
+import { RouteConstant } from '@/core/constants/route';
+import { TourStatusEnum } from '@/core/enum/tour.enum';
 import { splitDateStr } from '@/utils/date';
 import { formatCurrency } from '@/utils/number';
 import type { ColumnDef } from '@tanstack/react-table';

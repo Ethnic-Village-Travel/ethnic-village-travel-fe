@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useBookingStore } from '@/store/useBookingStore';
+import { useBookingStore } from '@/stores/useBookingStore';
 import { useTranslations } from 'next-intl';
 
 import { BookingGetResponse } from '@/types/booking';

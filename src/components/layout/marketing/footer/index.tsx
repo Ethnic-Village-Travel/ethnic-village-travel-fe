@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { RouteConstant } from '@/constants/route';
+import { RouteConstant } from '@/core/constants/route';
 import { cn } from '@/utils';
 
 import FooterCopyright from './FooterCopyright';

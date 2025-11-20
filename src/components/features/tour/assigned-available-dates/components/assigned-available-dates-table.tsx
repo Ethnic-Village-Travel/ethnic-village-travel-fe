@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useMemo, useState } from 'react';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { useTranslations } from 'next-intl';
 
 import { AssignedAvailableDateResponse } from '@/types/tour-assignment.type';

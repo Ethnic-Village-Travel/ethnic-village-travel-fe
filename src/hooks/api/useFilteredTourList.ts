@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { FilterConfig, FILTERS } from '@/data/filters';
-import { useMetaStore } from '@/store/useMetaStore';
 import { omitBy } from 'lodash';
 
 import { TourListRequest } from '@/types/tour.type';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useTourAssignmentStore } from '@/store/useTourAssignmentStore';
+import { useTourAssignmentStore } from '@/stores/useTourAssignmentStore';
 import { Save, Users, X } from 'lucide-react';
-import { Form, FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useShallow } from 'zustand/react/shallow';
 
 import type { EmployeeBasicResponse } from '@/types/employee.type';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 import { EnterOtpPopup } from './enter-otp-popup';
 import { ForgotPasswordPopup } from './forgot-password-popup';

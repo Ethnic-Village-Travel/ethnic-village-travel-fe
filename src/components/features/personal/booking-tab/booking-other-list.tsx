@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BookingStatus } from '@/constants/enum/booking.enum';
+import { BookingStatus } from '@/core/enum/booking.enum';
 import { useTranslations } from 'next-intl';
 
 import { BookingListRequest } from '@/types/booking';

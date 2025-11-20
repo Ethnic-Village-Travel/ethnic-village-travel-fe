@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
-import { BookingStatus } from '@/constants/enum/booking.enum';
-import { useUserStore } from '@/store/useUserStore';
+import { BookingStatus } from '@/core/enum/booking.enum';
+import { useUserStore } from '@/stores/useUserStore';
 import { useTranslations } from 'next-intl';
 
 import { BookingListRequest } from '@/types/booking';

@@ -1,4 +1,4 @@
-import { routing } from '@/lib/i18n-navigation';
+import { routing } from '@/libs/i18n-navigation';
 
 import messages from '../messages/en.json';
 

@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { RouteConstant } from '@/constants/route';
-import { useBookingStore } from '@/store/useBookingStore';
+import { RouteConstant } from '@/core/constants/route';
+import { useBookingStore } from '@/stores/useBookingStore';
 import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';

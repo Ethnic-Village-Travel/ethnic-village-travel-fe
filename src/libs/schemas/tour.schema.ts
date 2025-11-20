@@ -1,4 +1,4 @@
-import { TourStatus } from '@/constants/enum/tour.enum';
+import { TourStatus } from '@/core/enum/tour.enum';
 import { z } from 'zod';
 
 export const createTourSchema = (t: (key: string) => string) =>

@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import { TourCreateFormValues } from '@/libs/schemas/tour.schema';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { UseFormReturn } from 'react-hook-form';
 
-import { TourCreateFormValues } from '@/lib/schemas/tour.schema';
 import { Button } from '@/components/ui/button';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';

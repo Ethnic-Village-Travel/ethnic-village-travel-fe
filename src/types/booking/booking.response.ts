@@ -1,4 +1,4 @@
-import { BookingStatus, PaymentMethod, PaymentStatus } from '@/constants/enum/booking.enum';
+import { BookingStatus, PaymentMethod } from '@/core/enum/booking.enum';
 
 import { TourInfo } from './booking.type';
 

@@ -1,4 +1,4 @@
-import { TourStatus } from '@/constants/enum/tour.enum';
+import { TourStatus } from '@/core/enum/tour.enum';
 
 import type { EmployeeBasicResponse } from './employee.type';
 import { Location } from './location.type';

@@ -1,13 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { getErrorMessage } from '@/utils/handle-error';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
-import { SignupFormValues, signupSchema } from '@/lib/schemas/auth';
+import { SignupFormValues, signupSchema } from '@/libs/schemas/auth';
 import { useSignup } from '@/hooks/api/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';

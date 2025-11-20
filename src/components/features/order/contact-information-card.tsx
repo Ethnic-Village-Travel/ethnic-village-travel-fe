@@ -1,4 +1,4 @@
-import { PersonInfo, useBookingStore } from '@/store/useBookingStore';
+import { PersonInfo, useBookingStore } from '@/stores/useBookingStore';
 import { useTranslations } from 'next-intl';
 import { z } from 'zod';
 

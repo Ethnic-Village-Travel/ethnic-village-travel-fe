@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { deleteCookie } from '@/utils/cookie';
 
 export const logout = () => {
