@@ -1,4 +1,4 @@
-import { EntityType } from '@/constants/entity';
+import { EntityType } from '@/core/constants/entity';
 import api from '@/data/apis/axios';
 import { API } from '@/data/apis/define';
 

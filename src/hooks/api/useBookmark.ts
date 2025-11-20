@@ -1,4 +1,4 @@
-import { EntityType } from '@/constants/entity';
+import { EntityType } from '@/core/constants/entity';
 import { bookmarkApi } from '@/data/apis/bookmark.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 

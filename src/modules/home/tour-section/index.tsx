@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { RouteConstant } from '@/constants/route';
+import { RouteConstant } from '@/core/constants/route';
 import { TabType } from '@/data/apis/tour.api';
 import { ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';

@@ -1,4 +1,4 @@
-import { TourFilterTabType } from '@/constants/enum/tour.enum';
+import { TourFilterTabType } from '@/core/enum/tour.enum';
 import api from '@/data/apis/axios';
 import { AdminAPI, API } from '@/data/apis/define';
 import { encodeQueryData } from '@/data/apis/helper';

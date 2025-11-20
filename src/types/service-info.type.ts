@@ -1,4 +1,4 @@
-import { TourServiceInfoType } from "@/constants/enum/tour-service-info.enum";
+import { TourServiceInfoType } from '@/core/enum/tour-service-info.enum';
 
 export interface Service {
   id: number;

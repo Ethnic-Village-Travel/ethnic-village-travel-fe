@@ -1,4 +1,3 @@
-import { EntityType } from '@/constants/entity';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 

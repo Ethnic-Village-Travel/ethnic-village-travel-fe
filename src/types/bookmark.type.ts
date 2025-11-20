@@ -1,5 +1,5 @@
-import { EntityType } from '@/constants/entity';
-import { BookmarkStatus } from '@/constants/enum/bookmark.enum';
+import { EntityType } from '@/core/constants/entity';
+import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 
 export interface Bookmark {
   id: number;

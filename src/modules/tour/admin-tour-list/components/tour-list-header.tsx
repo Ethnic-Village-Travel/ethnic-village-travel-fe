@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { RouteConstant } from '@/constants/route';
+import { RouteConstant } from '@/core/constants/route';
 import { Download, UserPlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

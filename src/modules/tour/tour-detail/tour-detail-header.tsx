@@ -1,6 +1,6 @@
 'use client';
 
-import { EntityType } from '@/constants/entity';
+import { EntityType } from '@/core/constants/entity';
 import { useUserStore } from '@/stores/useUserStore';
 import { calculateRatingStats } from '@/utils';
 import { Share2 } from 'lucide-react';

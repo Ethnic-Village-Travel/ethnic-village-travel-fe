@@ -1,6 +1,6 @@
 'use client';
 
-import { TourServiceInfoType } from '@/constants/enum/tour-service-info.enum';
+import { TourServiceInfoType } from '@/core/enum/tour-service-info.enum';
 import { CircleCheck, CircleMinus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

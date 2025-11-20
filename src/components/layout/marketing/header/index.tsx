@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { RouteConstant } from '@/constants/route';
+import { RouteConstant } from '@/core/constants/route';
 import { AuthPopup } from '@/modules/auth/auth-popup';
 import { UserMenu } from '@/modules/user/user-menu';
 import { useAuthStore } from '@/stores/useAuthStore';

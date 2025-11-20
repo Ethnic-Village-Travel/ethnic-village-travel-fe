@@ -2,14 +2,14 @@
 
 import { useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { ADMIN_DASHBOARD_READ } from '@/constants/permission-map';
-import { RouteConstant } from '@/constants/route';
-import { logout } from '@/libs/auth';
+import { ADMIN_DASHBOARD_READ } from '@/core/constants/permission-map';
+import { RouteConstant } from '@/core/constants/route';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
 import { LogOut } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { logout } from '@/libs/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Sidebar,

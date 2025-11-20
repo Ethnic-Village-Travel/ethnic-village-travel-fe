@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { RouteConstant } from '@/constants/route';
-import { logout } from '@/libs/auth';
+import { RouteConstant } from '@/core/constants/route';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils/classnames';
 import { Bell } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { logout } from '@/libs/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

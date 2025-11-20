@@ -3,8 +3,8 @@
 import { useTransition } from 'react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { AppConstant } from '@/constants/app';
-import { RouteConstant } from '@/constants/route';
+import { AppConstant } from '@/core/constants/app';
+import { RouteConstant } from '@/core/constants/route';
 import { setDefaultHeaders } from '@/data/apis/axios';
 import { cn } from '@/utils';
 import { ChevronDown } from 'lucide-react';

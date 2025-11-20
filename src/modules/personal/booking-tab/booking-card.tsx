@@ -1,6 +1,6 @@
 'use client';
 
-import { getStatusBadgeVariant } from '@/constants/enum/booking.enum';
+import { getStatusBadgeVariant } from '@/core/enum/booking.enum';
 import { formatCurrency } from '@/utils/number';
 import { format } from 'date-fns';
 import { CalendarDays, Clock, MapPin } from 'lucide-react';

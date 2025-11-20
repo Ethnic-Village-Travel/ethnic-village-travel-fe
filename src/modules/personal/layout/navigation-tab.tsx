@@ -3,15 +3,15 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { BookmarkStatus } from '@/constants/enum/bookmark.enum';
-import { RouteConstant } from '@/constants/route';
-import { logout } from '@/libs/auth';
+import { RouteConstant } from '@/core/constants/route';
+import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useUserStore } from '@/stores/useUserStore';
 import { cn, getInitialName } from '@/utils';
 import { Bookmark, LogOut, ScrollText, Settings } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { logout } from '@/libs/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

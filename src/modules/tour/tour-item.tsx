@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { EntityType } from '@/constants/entity';
-import { BookmarkStatus } from '@/constants/enum/bookmark.enum';
-import { RouteConstant } from '@/constants/route';
+import { EntityType } from '@/core/constants/entity';
+import { RouteConstant } from '@/core/constants/route';
+import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { useUserStore } from '@/stores/useUserStore';
 import { calculateRatingStats, cn } from '@/utils';
 import { formatCurrency } from '@/utils/number';

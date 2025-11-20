@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { notFound, useParams, useRouter } from 'next/navigation';
-import { BookingStatus } from '@/constants/enum/booking.enum';
-import { RouteConstant } from '@/constants/route';
+import { RouteConstant } from '@/core/constants/route';
+import { BookingStatus } from '@/core/enum/booking.enum';
 import { useBookingStore } from '@/stores/useBookingStore';
 
 import { useApiBookingGet } from '@/hooks/api/useBooking';

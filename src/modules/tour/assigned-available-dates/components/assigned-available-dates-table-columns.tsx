@@ -2,9 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { TourAvailableDateStatus, TourAvailableDateStatusEnum } from '@/constants/enum/tour.enum';
-import { RouteConstant } from '@/constants/route';
-import { formatDate } from '@/utils/date';
+import { RouteConstant } from '@/core/constants/route';
+import { TourAvailableDateStatusEnum } from '@/core/enum/tour.enum';
 import type { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { CalendarDays, Clock, MapPin, MoreHorizontal, Users, X } from 'lucide-react';

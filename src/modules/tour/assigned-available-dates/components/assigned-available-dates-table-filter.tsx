@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TourAvailableDateStatusEnum } from '@/constants/enum/tour.enum';
+import { TourAvailableDateStatusEnum } from '@/core/enum/tour.enum';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
 import { format } from 'date-fns';

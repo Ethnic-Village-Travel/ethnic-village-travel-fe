@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EntityType } from '@/constants/entity';
+import { EntityType } from '@/core/constants/entity';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useUserStore } from '@/stores/useUserStore';
 import { cn } from '@/utils/classnames';

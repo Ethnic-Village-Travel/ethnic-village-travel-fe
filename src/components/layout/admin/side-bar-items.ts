@@ -1,5 +1,5 @@
-import { PermissionMap } from '@/constants/permission-map';
-import { RouteConstant } from '@/constants/route';
+import { PermissionMap } from '@/core/constants/permission-map';
+import { RouteConstant } from '@/core/constants/route';
 import { Bell, Book, FileText, LayoutGrid, MapPin, MessageCircle, ShieldCheck, ShoppingCart, User } from 'lucide-react';
 
 export type SIDEBAR_NAV_ITEM_PROP = {

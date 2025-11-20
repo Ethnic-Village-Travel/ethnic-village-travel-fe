@@ -1,9 +1,9 @@
-import { TourServiceInfoType } from '@/constants/enum/tour-service-info.enum';
-import { TourCreateFormValues } from '@/libs/schemas/tour.schema';
+import { TourServiceInfoType } from '@/core/enum/tour-service-info.enum';
 import { useTranslations } from 'next-intl';
 import { UseFormReturn } from 'react-hook-form';
 
 import { ServiceInfoBasic } from '@/types/service-info.type';
+import { TourCreateFormValues } from '@/libs/schemas/tour.schema';
 import { useServiceInfoList } from '@/hooks/api/useServiceInfo';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { MultiSelect } from '@/components/shared/multiple-select';

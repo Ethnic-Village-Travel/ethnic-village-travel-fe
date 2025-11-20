@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { EntityType } from '@/constants/entity';
+import { EntityType } from '@/core/constants/entity';
 import { useUserStore } from '@/stores/useUserStore';
 import { useTranslations } from 'next-intl';
 
