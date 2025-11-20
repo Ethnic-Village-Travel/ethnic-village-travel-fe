@@ -1,6 +1,5 @@
+import { DataTableConfig } from '@/libs/data-table-config';
 import type { ColumnSort, RowData } from '@tanstack/react-table';
-
-import { DataTableConfig } from '@/lib/data-table-config';
 
 declare module '@tanstack/react-table' {
   // biome-ignore lint/correctness/noUnusedVariables: <explanation>

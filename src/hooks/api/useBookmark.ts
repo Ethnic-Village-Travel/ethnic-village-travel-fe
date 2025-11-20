@@ -1,5 +1,5 @@
-import { bookmarkApi } from '@/apis/bookmark.api';
 import { EntityType } from '@/constants/entity';
+import { bookmarkApi } from '@/data/apis/bookmark.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { BookmarkRequest, BookmarkResponse } from '@/types/bookmark.type';

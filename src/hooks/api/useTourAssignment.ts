@@ -1,5 +1,5 @@
-import { tourAssignmentApi } from '@/apis/tour-assignment.api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { tourAssignmentApi } from '@/data/apis/tour-assignment.api';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import type { AssignedAvailableDatesRequest, TourAssignmentRequest } from '@/types/tour-assignment.type';
 

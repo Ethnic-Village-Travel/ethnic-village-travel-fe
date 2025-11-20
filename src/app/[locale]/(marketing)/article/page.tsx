@@ -1,8 +1,7 @@
 'use client';
 
-import { MOCK_ARTICLES } from '@/data/articles';
-
-import ArticleItem from '@/components/features/article/article-item';
+import { MOCK_ARTICLES } from '@/data/mock/articles';
+import ArticleItem from '@/modules/article/article-item';
 
 export default function ArticlesPage() {
   return (

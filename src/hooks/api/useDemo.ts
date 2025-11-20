@@ -1,6 +1,6 @@
-import { API } from '@/core/api';
-import api from '@/core/api/api';
-import { encodeQueryData } from '@/core/api/utils';
+import api from '@/data/apis/axios';
+import { API } from '@/data/apis/define';
+import { encodeQueryData } from '@/data/apis/helper';
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 
 // Get normal query

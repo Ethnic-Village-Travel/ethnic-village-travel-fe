@@ -1,0 +1,119 @@
+import { TourFilterTabType } from '@/constants/enum/tour.enum';
+import api from '@/data/apis/axios';
+import { AdminAPI, API } from '@/data/apis/define';
+import { encodeQueryData } from '@/data/apis/helper';
+
+import { ApiResponse } from '@/types/api.type';
+import {
+  Tour,
+  TourAdminListRequest,
+  TourCreateRequest,
+  TourListRequest,
+  TourListResponse,
+  TourResponse,
+} from '@/types/tour.type';
+
+export type TabType = 'popular' | 'outstanding' | 'best_price';
+
+// Map frontend TabType to backend enum values
+const mapTabTypeToBackend = (tabType: TabType): TourFilterTabType => {
+  const mapping: Record<TabType, TourFilterTabType> = {
+    popular: TourFilterTabType.POPULAR,
+    outstanding: TourFilterTabType.OUTSTANDING,
+    best_price: TourFilterTabType.BEST_PRICE,
+  };
+  return mapping[tabType];
+};
+
+export const tourApi = {
+  getTourList: async (params: TourListRequest): Promise<ApiResponse<TourListResponse>> => {
+    try {
+      const queryParams = {
+        ...params,
+        ethnicIds: params.ethnicIds?.join(','),
+        locationIds: params.locationIds?.join(','),
+      };
+
+      const queryString = encodeQueryData(queryParams);
+      const { data } = await api.get<ApiResponse<TourListResponse>>(`${API.TOUR.SEARCH}?${queryString}`);
+
+      return data;
+    } catch {
+      throw new Error('Failed to get tour list');
+    }
+  },
+
+  getTourListByIds: async (ids: number[]): Promise<ApiResponse<Tour[]>> => {
+    try {
+      const { data } = await api.get<ApiResponse<Tour[]>>(`${API.TOUR.GET_BY_IDS}?ids=${ids.join(',')}`);
+      return data;
+    } catch {
+      throw new Error('Failed to get tour list by ids');
+    }
+  },
+
+  getTourDetail: async (slug: string): Promise<ApiResponse<Tour>> => {
+    try {
+      const { data } = await api.get<ApiResponse<Tour>>(`${API.TOUR.DETAIL}/${slug}`);
+      return data;
+    } catch {
+      throw new Error('Failed to get tour detail');
+    }
+  },
+
+  getFilteredTours: async (
+    tabType: TabType = 'popular',
+    page: number = 0,
+    size: number = 10,
+  ): Promise<ApiResponse<Tour[]>> => {
+    try {
+      const requestBody = {
+        tabType: mapTabTypeToBackend(tabType),
+        page,
+        size,
+      };
+
+      const queryString = encodeQueryData(requestBody);
+      const { data } = await api.get<ApiResponse<TourListResponse>>(`${API.TOUR.FILTER_TAB}?${queryString}`);
+
+      // Extract tours from pagination response and return in expected format
+      return {
+        code: data.code,
+        success: data.success,
+        message: data.message,
+        data: data.data?.content || [],
+      };
+    } catch {
+      throw new Error('Failed to get filtered tours');
+    }
+  },
+
+  //-------------------------Admin------------------------------------------------
+
+  getAdminTourList: async (params: TourAdminListRequest): Promise<ApiResponse<TourListResponse>> => {
+    try {
+      const queryParams = {
+        ...params,
+        ethnicIds: params.ethnicIds?.join(','),
+        locationIds: params.locationIds?.join(','),
+        status: params.status?.join(','),
+        sortBy: params.sortBy === 'price' ? 'adultPrice' : params.sortBy,
+      };
+
+      const queryString = encodeQueryData(queryParams);
+      const { data } = await api.get<ApiResponse<TourListResponse>>(`${AdminAPI.TOUR.SEARCH}?${queryString}`);
+
+      return data;
+    } catch {
+      throw new Error('Failed to get tour list');
+    }
+  },
+  createTour: async (data: TourCreateRequest): Promise<ApiResponse<TourResponse>> => {
+    try {
+      const res = await api.post(AdminAPI.TOUR.STORE, data);
+      return res.data;
+    } catch {
+      throw new Error('Failed to store tour');
+    }
+  },
+};

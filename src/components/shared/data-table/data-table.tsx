@@ -1,8 +1,8 @@
 import type * as React from 'react';
+import { getCommonPinningStyles } from '@/libs/data-table';
 import { cn } from '@/utils';
 import { flexRender, type Table as TanstackTable } from '@tanstack/react-table';
 
-import { getCommonPinningStyles } from '@/lib/data-table';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 import { DataTablePagination } from './data-table-pagination';

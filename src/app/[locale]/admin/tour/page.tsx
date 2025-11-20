@@ -1,4 +1,4 @@
-import AdminTourListContent from '@/components/features/tour/admin-tour-list';
+import AdminTourListContent from '@/modules/tour/admin-tour-list';
 
 export default function TourListPage() {
   return <AdminTourListContent />;

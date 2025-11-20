@@ -1,4 +1,4 @@
-import TourDetail from '@/components/features/tour/tour-detail';
+import TourDetail from '@/modules/tour/tour-detail';
 
 interface TourDetailProps {
   params: {

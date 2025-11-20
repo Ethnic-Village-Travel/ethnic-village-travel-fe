@@ -1,8 +1,8 @@
+import SearchCommand from '@/modules/admin/search-command';
 import { Bell } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import SearchCommand from '@/components/features/admin/search-command';
 
 export default function AdminHeader() {
   return (

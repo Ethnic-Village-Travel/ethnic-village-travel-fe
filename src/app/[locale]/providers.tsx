@@ -1,13 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import queryClient from '@/core/queryClient';
-import { useProgressStore } from '@/store/useProgressStore';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { UserDetailsLoader } from '@/modules/auth/user-details-loader';
+import { useProgressStore } from '@/stores/useProgressStore';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { Progress } from '@/components/base/progress';
-import { UserDetailsLoader } from '@/components/features/auth/user-details-loader';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const setIsAnimating = useProgressStore(state => state.setIsAnimating);
@@ -34,6 +33,17 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       document.removeEventListener('navigationError', handleStop);
     };
   }, [setIsAnimating]);
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        staleTime: 60 * 1000 * 5, // 5 minutes
+        refetchOnWindowFocus: false,
+        refetchOnMount: 'always',
+      },
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
 import { formatTimeAgo } from '@/utils/date';
 import { Loader2, MoreHorizontal, PinIcon, Trash2Icon } from 'lucide-react';
@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { AddReviewCard } from '../features/tour/tour-detail/add-review-card';
+import { AddReviewCard } from '../../modules/tour/tour-detail/add-review-card';
 import StarRating from './star-rating';
 
 interface ReviewItemProps {

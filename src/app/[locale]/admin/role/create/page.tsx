@@ -1,4 +1,4 @@
-import RoleCreateContent from '@/components/features/role/role-create';
+import RoleCreateContent from '@/modules/role/role-create';
 
 export default function RoleCreatePage() {
   return <RoleCreateContent />;

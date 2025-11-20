@@ -1,4 +1,4 @@
-import { promotionApi } from '@/apis/promotion.api';
+import { promotionApi } from '@/data/apis/promotion.api';
 import { useMutation } from '@tanstack/react-query';
 
 export const useApiValidatePromotion = () => {

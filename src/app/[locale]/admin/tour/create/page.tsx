@@ -1,4 +1,4 @@
-import TourCreateContent from '@/components/features/tour/tour-create';
+import TourCreateContent from '@/modules/tour/tour-create';
 
 export default function TourCreatePage() {
   return <TourCreateContent />;

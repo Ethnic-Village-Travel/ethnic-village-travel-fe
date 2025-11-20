@@ -2,10 +2,10 @@ import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import { notFound } from 'next/navigation';
+import { routing } from '@/libs/i18n-navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 
-import { routing } from '@/lib/i18n-navigation';
 import { Toaster } from '@/components/ui/toaster';
 import Loading from '@/components/shared/loading';
 

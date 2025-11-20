@@ -1,4 +1,4 @@
-import { PersonalNavigationTab } from '@/components/features/personal/layout';
+import { PersonalNavigationTab } from '@/modules/personal/layout';
 
 export default function PersonalLayout({ children }: { children: React.ReactNode }) {
   return (

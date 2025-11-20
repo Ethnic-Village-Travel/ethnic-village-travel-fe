@@ -1,12 +1,12 @@
 'use client';
 
+import ArticleSection from '@/modules/home/article-section';
+import { HeroSection } from '@/modules/home/hero-section';
+import ReasonSection from '@/modules/home/reason-section';
+import TourSection from '@/modules/home/tour-section';
 import { useTranslations } from 'next-intl';
 
 import { useQueryConfig } from '@/hooks/use-query-config';
-import ArticleSection from '@/components/features/home/article-section';
-import { HeroSection } from '@/components/features/home/hero-section';
-import ReasonSection from '@/components/features/home/reason-section';
-import TourSection from '@/components/features/home/tour-section';
 
 export default function HomePage() {
   const t = useTranslations('home');

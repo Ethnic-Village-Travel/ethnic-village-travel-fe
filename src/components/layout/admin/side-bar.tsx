@@ -4,12 +4,12 @@ import { useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { ADMIN_DASHBOARD_READ } from '@/constants/permission-map';
 import { RouteConstant } from '@/constants/route';
-import { useAuthStore } from '@/store/useAuthStore';
+import { logout } from '@/libs/auth';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
 import { LogOut } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { logout } from '@/lib/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Sidebar,

@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next';
-
-import { getBaseUrl } from '@/lib/i18n-url';
+import { getBaseUrl } from '@/libs/i18n-url';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

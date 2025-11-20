@@ -5,12 +5,12 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { AppConstant } from '@/constants/app';
 import { RouteConstant } from '@/constants/route';
-import { setDefaultHeaders } from '@/core/api';
+import { setDefaultHeaders } from '@/data/apis/axios';
 import { cn } from '@/utils';
 import { ChevronDown } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
-import { routing } from '@/lib/i18n-navigation';
+import { routing } from '@/libs/i18n-navigation';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,

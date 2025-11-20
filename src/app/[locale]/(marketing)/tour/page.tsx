@@ -1,8 +1,8 @@
 'use client';
 
-import { SearchBar } from '@/components/features/home/hero-section';
-import TourContentSection from '@/components/features/tour/content-section';
-import FilterSection from '@/components/features/tour/filter-section';
+import { SearchBar } from '@/modules/home/hero-section';
+import TourContentSection from '@/modules/tour/content-section';
+import FilterSection from '@/modules/tour/filter-section';
 
 export default function TourList() {
   return (

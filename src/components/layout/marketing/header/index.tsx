@@ -5,14 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { RouteConstant } from '@/constants/route';
-import { useAuthStore } from '@/store/useAuthStore';
+import { AuthPopup } from '@/modules/auth/auth-popup';
+import { UserMenu } from '@/modules/user/user-menu';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
 import { useTranslations } from 'next-intl';
 import { ClassNameValue } from 'tailwind-merge';
 
 import { Button } from '@/components/ui/button';
-import { AuthPopup } from '@/components/features/auth/auth-popup';
-import { UserMenu } from '@/components/features/user/user-menu';
 import LanguageSwitcher from '@/components/shared/language-switcher';
 
 interface HeaderProps {

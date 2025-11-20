@@ -8,5 +8,5 @@ const nextConfig = {
   },
 };
 
-const withNextIntl = createNextIntlPlugin('./src/lib/i18n.ts');
+const withNextIntl = createNextIntlPlugin('./src/libs/i18n.ts');
 export default withNextIntl(nextConfig);
