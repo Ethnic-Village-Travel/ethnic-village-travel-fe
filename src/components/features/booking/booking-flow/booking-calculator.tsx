@@ -88,7 +88,7 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
       // Đợi confirm booking hoàn thành
       await confirmBooking({
         promotionId: promotion?.id,
-        discountAmountApplied: totalPrice,
+        discountAmountApplied: totalPrice - discountPrice,
         guestInformation: guestInfo,
         additionalInformation: additionalInfo,
         totalPrice: discountPrice,
