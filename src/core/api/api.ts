@@ -7,7 +7,7 @@ import { logout } from '@/lib/auth';
 import { API_ROOT, TIMEOUT } from './config';
 
 const instance = axios.create({
-  baseURL: API_ROOT + '/api',
+  baseURL: API_ROOT + '/api/v1',
   timeout: TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
