@@ -1,6 +1,6 @@
 'use client';
 
-import { MOCK_ARTICLES } from '@/data/articles';
+import { MOCK_ARTICLES } from '@/data/mocks/articles';
 
 import ArticleItem from '@/components/features/article/article-item';
 

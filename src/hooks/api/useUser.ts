@@ -1,6 +1,6 @@
-import { getUserDetails } from '@/apis/user.api';
-import { useAuthStore } from '@/store/useAuthStore';
-import { useUserStore } from '@/store/useUserStore';
+import { getUserDetails } from '@/data/apis/user.api';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { useUserStore } from '@/stores/useUserStore';
 import { useQuery } from '@tanstack/react-query';
 
 export const useApiUserDetailsGet = () => {

@@ -1,4 +1,4 @@
-import { TabType, tourApi } from '@/apis/tour.api';
+import { TabType, tourApi } from '@/data/apis/tour.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { ApiResponse } from '@/types/api.type';

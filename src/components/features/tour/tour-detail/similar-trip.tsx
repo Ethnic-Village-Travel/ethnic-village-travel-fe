@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
 
-import { EmptyState } from '../empty-state';
-import TourItem from '../tour-item';
+import TourItem from '../tour-card/tour-item';
+import { EmptyState } from '../tour-list/empty-state';
 
 interface SimilarTripProps {
   tours: Tour[];

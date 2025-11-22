@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
 import { formatTimeAgo } from '@/utils/date';
 import { Loader2, MoreHorizontal, PinIcon, Trash2Icon } from 'lucide-react';

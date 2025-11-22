@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { EntityType } from '@/constants/entity';
-import { RouteConstant } from '@/constants/route';
+import { EntityType } from '@/core/constants/entity';
+import { RouteConstant } from '@/core/constants/route';
 import { cn } from '@/utils';
 
 import { Badge } from '@/components/ui/badge';

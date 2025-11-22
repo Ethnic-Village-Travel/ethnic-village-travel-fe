@@ -1,4 +1,4 @@
-import { getAllServiceInfo } from '@/apis/service-info.api';
+import { getAllServiceInfo } from '@/data/apis/service-info.api';
 import { useQuery } from '@tanstack/react-query';
 
 import { ServiceInfoBasic } from '@/types/service-info.type';

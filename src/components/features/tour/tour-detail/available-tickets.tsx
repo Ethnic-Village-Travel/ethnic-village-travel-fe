@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useBookingStore } from '@/store/useBookingStore';
+import { useBookingStore } from '@/stores/useBookingStore';
 import { cn } from '@/utils';
 import { format } from 'date-fns';
 import { vi } from 'date-fns/locale';
@@ -113,8 +113,10 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
                   'flex h-auto min-w-[120px] flex-col items-center gap-1 border-gray-500 px-4 py-2 transition-all duration-200',
                   {
                     'border-secondary-600 text-secondary-600': isSpecial && availableSlots > 0,
-                    'hover:bg-primary-500/90 bg-primary-500 text-white': selectedDateId === date.id && availableSlots > 0,
-                    'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed hover:bg-gray-100': availableSlots <= 0,
+                    'hover:bg-primary-500/90 bg-primary-500 text-white':
+                      selectedDateId === date.id && availableSlots > 0,
+                    'cursor-not-allowed border-gray-300 bg-gray-100 text-gray-400 hover:bg-gray-100':
+                      availableSlots <= 0,
                   },
                 )}
               >
@@ -128,10 +130,14 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
                   {isSpecial && availableSlots > 0 ? '🔥 ' : ''}
                   {format(startDate, 'EEEE', { locale: vi })}
                 </span>
-                <span className={cn('text-xl font-bold', {
-                  'text-white': selectedDateId === date.id && availableSlots > 0,
-                  'text-gray-400': availableSlots <= 0,
-                })}>{format(startDate, 'dd/MM', { locale: vi })}</span>
+                <span
+                  className={cn('text-xl font-bold', {
+                    'text-white': selectedDateId === date.id && availableSlots > 0,
+                    'text-gray-400': availableSlots <= 0,
+                  })}
+                >
+                  {format(startDate, 'dd/MM', { locale: vi })}
+                </span>
                 <span
                   className={cn('text-sm font-bold', {
                     'text-white': selectedDateId === date.id && availableSlots > 0,

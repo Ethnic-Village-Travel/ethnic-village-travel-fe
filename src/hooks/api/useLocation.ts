@@ -1,4 +1,4 @@
-import { locationApi } from '@/apis/location.api';
+import { locationApi } from '@/data/apis/location.api';
 import { useQuery } from '@tanstack/react-query';
 
 export const useLocationList = () => {

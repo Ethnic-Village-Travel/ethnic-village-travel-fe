@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
 import { Star } from 'lucide-react';
 import { useTranslations } from 'next-intl';

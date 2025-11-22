@@ -1,13 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
-import { ForgotPasswordFormValues, forgotPasswordSchema } from '@/lib/schemas/auth';
+import { ForgotPasswordFormValues, forgotPasswordSchema } from '@/libs/schemas/auth';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';

@@ -1,7 +1,7 @@
 'use client';
 
-import { EntityType } from '@/constants/entity';
-import { useUserStore } from '@/store/useUserStore';
+import { EntityType } from '@/core/constants/entity';
+import { useUserStore } from '@/stores/useUserStore';
 import { calculateRatingStats } from '@/utils';
 import { Share2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';

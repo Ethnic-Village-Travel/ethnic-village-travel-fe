@@ -1,8 +1,13 @@
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
-import { ACCOUNT_LOCKED, ADMIN_DASHBOARD_READ, DeniedPermissionMap, PermissionMap } from './constants/permission-map';
-import { routing } from './lib/i18n-navigation';
+import {
+  ACCOUNT_LOCKED,
+  ADMIN_DASHBOARD_READ,
+  DeniedPermissionMap,
+  PermissionMap,
+} from './core/constants/permission-map';
+import { routing } from './libs/i18n-navigation';
 import { normalizePath } from './utils';
 import { PROTECTED_ROUTES } from './utils/route-guard';
 

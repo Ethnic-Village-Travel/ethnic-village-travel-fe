@@ -1,4 +1,4 @@
-import { RouteConstant } from '@/constants/route';
+import { RouteConstant } from '@/core/constants/route';
 
 /**
  * Routes that require admin permissions

@@ -1,4 +1,4 @@
-import { reviewApi } from '@/apis/review.api';
+import { reviewApi } from '@/data/apis/review.api';
 import { handleError } from '@/utils/handle-error';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 

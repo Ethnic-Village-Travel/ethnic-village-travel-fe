@@ -66,6 +66,9 @@ jobs:
             TAG="${{ needs.build-and-push.outputs.image_tag }}"
             IMAGE_NAME="ghcr.io/${REPO_LOWER}/ethnic-village-travel-fe"
 
+            # Login to GHCR using PAT stored in repo secrets
+            # echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" --password-stdin
+
             echo "Pulling $IMAGE_NAME:$TAG"
             docker pull $IMAGE_NAME:$TAG
 

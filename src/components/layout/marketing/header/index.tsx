@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { RouteConstant } from '@/constants/route';
-import { useAuthStore } from '@/store/useAuthStore';
+import { RouteConstant } from '@/core/constants/route';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
 import { useTranslations } from 'next-intl';
 import { ClassNameValue } from 'tailwind-merge';
 
 import { Button } from '@/components/ui/button';
-import { AuthPopup } from '@/components/features/auth/auth-popup';
-import { UserMenu } from '@/components/features/user/user-menu';
+import Container from '@/components/ui/container';
+import { AuthPopup } from '@/components/features/auth';
+import { UserMenu } from '@/components/features/user';
 import LanguageSwitcher from '@/components/shared/language-switcher';
 
 interface HeaderProps {
@@ -57,13 +58,13 @@ const Header = ({ navItemClassName }: HeaderProps) => {
   };
 
   return (
-    <>
+    <Container className={cn('fixed left-0 right-0 top-0 z-50')}>
       <header
-        className={cn('fixed left-0 right-0 top-0 z-50 flex items-center justify-center bg-transparent py-4', {
+        className={cn('flex w-full items-center justify-center bg-transparent py-4', {
           'backdrop-blur-lg': hasBackdrop,
         })}
       >
-        <div className="flex w-full max-w-screen-2xl items-center justify-between px-28">
+        <div className="flex w-full items-center justify-between">
           <Link href="/" className="flex items-center">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white transition-transform duration-300 ease-in-out hover:scale-110">
               <Image
@@ -123,7 +124,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
       </header>
 
       <AuthPopup />
-    </>
+    </Container>
   );
 };
 

@@ -1,4 +1,4 @@
-import AssignedAvailableDatesContent from '@/components/features/tour/assigned-available-dates';
+import AssignedAvailableDatesContent from '@/components/features/admin/assignment';
 
 export default function AssignedAvailableDatesPage() {
   return <AssignedAvailableDatesContent />;

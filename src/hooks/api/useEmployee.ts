@@ -1,4 +1,4 @@
-import { employeeApi } from '@/apis/employee.api';
+import { employeeApi } from '@/data/apis/employee.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { AssignedEmployeesByDatesRequest, EmployeeDateRangeRequest } from '@/types/employee.type';

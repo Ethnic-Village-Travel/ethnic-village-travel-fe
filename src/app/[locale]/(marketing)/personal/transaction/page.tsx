@@ -1,4 +1,4 @@
-import BookingTabContent from '@/components/features/personal/booking-tab/booking-tab';
+import BookingTabContent from '@/components/features/user/bookings/booking-tab';
 
 export default function TransactionPage() {
   return <BookingTabContent />;

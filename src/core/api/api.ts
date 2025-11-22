@@ -1,8 +1,8 @@
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { getCookie } from '@/utils/cookie';
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import { logout } from '@/lib/auth';
+import { logout } from '@/libs/auth';
 
 import { API_ROOT, TIMEOUT } from './config';
 

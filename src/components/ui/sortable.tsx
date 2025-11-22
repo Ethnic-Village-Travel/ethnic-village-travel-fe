@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@//utils';
+import { composeEventHandlers, useComposedRefs } from '@/libs/composition';
 import {
   closestCenter,
   closestCorners,
@@ -34,8 +35,6 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { Slot } from '@radix-ui/react-slot';
 import * as ReactDOM from 'react-dom';
-
-import { composeEventHandlers, useComposedRefs } from '@/lib/composition';
 
 const orientationConfig = {
   vertical: {
@@ -475,11 +474,11 @@ const ItemHandle = SortableItemHandle;
 const Overlay = SortableOverlay;
 
 export {
-  Root,
   Content,
   Item,
   ItemHandle,
   Overlay,
+  Root,
   //
   Sortable,
   SortableContent,

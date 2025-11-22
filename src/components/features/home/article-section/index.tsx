@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { RouteConstant } from '@/constants/route';
-import { MOCK_ARTICLES } from '@/data/articles';
+import { RouteConstant } from '@/core/constants/route';
+import { MOCK_ARTICLES } from '@/data/mocks/articles';
 import { ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
