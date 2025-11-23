@@ -704,5 +704,201 @@
     "minimize_button": "Minimize",
     "expand_button": "Expand",
     "guest_label": "Guest"
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact - Ethnic Village Travel",
+      "description": "Contact us for consultation and support about ethnic village tours"
+    },
+    "hero": {
+      "title": "Contact Us",
+      "description": "We're always ready to support you in your ethnic cultural exploration journey"
+    },
+    "info": {
+      "title": "Contact Information",
+      "phone": {
+        "title": "Phone",
+        "primary": "+84 123 456 789",
+        "secondary": "+84 987 654 321"
+      },
+      "email": {
+        "title": "Email",
+        "general": "info@ethnicvillagetravel.com",
+        "support": "support@ethnicvillagetravel.com"
+      },
+      "address": {
+        "title": "Address",
+        "line1": "123 Van Hoa Street",
+        "line2": "Ba Dinh District, Hanoi, Vietnam"
+      },
+      "hours": {
+        "title": "Business Hours",
+        "weekdays": "Monday - Friday: 8:00 AM - 6:00 PM",
+        "weekend": "Saturday - Sunday: 9:00 AM - 5:00 PM"
+      },
+      "social": {
+        "title": "Social Media",
+        "follow_us": "Follow us"
+      }
+    },
+    "form": {
+      "title": "Send Message",
+      "description": "Fill out the form below and we'll get back to you as soon as possible",
+      "name": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email address"
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": "Enter your phone number"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Your message subject"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Write your message here..."
+      },
+      "submit": "Send Message",
+      "submitting": "Sending...",
+      "success": "Your message has been sent successfully! We'll get back to you soon.",
+      "error": "An error occurred while sending your message. Please try again.",
+      "errors": {
+        "name_required": "Please enter your full name",
+        "name_min_length": "Name must be at least 2 characters",
+        "email_required": "Please enter your email address",
+        "email_invalid": "Invalid email address",
+        "phone_required": "Please enter your phone number",
+        "phone_invalid": "Invalid phone number",
+        "subject_required": "Please enter a subject",
+        "subject_min_length": "Subject must be at least 3 characters",
+        "message_required": "Please enter your message",
+        "message_min_length": "Message must be at least 10 characters"
+      }
+    },
+    "response_time": "We typically respond within 24 business hours"
+  },
+  "about": {
+    "meta": {
+      "title": "About Us - Ethnic Village Travel",
+      "description": "Discover our story and mission in connecting travelers with Vietnam's ethnic minority villages"
+    },
+    "hero": {
+      "title": "About Us",
+      "description": "Connecting you with authentic ethnic cultural experiences"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "content": "We believe that travel can be a bridge between cultures, bringing benefits to both travelers and local communities. Our mission is to create meaningful, sustainable travel experiences that help preserve and promote the rich culture of Vietnam's ethnic minorities.",
+      "subtitle": "Our Story",
+      "story": "Founded with a passion for ethnic culture and sustainable tourism, Ethnic Village Travel has spent years building trusted relationships with local communities. We work directly with local families and guides to ensure each trip is not only memorable but also has a positive impact on the community."
+    },
+    "values": {
+      "title": "Core Values",
+      "items": {
+        "authenticity": {
+          "title": "Authentic Experiences",
+          "description": "We are committed to providing genuine cultural experiences that are not commercialized and respect local traditions"
+        },
+        "sustainability": {
+          "title": "Sustainable Tourism",
+          "description": "We prioritize responsible tourism activities that protect the environment and support local economies"
+        },
+        "community": {
+          "title": "Community Support",
+          "description": "A portion of revenue from each trip goes directly to local families and communities"
+        },
+        "quality": {
+          "title": "Service Quality",
+          "description": "We maintain the highest standards of safety, comfort, and customer service on every trip"
+        }
+      }
+    },
+    "stats": {
+      "title": "Our Achievements",
+      "years_experience": {
+        "value": "10+",
+        "label": "Years of Experience"
+      },
+      "tours_completed": {
+        "value": "5,000+",
+        "label": "Tours Completed"
+      },
+      "happy_customers": {
+        "value": "15,000+",
+        "label": "Happy Customers"
+      },
+      "villages_partnered": {
+        "value": "50+",
+        "label": "Partner Villages"
+      }
+    },
+    "cta": {
+      "title": "Ready to Explore?",
+      "description": "Join us on a journey to discover Vietnam's rich ethnic culture",
+      "explore_tours": "Explore Tours",
+      "contact_us": "Contact Us"
+    }
+  },
+  "services": {
+    "meta": {
+      "title": "Services - Ethnic Village Travel",
+      "description": "Explore our ethnic tourism services - from tour booking, custom tours to professional guides"
+    },
+    "hero": {
+      "title": "Our Services",
+      "description": "Experience comprehensive professional ethnic tourism services"
+    },
+    "list": {
+      "title": "Services We Offer",
+      "subtitle": "We provide comprehensive services to ensure your trip is complete and memorable",
+      "tour_booking": {
+        "title": "Online Tour Booking",
+        "description": "Easily search and book ethnic tours with our convenient online booking system",
+        "features": [
+          "Browse tours by ethnic group, location, and duration",
+          "View detailed itineraries and customer reviews",
+          "Secure online booking and payment",
+          "Instant booking confirmation via email"
+        ],
+        "cta": "Explore Tours"
+      },
+      "custom_tours": {
+        "title": "Custom Tours",
+        "description": "Create your own journey with specially designed tours tailored to your personal needs and preferences",
+        "features": [
+          "Flexible itinerary based on your requirements",
+          "Choose your preferred ethnic groups and activities",
+          "Suitable for groups and families",
+          "Free consultation from travel experts"
+        ],
+        "cta": "Contact for Consultation"
+      },
+      "guide_services": {
+        "title": "Professional Guides",
+        "description": "Experienced local guides with deep cultural knowledge and enthusiasm",
+        "features": [
+          "Local ethnic minority guides",
+          "Multi-language support (Vietnamese, English)",
+          "Deep knowledge of culture and traditions",
+          "Safety assurance and support throughout the journey"
+        ]
+      },
+      "additional_services": {
+        "title": "Additional Services",
+        "description": "Other support services to make your trip more convenient and comfortable",
+        "features": [
+          "Airport pickup and transportation",
+          "Hotel and homestay booking",
+          "Travel insurance",
+          "Visa and documentation support"
+        ]
+      }
+    }
   }
 }

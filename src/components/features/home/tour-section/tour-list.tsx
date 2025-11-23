@@ -4,7 +4,6 @@ import { cn } from '@/utils';
 import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
-import { useMediaQuery } from '@/hooks/use-media-query';
 
 import { TourItem } from '../../tour/tour-card';
 
@@ -16,7 +15,6 @@ interface TourListProps {
 }
 
 const TourList = ({ tours, isLoading, isError, className }: TourListProps) => {
-  const isHorizontal = useMediaQuery('(max-width: 768px)');
   const t = useTranslations('common');
 
   if (isLoading) {
@@ -46,9 +44,14 @@ const TourList = ({ tours, isLoading, isError, className }: TourListProps) => {
   }
 
   return (
-    <div className={cn(`grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`, className)}>
+    <div
+      className={cn(
+        `grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5`,
+        className,
+      )}
+    >
       {tours.map(tour => (
-        <TourItem key={tour.id} tour={tour} layout={isHorizontal ? 'horizontal' : 'vertical'} />
+        <TourItem key={tour.id} tour={tour} />
       ))}
     </div>
   );
