@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import { cn } from '@/utils';
 
-import { FilterBar } from './filter-bar';
 import { SearchBar } from './search-bar';
 
 interface HeroSectionProps {
@@ -12,7 +11,13 @@ interface HeroSectionProps {
 
 export function HeroSection({ className }: HeroSectionProps) {
   return (
-    <section className={cn('full-bleed relative mt-[-80px] h-[600px] overflow-hidden', className)}>
+    <section
+      className={cn(
+        'full-bleed relative mt-[-80px] overflow-hidden',
+        'h-[500px] sm:h-[550px] lg:h-[600px] xl:h-[650px]',
+        className,
+      )}
+    >
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image src="/images/homepage_hero.jpg" alt="Hero Background" fill className="object-cover" priority />
@@ -20,21 +25,18 @@ export function HeroSection({ className }: HeroSectionProps) {
       </div>
 
       {/* Content */}
-      <div className="container relative mx-auto flex h-full w-full flex-col items-center justify-center">
-        <div className="mb-12 text-center">
-          <h1 className="mb-4 text-4xl font-bold text-white md:px-8 md:text-5xl lg:px-16 lg:text-6xl xl:px-28">
+      <div className="container relative mx-auto flex h-full w-full flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 w-full text-center sm:mb-8 lg:mb-12">
+          <h1 className="mb-3 text-3xl font-bold leading-tight text-white sm:mb-4 sm:text-4xl sm:leading-tight lg:px-8 lg:text-5xl xl:px-16 xl:text-6xl">
             Khám phá vẻ đẹp văn hóa dân tộc
           </h1>
-          <p className="text-white/90 text-lg text-gray-400 md:text-xl">
+          <p className="mx-auto max-w-2xl text-base text-gray-300 sm:text-lg lg:text-xl">
             Trải nghiệm những chuyến du lịch độc đáo đến các làng dân tộc thiểu số
           </p>
         </div>
 
-        <div className="flex w-full max-w-6xl flex-col gap-4 md:px-8 lg:px-16 xl:px-28">
+        <div className="flex w-full max-w-6xl flex-col gap-4 px-2 sm:px-4 lg:px-8 xl:px-16">
           <SearchBar className="w-full" />
-          <div className="flex w-full">
-            <FilterBar />
-          </div>
         </div>
       </div>
     </section>

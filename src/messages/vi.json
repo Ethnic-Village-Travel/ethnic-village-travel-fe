@@ -653,5 +653,201 @@
     "minimize_button": "Thu nhỏ",
     "expand_button": "Mở rộng",
     "guest_label": "Khách"
+  },
+  "contact": {
+    "meta": {
+      "title": "Liên Hệ - Ethnic Village Travel",
+      "description": "Liên hệ với chúng tôi để được tư vấn và hỗ trợ về các tour du lịch dân tộc"
+    },
+    "hero": {
+      "title": "Liên Hệ Với Chúng Tôi",
+      "description": "Chúng tôi luôn sẵn sàng hỗ trợ bạn trong hành trình khám phá văn hóa dân tộc"
+    },
+    "info": {
+      "title": "Thông Tin Liên Hệ",
+      "phone": {
+        "title": "Điện Thoại",
+        "primary": "+84 123 456 789",
+        "secondary": "+84 987 654 321"
+      },
+      "email": {
+        "title": "Email",
+        "general": "info@ethnicvillagetravel.com",
+        "support": "support@ethnicvillagetravel.com"
+      },
+      "address": {
+        "title": "Địa Chỉ",
+        "line1": "123 Đường Văn Hóa",
+        "line2": "Quận Ba Đình, Hà Nội, Việt Nam"
+      },
+      "hours": {
+        "title": "Giờ Làm Việc",
+        "weekdays": "Thứ 2 - Thứ 6: 8:00 - 18:00",
+        "weekend": "Thứ 7 - Chủ Nhật: 9:00 - 17:00"
+      },
+      "social": {
+        "title": "Mạng Xã Hội",
+        "follow_us": "Theo dõi chúng tôi"
+      }
+    },
+    "form": {
+      "title": "Gửi Tin Nhắn",
+      "description": "Điền vào form bên dưới và chúng tôi sẽ liên hệ lại với bạn sớm nhất có thể",
+      "name": {
+        "label": "Họ và Tên",
+        "placeholder": "Nhập họ và tên của bạn"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Nhập địa chỉ email của bạn"
+      },
+      "phone": {
+        "label": "Số Điện Thoại",
+        "placeholder": "Nhập số điện thoại của bạn"
+      },
+      "subject": {
+        "label": "Chủ Đề",
+        "placeholder": "Chủ đề tin nhắn của bạn"
+      },
+      "message": {
+        "label": "Tin Nhắn",
+        "placeholder": "Viết tin nhắn của bạn tại đây..."
+      },
+      "submit": "Gửi Tin Nhắn",
+      "submitting": "Đang gửi...",
+      "success": "Tin nhắn của bạn đã được gửi thành công! Chúng tôi sẽ liên hệ lại sớm.",
+      "error": "Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại.",
+      "errors": {
+        "name_required": "Vui lòng nhập họ và tên",
+        "name_min_length": "Họ và tên phải có ít nhất 2 ký tự",
+        "email_required": "Vui lòng nhập địa chỉ email",
+        "email_invalid": "Địa chỉ email không hợp lệ",
+        "phone_required": "Vui lòng nhập số điện thoại",
+        "phone_invalid": "Số điện thoại không hợp lệ",
+        "subject_required": "Vui lòng nhập chủ đề",
+        "subject_min_length": "Chủ đề phải có ít nhất 3 ký tự",
+        "message_required": "Vui lòng nhập tin nhắn",
+        "message_min_length": "Tin nhắn phải có ít nhất 10 ký tự"
+      }
+    },
+    "response_time": "Chúng tôi thường phản hồi trong vòng 24 giờ làm việc"
+  },
+  "about": {
+    "meta": {
+      "title": "Giới Thiệu - Ethnic Village Travel",
+      "description": "Khám phá câu chuyện và sứ mệnh của chúng tôi trong việc kết nối du khách với các làng dân tộc thiểu số Việt Nam"
+    },
+    "hero": {
+      "title": "Về Chúng Tôi",
+      "description": "Kết nối bạn với trải nghiệm văn hóa dân tộc đích thực"
+    },
+    "mission": {
+      "title": "Sứ Mệnh Của Chúng Tôi",
+      "content": "Chúng tôi tin rằng du lịch có thể là cầu nối văn hóa, mang lại lợi ích cho cả du khách và cộng đồng địa phương. Sứ mệnh của chúng tôi là tạo ra những trải nghiệm du lịch có ý nghĩa, bền vững, giúp bảo tồn và quảng bá văn hóa phong phú của các dân tộc thiểu số Việt Nam.",
+      "subtitle": "Câu Chuyện Của Chúng Tôi",
+      "story": "Được thành lập với niềm đam mê về văn hóa dân tộc và du lịch bền vững, Ethnic Village Travel đã dành nhiều năm xây dựng mối quan hệ tin cậy với các cộng đồng địa phương. Chúng tôi làm việc trực tiếp với các gia đình và hướng dẫn viên địa phương để đảm bảo mỗi chuyến đi không chỉ đáng nhớ mà còn có tác động tích cực đến cộng đồng."
+    },
+    "values": {
+      "title": "Giá Trị Cốt Lõi",
+      "items": {
+        "authenticity": {
+          "title": "Trải Nghiệm Chân Thực",
+          "description": "Chúng tôi cam kết mang đến những trải nghiệm văn hóa chân thực, không bị thương mại hóa, tôn trọng truyền thống địa phương"
+        },
+        "sustainability": {
+          "title": "Du Lịch Bền Vững",
+          "description": "Chúng tôi ưu tiên các hoạt động du lịch có trách nhiệm, bảo vệ môi trường và hỗ trợ kinh tế địa phương"
+        },
+        "community": {
+          "title": "Hỗ Trợ Cộng Đồng",
+          "description": "Một phần doanh thu từ mỗi chuyến đi được trả trực tiếp cho các gia đình và cộng đồng địa phương"
+        },
+        "quality": {
+          "title": "Chất Lượng Dịch Vụ",
+          "description": "Chúng tôi duy trì tiêu chuẩn cao nhất về an toàn, tiện nghi và dịch vụ khách hàng trong mọi chuyến đi"
+        }
+      }
+    },
+    "stats": {
+      "title": "Thành Tựu Của Chúng Tôi",
+      "years_experience": {
+        "value": "10+",
+        "label": "Năm Kinh Nghiệm"
+      },
+      "tours_completed": {
+        "value": "5,000+",
+        "label": "Chuyến Đi Hoàn Thành"
+      },
+      "happy_customers": {
+        "value": "15,000+",
+        "label": "Khách Hàng Hài Lòng"
+      },
+      "villages_partnered": {
+        "value": "50+",
+        "label": "Làng Dân Tộc Hợp Tác"
+      }
+    },
+    "cta": {
+      "title": "Sẵn Sàng Khám Phá?",
+      "description": "Tham gia cùng chúng tôi trong hành trình khám phá văn hóa dân tộc phong phú của Việt Nam",
+      "explore_tours": "Khám Phá Các Tour",
+      "contact_us": "Liên Hệ Chúng Tôi"
+    }
+  },
+  "services": {
+    "meta": {
+      "title": "Dịch Vụ - Ethnic Village Travel",
+      "description": "Khám phá các dịch vụ du lịch dân tộc của chúng tôi - từ đặt tour, tour tùy chỉnh đến hướng dẫn viên chuyên nghiệp"
+    },
+    "hero": {
+      "title": "Dịch Vụ Của Chúng Tôi",
+      "description": "Trải nghiệm đầy đủ các dịch vụ du lịch dân tộc chuyên nghiệp"
+    },
+    "list": {
+      "title": "Các Dịch Vụ Chúng Tôi Cung Cấp",
+      "subtitle": "Chúng tôi cung cấp đầy đủ các dịch vụ để đảm bảo chuyến đi của bạn trọn vẹn và đáng nhớ",
+      "tour_booking": {
+        "title": "Đặt Tour Trực Tuyến",
+        "description": "Dễ dàng tìm kiếm và đặt các tour du lịch dân tộc với hệ thống đặt chỗ trực tuyến tiện lợi của chúng tôi",
+        "features": [
+          "Duyệt tour theo dân tộc, địa điểm và thời gian",
+          "Xem chi tiết lịch trình và đánh giá từ khách hàng",
+          "Đặt chỗ và thanh toán trực tuyến an toàn",
+          "Xác nhận đặt chỗ tức thì qua email"
+        ],
+        "cta": "Khám Phá Các Tour"
+      },
+      "custom_tours": {
+        "title": "Tour Tùy Chỉnh",
+        "description": "Tạo hành trình riêng của bạn với các tour được thiết kế đặc biệt theo nhu cầu và sở thích cá nhân",
+        "features": [
+          "Lịch trình linh hoạt theo yêu cầu",
+          "Lựa chọn dân tộc và hoạt động ưa thích",
+          "Phù hợp cho nhóm và gia đình",
+          "Tư vấn miễn phí từ chuyên gia du lịch"
+        ],
+        "cta": "Liên Hệ Tư Vấn"
+      },
+      "guide_services": {
+        "title": "Hướng Dẫn Viên Chuyên Nghiệp",
+        "description": "Đội ngũ hướng dẫn viên địa phương giàu kinh nghiệm, am hiểu văn hóa và nhiệt tình",
+        "features": [
+          "Hướng dẫn viên người dân tộc địa phương",
+          "Hỗ trợ đa ngôn ngữ (Tiếng Việt, Tiếng Anh)",
+          "Kiến thức sâu về văn hóa và truyền thống",
+          "Đảm bảo an toàn và hỗ trợ suốt hành trình"
+        ]
+      },
+      "additional_services": {
+        "title": "Dịch Vụ Bổ Sung",
+        "description": "Các dịch vụ hỗ trợ khác để chuyến đi của bạn thuận tiện và thoải mái hơn",
+        "features": [
+          "Đưa đón sân bay và vận chuyển",
+          "Đặt phòng khách sạn và homestay",
+          "Bảo hiểm du lịch",
+          "Hỗ trợ visa và thủ tục"
+        ]
+      }
+    }
   }
 }

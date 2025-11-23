@@ -65,7 +65,10 @@ export function SearchBar({ className }: SearchBarProps) {
 
   return (
     <div
-      className={cn('flex items-center gap-2 rounded-xl border-[1px] border-primary-400 bg-white p-2 px-4', className)}
+      className={cn(
+        'flex flex-col items-stretch gap-2 rounded-xl border-[1px] border-primary-400 bg-white p-2 md:flex-row md:items-center md:px-4',
+        className,
+      )}
     >
       {isHome && (
         <>
@@ -75,11 +78,15 @@ export function SearchBar({ className }: SearchBarProps) {
               setSearchData({ ...searchData, location: value });
             }}
           >
-            <SelectTrigger className="flex h-fit max-w-60 gap-4 border-0 bg-transparent p-2 py-1 text-left font-semibold shadow-none focus:ring-0 focus-visible:ring-0">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-5">
-                <MapPin className="h-6 w-6 text-primary-500" />
+            <SelectTrigger className="flex h-fit w-full gap-2 border-0 bg-transparent p-0 text-left font-semibold shadow-none focus:ring-0 focus-visible:ring-0 md:max-w-60 md:gap-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-5 md:h-12 md:w-12">
+                <MapPin className="h-5 w-5 text-primary-500 md:h-6 md:w-6" />
               </div>
-              <SelectValue placeholder={t('location_placeholder')} className="text-base font-semibold" color="dark" />
+              <SelectValue
+                placeholder={t('location_placeholder')}
+                className="text-sm font-semibold md:text-base"
+                color="dark"
+              />
             </SelectTrigger>
             <SelectContent>
               {locationRes?.data?.map(location => (
@@ -89,27 +96,29 @@ export function SearchBar({ className }: SearchBarProps) {
               ))}
             </SelectContent>
           </Select>
-          <Separator className="mx-1 h-full w-[0.5px] bg-gray-20" />
+          <Separator className="mx-1 hidden h-full w-[0.5px] bg-gray-20 md:block" />
         </>
       )}
 
       <Popover open={isOpenDate} onOpenChange={setIsOpenDate}>
-        <PopoverTrigger asChild className="h-fit max-w-44 py-1 shadow-none hover:bg-primary-5">
+        <PopoverTrigger asChild className="h-fit w-full py-1 shadow-none hover:bg-primary-5 md:max-w-44">
           <Button
             variant="outline"
             className={cn(
-              'w-full justify-start border-0 bg-transparent px-2 text-left font-normal',
+              'w-full justify-start border-0 bg-transparent p-0 text-left text-sm font-normal md:text-base',
               !searchData.date && 'text-muted-foreground',
             )}
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-5">
-              <CalendarIcon className="h-6 w-6 text-primary-500" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-5 md:h-12 md:w-12">
+              <CalendarIcon className="h-5 w-5 text-primary-500 md:h-6 md:w-6" />
             </div>
-            {searchData.date ? (
-              format(searchData.date, 'dd/MM/yyyy', { locale: vi })
-            ) : (
-              <span>{t('date_placeholder')}</span>
-            )}
+            <span className="truncate">
+              {searchData.date ? (
+                format(searchData.date, 'dd/MM/yyyy', { locale: vi })
+              ) : (
+                <span>{t('date_placeholder')}</span>
+              )}
+            </span>
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto overflow-hidden p-0" align="start">
@@ -125,17 +134,17 @@ export function SearchBar({ className }: SearchBarProps) {
         </PopoverContent>
       </Popover>
 
-      <Separator className="mx-1 h-full w-[0.5px] bg-gray-20" />
+      <Separator className="mx-1 hidden h-full w-[0.5px] bg-gray-20 md:block" />
 
       <div className="flex w-full flex-grow items-center gap-1">
-        <div className="flex h-12 min-w-12 items-center justify-center rounded-full bg-primary-5">
-          <Search className="h-6 w-6 text-primary-500" />
+        <div className="flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full bg-primary-5 md:h-12 md:min-w-12">
+          <Search className="h-5 w-5 text-primary-500 md:h-6 md:w-6" />
         </div>
 
         <Input
           type="text"
           placeholder={t('keyword_placeholder')}
-          className="border-0 bg-transparent shadow-none focus-visible:ring-0"
+          className="border-0 bg-transparent text-sm shadow-none focus-visible:ring-0 md:text-base"
           value={searchData.keyword}
           onChange={e => {
             setSearchData({ ...searchData, keyword: e.target.value });
@@ -144,7 +153,10 @@ export function SearchBar({ className }: SearchBarProps) {
         />
       </div>
 
-      <Button className="h-fit rounded-full bg-primary-button px-5 py-2" onClick={handleSearch}>
+      <Button
+        className="h-fit w-full rounded-full bg-primary-button px-4 py-2 text-sm md:w-auto md:px-5 md:text-base"
+        onClick={handleSearch}
+      >
         {t('search_button')}
       </Button>
     </div>
