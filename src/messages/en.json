@@ -518,6 +518,76 @@
       "no_pending": "No pending bookings",
       "no_other": "No other bookings"
     },
+    "detail": {
+      "title": "Transaction Details",
+      "booking_info": {
+        "title": "Booking Information",
+        "booking_id": "Booking ID",
+        "booking_date": "Booking Date",
+        "start_date": "Start Date",
+        "end_date": "End Date",
+        "guest_count": "Guest Count",
+        "payment_info": "Payment Information",
+        "payment_method": "Payment Method",
+        "payment_date": "Payment Date",
+        "original_price": "Original Price",
+        "discount": "Discount",
+        "total_amount": "Total Amount",
+        "payment_deadline": "Payment Deadline",
+        "additional_info": "Additional Information"
+      },
+      "customer_info": {
+        "title": "Customer Information",
+        "customer": "Customer",
+        "email": "Email",
+        "phone": "Phone Number",
+        "status": "Status",
+        "loyal_customer": "Loyal Customer",
+        "new_customer": "New Customer",
+        "send_email": "Send Email",
+        "make_call": "Make Call",
+        "not_updated": "Not Updated"
+      },
+      "tour_info": {
+        "title": "Tour Details",
+        "pickup_location": "Pickup Location",
+        "duration": "Duration",
+        "adult_price": "Adult Price",
+        "child_price": "Child Price",
+        "highlights": "Highlights",
+        "professional_guide": "Professional Guide",
+        "transportation": "Transportation",
+        "travel_insurance": "Travel Insurance",
+        "support_24_7": "24/7 Support",
+        "view_tour_details": "View Tour Details",
+        "similar_tours": "Similar Tours",
+        "tour_not_available": "Tour information not available"
+      },
+      "actions": {
+        "pay_now": "Pay Now",
+        "print_invoice": "Print Invoice",
+        "download_pdf": "Download PDF",
+        "back_to_list": "Back to List",
+        "print_transaction": "Print Transaction",
+        "back": "Back"
+      },
+      "loading": "Loading transaction details...",
+      "error": {
+        "title": "Error Occurred",
+        "message": "Unable to load transaction details. Please try again.",
+        "retry": "Retry"
+      },
+      "format": {
+        "days": "days",
+        "nights": "nights",
+        "day_night": "{days} days {nights} nights",
+        "single_day": "1 day",
+        "adults": "adults",
+        "children": "children",
+        "infants": "infants",
+        "not_specified": "Not specified"
+      }
+    },
     "account": {
       "title": "Account Settings",
       "profile": "Profile Settings",
