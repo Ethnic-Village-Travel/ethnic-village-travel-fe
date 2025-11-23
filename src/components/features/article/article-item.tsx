@@ -2,13 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { EntityType } from '@/core/constants/entity';
 import { RouteConstant } from '@/core/constants/route';
 import { cn } from '@/utils';
+import dayjs from 'dayjs';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { BookmarkButton } from '@/components/shared/bookmark-button';
 
 export interface ArticleItemProps {
   id: number;
@@ -26,7 +25,6 @@ export interface ArticleItemProps {
 }
 
 const ArticleItem = ({
-  id,
   title,
   author,
   readTime,
@@ -37,77 +35,83 @@ const ArticleItem = ({
   description,
   date,
   tags,
-  isBookmarked = false,
 }: ArticleItemProps) => {
   const isHorizontal = layout === 'horizontal';
+  const formattedDate = date ? dayjs(date).format('DD/MM/YYYY') : null;
 
   return (
-    <Link href={`${RouteConstant.article_detail.replace(':slug', slug)}`} className="block w-full">
-      <Card
-        className={cn(
-          'h-full w-full overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-md',
-          {
-            'flex flex-col md:flex-row': isHorizontal,
-          },
-          className,
-        )}
+    <Card
+      className={cn(
+        'group relative flex h-full w-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg',
+        {
+          'flex-row': isHorizontal,
+        },
+        className,
+      )}
+    >
+      {/* Image Section */}
+      <Link
+        href={`${RouteConstant.article_detail.replace(':slug', slug)}`}
+        className={cn('relative shrink-0 overflow-hidden', {
+          'w-80': isHorizontal,
+          'w-full': !isHorizontal,
+        })}
       >
         <div
-          className={cn('relative h-[154px] w-full', {
-            'flex-shrink-0 md:h-auto md:w-[150px]': isHorizontal,
+          className={cn('relative overflow-hidden', {
+            'h-full min-h-[220px]': isHorizontal,
+            'aspect-[4/3]': !isHorizontal,
           })}
         >
-          <Image src={thumbnailUrl} alt={title} fill style={{ objectFit: 'cover' }} priority />
+          <Image
+            src={thumbnailUrl}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            priority
+          />
         </div>
-        <CardContent
-          className={cn('flex flex-col gap-3 p-4', {
-            'flex-grow gap-0 p-5': isHorizontal,
-          })}
-        >
-          <div>
-            {tags && tags.length > 0 && (
-              <div
-                className={cn('mb-2 flex flex-wrap gap-1', {
-                  'h-[44px]': !isHorizontal,
-                })}
-              >
-                {tags.map(tag => (
-                  <Badge key={tag} autoVariant shape="rounded" size="sm">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
-            <h3
-              className={cn('line-clamp-2 text-base font-bold text-dark', {
-                'mb-2 line-clamp-2 text-xl md:line-clamp-1 md:text-2xl': isHorizontal,
-              })}
-            >
+      </Link>
+
+      {/* Content Section */}
+      <CardContent className={cn('flex flex-1 flex-col p-5', isHorizontal ? 'py-4' : '')}>
+        <div className="flex flex-1 flex-col">
+          {/* Tags */}
+          {tags && tags.length > 0 && (
+            <div className="mb-3 flex h-7 flex-wrap gap-1.5">
+              {tags.slice(0, 3).map(tag => (
+                <Badge key={tag} autoVariant shape="rounded" size="sm">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          )}
+
+          {/* Title */}
+          <Link href={`${RouteConstant.article_detail.replace(':slug', slug)}`} className="group/title mb-3 block h-14">
+            <h3 className="line-clamp-2 text-lg font-bold leading-snug transition-colors group-hover/title:text-primary">
               {title}
             </h3>
-            {isHorizontal && description && <p className="mb-3 mt-2 line-clamp-3 text-gray-600">{description}</p>}
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-dark">{author}</span>
-              <span className="text-gray-500">·</span>
-              <span className="text-sm text-gray-500">{readTime} phút đọc</span>
-              {isHorizontal && date && (
-                <>
-                  <span className="text-gray-500">·</span>
-                  <span className="text-sm text-gray-500">{date}</span>
-                </>
-              )}
-            </div>
-            <BookmarkButton
-              entityId={id.toString()}
-              entityType={EntityType.ARTICLE}
-              isBookmarkedDefault={isBookmarked}
-            />
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
+          </Link>
+
+          {/* Description - Only for horizontal */}
+          {isHorizontal && description && <p className="mb-3 line-clamp-2 text-sm text-gray-600">{description}</p>}
+        </div>
+
+        {/* Meta Info */}
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span className="font-medium text-dark">{author}</span>
+          <span>·</span>
+          <span>{readTime} phút đọc</span>
+          {formattedDate && (
+            <>
+              <span>·</span>
+              <span>{formattedDate}</span>
+            </>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
