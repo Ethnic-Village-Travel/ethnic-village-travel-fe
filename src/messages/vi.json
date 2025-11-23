@@ -537,6 +537,76 @@
       "no_pending": "Không có booking chờ thanh toán",
       "no_other": "Không có booking khác"
     },
+    "detail": {
+      "title": "Chi tiết giao dịch",
+      "booking_info": {
+        "title": "Thông tin đặt tour",
+        "booking_id": "Mã đặt tour",
+        "booking_date": "Ngày đặt",
+        "start_date": "Ngày khởi hành",
+        "end_date": "Ngày kết thúc",
+        "guest_count": "Số khách",
+        "payment_info": "Thông tin thanh toán",
+        "payment_method": "Phương thức",
+        "payment_date": "Ngày thanh toán",
+        "original_price": "Giá gốc",
+        "discount": "Giảm giá",
+        "total_amount": "Tổng tiền",
+        "payment_deadline": "Hạn thanh toán",
+        "additional_info": "Ghi chú"
+      },
+      "customer_info": {
+        "title": "Thông tin khách hàng",
+        "customer": "Khách hàng",
+        "email": "Email",
+        "phone": "Số điện thoại",
+        "status": "Trạng thái",
+        "loyal_customer": "Khách hàng thân thiết",
+        "new_customer": "Khách hàng mới",
+        "send_email": "Gửi email",
+        "make_call": "Gọi điện",
+        "not_updated": "Chưa cập nhật"
+      },
+      "tour_info": {
+        "title": "Chi tiết tour",
+        "pickup_location": "Điểm khởi hành",
+        "duration": "Thời gian",
+        "adult_price": "Giá người lớn",
+        "child_price": "Giá trẻ em",
+        "highlights": "Điểm nổi bật",
+        "professional_guide": "Hướng dẫn viên chuyên nghiệp",
+        "transportation": "Phương tiện di chuyển",
+        "travel_insurance": "Bảo hiểm du lịch",
+        "support_24_7": "Hỗ trợ 24/7",
+        "view_tour_details": "Xem chi tiết tour",
+        "similar_tours": "Tour tương tự",
+        "tour_not_available": "Thông tin tour không khả dụng"
+      },
+      "actions": {
+        "pay_now": "Thanh toán ngay",
+        "print_invoice": "In hóa đơn",
+        "download_pdf": "Tải PDF",
+        "back_to_list": "Quay lại danh sách",
+        "print_transaction": "In giao dịch",
+        "back": "Quay lại"
+      },
+      "loading": "Đang tải thông tin giao dịch...",
+      "error": {
+        "title": "Có lỗi xảy ra",
+        "message": "Không thể tải thông tin giao dịch. Vui lòng thử lại.",
+        "retry": "Thử lại"
+      },
+      "format": {
+        "days": "ngày",
+        "nights": "đêm",
+        "day_night": "{days} ngày {nights} đêm",
+        "single_day": "1 ngày",
+        "adults": "người lớn",
+        "children": "trẻ em",
+        "infants": "em bé",
+        "not_specified": "Chưa xác định"
+      }
+    },
     "account": {
       "title": "Cài đặt tài khoản",
       "profile": "Cài đặt hồ sơ",

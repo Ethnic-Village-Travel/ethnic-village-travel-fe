@@ -21,6 +21,7 @@ export const RouteConstant = {
   personal: '/personal',
   personal_bookmark: '/personal/bookmark',
   personal_transaction: '/personal/transaction',
+  personal_transaction_detail: '/personal/transaction/:id',
   personal_account: '/personal/account',
 
   //Admin routes (require admin permissions)
