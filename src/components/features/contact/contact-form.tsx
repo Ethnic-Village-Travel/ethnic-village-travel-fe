@@ -22,14 +22,12 @@ export function ContactForm() {
       name: '',
       email: '',
       phone: '',
-      subject: '',
       message: '',
     },
   });
 
   const onSubmit = async (values: ContactFormData) => {
     try {
-      // Simulate form submission
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       console.log('Form submitted:', values);
@@ -49,7 +47,7 @@ export function ContactForm() {
   };
 
   return (
-    <Card className="p-6 md:p-8">
+    <Card className="mx-auto w-full max-w-[800px] p-6 md:p-8">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-dark">{t('title')}</h2>
         <p className="mt-2 text-sm text-gray-600">{t('description')}</p>
@@ -100,20 +98,6 @@ export function ContactForm() {
               )}
             />
           </div>
-
-          <FormField
-            control={form.control}
-            name="subject"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('subject.label')}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t('subject.placeholder')} {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
           <FormField
             control={form.control}
