@@ -1,0 +1,1 @@
+export { generateRobotsTxt } from './generator';

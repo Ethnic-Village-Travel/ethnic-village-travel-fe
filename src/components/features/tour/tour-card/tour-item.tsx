@@ -100,7 +100,6 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
                   max_discount_amount: tour.promotions?.[0]?.maxDiscountAmount,
                 })}
               </span>
-              <span className="text-sm text-muted-foreground">₫</span>
             </div>
             {hasPromotion && (
               <span className="text-sm font-medium text-gray-400 line-through">
