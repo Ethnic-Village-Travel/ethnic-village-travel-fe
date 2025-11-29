@@ -27,18 +27,18 @@ const TourDetail = ({ slug }: { slug: string }) => {
 
   return (
     <div>
-      <div className="full-bleed h-[600px]">
+      <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
         <img src={tour.imageUrl} alt={tour.title} className="h-full w-full object-cover" />
       </div>
-      <div className="flex flex-col pt-6">
-        <div className="flex gap-10 px-[80px] pb-[60px] sm:flex-col-reverse md:flex-col-reverse lg:flex-col-reverse xl:flex-row">
-          <div className="w-full space-y-10 xl:max-w-[calc(100%-360px)]">
+      <div className="flex flex-col pt-4 sm:pt-6">
+        <div className="flex flex-col-reverse gap-6 pb-10 sm:gap-8 sm:pb-[60px] lg:gap-10 xl:flex-row">
+          <div className="w-full space-y-6 sm:space-y-8 lg:space-y-10 xl:max-w-[calc(100%-360px-40px)]">
             <TourDetailHeader {...tour} />
             <TourDetailContent tour={tour} />
           </div>
           <FloatingBookingPanel tour={tour} />
         </div>
-        <SimilarTrip tours={[]} /> {/* TODO: Implement similar tours API */}
+        <SimilarTrip tours={[]} />
       </div>
     </div>
   );

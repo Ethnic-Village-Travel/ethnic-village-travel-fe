@@ -6,6 +6,15 @@ const nextConfig = {
   eslint: {
     dirs: ['src'],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin('./src/libs/i18n.ts');

@@ -45,6 +45,17 @@ export const bookingApi = {
       throw new Error('Failed to get booking');
     }
   },
+  getByOrderCode: async (orderCode: string) => {
+    try {
+      const { data } = await api.get<ApiResponse<BookingGetResponse>>(
+        API.BOOKING.GET_BY_ORDER_CODE.replace('{orderCode}', orderCode),
+      );
+
+      return data;
+    } catch {
+      throw new Error('Failed to get booking by order code');
+    }
+  },
   store: async (request: BookingStoreRequest) => {
     try {
       const { data } = await api.post<ApiResponse<BookingStoreResponse>>(API.BOOKING.STORE, request);

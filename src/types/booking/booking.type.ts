@@ -3,9 +3,21 @@ import { Location } from '../location.type';
 import { Promotion } from '../promotion.type';
 import { Review } from '../review.type';
 
+export interface TimelineActivity {
+  time: string;
+  description: string;
+}
+
+export interface TimelineDay {
+  day: number;
+  activities: TimelineActivity[];
+}
+
 export interface TourInfo {
   id: string;
   title: string;
+  overview?: string;
+  slug?: string;
   imageUrl: string;
   duration: number;
   adultPrice: number;
@@ -15,4 +27,5 @@ export interface TourInfo {
   ethnics?: Ethnic[];
   locations?: Location[];
   reviews?: Review[];
+  timeline?: TimelineDay[];
 }

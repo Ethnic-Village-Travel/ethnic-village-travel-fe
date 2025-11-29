@@ -376,6 +376,38 @@
     }
   },
   "order": {
+    "title": "Review Booking",
+    "payment_expired_title": "Booking Payment Expired",
+    "payment_expired_message": "The payment period for this booking has expired. Please contact support or create a new booking.",
+    "confirm_failed": "Booking Confirmation Failed",
+    "confirm_failed_description": "Unable to confirm your booking. Please try again.",
+    "success_title": "Booking Successful",
+    "order_code": "Order Code",
+    "not_found_title": "Order Not Found",
+    "not_found_message": "The order does not exist or has been deleted.",
+    "tour_info_title": "Tour Information",
+    "start_date": "Start Date",
+    "adults": "adults",
+    "children": "children",
+    "contact_info_title": "Contact Information",
+    "payment_info": "Payment Information",
+    "total_paid": "Total Paid",
+    "email_sent": "A confirmation email has been sent to your email address.",
+    "browse_tours": "Browse More Tours",
+    "view_bookings": "View My Bookings",
+    "lookup": {
+      "title": "Order Lookup",
+      "placeholder": "Enter order code",
+      "enter_order_code": "Please enter order code",
+      "not_found": "Order not found with this code",
+      "order_found": "Order Information",
+      "order_code": "Order Code",
+      "tour_info": "Tour Information",
+      "adults": "adults",
+      "children": "children",
+      "contact_info": "Contact Information",
+      "total_paid": "Total Paid"
+    },
     "additional_info": {
       "title": "Additional requirements (optional)",
       "placeholder": "Share your experience...",
@@ -608,7 +640,18 @@
     "success": {
       "title": "Payment Successful!",
       "description": "Thank you for booking the tour. We will contact you as soon as possible.",
+      "booking_confirmed": "Booking Confirmed",
+      "tour": "Tour",
+      "date": "Date",
+      "guests": "Guests",
+      "adults": "adults",
+      "children": "children",
       "order_code": "Order Code",
+      "total_paid": "Total Paid",
+      "email_confirmation": "A confirmation email has been sent to your email address",
+      "save_order_code": "Save your order code to look up at /order/lookup",
+      "view_order_details": "View Order Details",
+      "browse_more_tours": "Browse More Tours",
       "view_orders": "View Orders",
       "back_home": "Back to Home",
       "auto_redirect": "Auto redirect in {seconds} seconds"
@@ -617,7 +660,10 @@
       "title": "Payment Cancelled",
       "description": "Your order has not been paid. You can try again or contact us for support.",
       "order_code": "Order Code",
+      "booking_saved": "Don't worry - your booking is saved.",
+      "retry_or_browse": "You can retry payment or browse other tours.",
       "retry_payment": "Retry Payment",
+      "browse_tours": "Browse Tours",
       "back_home": "Back to Home",
       "auto_redirect": "Auto redirect in {seconds} seconds"
     }
@@ -898,6 +944,123 @@
           "Travel insurance",
           "Visa and documentation support"
         ]
+      }
+    }
+  },
+  "booking": {
+    "wizard": {
+      "back": "Back",
+      "continue": "Continue",
+      "processing": "Processing...",
+      "cancel_booking": "Cancel booking",
+      "steps": {
+        "guest_count": "Guest Count",
+        "contact_info": "Contact Info",
+        "guest_info": "Guest Info",
+        "review": "Review & Pay"
+      },
+      "guest_count": {
+        "selected_date": "Selected date",
+        "no_date_selected": "No date selected",
+        "available_slots": "Available slots",
+        "adult": "Adult",
+        "child": "Child",
+        "discount": "Discount",
+        "total": "Total",
+        "per_person": "person",
+        "errors": {
+          "guest_count_zero": "Please select at least 1 guest",
+          "exceeds_available_slots": "Guest count exceeds available slots"
+        }
+      },
+      "contact_info": {
+        "name": "Full Name",
+        "name_placeholder": "Enter your full name",
+        "email": "Email",
+        "email_placeholder": "Enter your email address",
+        "phone": "Phone Number",
+        "phone_placeholder": "Enter phone number (10 digits)",
+        "errors": {
+          "name_required": "Please enter your name",
+          "email_required": "Please enter your email",
+          "email_invalid": "Invalid email format",
+          "phone_required": "Please enter your phone number",
+          "phone_invalid": "Phone number must be 10 digits"
+        }
+      },
+      "guest_info": {
+        "booking_type_label": "Who is this booking for?",
+        "self_option": "I am the guest",
+        "self_description": "Contact information will be used for the guest",
+        "others_option": "Booking for someone else",
+        "others_description": "Enter the guest's information",
+        "guest_details_title": "Guest Details",
+        "auto_filled": "Auto-filled",
+        "name": "Full Name",
+        "name_placeholder": "Enter guest's full name",
+        "email": "Email",
+        "email_placeholder": "Enter guest's email address",
+        "phone": "Phone Number",
+        "phone_placeholder": "Enter guest's phone number (10 digits)",
+        "errors": {
+          "name_required": "Please enter the guest's name",
+          "email_required": "Please enter the guest's email",
+          "email_invalid": "Invalid email format",
+          "phone_required": "Please enter the guest's phone number",
+          "phone_invalid": "Phone number must be 10 digits"
+        }
+      },
+      "review": {
+        "edit": "Edit",
+        "guest_count_section": "Guest Count",
+        "contact_info_section": "Contact Information",
+        "guest_info_section": "Guest Information",
+        "tour_info": "Tour Information",
+        "date": "Date",
+        "adults": "Adults",
+        "children": "Children",
+        "total_guests": "Total Guests",
+        "same_as_contact": "Same as contact information",
+        "confirm_and_pay": "Confirm & Pay",
+        "retry": "Retry",
+        "payment_failed": "Payment failed. Please try again."
+      },
+      "summary": {
+        "title": "Booking Summary",
+        "date": "Date",
+        "guests": "Guests",
+        "adults": "Adults",
+        "children": "Children",
+        "subtotal": "Subtotal",
+        "discount": "Discount",
+        "total": "Total",
+        "not_selected": "Not selected"
+      },
+      "price_breakdown": {
+        "title": "Price Breakdown",
+        "adults": "Adults",
+        "children": "Children",
+        "subtotal": "Subtotal",
+        "total": "Total"
+      },
+      "promotion": {
+        "title": "Promotion Code",
+        "placeholder": "Enter promotion code",
+        "apply": "Apply",
+        "discount_applied": "{percent}% discount applied",
+        "errors": {
+          "expired": "Promotion code has expired",
+          "not_active": "Promotion code is not active",
+          "out_of_stock": "Promotion code is out of stock",
+          "invalid": "Invalid promotion code",
+          "validation_failed": "Failed to validate promotion code"
+        }
+      },
+      "error": {
+        "retry": "Retry",
+        "default_title": "An error occurred",
+        "offline_title": "No internet connection",
+        "offline_message": "Please check your internet connection. Actions will be queued and retried when connection is restored."
       }
     }
   }
