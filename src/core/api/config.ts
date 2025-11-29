@@ -40,6 +40,7 @@ export const API = {
   BOOKING: {
     SEARCH: '/booking',
     GET: '/booking/{id}',
+    GET_BY_ORDER_CODE: '/booking/by-order-code/{orderCode}',
     STORE: '/booking/store',
     UPDATE: '/booking/update',
     UPDATE_CONTACT: '/booking/{id}/contact',

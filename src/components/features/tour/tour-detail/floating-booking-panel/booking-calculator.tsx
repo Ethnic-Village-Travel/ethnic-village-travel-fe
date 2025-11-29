@@ -76,8 +76,8 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
   };
 
   return (
-    <div className="xl:flex-0 grid gap-4 rounded-[20px] border border-gray-20 bg-white p-[30px] shadow-custom-gray lg:w-[360px]">
-      <h3 className="text-dark-900 text-center text-[30px] font-bold leading-[1.17]">{t('title')}</h3>
+    <div className="grid w-full gap-4 rounded-[20px] border border-gray-20 bg-white p-5 shadow-custom-gray sm:p-[30px] xl:w-[360px]">
+      <h3 className="text-dark-900 text-center text-2xl font-bold leading-[1.17] sm:text-[30px]">{t('title')}</h3>
 
       {!selectedDateId ? (
         <p className="text-center text-sm text-gray-500">{t('select_date')}</p>

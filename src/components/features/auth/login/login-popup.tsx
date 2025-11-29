@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { getErrorMessage } from '@/utils/handle-error';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,6 +19,8 @@ import { Input } from '@/components/ui/input';
 
 export function LoginPopup() {
   const t = useTranslations('auth.login');
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { loginOpen, setAuth, setLoginOpen, setSignupOpen, setForgotPasswordOpen, closeAllPopups } = useAuthStore();
   const { mutateAsync: login, isPending } = useLogin();
   const { refetch: refetchUserDetails } = useApiUserDetailsGet();
@@ -58,6 +61,11 @@ export function LoginPopup() {
           variant: 'default',
         });
         form.reset();
+
+        const redirectUrl = searchParams.get('redirect');
+        if (redirectUrl) {
+          router.push(redirectUrl);
+        }
       } else {
         toast({
           title: response.message || 'Đăng nhập thất bại',

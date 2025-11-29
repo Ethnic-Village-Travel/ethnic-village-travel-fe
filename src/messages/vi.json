@@ -377,6 +377,38 @@
     }
   },
   "order": {
+    "title": "Xác nhận đặt tour",
+    "payment_expired_title": "Đơn đặt tour đã hết hạn",
+    "payment_expired_message": "Thời gian thanh toán cho đơn đặt tour này đã hết hạn. Vui lòng liên hệ hỗ trợ hoặc tạo đơn đặt mới.",
+    "confirm_failed": "Xác nhận đặt tour thất bại",
+    "confirm_failed_description": "Không thể xác nhận đơn đặt tour. Vui lòng thử lại.",
+    "success_title": "Đặt tour thành công",
+    "order_code": "Mã đơn hàng",
+    "not_found_title": "Không tìm thấy đơn hàng",
+    "not_found_message": "Đơn hàng không tồn tại hoặc đã bị xóa.",
+    "tour_info_title": "Thông tin tour",
+    "start_date": "Ngày khởi hành",
+    "adults": "người lớn",
+    "children": "trẻ em",
+    "contact_info_title": "Thông tin liên hệ",
+    "payment_info": "Thông tin thanh toán",
+    "total_paid": "Tổng thanh toán",
+    "email_sent": "Email xác nhận đã được gửi đến địa chỉ email của bạn.",
+    "browse_tours": "Khám phá thêm tour",
+    "view_bookings": "Xem đơn đặt của tôi",
+    "lookup": {
+      "title": "Tra cứu đơn hàng",
+      "placeholder": "Nhập mã đơn hàng",
+      "enter_order_code": "Vui lòng nhập mã đơn hàng",
+      "not_found": "Không tìm thấy đơn hàng với mã này",
+      "order_found": "Thông tin đơn hàng",
+      "order_code": "Mã đơn hàng",
+      "tour_info": "Thông tin tour",
+      "adults": "người lớn",
+      "children": "trẻ em",
+      "contact_info": "Thông tin liên hệ",
+      "total_paid": "Tổng thanh toán"
+    },
     "additional_info": {
       "title": "Yêu cầu bổ sung (không bắt buộc)",
       "placeholder": "Chia sẻ trải nghiệm của bạn...",
@@ -627,7 +659,18 @@
     "success": {
       "title": "Thanh toán thành công!",
       "description": "Cảm ơn bạn đã đặt tour. Chúng tôi sẽ liên hệ với bạn sớm nhất có thể.",
+      "booking_confirmed": "Đặt tour thành công",
+      "tour": "Tour",
+      "date": "Ngày khởi hành",
+      "guests": "Số khách",
+      "adults": "người lớn",
+      "children": "trẻ em",
       "order_code": "Mã đơn hàng",
+      "total_paid": "Tổng thanh toán",
+      "email_confirmation": "Email xác nhận đã được gửi đến địa chỉ email của bạn",
+      "save_order_code": "Lưu lại mã đơn hàng để tra cứu tại /order/lookup",
+      "view_order_details": "Xem chi tiết đơn hàng",
+      "browse_more_tours": "Khám phá thêm tour",
       "view_orders": "Xem đơn hàng",
       "back_home": "Về trang chủ",
       "auto_redirect": "Tự động chuyển hướng sau {seconds} giây"
@@ -636,7 +679,10 @@
       "title": "Thanh toán đã bị hủy",
       "description": "Đơn hàng của bạn chưa được thanh toán. Bạn có thể thử lại hoặc liên hệ với chúng tôi để được hỗ trợ.",
       "order_code": "Mã đơn hàng",
+      "booking_saved": "Đừng lo - đơn đặt tour của bạn đã được lưu.",
+      "retry_or_browse": "Bạn có thể thử thanh toán lại hoặc khám phá các tour khác.",
       "retry_payment": "Thử lại thanh toán",
+      "browse_tours": "Khám phá tour",
       "back_home": "Về trang chủ",
       "auto_redirect": "Tự động chuyển hướng sau {seconds} giây"
     }
@@ -917,6 +963,123 @@
           "Bảo hiểm du lịch",
           "Hỗ trợ visa và thủ tục"
         ]
+      }
+    }
+  },
+  "booking": {
+    "wizard": {
+      "back": "Quay lại",
+      "continue": "Tiếp tục",
+      "processing": "Đang xử lý...",
+      "cancel_booking": "Hủy đặt tour",
+      "steps": {
+        "guest_count": "Số khách",
+        "contact_info": "Thông tin liên hệ",
+        "guest_info": "Thông tin khách",
+        "review": "Xác nhận & Thanh toán"
+      },
+      "guest_count": {
+        "selected_date": "Ngày đã chọn",
+        "no_date_selected": "Chưa chọn ngày",
+        "available_slots": "Số chỗ còn trống",
+        "adult": "Người lớn",
+        "child": "Trẻ em",
+        "discount": "Giảm giá",
+        "total": "Tổng cộng",
+        "per_person": "người",
+        "errors": {
+          "guest_count_zero": "Vui lòng chọn ít nhất 1 khách",
+          "exceeds_available_slots": "Số khách vượt quá số chỗ còn trống"
+        }
+      },
+      "contact_info": {
+        "name": "Họ và tên",
+        "name_placeholder": "Nhập họ và tên của bạn",
+        "email": "Email",
+        "email_placeholder": "Nhập địa chỉ email",
+        "phone": "Số điện thoại",
+        "phone_placeholder": "Nhập số điện thoại (10 chữ số)",
+        "errors": {
+          "name_required": "Vui lòng nhập họ và tên",
+          "email_required": "Vui lòng nhập email",
+          "email_invalid": "Email không hợp lệ",
+          "phone_required": "Vui lòng nhập số điện thoại",
+          "phone_invalid": "Số điện thoại phải có 10 chữ số"
+        }
+      },
+      "guest_info": {
+        "booking_type_label": "Bạn là ai trong chuyến đi này?",
+        "self_option": "Tôi là khách tham gia",
+        "self_description": "Thông tin liên hệ sẽ được sử dụng cho khách",
+        "others_option": "Đặt cho người khác",
+        "others_description": "Nhập thông tin của khách tham gia tour",
+        "guest_details_title": "Thông tin khách tham gia",
+        "auto_filled": "Tự động điền",
+        "name": "Họ và tên",
+        "name_placeholder": "Nhập họ và tên khách",
+        "email": "Email",
+        "email_placeholder": "Nhập địa chỉ email khách",
+        "phone": "Số điện thoại",
+        "phone_placeholder": "Nhập số điện thoại khách (10 chữ số)",
+        "errors": {
+          "name_required": "Vui lòng nhập họ và tên",
+          "email_required": "Vui lòng nhập email",
+          "email_invalid": "Email không hợp lệ",
+          "phone_required": "Vui lòng nhập số điện thoại",
+          "phone_invalid": "Số điện thoại phải có 10 chữ số"
+        }
+      },
+      "review": {
+        "edit": "Sửa",
+        "guest_count_section": "Số lượng khách",
+        "contact_info_section": "Thông tin liên hệ",
+        "guest_info_section": "Thông tin khách",
+        "tour_info": "Thông tin tour",
+        "date": "Ngày",
+        "adults": "Người lớn",
+        "children": "Trẻ em",
+        "total_guests": "Tổng số khách",
+        "same_as_contact": "Giống thông tin liên hệ",
+        "confirm_and_pay": "Xác nhận & Thanh toán",
+        "retry": "Thử lại",
+        "payment_failed": "Thanh toán thất bại. Vui lòng thử lại."
+      },
+      "summary": {
+        "title": "Tóm tắt đặt tour",
+        "date": "Ngày",
+        "guests": "Số khách",
+        "adults": "Người lớn",
+        "children": "Trẻ em",
+        "subtotal": "Tạm tính",
+        "discount": "Giảm giá",
+        "total": "Tổng cộng",
+        "not_selected": "Chưa chọn"
+      },
+      "price_breakdown": {
+        "title": "Chi tiết giá",
+        "adults": "Người lớn",
+        "children": "Trẻ em",
+        "subtotal": "Tạm tính",
+        "total": "Tổng cộng"
+      },
+      "promotion": {
+        "title": "Mã khuyến mãi",
+        "placeholder": "Nhập mã khuyến mãi",
+        "apply": "Áp dụng",
+        "discount_applied": "Giảm {percent}%",
+        "errors": {
+          "expired": "Mã khuyến mãi đã hết hạn",
+          "not_active": "Mã khuyến mãi chưa được kích hoạt",
+          "out_of_stock": "Mã khuyến mãi đã hết lượt sử dụng",
+          "invalid": "Mã khuyến mãi không hợp lệ",
+          "validation_failed": "Không thể xác thực mã khuyến mãi"
+        }
+      },
+      "error": {
+        "retry": "Thử lại",
+        "default_title": "Đã xảy ra lỗi",
+        "offline_title": "Mất kết nối mạng",
+        "offline_message": "Vui lòng kiểm tra kết nối internet của bạn. Các thao tác sẽ được thực hiện khi có mạng trở lại."
       }
     }
   }

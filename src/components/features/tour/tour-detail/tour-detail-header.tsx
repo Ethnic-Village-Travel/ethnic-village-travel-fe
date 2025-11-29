@@ -22,37 +22,35 @@ const TourDetailHeader = (tour: Tour) => {
 
   return (
     <div className="flex flex-col gap-2.5">
-      <h1 className="text-[40px] font-bold text-dark">{tour.title}</h1>
+      <h1 className="text-2xl font-bold text-dark sm:text-3xl md:text-[40px]">{tour.title}</h1>
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-5">
-          {/* Review Section */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-5">
           <div className="flex flex-col gap-1.5">
-            <span className="text-sm text-gray-500">{t('review')}</span>
+            <span className="text-xs text-gray-500 sm:text-sm">{t('review')}</span>
             <StarRating average={ratingObj.average} readOnly />
           </div>
 
-          <Separator className="h-[53px]" orientation="vertical" />
+          <Separator className="hidden h-[53px] sm:block" orientation="vertical" />
 
-          {/* Days Section */}
           <div className="flex flex-col gap-1.5">
-            <span className="text-sm text-gray-500">{t('days')}</span>
-            <span className="text-base text-dark">
+            <span className="text-xs text-gray-500 sm:text-sm">{t('days')}</span>
+            <span className="text-sm text-dark sm:text-base">
               {t('duration_format', { days: tour.duration, nights: tour.duration - 1 })}
             </span>
           </div>
 
-          <Separator className="h-[53px]" orientation="vertical" />
+          <Separator className="hidden h-[53px] sm:block" orientation="vertical" />
 
-          {/* Location Section */}
           <div className="flex flex-col gap-1.5">
-            <span className="text-sm text-gray-500">{t('location')}</span>
-            <span className="text-base text-dark">{tour.locations?.map(location => location.city).join(' - ')}</span>
+            <span className="text-xs text-gray-500 sm:text-sm">{t('location')}</span>
+            <span className="line-clamp-1 text-sm text-dark sm:text-base">
+              {tour.locations?.map(location => location.city).join(' - ')}
+            </span>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-4">
+        <div className="flex gap-3 sm:gap-4">
           <BookmarkButton
             variant="outline"
             size="icon"
@@ -66,7 +64,7 @@ const TourDetailHeader = (tour: Tour) => {
             className="hover:border-primary-500/80 hover:text-primary-500/80 h-[38px] border-primary-500 text-primary-500 [&_svg]:size-5"
           >
             <Share2 className="mr-2" />
-            {t('share')}
+            <span className="hidden sm:inline">{t('share')}</span>
           </Button>
         </div>
       </div>

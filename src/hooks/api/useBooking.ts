@@ -30,6 +30,15 @@ export const useApiBookingGet = (id: string) => {
   });
 };
 
+export const useApiBookingGetByOrderCode = (orderCode: string) => {
+  return useQuery({
+    queryKey: ['booking', 'orderCode', orderCode],
+    queryFn: () => bookingApi.getByOrderCode(orderCode),
+    enabled: !!orderCode,
+    select: response => response.data as BookingGetResponse,
+  });
+};
+
 export const useApiBookingStore = () => {
   return useMutation({
     mutationFn: async (request: BookingStoreRequest) => {
