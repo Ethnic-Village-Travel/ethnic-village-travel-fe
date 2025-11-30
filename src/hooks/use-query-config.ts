@@ -50,3 +50,25 @@ export const useBookingQueryConfig = () => {
 
   return queryConfig;
 };
+
+export const useAdminBookingQueryConfig = () => {
+  const queryParams = useQueryParams();
+
+  const queryConfig: QueryConfig = omitBy(
+    {
+      page: queryParams.page,
+      perPage: queryParams.pageSize,
+      status: queryParams.status?.split(',') || [],
+      tourId: queryParams.tourId,
+      tourAvailableDateIds: queryParams.tourAvailableDateIds?.split(',') || [],
+      sort_by: queryParams.sort_by || undefined,
+      order: queryParams.order || undefined,
+      search: queryParams.search,
+      start_date: queryParams.start_date,
+      end_date: queryParams.end_date,
+    },
+    isUndefined,
+  );
+
+  return queryConfig;
+};

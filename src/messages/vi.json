@@ -29,6 +29,7 @@
       "role": "Vai trò",
       "tour": "Tour",
       "tour_assigned_available_dates": "Lịch phân công",
+      "booking": "Booking",
       "order": "Đơn hàng",
       "article": "Bài viết",
       "notification": "Thông báo",
@@ -104,6 +105,61 @@
         "no_data": "Không có dữ liệu",
         "actions": "Hành động",
         "not_available": "Không có"
+      }
+    },
+    "booking": {
+      "list": {
+        "title": "Quản lý Booking",
+        "description": "Xem và quản lý danh sách booking từ khách hàng",
+        "export": "Xuất dữ liệu",
+        "filter": {
+          "tour": "Chọn tour",
+          "tour_dates": "Chọn ngày tour",
+          "status": "Trạng thái",
+          "date_range": "Khoảng thời gian booking"
+        },
+        "table": {
+          "id": "Mã booking",
+          "booking_id": "Mã booking",
+          "tour_title": "Tên tour",
+          "tour_name": "Tên tour",
+          "tour_date": "Ngày tour",
+          "booker": "Người đặt",
+          "booker_name": "Tên người đặt",
+          "booker_phone": "Số điện thoại",
+          "status": "Trạng thái",
+          "pricing": "Giá tiền",
+          "total_price": "Tổng tiền",
+          "participants": "Số người",
+          "payment_date": "Ngày thanh toán",
+          "payment_method": "Phương thức thanh toán",
+          "payment_status": "Trạng thái thanh toán",
+          "created_at": "Ngày tạo",
+          "actions": "Thao tác",
+          "view_detail": "Xem chi tiết"
+        },
+        "status": {
+          "pending_payment": "Chờ thanh toán",
+          "failed_payment": "Thanh toán thất bại",
+          "draft": "Mới tạo",
+          "paid": "Đã thanh toán",
+          "confirmed": "Đã xác nhận",
+          "in_progress": "Đang thực hiện",
+          "cancelled_by_user": "Hủy bởi khách hàng",
+          "cancelled_by_admin": "Hủy bởi admin",
+          "completed": "Hoàn thành",
+          "refunded": "Đã hoàn tiền"
+        },
+        "payment_status": {
+          "pending": "Chờ thanh toán",
+          "partial": "Thanh toán một phần",
+          "paid": "Đã thanh toán",
+          "refunded": "Đã hoàn tiền"
+        },
+        "actions": {
+          "title": "Hành động",
+          "view_details": "Xem chi tiết"
+        }
       }
     },
     "available_date_status": {

@@ -55,6 +55,8 @@ export const RouteConstant = {
   admin_article_create: '/admin/article/create',
   admin_article_edit: '/admin/article/edit/:slug',
 
+  admin_booking: '/admin/booking',
+
   admin_order: '/admin/order',
 
   admin_notification: '/admin/notification',
