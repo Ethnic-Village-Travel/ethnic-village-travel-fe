@@ -111,6 +111,7 @@
         "title": "Booking Management",
         "description": "View and manage booking list from customers",
         "export": "Export Data",
+        "export_title": "Booking List",
         "filter": {
           "tour": "Select Tour",
           "tour_dates": "Select Tour Dates",

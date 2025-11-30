@@ -8,8 +8,10 @@ import { useDataTable } from '@/hooks/use-data-table';
 import { useAdminBookingQueryConfig } from '@/hooks/use-query-config';
 import { DataTable } from '@/components/shared/data-table/data-table';
 import { DataTableViewOptions } from '@/components/shared/data-table/data-table-view-options';
+import { DataExporter } from '@/components/shared/export';
 
 import { useAdminBookingColumns } from '../hooks/use-admin-booking-columns';
+import { useAdminBookingExport } from '../hooks/use-admin-booking-export';
 import { BookingTableFilter } from './booking-table-filter';
 
 function BookingTable() {
@@ -18,6 +20,9 @@ function BookingTable() {
 
   // Use the same pattern as tour table
   const { bookings, totalPages, isLoading, error } = useAdminFilteredBookingList(queryConfig.perPage || 10);
+
+  // Export functionality
+  const { fetchAllBookings, exportColumns } = useAdminBookingExport();
 
   const { table } = useDataTable<AdminBooking>({
     data: bookings,
@@ -55,6 +60,13 @@ function BookingTable() {
         <div className="flex w-full items-start justify-between gap-2 p-1">
           <BookingTableFilter />
           <div className="flex items-center gap-2">
+            <DataExporter
+              title={t('export_title') || 'Danh sách Booking'}
+              columns={exportColumns}
+              onFetchAllData={fetchAllBookings}
+              currentFilters={queryConfig}
+              className="h-8"
+            />
             <DataTableViewOptions table={table} />
           </div>
         </div>
