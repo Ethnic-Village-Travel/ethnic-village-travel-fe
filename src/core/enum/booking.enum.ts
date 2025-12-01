@@ -16,13 +16,6 @@ export enum PaymentMethod {
   E_WALLET = 'E_WALLET',
 }
 
-export enum PaymentStatus {
-  PENDING = 'PENDING',
-  PAID = 'PAID',
-  FAILED = 'FAILED',
-  REFUNDED = 'REFUNDED',
-}
-
 export const getStatusBadgeVariant = (status: string) => {
   switch (status) {
     case BookingStatus.PENDING_PAYMENT:

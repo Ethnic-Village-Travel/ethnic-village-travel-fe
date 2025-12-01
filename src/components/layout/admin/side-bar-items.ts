@@ -1,6 +1,17 @@
 import { PermissionMap } from '@/core/constants/permission-map';
 import { RouteConstant } from '@/core/constants/route';
-import { Bell, Book, FileText, LayoutGrid, MapPin, MessageCircle, ShieldCheck, ShoppingCart, User } from 'lucide-react';
+import {
+  Bell,
+  Book,
+  Calendar,
+  FileText,
+  LayoutGrid,
+  MapPin,
+  MessageCircle,
+  ShieldCheck,
+  ShoppingCart,
+  User,
+} from 'lucide-react';
 
 export type SIDEBAR_NAV_ITEM_PROP = {
   label: string;
@@ -42,6 +53,12 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       icon: MapPin,
       href: RouteConstant.admin_assigned_available_dates,
       permission: PermissionMap[RouteConstant.admin_assigned_available_dates],
+    },
+    {
+      label: 'booking',
+      icon: Calendar,
+      href: RouteConstant.admin_booking,
+      permission: PermissionMap[RouteConstant.admin_booking],
     },
     {
       label: 'order',

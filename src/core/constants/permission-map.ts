@@ -18,6 +18,7 @@ export const PermissionMap: { [key: string]: string[] } = {
   [RouteConstant.admin_article]: ['ADMIN_ARTICLE_READ'],
   [RouteConstant.admin_article_create]: ['ADMIN_ARTICLE_WRITE'],
   [RouteConstant.admin_article_edit]: ['ADMIN_ARTICLE_WRITE'],
+  [RouteConstant.admin_booking]: ['ADMIN_BOOKING_READ'],
   [RouteConstant.admin_order]: ['ADMIN_ORDER_READ'],
   [RouteConstant.admin_notification]: ['ADMIN_NOTIFICATION_READ'],
   [RouteConstant.admin_notification_create]: ['ADMIN_NOTIFICATION_WRITE'],
