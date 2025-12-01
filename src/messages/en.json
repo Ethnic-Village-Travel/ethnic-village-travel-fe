@@ -28,6 +28,7 @@
       "role": "Role",
       "tour": "Tour",
       "tour_assigned_available_dates": "Tour Guide Assignments",
+      "booking": "Booking",
       "order": "Order",
       "article": "Article",
       "notification": "Notification",
@@ -103,6 +104,62 @@
         "no_data": "No data available",
         "actions": "Actions",
         "not_available": "N/A"
+      }
+    },
+    "booking": {
+      "list": {
+        "title": "Booking Management",
+        "description": "View and manage booking list from customers",
+        "export": "Export Data",
+        "export_title": "Booking List",
+        "filter": {
+          "tour": "Select Tour",
+          "tour_dates": "Select Tour Dates",
+          "status": "Status",
+          "date_range": "Booking Date Range"
+        },
+        "table": {
+          "id": "Booking ID",
+          "booking_id": "Booking ID",
+          "tour_title": "Tour Title",
+          "tour_name": "Tour Name",
+          "tour_date": "Tour Date",
+          "booker": "Booker",
+          "booker_name": "Booker Name",
+          "booker_phone": "Phone Number",
+          "status": "Status",
+          "pricing": "Pricing",
+          "total_price": "Total Price",
+          "participants": "Participants",
+          "payment_date": "Payment Date",
+          "payment_method": "Payment Method",
+          "payment_status": "Payment Status",
+          "created_at": "Created At",
+          "actions": "Actions",
+          "view_detail": "View Detail"
+        },
+        "status": {
+          "pending_payment": "Pending Payment",
+          "failed_payment": "Payment Failed",
+          "draft": "Draft",
+          "paid": "Paid",
+          "confirmed": "Confirmed",
+          "in_progress": "In Progress",
+          "cancelled_by_user": "Cancelled by User",
+          "cancelled_by_admin": "Cancelled by Admin",
+          "completed": "Completed",
+          "refunded": "Refunded"
+        },
+        "payment_status": {
+          "pending": "Pending Payment",
+          "partial": "Partial Payment",
+          "paid": "Paid",
+          "refunded": "Refunded"
+        },
+        "actions": {
+          "title": "Actions",
+          "view_details": "View Details"
+        }
       }
     },
     "available_date_status": {
