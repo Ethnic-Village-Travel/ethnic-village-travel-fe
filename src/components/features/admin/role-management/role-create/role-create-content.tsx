@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import * as zod from 'zod';
 
 import { FormErrors } from '@/components/shared/form-errors';
@@ -33,6 +34,7 @@ const createRoleSchema = zod.object({
 type CreateRoleFormData = zod.infer<typeof createRoleSchema>;
 
 export default function RoleCreateContent() {
+  const t = useTranslations('admin.role.create');
   const methods = useForm<CreateRoleFormData>({
     resolver: zodResolver(createRoleSchema),
     defaultValues: { roleName: '', selectedPermissions: [] },
@@ -63,8 +65,8 @@ export default function RoleCreateContent() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="container mx-auto max-w-7xl p-6">
           <div className="mb-8">
-            <h1 className="mb-2 text-3xl font-bold text-gray-900">Add Role</h1>
-            <p className="text-gray-600">Manage your users and their roles here.</p>
+            <h1 className="mb-2 text-3xl font-bold text-gray-900">{t('title')}</h1>
+            <p className="text-gray-600">{t('description')}</p>
           </div>
 
           {errors && <FormErrors errors={errors} />}

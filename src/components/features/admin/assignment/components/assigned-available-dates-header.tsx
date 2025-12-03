@@ -15,10 +15,10 @@ export const AssignedAvailableDatesHeader = () => {
     : t('tour.assigned_dates.my_assignments_description');
 
   return (
-    <div className="mb-3 flex items-start justify-between">
+    <div className="mb-6 flex items-start justify-between">
       <div>
-        <h1 className="text-3xl font-bold">{title}</h1>
-        <p className="mt-2 text-xl text-muted-foreground">{description}</p>
+        <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
+        <p className="mt-2 text-base text-muted-foreground">{description}</p>
       </div>
     </div>
   );
