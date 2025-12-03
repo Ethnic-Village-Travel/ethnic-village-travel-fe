@@ -39,7 +39,11 @@ export const useAdminFilteredTourList = (pageSize: number = 12) => {
       size: pageSize,
       ethnicIds: getFilterIds(queryConfig.e, ethnics, ethnic => ethnic.code),
       locationIds: getFilterIds(queryConfig.l, locations, location => location.city),
-      status: queryConfig.status,
+      status: queryConfig.status
+        ? Array.isArray(queryConfig.status)
+          ? queryConfig.status
+          : [queryConfig.status]
+        : undefined,
       onSale: queryConfig.p
         ? (Array.isArray(queryConfig.p) ? queryConfig.p : [queryConfig.p]).includes('on_sale')
         : false,
@@ -52,14 +56,13 @@ export const useAdminFilteredTourList = (pageSize: number = 12) => {
     },
   );
 
-  console.log('useFilteredTourList - queryConfig:', queryConfig);
-  console.log('useFilteredTourList - filterParams:', filterParams);
+  const { data: tourRes, isLoading, error } = useAdminTourList(filterParams);
 
-  const { data: tourRes, isLoading } = useAdminTourList(filterParams);
+  const isArrayResponse = Array.isArray(tourRes?.data);
 
   return {
-    tours: tourRes?.data?.content || [],
-    totalPages: tourRes?.data?.totalPages || 0,
+    tours: isArrayResponse ? tourRes?.data || [] : tourRes?.data?.content || [],
+    totalPages: isArrayResponse ? 1 : tourRes?.data?.totalPages || 0,
     isLoading,
   };
 };

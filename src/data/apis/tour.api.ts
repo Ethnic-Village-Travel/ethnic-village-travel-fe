@@ -101,7 +101,7 @@ export const tourApi = {
       };
 
       const queryString = encodeQueryData(queryParams);
-      const { data } = await api.get<ApiResponse<TourListResponse>>(`${AdminAPI.TOUR.SEARCH}?${queryString}`);
+      const { data } = await api.get<ApiResponse<TourListResponse>>(`${AdminAPI.TOUR.LIST}?${queryString}`);
 
       return data;
     } catch {

@@ -10,9 +10,11 @@ import { CalendarIcon, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import type { Option } from '@/types/data-table';
+import { useActiveEmployees } from '@/hooks/api/useEmployee';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
+import { MultiSelect } from '@/components/shared/multiple-select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { StatusFilter } from '@/components/shared/filter';
 
@@ -34,6 +36,10 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
   const currentStatus = searchParams.get('status')?.split(',') || [];
   const currentFromDate = searchParams.get('start_date') || '';
   const currentToDate = searchParams.get('end_date') || '';
+  const currentEmployeeIds = searchParams.get('employee_ids')?.split(',') || [];
+
+  // Fetch active employees for filter (Admin only)
+  const { data: employees = [], isLoading: isLoadingEmployees } = useActiveEmployees();
 
   // Local state for form inputs
   const [searchInput, setSearchInput] = useState(currentSearch);
@@ -97,6 +103,11 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
     updateFilters({ status: statuses });
   };
 
+  // Handle employee filter change (Admin only)
+  const handleEmployeeChange = (employeeIds: string[]) => {
+    updateFilters({ employee_ids: employeeIds });
+  };
+
   // Clear all filters
   const clearFilters = () => {
     setSearchInput('');
@@ -107,11 +118,21 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
       status: undefined,
       start_date: undefined,
       end_date: undefined,
+      employee_ids: undefined,
     });
   };
 
   // Check if any filters are active
-  const hasActiveFilters = currentSearch || currentStatus.length > 0 || currentFromDate || currentToDate;
+  const hasActiveFilters =
+    currentSearch || currentStatus.length > 0 || currentFromDate || currentToDate || currentEmployeeIds.length > 0;
+
+  // Prepare employee options for MultiSelect
+  const employeeOptions = employees.map(emp => ({
+    id: String(emp.id),
+    name: emp.personal
+      ? `${emp.personal.firstName} ${emp.personal.lastName}`
+      : emp.email || `Nhân viên ${emp.id}`,
+  }));
 
   return (
     <div className={cn('space-y-4', className)}>
@@ -183,10 +204,20 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
         )}
       </div>
 
-      {/* TODO: Add Employee Filter for Admin */}
+      {/* Employee Filter for Admin */}
       {isAdmin && (
         <div className="border-t pt-4">
-          <div className="text-sm text-muted-foreground">{t('tour.assigned_dates.filter_employee')}</div>
+          <div className="mb-2 text-sm font-medium">{t('tour.assigned_dates.filter_employee')}</div>
+          <div className="w-full md:w-80">
+            <MultiSelect
+              options={employeeOptions}
+              value={currentEmployeeIds}
+              onValueChange={handleEmployeeChange}
+              placeholder={t('tour.assigned_dates.select_employees')}
+              disabled={isLoadingEmployees}
+              maxCount={3}
+            />
+          </div>
         </div>
       )}
     </div>

@@ -2,12 +2,12 @@ import { create } from 'zustand';
 
 import type { EmployeeBasicResponse } from '@/types/employee.type';
 
-export interface AssignedEmployeesByDate {
-  [dateId: string]: EmployeeBasicResponse[];
+export interface AssignedGuideByDate {
+  [dateId: string]: EmployeeBasicResponse | null;
 }
 
 export interface TourAssignments {
-  [tourId: string]: AssignedEmployeesByDate;
+  [tourId: string]: AssignedGuideByDate;
 }
 
 interface TourAssignmentStore {
@@ -17,8 +17,8 @@ interface TourAssignmentStore {
 
   // Actions
   setActiveTourId: (tourId: string | null) => void;
-  setTourAssignments: (tourId: string, assignments: AssignedEmployeesByDate) => void;
-  updateTourAssignments: (tourId: string, newAssignments: AssignedEmployeesByDate) => void;
+  setTourAssignments: (tourId: string, assignments: AssignedGuideByDate) => void;
+  updateTourAssignments: (tourId: string, newAssignments: AssignedGuideByDate) => void;
   clearTourAssignments: (tourId?: string) => void;
 }
 

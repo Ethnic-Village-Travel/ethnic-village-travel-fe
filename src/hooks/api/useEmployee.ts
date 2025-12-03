@@ -49,3 +49,13 @@ export const useAssignEmployees = () => {
     mutationFn: employeeApi.assignEmployees,
   });
 };
+
+export const useActiveEmployees = () => {
+  return useQuery({
+    queryKey: ['active-employees'],
+    queryFn: async () => {
+      const res = await employeeApi.getActiveEmployees();
+      return res.data || [];
+    },
+  });
+};

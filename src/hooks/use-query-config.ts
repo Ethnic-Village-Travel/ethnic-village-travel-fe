@@ -25,6 +25,7 @@ export const useQueryConfig = () => {
       date: queryParams.date,
       start_date: queryParams.start_date,
       end_date: queryParams.end_date,
+      employee_ids: queryParams.employee_ids?.split(',') || [],
     },
     isUndefined,
   );

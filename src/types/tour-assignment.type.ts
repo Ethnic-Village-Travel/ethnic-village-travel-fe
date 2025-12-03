@@ -6,16 +6,15 @@ import { TourAvailableDate } from './tour.type';
 
 export interface TourAssignmentRequest {
   assignments: {
-    [availableDateId: string]: string[]; // employeeIds
+    [availableDateId: string]: string; // Single guideId per date
   };
 }
 
 export interface TourAssignmentResponse {
   id: string;
-  employee: EmployeeBasicResponse;
+  guide: EmployeeBasicResponse;
   tourAvailableDateId: string;
   assignedBy: string;
-  assignedDate: string;
 }
 
 // New types for Assigned Available Dates feature
@@ -48,7 +47,6 @@ export interface TourBasicInfo {
 
 export interface AssignedAvailableDateResponse {
   assignmentId: string;
-  assignedDate: string; // ISO date string
   assignedBy: string;
 
   // Tour Available Date Information
@@ -57,8 +55,8 @@ export interface AssignedAvailableDateResponse {
   // Tour Information
   tour: TourBasicInfo;
 
-  // Employee Information (only visible to Admin)
-  assignedTo?: EmployeeBasicResponse;
+  // Guide Information (only visible to Admin)
+  guide?: EmployeeBasicResponse;
 }
 
 export interface AssignedAvailableDateListResponse {
