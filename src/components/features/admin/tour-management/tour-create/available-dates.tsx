@@ -11,8 +11,6 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
-import { AvailableEmployeeSelect } from '../tour-list/components/available-employee-select';
-
 type AvailableDatesProps = {
   form: UseFormReturn<TourCreateFormValues>;
 };
@@ -86,7 +84,7 @@ export default function AvailableDates({ form }: AvailableDatesProps) {
 
   const addAvailableDate = () => {
     if (fields.length < 5) {
-      append({ startDate: new Date(), maxSlots: 1, assignedEmployees: [] });
+      append({ startDate: new Date(), maxSlots: 1 } as any);
     }
   };
 
@@ -223,34 +221,6 @@ export default function AvailableDates({ form }: AvailableDatesProps) {
               />
             </div>
 
-            {/* Second row: Employee Selection */}
-            <div className="space-y-2">
-              <FormField
-                control={form.control}
-                name={`availableDates.${index}.assignedEmployees`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      {currentStartDate && endDate ? (
-                        <AvailableEmployeeSelect
-                          startDate={currentStartDate.toLocaleString()}
-                          endDate={endDate.toLocaleString()}
-                          value={field.value || []}
-                          onChange={employees => field.onChange(employees)}
-                          placeholder={t('tourCreate.selectEmployee')}
-                          showDateHeader={false}
-                        />
-                      ) : (
-                        <div className="text-sm italic text-muted-foreground">
-                          {t('tourCreate.selectStartDateFirst')}
-                        </div>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
           </div>
         );
       })}

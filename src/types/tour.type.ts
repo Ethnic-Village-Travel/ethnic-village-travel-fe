@@ -7,13 +7,14 @@ import { Review } from './review.type';
 import { TourServiceInfo } from './service-info.type';
 
 export interface Tour {
-  id: number;
+  id?: number;
+  tourId?: string;
   imageUrl: string;
   title: string;
-  slug: string;
+  slug?: string;
   overview?: string;
   status?: string;
-  duration: number;
+  duration?: number;
   pickUpLocation?: Location;
   adultPrice?: number;
   childPrice?: number;
@@ -76,6 +77,7 @@ export interface TourAdminListRequest {
   locationIds?: number[];
   onSale?: boolean;
   status?: TourStatus[];
+  searchKey?: string;
 }
 
 export interface TourListResponse {

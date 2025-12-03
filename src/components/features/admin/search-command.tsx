@@ -4,15 +4,18 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import {
+  BarChart3,
   Bell,
-  Book,
+  Bot,
+  Calendar,
+  CalendarCheck,
+  Compass,
   FileText,
   LayoutGrid,
-  MapPin,
-  MessageCircle,
+  Newspaper,
+  Package,
   Search,
   ShieldCheck,
-  ShoppingCart,
   User,
 } from 'lucide-react';
 
@@ -34,20 +37,22 @@ const COMMAND_ITEMS = {
     { label: 'Role', icon: ShieldCheck, href: RouteConstant.admin_role },
   ],
   Functions: [
-    { label: 'Tour', icon: MapPin, href: RouteConstant.admin_tour },
-    { label: 'Order', icon: ShoppingCart, href: RouteConstant.admin_order },
-    { label: 'Article', icon: Book, href: RouteConstant.admin_article },
+    { label: 'Tour', icon: Compass, href: RouteConstant.admin_tour },
+    { label: 'Tour Assignment', icon: CalendarCheck, href: RouteConstant.admin_assigned_available_dates },
+    { label: 'Booking', icon: Calendar, href: RouteConstant.admin_booking },
+    { label: 'Order', icon: Package, href: RouteConstant.admin_order },
+    { label: 'Article', icon: Newspaper, href: RouteConstant.admin_article },
     { label: 'Notification', icon: Bell, href: RouteConstant.admin_notification },
-    { label: 'Report', icon: FileText, href: RouteConstant.admin_report },
-    { label: 'Chatbot', icon: MessageCircle, href: RouteConstant.admin_chatbot },
+    { label: 'Report', icon: BarChart3, href: RouteConstant.admin_report },
+    { label: 'Chatbot', icon: Bot, href: RouteConstant.admin_chatbot },
   ],
   Create: [
-    { label: 'User Create', icon: Book, href: RouteConstant.admin_user_create },
-    { label: 'Role Create', icon: Book, href: RouteConstant.admin_role_create },
-    { label: 'Tour Create', icon: MapPin, href: RouteConstant.admin_tour_create },
-    { label: 'Article Create', icon: ShoppingCart, href: RouteConstant.admin_article_create },
+    { label: 'User Create', icon: User, href: RouteConstant.admin_user_create },
+    { label: 'Role Create', icon: ShieldCheck, href: RouteConstant.admin_role_create },
+    { label: 'Tour Create', icon: Compass, href: RouteConstant.admin_tour_create },
+    { label: 'Article Create', icon: Newspaper, href: RouteConstant.admin_article_create },
     { label: 'Notification Create', icon: Bell, href: RouteConstant.admin_notification_create },
-    { label: 'Chatbot Information Create', icon: MessageCircle, href: RouteConstant.admin_chatbot_create },
+    { label: 'Chatbot Information Create', icon: Bot, href: RouteConstant.admin_chatbot_create },
   ],
 } as const;
 

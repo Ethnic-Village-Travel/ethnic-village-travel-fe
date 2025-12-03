@@ -2,6 +2,7 @@ import type * as React from 'react';
 import { getCommonPinningStyles } from '@/libs/data-table';
 import { cn } from '@/utils';
 import { flexRender, type Table as TanstackTable } from '@tanstack/react-table';
+import { Loader2 } from 'lucide-react';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
@@ -13,9 +14,13 @@ export interface DataTableProps<TData> extends React.ComponentProps<'div'> {
   loading?: boolean;
 }
 
-export function DataTable<TData>({ table, actionBar, children, className, ...props }: DataTableProps<TData>) {
+export function DataTable<TData>({ table, actionBar, children, className, loading, ...props }: DataTableProps<TData>) {
   return (
-    <div className={cn('flex w-full flex-col gap-2.5 overflow-auto', className)} {...props}>
+    <div
+      className={cn('flex w-full flex-col gap-2.5 overflow-auto', className)}
+      data-loading={loading ? 'true' : undefined}
+      {...props}
+    >
       {children}
       <div className="overflow-hidden rounded-md border">
         <Table>
@@ -37,7 +42,16 @@ export function DataTable<TData>({ table, actionBar, children, className, ...pro
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={table.getAllColumns().length} className="h-24 text-center">
+                  <div className="flex items-center justify-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">Đang tải dữ liệu...</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map(row => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map(cell => (

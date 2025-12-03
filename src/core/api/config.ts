@@ -61,6 +61,7 @@ export const API = {
 
 export const AdminAPI = {
   TOUR: {
+    LIST: '/admin/tour',
     SEARCH: '/admin/tour/search',
     STORE: '/admin/tour/store',
     AVAILABLE_DAYS: '/admin/tour-available-days',
@@ -75,6 +76,7 @@ export const AdminAPI = {
     AVAILABLE: '/admin/employee/available',
     AVAILABLE_BY_DATE_RANGE: '/admin/employee/available-by-date-range',
     ASSIGNED_BY_DATES: '/admin/employee/assigned-by-dates',
+    ACTIVE: '/admin/employee/active',
   },
   TOUR_ASSIGNMENT: {
     ASSIGN: '/admin/tour-assignments/assign',

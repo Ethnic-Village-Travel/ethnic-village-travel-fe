@@ -34,4 +34,8 @@ export const employeeApi = {
     // TODO: implement API assign logic
     return { success: true } as any;
   },
+  getActiveEmployees: async (): Promise<ApiResponse<EmployeeBasicResponse[]>> => {
+    const { data } = await api.get(AdminAPI.EMPLOYEE.ACTIVE);
+    return data;
+  },
 };

@@ -1,16 +1,19 @@
 import { PermissionMap } from '@/core/constants/permission-map';
 import { RouteConstant } from '@/core/constants/route';
 import {
+  BarChart3,
   Bell,
-  Book,
+  Bot,
   Calendar,
+  CalendarCheck,
+  Compass,
   FileText,
   LayoutGrid,
-  MapPin,
-  MessageCircle,
+  Newspaper,
+  Package,
   ShieldCheck,
-  ShoppingCart,
   User,
+  Users,
 } from 'lucide-react';
 
 export type SIDEBAR_NAV_ITEM_PROP = {
@@ -44,13 +47,13 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
   'section.functions': [
     {
       label: 'tour',
-      icon: MapPin,
+      icon: Compass,
       href: RouteConstant.admin_tour,
       permission: PermissionMap[RouteConstant.admin_tour],
     },
     {
       label: 'tour_assigned_available_dates',
-      icon: MapPin,
+      icon: CalendarCheck,
       href: RouteConstant.admin_assigned_available_dates,
       permission: PermissionMap[RouteConstant.admin_assigned_available_dates],
     },
@@ -62,13 +65,13 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
     },
     {
       label: 'order',
-      icon: ShoppingCart,
+      icon: Package,
       href: RouteConstant.admin_order,
       permission: PermissionMap[RouteConstant.admin_order],
     },
     {
       label: 'article',
-      icon: Book,
+      icon: Newspaper,
       href: RouteConstant.admin_article,
       permission: PermissionMap[RouteConstant.admin_article],
     },
@@ -80,13 +83,13 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
     },
     {
       label: 'report',
-      icon: FileText,
+      icon: BarChart3,
       href: RouteConstant.admin_report,
       permission: PermissionMap[RouteConstant.admin_report],
     },
     {
       label: 'chatbot',
-      icon: MessageCircle,
+      icon: Bot,
       href: RouteConstant.admin_chatbot,
       permission: PermissionMap[RouteConstant.admin_chatbot],
     },

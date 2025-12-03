@@ -19,6 +19,8 @@ export type QueryConfig = Partial<{
   // Booking-specific fields
   tourId: string;
   tourAvailableDateIds: string[];
+  // Assignment-specific fields
+  employee_ids: string[];
 }>;
 
 export type BookingQueryConfig = Partial<{

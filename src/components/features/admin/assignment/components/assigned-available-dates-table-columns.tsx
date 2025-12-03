@@ -179,18 +179,17 @@ export function getAssignedAvailableDatesTableColumns({
   // Add employee column only for Admin
   if (isAdmin) {
     columns.push({
-      id: 'assignedTo',
-      // accessorKey: 'assignedEmployee.user.personal.fullName',
+      id: 'guide',
       accessorFn: row =>
-        row.assignedTo?.personal
-          ? `${row.assignedTo.personal.firstName} ${row.assignedTo.personal.lastName}`
+        row.guide?.personal
+          ? `${row.guide.personal.firstName} ${row.guide.personal.lastName}`
           : undefined,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('tour.assigned_dates.assigned_employee')} />
       ),
       cell: ({ row }) => {
         const assignment = row.original;
-        const employee = assignment.assignedTo;
+        const employee = assignment.guide;
 
         if (!employee) {
           return <span className="text-xs text-muted-foreground">{t('tour.assigned_dates.no_employee')}</span>;

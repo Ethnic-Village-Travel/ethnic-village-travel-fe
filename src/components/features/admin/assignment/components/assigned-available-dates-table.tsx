@@ -53,6 +53,14 @@ export function AssignedAvailableDatesTable() {
       params.toDate = queryConfig.end_date as string;
     }
 
+    // Add employee filter (Admin only)
+    if (queryConfig.employee_ids) {
+      const employeeIdsArray = Array.isArray(queryConfig.employee_ids)
+        ? queryConfig.employee_ids
+        : [queryConfig.employee_ids as string];
+      params.employeeIds = employeeIdsArray;
+    }
+
     return params;
   }, [queryConfig]);
 

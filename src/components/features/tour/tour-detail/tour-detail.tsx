@@ -27,7 +27,7 @@ const TourDetail = ({ slug }: { slug: string }) => {
 
   return (
     <div>
-      <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
+      <div className="full-bleed h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
         <img src={tour.imageUrl} alt={tour.title} className="h-full w-full object-cover" />
       </div>
       <div className="flex flex-col pt-4 sm:pt-6">

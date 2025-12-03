@@ -46,7 +46,7 @@ export function ToursTable() {
     initialState: {
       columnPinning: { right: ['actions'] },
     },
-    getRowId: (originalRow: Tour) => originalRow.id.toString(),
+    getRowId: (originalRow: any) => originalRow?.tourId ?? originalRow?.id?.toString() ?? String(Math.random()),
     shallow: false,
     clearOnDefault: true,
   });

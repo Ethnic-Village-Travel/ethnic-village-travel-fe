@@ -54,23 +54,8 @@ export const createTourSchema = (t: (key: string) => string) =>
         .array(
           z.object({
             startDate: z.date({ required_error: t('tourCreate.validation.startDateRequired') }),
-            // endDate removed - will be calculated from startDate + duration
+            // endDate is calculated from startDate + duration on the fly
             maxSlots: z.number().min(1, { message: t('tourCreate.validation.maxSlotsMin') }),
-            assignedEmployees: z
-              .array(
-                z.object({
-                  id: z.string(),
-                  email: z.string(),
-                  personal: z
-                    .object({
-                      firstName: z.string(),
-                      lastName: z.string(),
-                    })
-                    .optional()
-                    .nullable(),
-                }),
-              )
-              .min(1, { message: t('tourCreate.validation.assignedEmployeesRequired') }), // Require at least 1 employee
           }),
         )
         .min(1, { message: t('tourCreate.validation.availableDatesRequired') }),

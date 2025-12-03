@@ -56,7 +56,7 @@ export default function AdminSidebar() {
                 <AvatarFallback>SN</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span className="text-sm font-bold text-foreground">{userName}</span>
+                <span className="text-sm font-semibold text-foreground">{userName}</span>
                 <span className="text-xs text-muted-foreground">{userEmail}</span>
               </div>
             </SidebarMenuButton>
@@ -98,8 +98,8 @@ export default function AdminSidebar() {
 
       <SidebarFooter className="border-t">
         <SidebarMenuItem className="cursor-pointer list-none">
-          <SidebarMenuButton onClick={handleLogout}>
-            <LogOut className="h-4 w-4" /> Logout
+          <SidebarMenuButton onClick={handleLogout} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+            <LogOut className="h-4 w-4" /> {t('logout')}
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarFooter>
