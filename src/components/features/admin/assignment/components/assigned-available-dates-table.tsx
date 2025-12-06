@@ -13,24 +13,33 @@ import { DataTableViewOptions } from '@/components/shared/data-table/data-table-
 
 import { getAssignedAvailableDatesTableColumns } from './assigned-available-dates-table-columns';
 import { AssignedAvailableDatesTableFilter } from './assigned-available-dates-table-filter';
+import { AssignmentHistoryDialog } from './assignment-history-dialog';
+import type { AssignmentHistoryRequest } from '@/types/tour-assignment.type';
 
 export function AssignedAvailableDatesTable() {
   const queryConfig = useQueryConfig();
   const t = useTranslations('admin');
   const { user } = useAuthStore();
-  const isAdmin = Boolean(user?.roles?.includes('ADMIN'));
+  // Backend returns roles with "ROLE_" prefix (e.g., "ROLE_ADMIN")
+  const isAdmin = user?.roles?.some(role => {
+    const normalizedRole = role?.toUpperCase().replace(/^ROLE_/, '');
+    return normalizedRole === 'ADMIN';
+  }) ?? false;
 
   // State for row actions
   const [rowAction, setRowAction] = useState<{
     id: string;
-    action: 'cancel';
+    action: 'cancel' | 'history';
     row?: AssignedAvailableDateResponse;
   } | null>(null);
 
   // Build request params from URL query config
   const requestParams = useMemo(() => {
+    const page =
+      typeof queryConfig.page === 'number' && queryConfig.page > 0 ? queryConfig.page - 1 : 0;
+
     const params = {
-      page: queryConfig.page ? queryConfig.page - 1 : -1,
+      page,
       size: typeof queryConfig.perPage === 'number' ? queryConfig.perPage : 10,
       sortBy: (queryConfig.sort_by as string) || 'assignedDate',
       order: (queryConfig.order as 'asc' | 'desc') || 'desc',
@@ -140,6 +149,24 @@ export function AssignedAvailableDatesTable() {
           </div>
         </div>
       </DataTable>
+
+      {/* Handle History Action */}
+      <AssignmentHistoryDialog
+        open={rowAction?.action === 'history'}
+        onOpenChange={open => {
+          if (!open) {
+            setRowAction(null);
+          }
+        }}
+        request={
+          rowAction?.action === 'history' && rowAction.row
+            ? {
+                assignmentId: rowAction.row.assignmentId,
+                tourAvailableDateId: rowAction.row.tourAvailableDate?.id,
+              }
+            : null
+        }
+      />
 
       {/* Handle Cancel Action */}
       {rowAction?.action === 'cancel' && (

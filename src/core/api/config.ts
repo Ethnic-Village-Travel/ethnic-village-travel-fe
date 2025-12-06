@@ -82,5 +82,7 @@ export const AdminAPI = {
     ASSIGN: '/admin/tour-assignments/assign',
     SEARCH: '/admin/tour-assignments/search',
     ASSIGNED_AVAILABLE_DATES: '/admin/tour-assignments/assigned-available-dates',
+    CALENDAR_ASSIGNMENTS: '/admin/tour-assignments/calendar',
+    HISTORY: '/admin/tour-assignments/history',
   },
 };

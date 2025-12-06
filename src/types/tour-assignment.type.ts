@@ -48,6 +48,7 @@ export interface TourBasicInfo {
 export interface AssignedAvailableDateResponse {
   assignmentId: string;
   assignedBy: string;
+  assignedDate?: string;
 
   // Tour Available Date Information
   tourAvailableDate: TourAvailableDate;
@@ -68,4 +69,59 @@ export interface AssignedAvailableDateListResponse {
   first: boolean;
   last: boolean;
   numberOfElements: number;
+}
+
+// Calendar View Types
+export interface CalendarAssignmentsRequest {
+  startDate: string; // ISO date string
+  endDate: string; // ISO date string
+  tourId?: string; // Optional filter by tour
+}
+
+export interface CalendarAssignmentResponse {
+  assignmentId: string;
+  startDate: string; // ISO date string
+  endDate: string; // ISO date string
+  assignedDate?: string; // ISO datetime string
+  assignedBy?: string;
+  
+  tourId: string;
+  tourTitle: string;
+  tourSlug: string;
+  tourImageUrl?: string;
+  tourStatus: string;
+  tourDuration: number;
+  
+  status: string;
+  maxSlots: number;
+  bookedSlots: number;
+  
+  guideId: string;
+  guideName: string;
+  guideEmail: string;
+}
+
+// Assignment History Types
+export interface AssignmentHistoryRequest {
+  assignmentId?: string;
+  tourAvailableDateId?: string;
+  guideId?: string;
+}
+
+export interface AssignmentHistoryResponse {
+  id: string;
+  assignmentId: string;
+  tourAvailableDateId: string;
+  
+  previousGuide?: EmployeeBasicResponse;
+  newGuide?: EmployeeBasicResponse;
+  
+  changedByEmail?: string;
+  changedByName?: string;
+  
+  changeReason?: string;
+  previousStatus?: string;
+  newStatus?: string;
+  
+  createdAt: string; // ISO datetime string
 }

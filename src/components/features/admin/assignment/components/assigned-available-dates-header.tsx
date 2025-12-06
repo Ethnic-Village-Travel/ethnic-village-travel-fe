@@ -8,7 +8,11 @@ export const AssignedAvailableDatesHeader = () => {
   const { user } = useAuthStore();
 
   // Determine title based on user role
-  const isAdmin = user?.roles?.includes('ADMIN');
+  // Backend returns roles with "ROLE_" prefix (e.g., "ROLE_ADMIN")
+  const isAdmin = user?.roles?.some(role => {
+    const normalizedRole = role?.toUpperCase().replace(/^ROLE_/, '');
+    return normalizedRole === 'ADMIN';
+  }) ?? false;
   const title = isAdmin ? t('tour.assigned_dates.all_assignments') : t('tour.assigned_dates.my_assignments');
   const description = isAdmin
     ? t('tour.assigned_dates.all_assignments_description')

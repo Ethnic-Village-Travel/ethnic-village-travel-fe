@@ -101,10 +101,22 @@
         "filter_status": "Status",
         "filter_employee": "Filter by Employee",
         "select_employees": "Select employees...",
+        "calendar_view": "Calendar View",
+        "my_calendar": "My Calendar",
+        "calendar_description": "View assignments by month",
+        "assignments_this_month": "assignments this month",
+        "select_date": "Select Date",
+        "assignments": "assignments",
+        "no_assignments": "No assignments",
+        "no_assignments_on_date": "No assignments on this date",
+        "select_date_to_view": "Select a date to view assignment details",
+        "guide": "Guide",
+        "table_view": "Table",
         "error_loading": "Unable to load data",
         "no_data": "No data available",
         "actions": "Actions",
-        "not_available": "N/A"
+        "not_available": "N/A",
+        "view_history": "View History"
       }
     },
     "booking": {

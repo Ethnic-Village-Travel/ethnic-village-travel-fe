@@ -21,7 +21,7 @@ export interface PromotionValidateResponse {
 }
 
 export interface Promotion {
-  id: number;
+  id: string;
   name: string;
   description?: string;
   startDate: string;

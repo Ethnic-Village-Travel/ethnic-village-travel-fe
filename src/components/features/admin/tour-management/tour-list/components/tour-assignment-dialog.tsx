@@ -209,9 +209,28 @@ export function TourAssignmentDialog({ tour, open, onOpenChange }: TourAssignmen
           toast({ title: 'Đã lưu phân công người dẫn tour!' });
           return;
         }
-      } catch (e) {
+      } catch (e: any) {
         console.error('Error saving assignments:', e);
-        toast({ title: 'Có lỗi khi lưu phân công!', variant: 'destructive' });
+        
+        let errorMessage = 'Có lỗi khi lưu phân công!';
+        
+        if (e?.response?.data?.message) {
+          errorMessage = e.response.data.message;
+        } else if (e?.message) {
+          errorMessage = e.message;
+        }
+        
+        if (errorMessage.includes('đã được phân công cho tour khác') || errorMessage.includes('conflict')) {
+          errorMessage = 'Guide đã được phân công cho tour khác trong khoảng thời gian này. Vui lòng chọn guide khác.';
+        } else if (errorMessage.includes('đủ số lượng khách') || errorMessage.includes('capacity')) {
+          errorMessage = 'Tour đã đủ số lượng khách, không thể assign guide.';
+        }
+        
+        toast({ 
+          title: 'Lỗi phân công', 
+          description: errorMessage,
+          variant: 'destructive' 
+        });
         setLoading(false);
         setIsSaving(false);
       }
