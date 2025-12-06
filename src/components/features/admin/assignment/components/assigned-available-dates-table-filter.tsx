@@ -29,7 +29,11 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
   const { user } = useAuthStore();
 
   // Check if user is admin
-  const isAdmin = user?.roles?.includes('ADMIN');
+  // Backend returns roles with "ROLE_" prefix (e.g., "ROLE_ADMIN")
+  const isAdmin = user?.roles?.some(role => {
+    const normalizedRole = role?.toUpperCase().replace(/^ROLE_/, '');
+    return normalizedRole === 'ADMIN';
+  }) ?? false;
 
   // Get current filter values from URL
   const currentSearch = searchParams.get('search') || '';

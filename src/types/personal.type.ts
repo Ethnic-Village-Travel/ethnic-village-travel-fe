@@ -3,7 +3,7 @@ export interface PersonalBasicInfo {
   firstName: string;
   lastName: string;
   avatar?: string;
-  phone?: string;
+  phoneNumber?: string;
   address?: string;
   createdAt?: string;
 }

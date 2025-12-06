@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { cn } from '@/utils';
 import dayjs from 'dayjs';
-import { CalendarDays, CheckCircle2, Clock, Loader2, UserCheck, Users } from 'lucide-react';
+import { AlertTriangle, CalendarDays, CheckCircle2, Clock, Loader2, UserCheck, Users } from 'lucide-react';
 
 import { EmployeeBasicResponse, EmployeeSelectedResponse } from '@/types/employee.type';
 import { useAvailableEmployeesByDateRange } from '@/hooks/api/useEmployee';
@@ -124,6 +124,8 @@ export function AvailableEmployeeSelect({
     const isAssigned = !!value;
     const daysCount = dayjs(endDate).diff(dayjs(startDate), 'day') + 1;
     const slotsPercentage = maxSlots > 0 ? Math.round((bookedSlots / maxSlots) * 100) : 0;
+    const isCapacityWarning = slotsPercentage >= 80;
+    const isCapacityFull = bookedSlots >= maxSlots;
 
     return (
       <Card
@@ -152,7 +154,7 @@ export function AvailableEmployeeSelect({
                 {maxSlots > 0 && (
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <Users className="h-3 w-3" />
-                    <span className={cn(slotsPercentage >= 80 && 'font-medium text-orange-600')}>
+                    <span className={cn(isCapacityWarning && 'font-medium text-orange-600', isCapacityFull && 'font-medium text-red-600')}>
                       {bookedSlots}/{maxSlots} chỗ
                     </span>
                     {slotsPercentage > 0 && <span className="text-muted-foreground/70">({slotsPercentage}%)</span>}
@@ -203,6 +205,21 @@ export function AvailableEmployeeSelect({
                 )}
               </SelectContent>
             </Select>
+            {isCapacityWarning && (
+              <div className={cn(
+                'flex items-start gap-2 rounded-lg border p-3 text-xs',
+                isCapacityFull 
+                  ? 'border-red-200 bg-red-50 text-red-800' 
+                  : 'border-orange-200 bg-orange-50 text-orange-800'
+              )}>
+                <AlertTriangle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  {isCapacityFull
+                    ? 'Tour đã đủ số lượng khách. Không thể assign guide.'
+                    : `Tour đã đạt ${slotsPercentage}% capacity. Cân nhắc assign guide sớm.`}
+                </div>
+              </div>
+            )}
             {value && (
               <div className="bg-primary/10 flex items-center gap-2 rounded-lg p-2.5 text-sm">
                 <CheckCircle2 className="h-4 w-4 text-primary" />

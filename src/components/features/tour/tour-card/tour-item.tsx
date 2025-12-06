@@ -3,7 +3,7 @@ import { RouteConstant } from '@/core/constants/route';
 import { calculateRatingStats, cn } from '@/utils';
 import { formatCurrency } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
-import { CalendarDays, MapPin } from 'lucide-react';
+import { CalendarDays, MapPin, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
@@ -21,8 +21,12 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
     : calculateRatingStats(tour.reviews || []);
   const t = useTranslations('tour.item');
 
-  const hasPromotion = tour?.promotions && tour?.promotions?.length > 0;
-  const discountPercent = tour.promotions?.[0]?.discountPercent;
+  // Prioritize DIRECT_DISCOUNT promotion for display
+  const promotion =
+    tour.promotions?.find(p => p.type === 'DIRECT_DISCOUNT' && p.status === 'ACTIVE') || tour.promotions?.[0];
+
+  const hasPromotion = !!promotion;
+  const discountPercent = promotion?.discountPercent;
 
   return (
     <Card
@@ -66,15 +70,31 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
           </Link>
 
           <div className="mb-3 space-y-2">
-            {tour.locations && tour.locations.length > 0 && (
-              <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4 shrink-0" />
-                <span className="font-medium">{tour.locations.map(l => l.city).join(', ')}</span>
-              </div>
-            )}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+              {tour.locations && tour.locations.length > 0 && (
+                <div className="flex items-center gap-1.5" title={tour.locations.map(l => l.city).join(', ')}>
+                  <MapPin className="size-4 shrink-0 text-primary" />
+                  <span className="line-clamp-1 max-w-[150px] font-medium">
+                    {tour.locations.map(l => l.city).join(', ')}
+                  </span>
+                </div>
+              )}
+
+              {tour.ethnics && tour.ethnics.length > 0 && (
+                <div className="flex items-center gap-1.5" title={tour.ethnics.map(e => e.name).join(', ')}>
+                  <Users className="size-4 shrink-0 text-indigo-500" />
+                  <span className="line-clamp-1 max-w-[150px] font-medium">
+                    {tour.ethnics.map(e => e.name).join(', ')}
+                  </span>
+                </div>
+              )}
+            </div>
+
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <CalendarDays className="h-4 w-4 shrink-0" />
-              <span className="font-medium">{t('duration', { days: tour.duration, nights: tour.duration - 1 })}</span>
+              <CalendarDays className="size-4 shrink-0 text-emerald-500" />
+              <span className="font-medium">
+                {t('duration', { days: tour.duration, nights: (tour.duration || 1) - 1 })}
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -96,16 +116,13 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
             <div className="flex items-baseline gap-1">
               <span className="text-2xl font-bold text-primary">
                 {formatCurrency(tour.adultPrice, {
-                  discount_percent: tour.promotions?.[0]?.discountPercent,
-                  max_discount_amount: tour.promotions?.[0]?.maxDiscountAmount,
+                  discount_percent: promotion?.discountPercent,
+                  max_discount_amount: promotion?.maxDiscountAmount,
                 })}
               </span>
-              <span className="text-sm text-muted-foreground">₫</span>
             </div>
             {hasPromotion && (
-              <span className="text-sm font-medium text-gray-400 line-through">
-                {formatCurrency(tour.adultPrice)} ₫
-              </span>
+              <span className="text-sm font-medium text-gray-400 line-through">{formatCurrency(tour.adultPrice)}</span>
             )}
           </div>
         </div>

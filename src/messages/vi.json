@@ -102,10 +102,22 @@
         "filter_status": "Trạng thái",
         "filter_employee": "Lọc theo nhân viên",
         "select_employees": "Chọn nhân viên...",
+        "calendar_view": "Xem lịch phân công",
+        "my_calendar": "Lịch của tôi",
+        "calendar_description": "Xem lịch phân công theo tháng",
+        "assignments_this_month": "phân công trong tháng này",
+        "select_date": "Chọn ngày",
+        "assignments": "phân công",
+        "no_assignments": "Không có phân công",
+        "no_assignments_on_date": "Không có phân công nào vào ngày này",
+        "select_date_to_view": "Chọn ngày để xem chi tiết phân công",
+        "guide": "Hướng dẫn viên",
+        "table_view": "Bảng",
         "error_loading": "Không thể tải dữ liệu",
         "no_data": "Không có dữ liệu",
         "actions": "Hành động",
-        "not_available": "Không có"
+        "not_available": "Không có",
+        "view_history": "Xem lịch sử"
       }
     },
     "booking": {

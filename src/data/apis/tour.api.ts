@@ -43,7 +43,7 @@ export const tourApi = {
     }
   },
 
-  getTourListByIds: async (ids: number[]): Promise<ApiResponse<Tour[]>> => {
+  getTourListByIds: async (ids: string[]): Promise<ApiResponse<Tour[]>> => {
     try {
       const { data } = await api.get<ApiResponse<Tour[]>>(`${API.TOUR.GET_BY_IDS}?ids=${ids.join(',')}`);
       return data;

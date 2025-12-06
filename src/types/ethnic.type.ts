@@ -1,5 +1,5 @@
 export interface Ethnic {
-  id: number;
+  id: string;
   name: string;
   code: string;
   description?: string;

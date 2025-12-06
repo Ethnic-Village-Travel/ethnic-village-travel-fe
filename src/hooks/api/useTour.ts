@@ -17,7 +17,7 @@ export const useTourList = (params: TourListRequest) => {
   });
 };
 
-export const useTourListByIds = (ids: number[]) => {
+export const useTourListByIds = (ids: string[]) => {
   return useQuery({
     queryKey: [TOUR_QUERY_KEY.LIST, ids],
     queryFn: async () => {
