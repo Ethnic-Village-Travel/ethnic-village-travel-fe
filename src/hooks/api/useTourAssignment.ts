@@ -5,12 +5,19 @@ import type {
   AssignedAvailableDatesRequest,
   AssignmentHistoryRequest,
   CalendarAssignmentsRequest,
+  SingleAssignmentRequest,
   TourAssignmentRequest,
 } from '@/types/tour-assignment.type';
 
 export const useAssignTourEmployees = () => {
   return useMutation({
     mutationFn: (payload: TourAssignmentRequest) => tourAssignmentApi.assign(payload),
+  });
+};
+
+export const useAssignSingleDate = () => {
+  return useMutation({
+    mutationFn: (payload: SingleAssignmentRequest) => tourAssignmentApi.assignSingleDate(payload),
   });
 };
 

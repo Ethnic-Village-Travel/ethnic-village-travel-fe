@@ -32,7 +32,10 @@ export const useAvailableEmployeesByDateRange = (params?: EmployeeDateRangeReque
   });
 };
 
-export const useAssignedEmployeesByDates = (params?: AssignedEmployeesByDatesRequest) => {
+export const useAssignedEmployeesByDates = (
+  params?: AssignedEmployeesByDatesRequest,
+  options?: { enabled?: boolean; staleTime?: number; refetchOnMount?: boolean },
+) => {
   return useQuery({
     queryKey: ['assigned-employees-by-dates', params],
     queryFn: async () => {
@@ -40,7 +43,9 @@ export const useAssignedEmployeesByDates = (params?: AssignedEmployeesByDatesReq
       const res = await employeeApi.getAssignedEmployeesByDates(params);
       return res.data || { assignedEmployeesByDate: {} };
     },
-    enabled: !!params?.availableDateIds?.length,
+    enabled: options?.enabled ?? !!params?.availableDateIds?.length,
+    staleTime: options?.staleTime ?? 0,
+    refetchOnMount: options?.refetchOnMount ?? true,
   });
 };
 
