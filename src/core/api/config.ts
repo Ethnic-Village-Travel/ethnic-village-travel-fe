@@ -86,4 +86,15 @@ export const AdminAPI = {
     CALENDAR_ASSIGNMENTS: '/admin/tour-assignments/calendar',
     HISTORY: '/admin/tour-assignments/history',
   },
+  ROLE: {
+    LIST: '/admin/role',
+    DETAIL: '/admin/role',
+    CREATE: '/admin/role',
+    UPDATE: '/admin/role',
+    DELETE: '/admin/role',
+  },
+  PERMISSION: {
+    LIST: '/admin/permission',
+    GROUPED: '/admin/permission/grouped',
+  },
 };

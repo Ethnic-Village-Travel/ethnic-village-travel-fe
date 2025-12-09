@@ -1,13 +1,14 @@
 'use client';
 
 import { useCallback } from 'react';
-import { PERMISSION_CATEGORIES } from '@/data/mocks/roles';
-import { useFormContext } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
+import { useFormContext } from 'react-hook-form';
 
-import { Permission } from '@/types/role.type';
+import { Permission, PermissionGroup } from '@/types/role.type';
+import { useGroupedPermissions } from '@/hooks/api/usePermission';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function PermissionListSection() {
   const {
@@ -18,6 +19,7 @@ export function PermissionListSection() {
   } = useFormContext();
 
   const selectedPermissions = watch('selectedPermissions') || [];
+  const { data: permissionGroups, isLoading } = useGroupedPermissions();
 
   const onPermissionsChange = useCallback(
     (permissions: Permission[]) => {
@@ -27,29 +29,25 @@ export function PermissionListSection() {
     [setValue, trigger],
   );
 
-  const permissionCategories = PERMISSION_CATEGORIES;
-
-  const handleCategoryToggle = useCallback(
-    (categoryName: string, checked: boolean) => {
-      const category = permissionCategories.find(cat => cat.id === categoryName);
-      if (!category) return;
-
+  const handleGroupToggle = useCallback(
+    (group: PermissionGroup, checked: boolean) => {
       if (checked) {
         const newPermissions = [...selectedPermissions];
-        category.permissions.forEach(permission => {
+        group.permissions.forEach(permission => {
           if (!newPermissions.find(p => p.id === permission.id)) {
             newPermissions.push(permission);
           }
         });
         onPermissionsChange(newPermissions);
       } else {
+        const groupPermissionIds = group.permissions.map(p => p.id);
         const filteredPermissions = selectedPermissions.filter(
-          (permission: Permission) => permission.category !== category.id,
+          (permission: Permission) => !groupPermissionIds.includes(permission.id),
         );
         onPermissionsChange(filteredPermissions);
       }
     },
-    [selectedPermissions, onPermissionsChange, permissionCategories],
+    [selectedPermissions, onPermissionsChange],
   );
 
   const handlePermissionToggle = useCallback(
@@ -71,41 +69,56 @@ export function PermissionListSection() {
     [selectedPermissions],
   );
 
-  const isCategorySelected = useCallback(
-    (categoryName: string): boolean => {
-      const category = permissionCategories.find(cat => cat.name === categoryName);
-      if (!category) return false;
-
-      return category.permissions.every((permission: Permission) =>
+  const isGroupSelected = useCallback(
+    (group: PermissionGroup): boolean => {
+      if (!group.permissions.length) return false;
+      return group.permissions.every((permission: Permission) =>
         selectedPermissions.some((p: Permission) => p.id === permission.id),
       );
     },
-    [selectedPermissions, permissionCategories],
+    [selectedPermissions],
   );
 
+  const getPermissionDisplayName = (name: string): string => {
+    if (name.endsWith('_READ')) return 'Xem';
+    if (name.endsWith('_WRITE')) return 'Thêm/Sửa/Xóa';
+    return name;
+  };
+
   const t = useTranslations('admin.role.create');
+
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-6 w-32" />
+        {[...Array(4)].map((_, i) => (
+          <Skeleton key={i} className="h-24 w-full" />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-2">
       <h2 className="text-base font-semibold">{t('permissions_label')}</h2>
 
       <div className="w-full space-y-4">
-        {permissionCategories.map(category => (
-          <div key={category.name} className="rounded-lg border p-4">
+        {permissionGroups?.map(group => (
+          <div key={group.prefix} className="rounded-lg border p-4">
             <div className="mb-2 flex items-center space-x-2">
               <Checkbox
-                id={`category-${category.name}`}
-                checked={isCategorySelected(category.name)}
-                onCheckedChange={checked => handleCategoryToggle(category.id, !!checked)}
-                aria-label={`Select all ${category.name} permissions`}
+                id={`group-${group.prefix}`}
+                checked={isGroupSelected(group)}
+                onCheckedChange={checked => handleGroupToggle(group, !!checked)}
+                aria-label={`Select all ${group.displayName} permissions`}
                 disabled={isSubmitting}
               />
-              <Label htmlFor={`category-${category.name}`} className="font-semibold">
-                {category.name}
+              <Label htmlFor={`group-${group.prefix}`} className="font-semibold">
+                {group.displayName}
               </Label>
             </div>
             <div className="grid grid-cols-2 gap-4 pl-6 pt-2">
-              {category.permissions.map(permission => (
+              {group.permissions.map(permission => (
                 <div key={permission.id} className="flex items-center space-x-2">
                   <Checkbox
                     id={permission.id}
@@ -113,7 +126,7 @@ export function PermissionListSection() {
                     onCheckedChange={checked => handlePermissionToggle(permission, !!checked)}
                     disabled={isSubmitting}
                   />
-                  <Label htmlFor={permission.id}>{permission.name}</Label>
+                  <Label htmlFor={permission.id}>{getPermissionDisplayName(permission.name)}</Label>
                 </div>
               ))}
             </div>

@@ -19,7 +19,7 @@
       "COMPLETED": "Đã hoàn thành",
       "CANCELLED": "Đã hủy"
     },
-      "sidebar": {
+    "sidebar": {
       "section": {
         "general": "Tổng quan",
         "functions": "Quản lý"
@@ -200,6 +200,23 @@
       "view_all": "Xem tất cả"
     },
     "role": {
+      "list": {
+        "title": "Quản lý vai trò",
+        "description": "Quản lý các vai trò và quyền truy cập trong hệ thống",
+        "createNew": "Tạo vai trò",
+        "empty": "Chưa có vai trò nào",
+        "table": {
+          "name": "Tên vai trò",
+          "description": "Mô tả",
+          "permissions": "Quyền",
+          "users": "Người dùng",
+          "actions": "Hành động"
+        },
+        "actions": {
+          "edit": "Chỉnh sửa",
+          "delete": "Xóa"
+        }
+      },
       "create": {
         "title": "Tạo vai trò mới",
         "description": "Tạo và cấu hình vai trò với các quyền truy cập phù hợp cho người dùng trong hệ thống",
@@ -210,6 +227,16 @@
         "reset": "Đặt lại",
         "create": "Tạo vai trò",
         "creating": "Đang tạo..."
+      },
+      "delete": {
+        "title": "Xóa vai trò",
+        "description": "Bạn có chắc chắn muốn xóa vai trò \"{name}\"? Hành động này không thể hoàn tác.",
+        "cancel": "Hủy",
+        "confirm": "Xóa"
+      },
+      "edit": {
+        "title": "Chỉnh sửa vai trò",
+        "description": "Cập nhật thông tin và quyền truy cập cho vai trò"
       }
     }
   },
