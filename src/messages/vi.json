@@ -112,6 +112,7 @@
         "title": "Quản lý Booking",
         "description": "Xem và quản lý danh sách booking từ khách hàng",
         "export": "Xuất dữ liệu",
+        "export_title": "Danh sách Booking",
         "filter": {
           "tour": "Chọn tour",
           "tour_dates": "Chọn ngày tour",
