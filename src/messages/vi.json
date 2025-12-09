@@ -19,22 +19,22 @@
       "COMPLETED": "Đã hoàn thành",
       "CANCELLED": "Đã hủy"
     },
-    "sidebar": {
+      "sidebar": {
       "section": {
-        "general": "Chung",
-        "functions": "Chức năng"
+        "general": "Tổng quan",
+        "functions": "Quản lý"
       },
       "dashboard": "Bảng điều khiển",
       "user": "Người dùng",
-      "role": "Vai trò",
-      "tour": "Tour",
-      "tour_assigned_available_dates": "Lịch phân công",
-      "booking": "Booking",
-      "order": "Đơn hàng",
-      "article": "Bài viết",
-      "notification": "Thông báo",
-      "report": "Báo cáo",
-      "chatbot": "Chatbot",
+      "role": "Vai trò & Quyền",
+      "tour": "Quản lý Tour",
+      "tour_assigned_available_dates": "Phân công hướng dẫn viên",
+      "booking": "Quản lý đặt chỗ",
+      "order": "Quản lý đơn hàng",
+      "article": "Quản lý bài viết",
+      "notification": "Thông báo hệ thống",
+      "report": "Báo cáo & Thống kê",
+      "chatbot": "Trợ lý ảo",
       "logout": "Đăng xuất"
     },
     "tour": {
@@ -57,7 +57,7 @@
         "no_title": "Không có tiêu đề",
         "search_tour": "Tìm kiếm tour...",
         "tour_list_title": "Danh sách tour",
-        "tour_list_description": "Quản lý chi tiết tour, tình trạng và trạng thái đặt chỗ tại một nơi.",
+        "tour_list_description": "Quản lý toàn bộ tour, theo dõi trạng thái và tình hình đặt chỗ một cách hiệu quả.",
         "import": "Nhập dữ liệu",
         "add_tour": "Thêm tour",
         "update_status": "Cập nhật trạng thái",
@@ -100,17 +100,30 @@
         "to_date": "Đến ngày",
         "clear_filters": "Xóa bộ lọc",
         "filter_status": "Trạng thái",
-        "filter_employee": "Bộ lọc nhân viên sẽ được thêm vào sau",
+        "filter_employee": "Lọc theo nhân viên",
+        "select_employees": "Chọn nhân viên...",
+        "calendar_view": "Xem lịch phân công",
+        "my_calendar": "Lịch của tôi",
+        "calendar_description": "Xem lịch phân công theo tháng",
+        "assignments_this_month": "phân công trong tháng này",
+        "select_date": "Chọn ngày",
+        "assignments": "phân công",
+        "no_assignments": "Không có phân công",
+        "no_assignments_on_date": "Không có phân công nào vào ngày này",
+        "select_date_to_view": "Chọn ngày để xem chi tiết phân công",
+        "guide": "Hướng dẫn viên",
+        "table_view": "Bảng",
         "error_loading": "Không thể tải dữ liệu",
         "no_data": "Không có dữ liệu",
         "actions": "Hành động",
-        "not_available": "Không có"
+        "not_available": "Không có",
+        "view_history": "Xem lịch sử"
       }
     },
     "booking": {
       "list": {
-        "title": "Quản lý Booking",
-        "description": "Xem và quản lý danh sách booking từ khách hàng",
+        "title": "Quản lý đặt chỗ",
+        "description": "Theo dõi và xử lý tất cả các đặt chỗ từ khách hàng một cách hiệu quả",
         "export": "Xuất dữ liệu",
         "export_title": "Danh sách Booking",
         "filter": {
@@ -170,6 +183,35 @@
       "COMPLETED": "Hoàn thành",
       "CANCELLED": "Đã hủy",
       "PAUSED": "Tạm dừng"
+    },
+    "dashboard": {
+      "title": "Bảng điều khiển",
+      "welcome": "Chào mừng trở lại",
+      "overview": "Tổng quan hệ thống",
+      "stats": {
+        "total_tours": "Tổng số tour",
+        "total_bookings": "Tổng đặt chỗ",
+        "total_revenue": "Tổng doanh thu",
+        "pending_bookings": "Đặt chỗ chờ xử lý",
+        "active_tours": "Tour đang hoạt động",
+        "total_users": "Tổng người dùng"
+      },
+      "recent_activities": "Hoạt động gần đây",
+      "quick_actions": "Thao tác nhanh",
+      "view_all": "Xem tất cả"
+    },
+    "role": {
+      "create": {
+        "title": "Tạo vai trò mới",
+        "description": "Tạo và cấu hình vai trò với các quyền truy cập phù hợp cho người dùng trong hệ thống",
+        "role_name_label": "Tên vai trò",
+        "role_name_placeholder": "Ví dụ: Biên tập viên nội dung",
+        "permissions_label": "Quyền truy cập",
+        "selected_permissions_label": "Quyền đã chọn",
+        "reset": "Đặt lại",
+        "create": "Tạo vai trò",
+        "creating": "Đang tạo..."
+      }
     }
   },
   "home": {

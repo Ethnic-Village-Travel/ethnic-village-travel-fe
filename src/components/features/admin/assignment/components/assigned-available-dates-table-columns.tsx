@@ -6,7 +6,7 @@ import { RouteConstant } from '@/core/constants/route';
 import { TourAvailableDateStatusEnum } from '@/core/enum/tour.enum';
 import type { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import { CalendarDays, Clock, MapPin, MoreHorizontal, Users, X } from 'lucide-react';
+import { CalendarDays, Clock, History, MapPin, MoreHorizontal, Users, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { AssignedAvailableDateResponse } from '@/types/tour-assignment.type';
@@ -27,7 +27,7 @@ interface GetAssignedAvailableDatesTableColumnsProps {
   setRowAction?: React.Dispatch<
     React.SetStateAction<{
       id: string;
-      action: 'cancel';
+      action: 'cancel' | 'history';
       row?: AssignedAvailableDateResponse;
     } | null>
   >;
@@ -145,16 +145,38 @@ export function getAssignedAvailableDatesTableColumns({
       header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.assigned_dates.assigned_date')} />,
       cell: ({ row }) => {
         const assignment = row.original;
-        const assignedDate = format(new Date(assignment.assignedDate), 'dd/MM/yyyy HH:mm');
-
-        return (
-          <div className="min-w-[100px]">
-            <div className="text-sm font-medium">{assignedDate}</div>
-            <div className="text-xs text-muted-foreground">
-              {t('tour.assigned_dates.assigned_by')} {assignment.assignedBy}
+        
+        if (!assignment.assignedDate) {
+          return (
+            <div className="min-w-[100px]">
+              <div className="text-sm font-medium text-muted-foreground">N/A</div>
+              <div className="text-xs text-muted-foreground">
+                {t('tour.assigned_dates.assigned_by')} {assignment.assignedBy}
+              </div>
             </div>
-          </div>
-        );
+          );
+        }
+
+        try {
+          const assignedDate = format(new Date(assignment.assignedDate), 'dd/MM/yyyy HH:mm');
+          return (
+            <div className="min-w-[100px]">
+              <div className="text-sm font-medium">{assignedDate}</div>
+              <div className="text-xs text-muted-foreground">
+                {t('tour.assigned_dates.assigned_by')} {assignment.assignedBy}
+              </div>
+            </div>
+          );
+        } catch (error) {
+          return (
+            <div className="min-w-[100px]">
+              <div className="text-sm font-medium text-muted-foreground">Invalid date</div>
+              <div className="text-xs text-muted-foreground">
+                {t('tour.assigned_dates.assigned_by')} {assignment.assignedBy}
+              </div>
+            </div>
+          );
+        }
       },
     },
     {
@@ -179,18 +201,17 @@ export function getAssignedAvailableDatesTableColumns({
   // Add employee column only for Admin
   if (isAdmin) {
     columns.push({
-      id: 'assignedTo',
-      // accessorKey: 'assignedEmployee.user.personal.fullName',
+      id: 'guide',
       accessorFn: row =>
-        row.assignedTo?.personal
-          ? `${row.assignedTo.personal.firstName} ${row.assignedTo.personal.lastName}`
+        row.guide?.personal
+          ? `${row.guide.personal.firstName} ${row.guide.personal.lastName}`
           : undefined,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('tour.assigned_dates.assigned_employee')} />
       ),
       cell: ({ row }) => {
         const assignment = row.original;
-        const employee = assignment.assignedTo;
+        const employee = assignment.guide;
 
         if (!employee) {
           return <span className="text-xs text-muted-foreground">{t('tour.assigned_dates.no_employee')}</span>;
@@ -230,6 +251,18 @@ export function getAssignedAvailableDatesTableColumns({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              onClick={() =>
+                setRowAction({
+                  id: assignment.assignmentId,
+                  action: 'history',
+                  row: assignment,
+                })
+              }
+            >
+              <History className="mr-2 h-4 w-4" />
+              {t('tour.assigned_dates.view_history')}
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
                 setRowAction({

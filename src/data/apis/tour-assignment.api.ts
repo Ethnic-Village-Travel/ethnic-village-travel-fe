@@ -5,6 +5,10 @@ import type { ApiResponse } from '@/types/api.type';
 import type {
   AssignedAvailableDateListResponse,
   AssignedAvailableDatesRequest,
+  AssignmentHistoryRequest,
+  AssignmentHistoryResponse,
+  CalendarAssignmentsRequest,
+  CalendarAssignmentResponse,
   TourAssignmentRequest,
   TourAssignmentResponse,
 } from '@/types/tour-assignment.type';
@@ -36,6 +40,34 @@ export const tourAssignmentApi = {
         throw new Error(`Failed to fetch assigned available dates: ${error.message}`);
       }
       throw new Error('Failed to fetch assigned available dates');
+    }
+  },
+
+  getCalendarAssignments: async (
+    payload: CalendarAssignmentsRequest,
+  ): Promise<ApiResponse<CalendarAssignmentResponse[]>> => {
+    try {
+      const { data } = await api.post(AdminAPI.TOUR_ASSIGNMENT.CALENDAR_ASSIGNMENTS, payload);
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to fetch calendar assignments: ${error.message}`);
+      }
+      throw new Error('Failed to fetch calendar assignments');
+    }
+  },
+
+  getAssignmentHistory: async (
+    payload: AssignmentHistoryRequest,
+  ): Promise<ApiResponse<AssignmentHistoryResponse[]>> => {
+    try {
+      const { data } = await api.post(AdminAPI.TOUR_ASSIGNMENT.HISTORY, payload);
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to fetch assignment history: ${error.message}`);
+      }
+      throw new Error('Failed to fetch assignment history');
     }
   },
 };

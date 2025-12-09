@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 import { PERMISSION_CATEGORIES } from '@/data/mocks/roles';
 import { useFormContext } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 import { Permission } from '@/types/role.type';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -82,9 +83,11 @@ export function PermissionListSection() {
     [selectedPermissions, permissionCategories],
   );
 
+  const t = useTranslations('admin.role.create');
+
   return (
     <div className="space-y-2">
-      <h2 className="font-bold">Permissions</h2>
+      <h2 className="text-base font-semibold">{t('permissions_label')}</h2>
 
       <div className="w-full space-y-4">
         {permissionCategories.map(category => (

@@ -1,7 +1,12 @@
 import { tourAssignmentApi } from '@/data/apis/tour-assignment.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import type { AssignedAvailableDatesRequest, TourAssignmentRequest } from '@/types/tour-assignment.type';
+import type {
+  AssignedAvailableDatesRequest,
+  AssignmentHistoryRequest,
+  CalendarAssignmentsRequest,
+  TourAssignmentRequest,
+} from '@/types/tour-assignment.type';
 
 export const useAssignTourEmployees = () => {
   return useMutation({
@@ -38,6 +43,56 @@ export const useAssignedAvailableDates = (
     refetchOnWindowFocus: options?.refetchOnWindowFocus ?? false,
     retry: (failureCount, error) => {
       // Don't retry on 4xx errors (client errors)
+      if (error instanceof Error && error.message.includes('4')) {
+        return false;
+      }
+      return failureCount < 3;
+    },
+  });
+};
+
+/**
+ * Hook for fetching calendar assignments for a date range
+ * Used for calendar view display
+ */
+export const useCalendarAssignments = (
+  params: CalendarAssignmentsRequest,
+  options?: {
+    enabled?: boolean;
+    staleTime?: number;
+  },
+) => {
+  return useQuery({
+    queryKey: ['calendar-assignments', params],
+    queryFn: () => tourAssignmentApi.getCalendarAssignments(params),
+    enabled: options?.enabled ?? true,
+    staleTime: options?.staleTime ?? 5 * 60 * 1000, // 5 minutes
+    retry: (failureCount, error) => {
+      if (error instanceof Error && error.message.includes('4')) {
+        return false;
+      }
+      return failureCount < 3;
+    },
+  });
+};
+
+/**
+ * Hook for fetching assignment history
+ * Used to display timeline of assignment changes
+ */
+export const useAssignmentHistory = (
+  params: AssignmentHistoryRequest,
+  options?: {
+    enabled?: boolean;
+    staleTime?: number;
+  },
+) => {
+  return useQuery({
+    queryKey: ['assignment-history', params],
+    queryFn: () => tourAssignmentApi.getAssignmentHistory(params),
+    enabled: options?.enabled ?? true,
+    staleTime: options?.staleTime ?? 5 * 60 * 1000, // 5 minutes
+    retry: (failureCount, error) => {
       if (error instanceof Error && error.message.includes('4')) {
         return false;
       }

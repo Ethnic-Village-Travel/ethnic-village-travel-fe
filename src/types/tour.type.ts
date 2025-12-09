@@ -7,13 +7,14 @@ import { Review } from './review.type';
 import { TourServiceInfo } from './service-info.type';
 
 export interface Tour {
-  id: number;
+  id?: string;
+  tourId?: string;
   imageUrl: string;
   title: string;
-  slug: string;
+  slug?: string;
   overview?: string;
   status?: string;
-  duration: number;
+  duration?: number;
   pickUpLocation?: Location;
   adultPrice?: number;
   childPrice?: number;
@@ -33,7 +34,7 @@ export interface Tour {
 }
 
 export interface TourAvailableDate {
-  id: number;
+  id: string;
   startDate: string;
   endDate: string;
   maxSlots: number;
@@ -57,8 +58,8 @@ export interface TourListRequest {
   size?: number;
   sortBy?: string;
   order?: 'asc' | 'desc';
-  ethnicIds?: number[];
-  locationIds?: number[];
+  ethnicIds?: string[];
+  locationIds?: string[];
   minPrice?: number;
   maxPrice?: number;
   onSale?: boolean;
@@ -72,10 +73,11 @@ export interface TourAdminListRequest {
   size?: number;
   sortBy?: string;
   order?: 'asc' | 'desc';
-  ethnicIds?: number[];
-  locationIds?: number[];
+  ethnicIds?: string[];
+  locationIds?: string[];
   onSale?: boolean;
   status?: TourStatus[];
+  searchKey?: string;
 }
 
 export interface TourListResponse {
