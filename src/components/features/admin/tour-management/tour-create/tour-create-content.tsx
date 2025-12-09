@@ -24,7 +24,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { MultiSelect } from '@/components/shared/multiple-select';
 
 import AvailableDates from './available-dates';
-import ContactNumber from './contact-number';
 import InExService from './in-ex-service';
 import TourItinerary from './tour-itinerary';
 
@@ -38,12 +37,11 @@ export default function TourCreateContent() {
       image: '',
       status: TourStatusEnum.DRAFT.value,
       duration: 3, // Default 3 days
-      contactNumbers: [{ name: '', phone: '' }],
       itinerary: [],
       ethnic: [],
       included: [],
       excluded: [],
-      availableDates: [{ startDate: new Date(), maxSlots: 1, assignedEmployees: [] }],
+      availableDates: [{ startDate: new Date(), maxSlots: 10 }],
       overview: '',
       adultPrice: 0,
       childPrice: 0,
@@ -69,7 +67,6 @@ export default function TourCreateContent() {
       pickUpLocationId: data.pickupLocation,
       adultPrice: data.adultPrice,
       childPrice: data.childPrice,
-      contacts: data.contactNumbers,
       timeline: data.itinerary,
       ethnicIds: data.ethnic,
       locationIds: data.location,
@@ -77,9 +74,8 @@ export default function TourCreateContent() {
       tourExcludedServices: data.excluded,
       availableDates: data.availableDates.map(date => ({
         startDate: date.startDate,
-        endDate: new Date(date.startDate.getTime() + (duration - 1) * 24 * 60 * 60 * 1000), // Calculate end date
+        endDate: new Date(date.startDate.getTime() + (duration - 1) * 24 * 60 * 60 * 1000),
         maxSlots: date.maxSlots,
-        employeeIds: date.assignedEmployees?.map(emp => emp.id) || [], // Map employee IDs
       })),
       publishedDate: data.publishedDate,
     };
@@ -417,9 +413,6 @@ export default function TourCreateContent() {
 
               {/* Right Column */}
               <div className="space-y-4">
-                {/* Contact Numbers */}
-                <ContactNumber form={form} />
-
                 <AvailableDates form={form} />
 
                 <InExService form={form} />

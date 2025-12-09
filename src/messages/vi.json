@@ -356,6 +356,12 @@
         "duration": "Thời gian"
       }
     },
+    "edit": {
+      "title": "Chỉnh sửa Tour"
+    },
+    "update": {
+      "success": "Cập nhật tour thành công"
+    },
     "detail": {
       "review": "Đánh giá",
       "days": "Ngày",
@@ -862,9 +868,12 @@
     "contactNumber": "Số điện thoại liên hệ",
     "contactPerson": "Người liên hệ",
     "add": "Thêm",
+    "save": "Lưu",
     "startDate": "Ngày bắt đầu",
     "endDate": "Ngày kết thúc",
     "maxSlots": "Số chỗ tối đa",
+    "slots": "chỗ",
+    "noAvailableDates": "Chưa có ngày khả dụng. Nhấn + để thêm.",
     "availableDates": "Ngày khả dụng",
     "included": "Dịch vụ bao gồm",
     "excluded": "Dịch vụ không bao gồm",
@@ -903,13 +912,14 @@
       "duration": "Thời gian tour",
       "durationMin": "Thời gian tour phải ít nhất 1 ngày",
       "durationMax": "Thời gian tour không được quá 30 ngày",
-      "adultPriceMin": "Giá người lớn phải lớn hơn hoặc bằng 0",
-      "childPriceMin": "Giá trẻ em phải lớn hơn hoặc bằng 0",
-      "contactNameRequired": "Yêu cầu tên",
-      "contactPhoneInvalid": "Số điện thoại không hợp lệ",
+      "adultPriceMin": "Giá người lớn phải lớn hơn 0",
+      "childPriceMin": "Giá trẻ em phải lớn hơn 0",
+      "contactNameRequired": "Yêu cầu tên liên hệ",
+      "contactPhoneInvalid": "Số điện thoại phải có đúng 10 số",
       "includedRequired": "Yêu cầu dịch vụ bao gồm",
       "excludedRequired": "Yêu cầu dịch vụ không bao gồm",
       "overviewRequired": "Yêu cầu tổng quan",
+      "overviewMax": "Tổng quan không được quá 1000 ký tự",
       "itineraryTitleRequired": "Yêu cầu tiêu đề lịch trình",
       "itineraryDescriptionRequired": "Yêu cầu mô tả lịch trình",
       "availableDatesRequired": "Yêu cầu ít nhất một ngày khả dụng",

@@ -1,13 +1,13 @@
-import { useEffect, useMemo } from 'react';
-import { Plus, X } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { CalendarIcon, Edit, Plus, Trash } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useFieldArray, UseFormReturn, useWatch } from 'react-hook-form';
+import { UseFormReturn, useWatch } from 'react-hook-form';
 
 import { TourCreateFormValues } from '@/libs/schemas/tour.schema';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
@@ -16,214 +16,198 @@ type AvailableDatesProps = {
 };
 
 export default function AvailableDates({ form }: AvailableDatesProps) {
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: 'availableDates',
-  });
-
   const t = useTranslations();
   const { toast } = useToast();
 
-  // Watch duration and publishedDate for validation
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [maxSlots, setMaxSlots] = useState<number>(10);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
   const duration = useWatch({ control: form.control, name: 'duration' }) || 3;
   const publishedDate = useWatch({ control: form.control, name: 'publishedDate' });
-  const availableDates = useWatch({ control: form.control, name: 'availableDates' }) || [];
+  const availableDates = form.watch('availableDates') || [];
 
-  // Calculate minimum start date
   const minStartDate = useMemo(() => {
     if (!publishedDate) return new Date();
     return new Date(publishedDate.getTime() + 7 * 24 * 60 * 60 * 1000);
   }, [publishedDate]);
 
-  // Check for date conflicts when publishedDate changes
-  useEffect(() => {
-    if (!publishedDate || !availableDates.length) return;
+  const calculateEndDate = (date: Date) => {
+    return new Date(date.getTime() + (duration - 1) * 24 * 60 * 60 * 1000);
+  };
 
-    const minStartDate = new Date(publishedDate.getTime() + 7 * 24 * 60 * 60 * 1000);
-    const conflictingDates = availableDates.filter(date => date.startDate && new Date(date.startDate) < minStartDate);
+  const checkConflict = (newStart: Date, excludeIndex?: number) => {
+    const newEnd = calculateEndDate(newStart);
+    return availableDates.some((existing, i) => {
+      if (excludeIndex !== undefined && i === excludeIndex) return false;
+      if (!existing.startDate) return false;
+      const existingStart = new Date(existing.startDate);
+      const existingEnd = calculateEndDate(existingStart);
+      return newStart <= existingEnd && newEnd >= existingStart;
+    });
+  };
 
-    if (conflictingDates.length > 0) {
+  const handleAddOrUpdate = () => {
+    if (!startDate || maxSlots < 1) return;
+
+    if (checkConflict(startDate, editIndex ?? undefined)) {
       toast({
         title: t('tourCreate.dateConflictWarning'),
-        description: `${t('tourCreate.publishedDateConflictMessage')} (${publishedDate.toLocaleDateString('vi-VN')})`,
+        description: t('tourCreate.availableDatesConflictMessage'),
         variant: 'destructive',
       });
+      return;
     }
-  }, [publishedDate, availableDates, toast]);
 
-  // Check for conflicts between available dates
-  useEffect(() => {
-    if (!availableDates.length || availableDates.length < 2 || !duration) return;
+    const currentDates = form.getValues('availableDates') || [];
+    const newItem = { startDate, maxSlots } as any;
 
-    for (let i = 0; i < availableDates.length; i++) {
-      const currentDate = availableDates[i];
-      if (!currentDate.startDate) continue;
-
-      const currentStart = new Date(currentDate.startDate);
-      const currentEnd = new Date(currentStart.getTime() + (duration - 1) * 24 * 60 * 60 * 1000);
-
-      for (let j = i + 1; j < availableDates.length; j++) {
-        const compareDate = availableDates[j];
-        if (!compareDate.startDate) continue;
-
-        const compareStart = new Date(compareDate.startDate);
-        const compareEnd = new Date(compareStart.getTime() + (duration - 1) * 24 * 60 * 60 * 1000);
-
-        // Check overlap
-        if (currentStart <= compareEnd && currentEnd >= compareStart) {
-          toast({
-            title: t('tourCreate.dateConflictWarning'),
-            description: `${t('tourCreate.availableDatesConflictMessage')} ${currentStart.toLocaleDateString('vi-VN')} - ${compareStart.toLocaleDateString('vi-VN')}`,
-            variant: 'destructive',
-          });
-          return; // Show only first conflict
-        }
-      }
+    if (editIndex !== null) {
+      const updated = [...currentDates];
+      updated[editIndex] = { ...updated[editIndex], startDate, maxSlots };
+      form.setValue('availableDates', updated);
+      setEditIndex(null);
+    } else {
+      form.setValue('availableDates', [newItem, ...currentDates]);
     }
-  }, [availableDates, duration, toast]);
 
-  const addAvailableDate = () => {
-    if (fields.length < 5) {
-      append({ startDate: new Date(), maxSlots: 1 } as any);
-    }
+    setStartDate(undefined);
+    setMaxSlots(10);
+    setIsPopoverOpen(false);
   };
 
-  const removeAvailableDate = (index: number) => {
-    if (fields.length > 1) {
-      remove(index);
-    }
+  const handleEdit = (index: number) => {
+    const item = availableDates[index];
+    setStartDate(new Date(item.startDate));
+    setMaxSlots(item.maxSlots);
+    setEditIndex(index);
+    setIsPopoverOpen(true);
   };
 
-  // Calculate end date for a given start date
-  const calculateEndDate = (startDate: Date) => {
-    return new Date(startDate.getTime() + (duration - 1) * 24 * 60 * 60 * 1000);
+  const handleDelete = (index: number) => {
+    const current = form.getValues('availableDates') || [];
+    form.setValue(
+      'availableDates',
+      current.filter((_, i) => i !== index),
+      { shouldValidate: false },
+    );
+  };
+
+  const handlePopoverOpenChange = (open: boolean) => {
+    setIsPopoverOpen(open);
+    if (!open) {
+      setEditIndex(null);
+      setStartDate(undefined);
+      setMaxSlots(10);
+    }
   };
 
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
         <FormLabel className="font-semibold">{t('tourCreate.availableDates')}</FormLabel>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          onClick={addAvailableDate}
-          disabled={form.getValues('availableDates')?.length >= 5}
-          className="px-2"
-        >
-          <Plus className="h-4 w-4" /> {t('tourCreate.add')}
-        </Button>
-      </div>
-
-      {/* Header labels */}
-      <div className="mb-1 grid grid-cols-3 gap-2">
-        <FormLabel>{t('tourCreate.startDate')}</FormLabel>
-        <FormLabel>{t('tourCreate.endDate')}</FormLabel>
-        <FormLabel>{t('tourCreate.maxSlots')}</FormLabel>
-      </div>
-
-      {/* Input rows */}
-      {fields.map((field, index) => {
-        const currentStartDate = form.watch(`availableDates.${index}.startDate`);
-        const endDate = currentStartDate ? calculateEndDate(currentStartDate) : null;
-
-        return (
-          <div key={field.id} className="mb-4 space-y-3 rounded-lg border p-4">
-            {/* First row: Start Date, End Date, Max Slots */}
-            <div className="grid grid-cols-3 gap-2">
-              {/* Start Date */}
-              <FormField
-                control={form.control}
-                name={`availableDates.${index}.startDate`}
-                render={({ field }) => (
-                  <FormItem>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button variant="outline" className="w-full justify-start">
-                          {field.value ? new Date(field.value).toLocaleDateString('vi-VN') : t('tourCreate.chooseDate')}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={date => {
-                            // Disable dates before minimum start date
-                            if (date < minStartDate) return true;
-
-                            // Check conflicts with other available dates
-                            const existingDates = form.getValues('availableDates') || [];
-                            const newStart = date;
-                            const newEnd = calculateEndDate(newStart);
-
-                            return existingDates.some((existingDate, i) => {
-                              if (i === index) return false; // Don't check against itself
-                              if (!existingDate.startDate) return false;
-
-                              const existingStart = new Date(existingDate.startDate);
-                              const existingEnd = calculateEndDate(existingStart);
-
-                              // Check overlap
-                              return newStart <= existingEnd && newEnd >= existingStart;
-                            });
-                          }}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* End Date (Calculated, Read-only) */}
-              <div className="flex items-center">
-                <div className="w-full rounded-md border border-input bg-muted px-3 py-2 text-sm">
-                  {endDate ? endDate.toLocaleDateString('vi-VN') : '-'}
-                </div>
+        <Popover open={isPopoverOpen} onOpenChange={handlePopoverOpenChange}>
+          <PopoverTrigger asChild>
+            <Button type="button" variant="ghost" size="sm" className="px-2">
+              <Plus className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80">
+            <div className="space-y-3">
+              <div>
+                <FormLabel className="text-sm">{t('tourCreate.startDate')}</FormLabel>
+                <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                  <PopoverTrigger asChild>
+                    <Button type="button" variant="outline" className="mt-1 w-full justify-start">
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {startDate ? startDate.toLocaleDateString('vi-VN') : t('tourCreate.chooseDate')}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={startDate}
+                      onSelect={date => {
+                        setStartDate(date);
+                        setIsCalendarOpen(false);
+                      }}
+                      disabled={date => date < minStartDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
 
-              {/* Max Slots */}
-              <FormField
-                control={form.control}
-                name={`availableDates.${index}.maxSlots`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="flex items-center gap-1">
-                        <Input
-                          type="number"
-                          min={1}
-                          {...field}
-                          onChange={e => {
-                            let value = e.target.value.replace(/^0+/, '');
-                            if (value === '') value = '1';
-                            field.onChange(Number(value));
-                          }}
-                        />
-                        {fields.length > 1 && (
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeAvailableDate(index)}
-                            className="px-2 text-destructive hover:bg-destructive/10"
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+              {startDate && (
+                <div>
+                  <FormLabel className="text-sm">{t('tourCreate.endDate')}</FormLabel>
+                  <div className="mt-1 rounded-md border border-input bg-muted px-3 py-2 text-sm">
+                    {calculateEndDate(startDate).toLocaleDateString('vi-VN')}
+                  </div>
+                </div>
+              )}
 
+              <div>
+                <FormLabel className="text-sm">{t('tourCreate.maxSlots')}</FormLabel>
+                <Input
+                  type="number"
+                  min={1}
+                  value={maxSlots}
+                  onChange={e => setMaxSlots(Math.max(1, Number(e.target.value)))}
+                  className="mt-1"
+                />
+              </div>
+
+              <Button type="button" onClick={handleAddOrUpdate} className="w-full" disabled={!startDate}>
+                {editIndex !== null ? t('tourCreate.save') : t('tourCreate.add')}
+              </Button>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
+
+      <div className="space-y-2">
+        {availableDates.map((item, index) => {
+          const start = new Date(item.startDate);
+          const end = calculateEndDate(start);
+          return (
+            <div key={index} className="flex items-center justify-between rounded border p-3">
+              <div className="flex items-center gap-4">
+                <CalendarIcon className="h-4 w-4 text-muted-foreground" />
+                <div>
+                  <p className="font-medium">
+                    {start.toLocaleDateString('vi-VN')} - {end.toLocaleDateString('vi-VN')}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {item.maxSlots} {t('tourCreate.slots')}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-1">
+                <Button type="button" variant="ghost" size="icon" className="h-7 w-7" onClick={() => handleEdit(index)}>
+                  <Edit className="h-3 w-3" />
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                  onClick={() => handleDelete(index)}
+                >
+                  <Trash className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+          );
+        })}
+        {availableDates.length === 0 && (
+          <div className="rounded border border-dashed p-4 text-center text-sm text-muted-foreground">
+            {t('tourCreate.noAvailableDates')}
           </div>
-        );
-      })}
+        )}
+      </div>
     </div>
   );
 }
