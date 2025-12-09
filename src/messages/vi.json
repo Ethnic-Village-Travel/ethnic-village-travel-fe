@@ -22,10 +22,13 @@
     "sidebar": {
       "section": {
         "general": "Tổng quan",
-        "functions": "Quản lý"
+        "users": "Người dùng & Phân quyền",
+        "business": "Kinh doanh",
+        "content": "Nội dung & Tiện ích"
       },
       "dashboard": "Bảng điều khiển",
       "user": "Người dùng",
+      "employee": "Nhân viên",
       "role": "Vai trò & Quyền",
       "tour": "Quản lý Tour",
       "tour_assigned_available_dates": "Phân công hướng dẫn viên",
