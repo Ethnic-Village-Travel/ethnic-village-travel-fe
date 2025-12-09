@@ -185,19 +185,56 @@
     },
     "dashboard": {
       "title": "Bảng điều khiển",
-      "welcome": "Chào mừng trở lại",
-      "overview": "Tổng quan hệ thống",
-      "stats": {
-        "total_tours": "Tổng số tour",
-        "total_bookings": "Tổng đặt chỗ",
-        "total_revenue": "Tổng doanh thu",
-        "pending_bookings": "Đặt chỗ chờ xử lý",
-        "active_tours": "Tour đang hoạt động",
-        "total_users": "Tổng người dùng"
+      "welcome": "Chào mừng trở lại! Đây là tổng quan hoạt động kinh doanh của bạn.",
+      "error_loading": "Không thể tải dữ liệu",
+      "sections": {
+        "key_metrics": "Chỉ số then chốt",
+        "operations": "Quản lý vận hành",
+        "analytics": "Biểu đồ & Phân tích",
+        "recent_activity": "Hoạt động gần đây"
       },
-      "recent_activities": "Hoạt động gần đây",
-      "quick_actions": "Thao tác nhanh",
-      "view_all": "Xem tất cả"
+      "metrics": {
+        "total_revenue": "Tổng doanh thu",
+        "total_revenue_desc": "Doanh thu trong tháng này",
+        "new_bookings": "Booking mới",
+        "new_bookings_desc": "Số đơn đặt tour hôm nay",
+        "upcoming_departures": "Tour sắp khởi hành",
+        "upcoming_departures_desc": "Tour chạy trong 48h tới",
+        "pending_bookings": "Yêu cầu giữ chỗ",
+        "pending_bookings_desc": "Chờ thanh toán, cần chốt gấp",
+        "compared_to_last_month": "so với tháng trước"
+      },
+      "upcoming_departures": {
+        "title": "Lịch khởi hành sắp tới",
+        "description": "Các tour sẽ khởi hành trong 7 ngày tới",
+        "tour_name": "Tên Tour",
+        "departure_date": "Ngày đi",
+        "slots": "Số chỗ",
+        "status": "Trạng thái",
+        "empty": "Không có tour khởi hành trong thời gian này"
+      },
+      "revenue_chart": {
+        "title": "Biểu đồ doanh thu",
+        "description": "So sánh doanh thu với cùng kỳ tháng trước",
+        "current": "Doanh thu thực tế",
+        "previous": "Cùng kỳ tháng trước"
+      },
+      "top_destinations": {
+        "title": "Top điểm đến",
+        "description": "Phân bổ booking theo địa điểm trong tháng",
+        "empty": "Chưa có dữ liệu booking"
+      },
+      "recent_bookings": {
+        "title": "Booking vừa đặt",
+        "description": "Các đơn đặt mới nhất cần xử lý",
+        "id": "ID",
+        "customer": "Khách hàng",
+        "tour": "Tour",
+        "departure_date": "Ngày đi",
+        "total": "Tổng tiền",
+        "status": "Trạng thái",
+        "empty": "Chưa có booking mới"
+      }
     },
     "role": {
       "list": {

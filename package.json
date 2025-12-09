@@ -61,6 +61,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.56.3",
     "react-use-draggable-scroll": "^0.4.7",
+    "recharts": "^3.5.1",
     "sharp": "^0.34.4",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",

@@ -97,4 +97,11 @@ export const AdminAPI = {
     LIST: '/admin/permission',
     GROUPED: '/admin/permission/grouped',
   },
+  DASHBOARD: {
+    STATS: '/admin/dashboard/stats',
+    UPCOMING_DEPARTURES: '/admin/dashboard/upcoming-departures',
+    REVENUE_CHART: '/admin/dashboard/revenue-chart',
+    TOP_DESTINATIONS: '/admin/dashboard/top-destinations',
+    RECENT_BOOKINGS: '/admin/dashboard/recent-bookings',
+  },
 };
