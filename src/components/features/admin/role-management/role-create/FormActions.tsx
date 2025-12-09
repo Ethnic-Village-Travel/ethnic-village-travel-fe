@@ -1,15 +1,17 @@
-import { useFormContext } from 'react-hook-form';
+import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
 
-export function FormActions() {
+interface FormActionsProps {
+  isSubmitting?: boolean;
+}
+
+export function FormActions({ isSubmitting: isSubmittingProp }: FormActionsProps) {
   const t = useTranslations('admin.role.create');
-  const {
-    reset,
-    formState: { isSubmitting },
-  } = useFormContext();
+  const { reset, formState } = useFormContext();
+  const isSubmitting = isSubmittingProp ?? formState.isSubmitting;
 
   return (
     <div className="flex justify-end gap-4">

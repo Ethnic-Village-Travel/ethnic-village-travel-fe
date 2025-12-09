@@ -7,8 +7,9 @@ import type {
   AssignedAvailableDatesRequest,
   AssignmentHistoryRequest,
   AssignmentHistoryResponse,
-  CalendarAssignmentsRequest,
   CalendarAssignmentResponse,
+  CalendarAssignmentsRequest,
+  SingleAssignmentRequest,
   TourAssignmentRequest,
   TourAssignmentResponse,
 } from '@/types/tour-assignment.type';
@@ -18,6 +19,12 @@ export const tourAssignmentApi = {
     const { data } = await api.post(AdminAPI.TOUR_ASSIGNMENT.ASSIGN, payload);
     return data;
   },
+
+  assignSingleDate: async (payload: SingleAssignmentRequest): Promise<ApiResponse<TourAssignmentResponse>> => {
+    const { data } = await api.post(AdminAPI.TOUR_ASSIGNMENT.ASSIGN_SINGLE, payload);
+    return data;
+  },
+
   search: async (payload: any): Promise<ApiResponse<TourAssignmentResponse[]>> => {
     const { data } = await api.post(AdminAPI.TOUR_ASSIGNMENT.SEARCH, payload);
     return data;

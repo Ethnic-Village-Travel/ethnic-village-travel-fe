@@ -65,3 +65,20 @@ export const useAdminCreateTour = () => {
     },
   });
 };
+
+export const useAdminUpdateTour = () => {
+  return useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: Partial<TourCreateRequest> }) => {
+      const res = await tourApi.updateTour(id, data);
+      return res;
+    },
+  });
+};
+
+export const useAdminTourDetail = (id: string) => {
+  return useQuery<ApiResponse<Tour>>({
+    queryKey: [TOUR_QUERY_KEY.DETAIL, 'admin', id],
+    queryFn: () => tourApi.getAdminTourDetail(id),
+    enabled: !!id,
+  });
+};

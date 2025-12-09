@@ -47,7 +47,7 @@ export const RouteConstant = {
 
   admin_tour: '/admin/tour',
   admin_tour_create: '/admin/tour/create',
-  admin_tour_edit: '/admin/tour/edit/:slug',
+  admin_tour_edit: '/admin/tour/:id/edit',
 
   admin_assigned_available_dates: '/admin/assigned-available-dates',
 

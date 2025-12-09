@@ -5,6 +5,7 @@ export const ADMIN_DASHBOARD_READ = 'ADMIN_DASHBOARD_READ';
 
 export const PermissionMap: { [key: string]: string[] } = {
   //pathname
+  [RouteConstant.admin_dashboard]: [ADMIN_DASHBOARD_READ],
   [RouteConstant.admin_user]: ['ADMIN_USER_READ'],
   [RouteConstant.admin_user_create]: ['ADMIN_USER_WRITE'],
   [RouteConstant.admin_user_edit]: ['ADMIN_USER_WRITE'],

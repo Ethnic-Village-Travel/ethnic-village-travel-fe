@@ -1,19 +1,43 @@
 export interface Permission {
   id: string;
   name: string;
-  code: string;
-  category: string;
+  url?: string;
+  prefix?: string;
+  parentId?: string;
 }
 
-export interface PermissionCategory {
+export interface PermissionGroup {
+  prefix: string;
+  displayName: string;
+  permissions: Permission[];
+}
+
+export interface Role {
   id: string;
   name: string;
+  description: string;
   permissions: Permission[];
+  userCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateRoleRequest {
+  name: string;
+  description?: string;
+  permissionIds: string[];
+}
+
+export interface UpdateRoleRequest {
+  name: string;
+  description?: string;
+  permissionIds: string[];
 }
 
 export interface CreateRoleFormData {
-  name: string;
-  permissions: Permission[];
+  roleName: string;
+  description?: string;
+  selectedPermissions: Permission[];
 }
 
 export interface CreateRoleState {
@@ -26,5 +50,3 @@ export interface CreateRoleState {
     general?: string;
   };
 }
-
-export type PermissionCategoryId = 'tour' | 'article' | 'user' | 'booking' | 'payment' | 'report' | 'system';

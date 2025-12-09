@@ -18,11 +18,12 @@ export interface Tour {
   pickUpLocation?: Location;
   adultPrice?: number;
   childPrice?: number;
-  contacts?: any[];
+  contacts?: any;
   timeline?: TourTimeLine[];
   ethnics?: Ethnic[];
   locations?: Location[];
   services?: TourServiceInfo[];
+  tourServices?: TourServiceInfo[];
   ratingCount?: number;
   avgRating?: number;
   reviews?: Review[];
@@ -101,7 +102,7 @@ export type TourCreateRequest = {
   pickUpLocationId: string;
   adultPrice: number;
   childPrice: number;
-  contacts: any; // JsonNode, dùng any hoặc object tuỳ UI
+  contacts?: any;
   timeline: any; // JsonNode, dùng any hoặc object tuỳ UI
   availableSlots?: any;
   ethnicIds?: string[];
@@ -110,10 +111,10 @@ export type TourCreateRequest = {
   tourIncludedServices?: string[];
   tourExcludedServices?: string[];
   availableDates?: {
-    startDate: Date; // ISO date string
-    endDate: Date; // Calculated from startDate + duration
+    id?: string;
+    startDate: Date;
+    endDate: Date;
     maxSlots: number;
-    employeeIds?: string[]; // NEW: Employee IDs for assignment
   }[];
   publishedDate: Date;
 };

@@ -80,9 +80,28 @@ export const AdminAPI = {
   },
   TOUR_ASSIGNMENT: {
     ASSIGN: '/admin/tour-assignments/assign',
+    ASSIGN_SINGLE: '/admin/tour-assignments/assign-single',
     SEARCH: '/admin/tour-assignments/search',
     ASSIGNED_AVAILABLE_DATES: '/admin/tour-assignments/assigned-available-dates',
     CALENDAR_ASSIGNMENTS: '/admin/tour-assignments/calendar',
     HISTORY: '/admin/tour-assignments/history',
+  },
+  ROLE: {
+    LIST: '/admin/role',
+    DETAIL: '/admin/role',
+    CREATE: '/admin/role',
+    UPDATE: '/admin/role',
+    DELETE: '/admin/role',
+  },
+  PERMISSION: {
+    LIST: '/admin/permission',
+    GROUPED: '/admin/permission/grouped',
+  },
+  DASHBOARD: {
+    STATS: '/admin/dashboard/stats',
+    UPCOMING_DEPARTURES: '/admin/dashboard/upcoming-departures',
+    REVENUE_CHART: '/admin/dashboard/revenue-chart',
+    TOP_DESTINATIONS: '/admin/dashboard/top-destinations',
+    RECENT_BOOKINGS: '/admin/dashboard/recent-bookings',
   },
 };

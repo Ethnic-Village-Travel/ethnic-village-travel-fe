@@ -116,4 +116,22 @@ export const tourApi = {
       throw new Error('Failed to store tour');
     }
   },
+
+  updateTour: async (id: string, data: Partial<TourCreateRequest>): Promise<ApiResponse<TourResponse>> => {
+    try {
+      const res = await api.put(`${AdminAPI.TOUR.LIST}/${id}`, data);
+      return res.data;
+    } catch {
+      throw new Error('Failed to update tour');
+    }
+  },
+
+  getAdminTourDetail: async (id: string): Promise<ApiResponse<Tour>> => {
+    try {
+      const { data } = await api.get(`${AdminAPI.TOUR.LIST}/${id}`);
+      return data;
+    } catch {
+      throw new Error('Failed to get admin tour detail');
+    }
+  },
 };

@@ -43,7 +43,7 @@ export default function InExService({ form }: InExServiceProps) {
                 options={serviceInfoList
                   .filter(service => !excludedValue.includes(service.id))
                   .map(service => ({
-                    id: service.id,
+                    id: String(service.id),
                     name: service.name,
                   }))}
                 onValueChange={values => {
@@ -76,7 +76,7 @@ export default function InExService({ form }: InExServiceProps) {
                 options={serviceInfoList
                   .filter(service => !includedValue.includes(service.id))
                   .map(service => ({
-                    id: service.id,
+                    id: String(service.id),
                     name: service.name,
                   }))}
                 onValueChange={values => {

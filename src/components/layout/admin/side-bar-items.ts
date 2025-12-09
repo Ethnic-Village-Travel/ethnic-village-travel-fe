@@ -4,16 +4,15 @@ import {
   BarChart3,
   Bell,
   Bot,
+  Briefcase,
   Calendar,
   CalendarCheck,
   Compass,
-  FileText,
   LayoutGrid,
   Newspaper,
   Package,
   ShieldCheck,
   User,
-  Users,
 } from 'lucide-react';
 
 export type SIDEBAR_NAV_ITEM_PROP = {
@@ -31,11 +30,19 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       href: RouteConstant.admin_dashboard,
       permission: PermissionMap[RouteConstant.admin_dashboard],
     },
+  ],
+  'section.users': [
     {
       label: 'user',
       icon: User,
       href: RouteConstant.admin_user,
       permission: PermissionMap[RouteConstant.admin_user],
+    },
+    {
+      label: 'employee',
+      icon: Briefcase,
+      href: RouteConstant.admin_employee,
+      permission: PermissionMap[RouteConstant.admin_employee],
     },
     {
       label: 'role',
@@ -44,7 +51,7 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       permission: PermissionMap[RouteConstant.admin_role],
     },
   ],
-  'section.functions': [
+  'section.business': [
     {
       label: 'tour',
       icon: Compass,
@@ -70,6 +77,14 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       permission: PermissionMap[RouteConstant.admin_order],
     },
     {
+      label: 'report',
+      icon: BarChart3,
+      href: RouteConstant.admin_report,
+      permission: PermissionMap[RouteConstant.admin_report],
+    },
+  ],
+  'section.content': [
+    {
       label: 'article',
       icon: Newspaper,
       href: RouteConstant.admin_article,
@@ -80,12 +95,6 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       icon: Bell,
       href: RouteConstant.admin_notification,
       permission: PermissionMap[RouteConstant.admin_notification],
-    },
-    {
-      label: 'report',
-      icon: BarChart3,
-      href: RouteConstant.admin_report,
-      permission: PermissionMap[RouteConstant.admin_report],
     },
     {
       label: 'chatbot',

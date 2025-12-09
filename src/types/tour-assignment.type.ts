@@ -17,6 +17,11 @@ export interface TourAssignmentResponse {
   assignedBy: string;
 }
 
+export interface SingleAssignmentRequest {
+  tourAvailableDateId: string;
+  guideId: string;
+}
+
 // New types for Assigned Available Dates feature
 export interface AssignedAvailableDatesRequest {
   page: number;
@@ -84,18 +89,18 @@ export interface CalendarAssignmentResponse {
   endDate: string; // ISO date string
   assignedDate?: string; // ISO datetime string
   assignedBy?: string;
-  
+
   tourId: string;
   tourTitle: string;
   tourSlug: string;
   tourImageUrl?: string;
   tourStatus: string;
   tourDuration: number;
-  
+
   status: string;
   maxSlots: number;
   bookedSlots: number;
-  
+
   guideId: string;
   guideName: string;
   guideEmail: string;
@@ -112,16 +117,16 @@ export interface AssignmentHistoryResponse {
   id: string;
   assignmentId: string;
   tourAvailableDateId: string;
-  
+
   previousGuide?: EmployeeBasicResponse;
   newGuide?: EmployeeBasicResponse;
-  
+
   changedByEmail?: string;
   changedByName?: string;
-  
+
   changeReason?: string;
   previousStatus?: string;
   newStatus?: string;
-  
+
   createdAt: string; // ISO datetime string
 }

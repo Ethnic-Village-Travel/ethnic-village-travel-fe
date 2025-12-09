@@ -10,10 +10,11 @@ export interface Service {
 }
 
 export interface TourServiceInfo {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  type: TourServiceInfoType;
+  included?: boolean;
+  type?: TourServiceInfoType;
 }
 
 export interface ServiceInfoBasic {

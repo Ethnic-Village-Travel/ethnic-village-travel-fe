@@ -19,13 +19,16 @@
       "COMPLETED": "Đã hoàn thành",
       "CANCELLED": "Đã hủy"
     },
-      "sidebar": {
+    "sidebar": {
       "section": {
         "general": "Tổng quan",
-        "functions": "Quản lý"
+        "users": "Người dùng & Phân quyền",
+        "business": "Kinh doanh",
+        "content": "Nội dung & Tiện ích"
       },
       "dashboard": "Bảng điều khiển",
       "user": "Người dùng",
+      "employee": "Nhân viên",
       "role": "Vai trò & Quyền",
       "tour": "Quản lý Tour",
       "tour_assigned_available_dates": "Phân công hướng dẫn viên",
@@ -185,21 +188,75 @@
     },
     "dashboard": {
       "title": "Bảng điều khiển",
-      "welcome": "Chào mừng trở lại",
-      "overview": "Tổng quan hệ thống",
-      "stats": {
-        "total_tours": "Tổng số tour",
-        "total_bookings": "Tổng đặt chỗ",
-        "total_revenue": "Tổng doanh thu",
-        "pending_bookings": "Đặt chỗ chờ xử lý",
-        "active_tours": "Tour đang hoạt động",
-        "total_users": "Tổng người dùng"
+      "welcome": "Chào mừng trở lại! Đây là tổng quan hoạt động kinh doanh của bạn.",
+      "error_loading": "Không thể tải dữ liệu",
+      "sections": {
+        "key_metrics": "Chỉ số then chốt",
+        "operations": "Quản lý vận hành",
+        "analytics": "Biểu đồ & Phân tích",
+        "recent_activity": "Hoạt động gần đây"
       },
-      "recent_activities": "Hoạt động gần đây",
-      "quick_actions": "Thao tác nhanh",
-      "view_all": "Xem tất cả"
+      "metrics": {
+        "total_revenue": "Tổng doanh thu",
+        "total_revenue_desc": "Doanh thu trong tháng này",
+        "new_bookings": "Booking mới",
+        "new_bookings_desc": "Số đơn đặt tour hôm nay",
+        "upcoming_departures": "Tour sắp khởi hành",
+        "upcoming_departures_desc": "Tour chạy trong 48h tới",
+        "pending_bookings": "Yêu cầu giữ chỗ",
+        "pending_bookings_desc": "Chờ thanh toán, cần chốt gấp",
+        "compared_to_last_month": "so với tháng trước"
+      },
+      "upcoming_departures": {
+        "title": "Lịch khởi hành sắp tới",
+        "description": "Các tour sẽ khởi hành trong 7 ngày tới",
+        "tour_name": "Tên Tour",
+        "departure_date": "Ngày đi",
+        "slots": "Số chỗ",
+        "status": "Trạng thái",
+        "empty": "Không có tour khởi hành trong thời gian này"
+      },
+      "revenue_chart": {
+        "title": "Biểu đồ doanh thu",
+        "description": "So sánh doanh thu với cùng kỳ tháng trước",
+        "current": "Doanh thu thực tế",
+        "previous": "Cùng kỳ tháng trước"
+      },
+      "top_destinations": {
+        "title": "Top điểm đến",
+        "description": "Phân bổ booking theo địa điểm trong tháng",
+        "empty": "Chưa có dữ liệu booking"
+      },
+      "recent_bookings": {
+        "title": "Booking vừa đặt",
+        "description": "Các đơn đặt mới nhất cần xử lý",
+        "id": "ID",
+        "customer": "Khách hàng",
+        "tour": "Tour",
+        "departure_date": "Ngày đi",
+        "total": "Tổng tiền",
+        "status": "Trạng thái",
+        "empty": "Chưa có booking mới"
+      }
     },
     "role": {
+      "list": {
+        "title": "Quản lý vai trò",
+        "description": "Quản lý các vai trò và quyền truy cập trong hệ thống",
+        "createNew": "Tạo vai trò",
+        "empty": "Chưa có vai trò nào",
+        "table": {
+          "name": "Tên vai trò",
+          "description": "Mô tả",
+          "permissions": "Quyền",
+          "users": "Người dùng",
+          "actions": "Hành động"
+        },
+        "actions": {
+          "edit": "Chỉnh sửa",
+          "delete": "Xóa"
+        }
+      },
       "create": {
         "title": "Tạo vai trò mới",
         "description": "Tạo và cấu hình vai trò với các quyền truy cập phù hợp cho người dùng trong hệ thống",
@@ -210,6 +267,16 @@
         "reset": "Đặt lại",
         "create": "Tạo vai trò",
         "creating": "Đang tạo..."
+      },
+      "delete": {
+        "title": "Xóa vai trò",
+        "description": "Bạn có chắc chắn muốn xóa vai trò \"{name}\"? Hành động này không thể hoàn tác.",
+        "cancel": "Hủy",
+        "confirm": "Xóa"
+      },
+      "edit": {
+        "title": "Chỉnh sửa vai trò",
+        "description": "Cập nhật thông tin và quyền truy cập cho vai trò"
       }
     }
   },
@@ -288,6 +355,12 @@
         "rating": "Đánh giá",
         "duration": "Thời gian"
       }
+    },
+    "edit": {
+      "title": "Chỉnh sửa Tour"
+    },
+    "update": {
+      "success": "Cập nhật tour thành công"
     },
     "detail": {
       "review": "Đánh giá",
@@ -795,9 +868,12 @@
     "contactNumber": "Số điện thoại liên hệ",
     "contactPerson": "Người liên hệ",
     "add": "Thêm",
+    "save": "Lưu",
     "startDate": "Ngày bắt đầu",
     "endDate": "Ngày kết thúc",
     "maxSlots": "Số chỗ tối đa",
+    "slots": "chỗ",
+    "noAvailableDates": "Chưa có ngày khả dụng. Nhấn + để thêm.",
     "availableDates": "Ngày khả dụng",
     "included": "Dịch vụ bao gồm",
     "excluded": "Dịch vụ không bao gồm",
@@ -836,13 +912,14 @@
       "duration": "Thời gian tour",
       "durationMin": "Thời gian tour phải ít nhất 1 ngày",
       "durationMax": "Thời gian tour không được quá 30 ngày",
-      "adultPriceMin": "Giá người lớn phải lớn hơn hoặc bằng 0",
-      "childPriceMin": "Giá trẻ em phải lớn hơn hoặc bằng 0",
-      "contactNameRequired": "Yêu cầu tên",
-      "contactPhoneInvalid": "Số điện thoại không hợp lệ",
+      "adultPriceMin": "Giá người lớn phải lớn hơn 0",
+      "childPriceMin": "Giá trẻ em phải lớn hơn 0",
+      "contactNameRequired": "Yêu cầu tên liên hệ",
+      "contactPhoneInvalid": "Số điện thoại phải có đúng 10 số",
       "includedRequired": "Yêu cầu dịch vụ bao gồm",
       "excludedRequired": "Yêu cầu dịch vụ không bao gồm",
       "overviewRequired": "Yêu cầu tổng quan",
+      "overviewMax": "Tổng quan không được quá 1000 ký tự",
       "itineraryTitleRequired": "Yêu cầu tiêu đề lịch trình",
       "itineraryDescriptionRequired": "Yêu cầu mô tả lịch trình",
       "availableDatesRequired": "Yêu cầu ít nhất một ngày khả dụng",

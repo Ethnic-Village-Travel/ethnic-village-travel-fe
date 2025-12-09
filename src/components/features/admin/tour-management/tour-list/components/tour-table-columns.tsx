@@ -26,7 +26,7 @@ import { DataTableColumnHeader } from '@/components/shared/data-table/data-table
 interface GetTourTableColumnsProps {
   setRowAction: React.Dispatch<
     React.SetStateAction<{
-      id: number;
+      id: number | string;
       action: 'edit' | 'delete' | 'status' | 'assign';
       row?: Tour;
     } | null>
@@ -253,7 +253,7 @@ export function getTourTableColumns({ setRowAction, t }: GetTourTableColumnsProp
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => setRowAction({ id: tour.id, action: 'edit', row: tour })}>
-                <Link href={RouteConstant.admin_tour_edit.replace(':slug', tour.slug)}>{t('tour.list.edit')}</Link>
+                <Link href={RouteConstant.admin_tour_edit.replace(':id', String(tour.id))}>{t('tour.list.edit')}</Link>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setRowAction({ id: tour.id, action: 'status', row: tour })}>
                 {t('tour.list.change_status')}
