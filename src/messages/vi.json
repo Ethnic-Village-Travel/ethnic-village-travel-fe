@@ -128,6 +128,7 @@
         "title": "Quản lý đặt chỗ",
         "description": "Theo dõi và xử lý tất cả các đặt chỗ từ khách hàng một cách hiệu quả",
         "export": "Xuất dữ liệu",
+        "export_title": "Danh sách Booking",
         "filter": {
           "tour": "Chọn tour",
           "tour_dates": "Chọn ngày tour",

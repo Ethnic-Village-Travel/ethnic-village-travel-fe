@@ -3,7 +3,7 @@ import React from 'react';
 import Container from '@/components/ui/container';
 import Footer from '@/components/layout/marketing/footer';
 import Header from '@/components/layout/marketing/header';
-import { MarketingChatbot } from '@/components/shared/chatbot';
+import { ChatbotV2 } from '@/components/shared/chatbot_v2';
 
 import '@/styles/chatbot.css';
 
@@ -15,7 +15,7 @@ const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
         <main className="mt-[80px] flex-1">{children}</main>
       </Container>
       <Footer />
-      <MarketingChatbot />
+      <ChatbotV2 />
     </div>
   );
 };
