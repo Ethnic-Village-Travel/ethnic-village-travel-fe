@@ -15,6 +15,7 @@ export const useQueryConfig = () => {
       e: queryParams.e?.split(',') || [],
       p: queryParams.p?.split(',') || [],
       l: queryParams.l?.split(',') || [],
+      t: queryParams.t?.split(',') || [],
       d: queryParams.d,
       r: queryParams.r,
       min: queryParams.min,

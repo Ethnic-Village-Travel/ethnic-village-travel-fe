@@ -9,6 +9,7 @@ export type QueryConfig = Partial<{
   e: string[];
   p: string[];
   l: string[];
+  t: string[];
   d: string;
   r: string;
   min: number;

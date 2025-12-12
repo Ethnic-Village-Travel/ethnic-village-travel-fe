@@ -4,6 +4,7 @@ import { FilterItem, FILTERS } from '@/data/mocks/filters';
 
 import { useEthnicList } from '@/hooks/api/useEthnic';
 import { useLocationList } from '@/hooks/api/useLocation';
+import { useTagList } from '@/hooks/api/useTag';
 
 import FilterCardGroup from '../filter-card/filter-card-group';
 import PriceFilterCard from '../filter-card/price-filter-card';
@@ -25,6 +26,14 @@ export default function FilterSection() {
       id: e.id,
     })) || [];
 
+  const { data: tagRes } = useTagList();
+  const tagItems: FilterItem[] =
+    tagRes?.data.map(t => ({
+      label: t.name,
+      value: t.slug,
+      id: t.id,
+    })) || [];
+
   const modifiedFilters = {
     ...FILTERS,
     location: {
@@ -35,6 +44,11 @@ export default function FilterSection() {
     ethnic: {
       ...FILTERS.ethnic,
       items: ethnicItems,
+      isTranslated: true,
+    },
+    tags: {
+      ...FILTERS.tags,
+      items: tagItems,
       isTranslated: true,
     },
   };

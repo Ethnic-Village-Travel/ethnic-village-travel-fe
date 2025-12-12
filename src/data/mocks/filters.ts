@@ -9,7 +9,7 @@ export type FilterItem = {
     | string
     | number
     | boolean; // Used for API parameters
-  id?: number;
+  id?: string;
 };
 
 export type FilterConfig = {
@@ -31,6 +31,12 @@ export const FILTERS: Record<string, FilterConfig> = {
   location: {
     titleKey: 'filters.location.title',
     name: 'l',
+    items: [],
+    maxVisible: 5,
+  },
+  tags: {
+    titleKey: 'filters.tags.title',
+    name: 't',
     items: [],
     maxVisible: 5,
   },
