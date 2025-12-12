@@ -1,7 +1,19 @@
+import {
+  createAdminEmployee,
+  deleteAdminEmployee,
+  getAdminEmployeeById,
+  getAdminEmployees,
+  updateAdminEmployee,
+} from '@/core/api/admin/employee.admin.api';
 import { employeeApi } from '@/data/apis/employee.api';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { AssignedEmployeesByDatesRequest, EmployeeDateRangeRequest } from '@/types/employee.type';
+import type { EmployeeFilters, UpdateEmployeeRequest } from '@/types/employee.type';
+import {
+  AssignedEmployeesByDatesRequest,
+  CreateEmployeeRequest,
+  EmployeeDateRangeRequest,
+} from '@/types/employee.type';
 
 export const useAvailableEmployees = (availableDateId?: string) => {
   return useQuery({
@@ -24,11 +36,11 @@ export const useAvailableEmployeesByDateRange = (params?: EmployeeDateRangeReque
       return res.data || [];
     },
     enabled: !!params?.startDate && !!params?.endDate,
-    staleTime: 0, // Always consider data stale - refetch when needed
-    gcTime: 0, // Don't cache at all (garbage collect immediately)
-    refetchOnMount: true, // Always refetch on mount
-    refetchOnWindowFocus: true, // Refetch on window focus
-    refetchOnReconnect: true, // Refetch on reconnect
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 
@@ -61,6 +73,58 @@ export const useActiveEmployees = () => {
     queryFn: async () => {
       const res = await employeeApi.getActiveEmployees();
       return res.data || [];
+    },
+  });
+};
+
+export const employeeAdminQueryKeys = {
+  all: ['admin-employees'] as const,
+  list: (page: number, size: number, filters?: EmployeeFilters) =>
+    [...employeeAdminQueryKeys.all, 'list', page, size, filters] as const,
+  detail: (id: string) => [...employeeAdminQueryKeys.all, 'detail', id] as const,
+};
+
+export const useAdminEmployees = (page = 0, size = 10, filters?: EmployeeFilters) => {
+  return useQuery({
+    queryKey: employeeAdminQueryKeys.list(page, size, filters),
+    queryFn: () => getAdminEmployees(page, size, filters),
+  });
+};
+
+export const useAdminEmployeeById = (id: string) => {
+  return useQuery({
+    queryKey: employeeAdminQueryKeys.detail(id),
+    queryFn: () => getAdminEmployeeById(id),
+    enabled: !!id,
+  });
+};
+
+export const useCreateAdminEmployee = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: CreateEmployeeRequest) => createAdminEmployee(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: employeeAdminQueryKeys.all });
+    },
+  });
+};
+
+export const useUpdateAdminEmployee = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateEmployeeRequest }) => updateAdminEmployee(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: employeeAdminQueryKeys.all });
+    },
+  });
+};
+
+export const useDeleteAdminEmployee = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteAdminEmployee(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: employeeAdminQueryKeys.all });
     },
   });
 };
