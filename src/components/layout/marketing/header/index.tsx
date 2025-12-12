@@ -11,6 +11,7 @@ import { Menu } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ClassNameValue } from 'tailwind-merge';
 
+import { useIsHomePage } from '@/hooks/use-is-home-page';
 import { Button } from '@/components/ui/button';
 import Container from '@/components/ui/container';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -26,6 +27,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
   const t = useTranslations('layout.header');
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isHomePage = useIsHomePage();
   const { user, setLoginOpen, setSignupOpen } = useAuthStore();
 
   const navLinks = [
@@ -59,11 +61,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
               'before:absolute before:bottom-[-2px] before:left-0 before:h-[2px] before:w-0 before:bg-primary-500 before:transition-all before:duration-300 before:ease-in-out',
               navItemClassName,
               {
-                'text-white':
-                  pathname === RouteConstant.home ||
-                  pathname === RouteConstant.about ||
-                  pathname === RouteConstant.services ||
-                  pathname === RouteConstant.contact,
+                'text-white': isHomePage,
                 'text-primary-500 before:w-full': pathname === link.href,
               },
               isMobileNav && 'py-2 text-lg text-dark',

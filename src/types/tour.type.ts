@@ -61,6 +61,7 @@ export interface TourListRequest {
   order?: 'asc' | 'desc';
   ethnicIds?: string[];
   locationIds?: string[];
+  tagIds?: string[];
   minPrice?: number;
   maxPrice?: number;
   onSale?: boolean;
