@@ -3,41 +3,33 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { RouteConstant } from '@/core/constants/route';
+import { ArticleStatusEnum } from '@/core/enum/article.enum';
 import { cn } from '@/utils';
 import dayjs from 'dayjs';
+import { ArrowBigDown, ArrowBigUp } from 'lucide-react';
 
+import { Article } from '@/types/article.type';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 
-export interface ArticleItemProps {
-  id: number;
-  title: string;
-  author: string;
-  readTime: number;
-  thumbnailUrl?: string;
-  slug: string;
+export interface ArticleItemProps extends Omit<Article, 'content' | 'id'> {
   className?: string;
   layout?: 'vertical' | 'horizontal';
-  description?: string;
-  date?: string;
-  tags?: string[];
-  isBookmarked?: boolean;
 }
 
 const ArticleItem = ({
   title,
-  author,
-  readTime,
-  thumbnailUrl = '/images/blog-card-thumbnail.png',
   slug,
+  summary,
+  imageUrl,
+  upvote,
+  publishedDate,
   className,
   layout = 'vertical',
-  description,
-  date,
-  tags,
 }: ArticleItemProps) => {
   const isHorizontal = layout === 'horizontal';
-  const formattedDate = date ? dayjs(date).format('DD/MM/YYYY') : null;
+  const formattedDate = publishedDate ? dayjs(publishedDate).format('DD/MM/YYYY') : null;
+  const readTime = Math.ceil(summary.length / 100); // Estimate read time from summary
 
   return (
     <Card
@@ -64,7 +56,7 @@ const ArticleItem = ({
           })}
         >
           <Image
-            src={thumbnailUrl}
+            src={imageUrl || '/images/blog-card-thumbnail.png'}
             alt={title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -76,17 +68,6 @@ const ArticleItem = ({
       {/* Content Section */}
       <CardContent className={cn('flex flex-1 flex-col p-5', isHorizontal ? 'py-4' : '')}>
         <div className="flex flex-1 flex-col">
-          {/* Tags */}
-          {tags && tags.length > 0 && (
-            <div className="mb-3 flex h-7 flex-wrap gap-1.5">
-              {tags.slice(0, 3).map(tag => (
-                <Badge key={tag} autoVariant shape="rounded" size="sm">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          )}
-
           {/* Title */}
           <Link href={`${RouteConstant.article_detail.replace(':slug', slug)}`} className="group/title mb-3 block h-14">
             <h3 className="line-clamp-2 text-lg font-bold leading-snug transition-colors group-hover/title:text-primary">
@@ -94,21 +75,22 @@ const ArticleItem = ({
             </h3>
           </Link>
 
-          {/* Description - Only for horizontal */}
-          {isHorizontal && description && <p className="mb-3 line-clamp-2 text-sm text-gray-600">{description}</p>}
+          {/* Summary */}
+          {summary && <p className="mb-3 line-clamp-2 text-sm text-gray-600">{summary}</p>}
         </div>
 
         {/* Meta Info */}
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <span className="font-medium text-dark">{author}</span>
+        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+          {formattedDate && <span>{formattedDate}</span>}
           <span>·</span>
           <span>{readTime} phút đọc</span>
-          {formattedDate && (
-            <>
-              <span>·</span>
-              <span>{formattedDate}</span>
-            </>
-          )}
+          <span>·</span>
+          <div className="flex flex-1 items-center justify-end gap-3">
+            <div className="flex items-center gap-1">
+              <ArrowBigUp className="h-6 w-6" fill="currentColor" />
+              <span>{upvote}</span>
+            </div>
+          </div>
         </div>
       </CardContent>
     </Card>

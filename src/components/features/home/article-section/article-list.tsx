@@ -2,14 +2,23 @@
 
 import { cn } from '@/utils';
 
-import ArticleItem, { ArticleItemProps } from '../../article/article-item';
+import { useArticleList } from '@/hooks/useArticle';
+
+import ArticleItem from '../../article/article-item';
 
 interface ArticleListProps {
-  articles: ArticleItemProps[];
   className?: string;
 }
 
-const ArticleList = ({ articles, className }: ArticleListProps) => {
+const ArticleList = ({ className }: ArticleListProps) => {
+  const { data, isLoading } = useArticleList({ page: 0, size: 4 });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const articles = data?.data?.content || [];
+
   return (
     <div
       className={cn(

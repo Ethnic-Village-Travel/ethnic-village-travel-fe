@@ -33,6 +33,9 @@ export const API = {
   TAG: {
     GET_ALL: '/tag',
   },
+  POST: {
+    GET_ALL: '/post',
+  },
   REVIEW: {
     ADD: '/review',
     EDIT: '/review',
