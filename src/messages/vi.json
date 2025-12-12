@@ -349,6 +349,9 @@
     "location": {
       "title": "Địa điểm"
     },
+    "tags": {
+      "title": "Thẻ"
+    },
     "duration": {
       "title": "Thời gian",
       "1_day": "1 Ngày",

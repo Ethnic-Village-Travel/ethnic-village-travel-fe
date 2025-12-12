@@ -218,6 +218,9 @@
     "location": {
       "title": "Location"
     },
+    "tags": {
+      "title": "Tags"
+    },
     "duration": {
       "title": "Duration",
       "1_day": "1 Day",

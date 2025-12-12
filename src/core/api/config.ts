@@ -30,6 +30,12 @@ export const API = {
   ETHNIC: {
     GET_ALL: '/ethnic',
   },
+  TAG: {
+    GET_ALL: '/tag',
+  },
+  POST: {
+    GET_ALL: '/post',
+  },
   REVIEW: {
     ADD: '/review',
     EDIT: '/review',
