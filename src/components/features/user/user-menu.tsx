@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils/classnames';
@@ -9,6 +9,7 @@ import { Bell } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { logout } from '@/libs/auth';
+import { useIsHomePage } from '@/hooks/use-is-home-page';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -23,8 +24,8 @@ import {
 export const UserMenu = () => {
   const t = useTranslations('layout.header.user_menu');
   const router = useRouter();
-  const pathname = usePathname();
   const { user } = useAuthStore();
+  const isHomePage = useIsHomePage();
   const [unreadCount] = useState(5); // TODO: Replace with actual notification count
 
   const handleLogout = () => {
@@ -43,10 +44,10 @@ export const UserMenu = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="relative"
+        className="relative hover:bg-white-10"
         // onClick={() => handleNavigate(RouteConstant.notifications)}
       >
-        <Bell className={cn('text-black', pathname === RouteConstant.home && 'text-white')} />
+        <Bell className={cn(isHomePage ? 'text-white' : 'text-black')} />
         {unreadCount > 0 && (
           <Badge
             variant="destructive"
@@ -59,15 +60,15 @@ export const UserMenu = () => {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="flex items-center gap-2 px-3 py-1 text-white">
+          <Button variant="ghost" className="flex items-center gap-2 px-3 py-1 hover:bg-white-10">
             <Avatar className="h-8 w-8">
               <AvatarImage src={user.avatar} />
-              <AvatarFallback className={cn('text-black', pathname === RouteConstant.home && 'text-white')}>
+              <AvatarFallback className={isHomePage ? 'bg-white/20 text-white' : 'bg-gray-200 text-black'}>
                 {user.personal?.firstName?.[0]}
                 {user.personal?.lastName?.[0]}
               </AvatarFallback>
             </Avatar>
-            <span className={cn('max-w-[100px] truncate text-black', pathname === RouteConstant.home && 'text-white')}>
+            <span className={cn('max-w-[100px] truncate', isHomePage ? 'text-white' : 'text-black')}>
               {user.personal?.firstName} {user.personal?.lastName}
             </span>
           </Button>
