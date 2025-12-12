@@ -57,6 +57,9 @@ export const API = {
     CREATE: '/payments/create/{id}',
     GET_PAYMENT_LINK: '/payments/booking/{id}/payment-link',
   },
+  CATEGORY: {
+    ENABLED: '/categories/enabled',
+  },
 };
 
 export const AdminAPI = {
@@ -115,5 +118,15 @@ export const AdminAPI = {
     REVENUE_CHART: '/admin/dashboard/revenue-chart',
     TOP_DESTINATIONS: '/admin/dashboard/top-destinations',
     RECENT_BOOKINGS: '/admin/dashboard/recent-bookings',
+  },
+  CATEGORY: {
+    LIST: '/admin/categories',
+    DETAIL: '/admin/categories',
+    CREATE: '/admin/categories',
+    UPDATE: '/admin/categories',
+    DELETE: '/admin/categories',
+    ADD_TOURS: '/admin/categories',
+    REMOVE_TOURS: '/admin/categories',
+    TOGGLE_STATUS: '/admin/categories',
   },
 };

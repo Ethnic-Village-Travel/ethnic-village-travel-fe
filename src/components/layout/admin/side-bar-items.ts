@@ -12,6 +12,7 @@ import {
   Newspaper,
   Package,
   ShieldCheck,
+  Tags,
   User,
 } from 'lucide-react';
 
@@ -57,6 +58,12 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       icon: Compass,
       href: RouteConstant.admin_tour,
       permission: PermissionMap[RouteConstant.admin_tour],
+    },
+    {
+      label: 'category',
+      icon: Tags,
+      href: RouteConstant.admin_category,
+      permission: PermissionMap[RouteConstant.admin_category],
     },
     {
       label: 'tour_assigned_available_dates',

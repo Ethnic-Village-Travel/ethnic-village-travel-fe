@@ -57,6 +57,10 @@ export const RouteConstant = {
 
   admin_booking: '/admin/booking',
 
+  admin_category: '/admin/category',
+  admin_category_create: '/admin/category/create',
+  admin_category_edit: '/admin/category/:id/edit',
+
   admin_order: '/admin/order',
 
   admin_notification: '/admin/notification',
