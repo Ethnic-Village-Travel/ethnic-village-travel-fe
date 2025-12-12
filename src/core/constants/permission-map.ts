@@ -31,6 +31,9 @@ export const PermissionMap: { [key: string]: string[] } = {
 
   //function
   [RouteConstant.admin_employee]: ['ADMIN_EMPLOYEE_READ'],
+  [RouteConstant.admin_category]: ['ADMIN_CATEGORY_READ'],
+  [RouteConstant.admin_category_create]: ['ADMIN_CATEGORY_WRITE'],
+  [RouteConstant.admin_category_edit]: ['ADMIN_CATEGORY_WRITE'],
 };
 
 export const DeniedPermissionMap: { [key: string]: string } = {
