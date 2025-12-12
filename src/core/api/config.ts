@@ -78,12 +78,7 @@ export const AdminAPI = {
   SERVICE_INFO: {
     ALL: '/admin/service',
   },
-  EMPLOYEE: {
-    AVAILABLE: '/admin/employee/available',
-    AVAILABLE_BY_DATE_RANGE: '/admin/employee/available-by-date-range',
-    ASSIGNED_BY_DATES: '/admin/employee/assigned-by-dates',
-    ACTIVE: '/admin/employee/active',
-  },
+
   TOUR_ASSIGNMENT: {
     ASSIGN: '/admin/tour-assignments/assign',
     ASSIGN_SINGLE: '/admin/tour-assignments/assign-single',
@@ -98,6 +93,23 @@ export const AdminAPI = {
     CREATE: '/admin/role',
     UPDATE: '/admin/role',
     DELETE: '/admin/role',
+  },
+  USER: {
+    LIST: '/admin/user',
+    DETAIL: '/admin/user',
+    CREATE: '/admin/user',
+    UPDATE: '/admin/user',
+    DELETE: '/admin/user',
+  },
+  EMPLOYEE: {
+    LIST: '/admin/employee',
+    DETAIL: '/admin/employee',
+    UPDATE: '/admin/employee',
+    DELETE: '/admin/employee',
+    AVAILABLE: '/admin/employee/available',
+    AVAILABLE_BY_DATE_RANGE: '/admin/employee/available-by-date-range',
+    ASSIGNED_BY_DATES: '/admin/employee/assigned-by-dates',
+    ACTIVE: '/admin/employee/active',
   },
   PERMISSION: {
     LIST: '/admin/permission',
