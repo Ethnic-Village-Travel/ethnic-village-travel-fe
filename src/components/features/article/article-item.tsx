@@ -24,6 +24,7 @@ const ArticleItem = ({
   imageUrl,
   upvote,
   publishedDate,
+  tags,
   className,
   layout = 'vertical',
 }: ArticleItemProps) => {
@@ -68,6 +69,25 @@ const ArticleItem = ({
       {/* Content Section */}
       <CardContent className={cn('flex flex-1 flex-col p-5', isHorizontal ? 'py-4' : '')}>
         <div className="flex flex-1 flex-col">
+          {/* Tags */}
+          {tags && tags.length > 0 && (
+            <div className="mb-3 flex h-6 flex-wrap gap-1.5 overflow-hidden">
+              {tags.map(tag => (
+                <Badge
+                  key={tag.id}
+                  shape="rounded"
+                  size="sm"
+                  style={{
+                    backgroundColor: tag.color || '#6B7280',
+                    color: '#FFFFFF',
+                  }}
+                >
+                  {tag.name}
+                </Badge>
+              ))}
+            </div>
+          )}
+
           {/* Title */}
           <Link href={`${RouteConstant.article_detail.replace(':slug', slug)}`} className="group/title mb-3 block h-14">
             <h3 className="line-clamp-2 text-lg font-bold leading-snug transition-colors group-hover/title:text-primary">

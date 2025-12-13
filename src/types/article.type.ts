@@ -1,5 +1,7 @@
 import { ArticleStatus } from '@/core/enum/article.enum';
 
+import { Tag } from './tag.type';
+
 export interface Article {
   id: string;
   title: string;
@@ -11,6 +13,7 @@ export interface Article {
   upvote: number;
   downvote: number;
   publishedDate: string;
+  tags?: Tag[];
 }
 
 export interface ArticleListRequest {
