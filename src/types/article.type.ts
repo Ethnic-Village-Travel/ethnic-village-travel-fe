@@ -12,11 +12,16 @@ export interface Article {
   imageUrl: string;
   upvote: number;
   downvote: number;
+  views: number;
   publishedDate: string;
   tags?: Tag[];
 }
 
 export interface ArticleListRequest {
+  searchKey?: string;
+  sortBy?: string;
+  order?: string;
+  tagIds?: string;
   page?: number;
   size?: number;
 }

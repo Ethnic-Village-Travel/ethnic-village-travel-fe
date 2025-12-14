@@ -1,20 +1,20 @@
 'use client';
 
-import { MOCK_ARTICLES } from '@/data/mocks/articles';
+import ArticleContentSection from '@/components/features/article/article-list/content-section';
+import ArticleFilterSection from '@/components/features/article/article-list/filter-section';
+import { ArticleSearchBar } from '@/components/features/article/article-search';
 
-import ArticleItem from '@/components/features/article/article-item';
-
-export default function ArticlesPage() {
+export default function ArticleListPage() {
   return (
-    <>
-      <section className="mb-12">
-        <h2 className="mb-8 text-2xl font-bold">Bài viết đáng chú ý</h2>
-        <div className="space-y-6">
-          {MOCK_ARTICLES.map(article => (
-            <ArticleItem key={article.id} {...article} layout="horizontal" className="max-w-full" />
-          ))}
+    <div className="flex min-h-screen w-full flex-col items-center">
+      <ArticleSearchBar className="w-full rounded-none border-0 shadow-custom-blue" />
+
+      <div className="container flex w-full flex-col gap-6 py-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-start">
+          <ArticleFilterSection />
+          <ArticleContentSection />
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }

@@ -1295,5 +1295,33 @@
         "offline_message": "Vui lòng kiểm tra kết nối internet của bạn. Các thao tác sẽ được thực hiện khi có mạng trở lại."
       }
     }
+  },
+  "article": {
+    "search": {
+      "placeholder": "Tìm kiếm bài viết...",
+      "button": "Tìm kiếm"
+    },
+    "list": {
+      "title": "Danh sách bài viết",
+      "sort": {
+        "newest": "Mới nhất",
+        "oldest": "Cũ nhất",
+        "most_viewed": "Lượt xem giảm dần",
+        "most_voted": "Lượt upvote giảm dần",
+        "relevance": "Phù hợp nhất"
+      },
+      "results_count": "Tìm thấy {count} kết quả",
+      "searching": "Đang tìm kiếm...",
+      "empty": {
+        "title": "Không tìm thấy bài viết",
+        "description": "Thử điều chỉnh bộ lọc hoặc từ khóa tìm kiếm"
+      }
+    },
+    "item": {
+      "views": "{count} lượt xem",
+      "upvotes": "{count} upvotes",
+      "read_time": "{minutes} phút đọc",
+      "published_on": "Ngày đăng"
+    }
   }
 }

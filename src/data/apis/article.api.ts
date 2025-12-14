@@ -9,6 +9,10 @@ export const articleApi = {
   getArticleList: async (params?: ArticleListRequest): Promise<ApiResponse<ArticleListResponse>> => {
     try {
       const queryParams = {
+        ...(params?.searchKey && { searchKey: params.searchKey }),
+        ...(params?.sortBy && { sortBy: params.sortBy }),
+        ...(params?.order && { order: params.order }),
+        ...(params?.tagIds && { tagIds: params.tagIds }),
         page: params?.page ?? 0,
         size: params?.size ?? 4,
       };
