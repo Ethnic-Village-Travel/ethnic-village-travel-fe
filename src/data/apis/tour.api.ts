@@ -30,6 +30,7 @@ export const tourApi = {
     try {
       const queryParams = {
         ...params,
+        tagIds: params.tagIds?.join(','),
         ethnicIds: params.ethnicIds?.join(','),
         locationIds: params.locationIds?.join(','),
       };
