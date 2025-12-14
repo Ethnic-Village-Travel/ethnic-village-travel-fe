@@ -5,8 +5,8 @@ import { FilterItem, FILTERS } from '@/data/mocks/filters';
 import { useEthnicList } from '@/hooks/api/useEthnic';
 import { useLocationList } from '@/hooks/api/useLocation';
 import { useTagList } from '@/hooks/api/useTag';
+import FilterCardGroup from '@/components/shared/filter-card/filter-card-group';
 
-import FilterCardGroup from '../filter-card/filter-card-group';
 import PriceFilterCard from '../filter-card/price-filter-card';
 
 export default function FilterSection() {

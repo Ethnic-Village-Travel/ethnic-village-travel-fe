@@ -1140,5 +1140,33 @@
         "offline_message": "Please check your internet connection. Actions will be queued and retried when connection is restored."
       }
     }
+  },
+  "article": {
+    "search": {
+      "placeholder": "Search articles...",
+      "button": "Search"
+    },
+    "list": {
+      "title": "Article List",
+      "sort": {
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "most_viewed": "Most Viewed",
+        "most_voted": "Most Upvoted",
+        "relevance": "Most Relevant"
+      },
+      "results_count": "Found {count} results",
+      "searching": "Searching...",
+      "empty": {
+        "title": "No articles found",
+        "description": "Try adjusting your filters or search keywords"
+      }
+    },
+    "item": {
+      "views": "{count} views",
+      "upvotes": "{count} upvotes",
+      "read_time": "{minutes} min read",
+      "published_on": "Published on"
+    }
   }
 }
