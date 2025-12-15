@@ -14,15 +14,15 @@
 
 2. Search tour page
 
-- Ethnic -> Click 1 checkbox -> Tour được search nhưng chỉ trả về đúng ethnic đó trong mỗi tour
+- Ethnic -> Click 1 checkbox -> Tour được search nhưng chỉ trả về đúng ethnic đó trong mỗi tour ✅
 
--> Tức ban đầu tour có 3 ethnics nhưng khi click chỉ lấy còn đúng ethnic đó
+-> Tức ban đầu tour có 3 ethnics nhưng khi click chỉ lấy còn đúng ethnic đó ✅
 
-- Popular filter -> Click On sale -> Data có 2 tour giảm giá -> Nhưng chỉ có 1 tour hiển thị
+- Popular filter -> Click On sale -> Data có 2 tour giảm giá -> Nhưng chỉ có 1 tour hiển thị ✅
 
--> Tour item lấy sai promotion để tính giảm giá (Dùng cả coupon code trong khi chỉ đc dùng direct discount)
+-> Tour item lấy sai promotion để tính giảm giá (Dùng cả coupon code trong khi chỉ đc dùng direct discount) ✅
 
-- Price -> Chỉ tính trên giá chưa giảm -> Chưa tính trên giá đã giảm
+- Price -> Chỉ tính trên giá chưa giảm -> Chưa tính trên giá đã giảm ✅
 
 3. Tour detail
 
@@ -81,7 +81,7 @@
 
 9. Article detail -> chưa có
 
-10. About + Services + Blog + Contact -> chưa có
+10. About + Services + Blog + Contact -> chưa có ✅
 
 11. Admin common
 

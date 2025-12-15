@@ -14,7 +14,7 @@ export interface Tour {
   slug?: string;
   overview?: string;
   status?: string;
-  duration?: number;
+  duration: number;
   pickUpLocation?: Location;
   adultPrice?: number;
   childPrice?: number;

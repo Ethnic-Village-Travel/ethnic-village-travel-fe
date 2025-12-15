@@ -22,8 +22,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
   const t = useTranslations('tour.item');
 
   // Prioritize DIRECT_DISCOUNT promotion for display
-  const promotion =
-    tour.promotions?.find(p => p.type === 'DIRECT_DISCOUNT' && p.status === 'ACTIVE') || tour.promotions?.[0];
+  const promotion = tour.promotions?.find(p => p.type === 'DIRECT_DISCOUNT' && p.status === 'ACTIVE');
 
   const hasPromotion = !!promotion;
   const discountPercent = promotion?.discountPercent;
