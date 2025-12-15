@@ -28,12 +28,13 @@ import { SimplePagination } from '@/components/shared/simple-pagination';
 export default function UserListPage() {
   const router = useRouter();
   const [page, setPage] = useState(0);
-  const [search, setSearch] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const [searchFilter, setSearchFilter] = useState('');
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserAdmin | null>(null);
   const { toast } = useToast();
 
-  const { data: usersData, isLoading, refetch } = useAdminUsers(page, 10, { search });
+  const { data: usersData, isLoading, refetch } = useAdminUsers(page, 10, { search: searchFilter });
   const deleteUserMutation = useDeleteAdminUser();
 
   const handleEditUser = (user: UserAdmin) => {
@@ -101,10 +102,15 @@ export default function UserListPage() {
       <div className="mb-6">
         <Input
           placeholder="Tìm kiếm theo email hoặc tên..."
-          value={search}
+          value={searchInput}
           onChange={e => {
-            setSearch(e.target.value);
-            setPage(0);
+            setSearchInput(e.target.value);
+          }}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              setSearchFilter(searchInput);
+              setPage(0);
+            }
           }}
           className="max-w-md"
         />

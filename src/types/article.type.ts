@@ -13,7 +13,7 @@ export interface Article {
   upvote: number;
   downvote: number;
   views: number;
-  publishedDate: string;
+  publishedDate: string | null;
   tags?: Tag[];
 }
 

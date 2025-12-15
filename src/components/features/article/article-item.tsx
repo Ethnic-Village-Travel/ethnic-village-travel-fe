@@ -31,8 +31,16 @@ const ArticleItem = ({
 }: ArticleItemProps) => {
   const t = useTranslations('article.item');
   const isHorizontal = layout === 'horizontal';
-  const formattedDate = publishedDate ? dayjs(publishedDate).format('DD/MM/YYYY') : null;
-  const readTime = Math.ceil((summary?.length || 0) / 200); // Estimate read time: 200 words/minute
+  
+  let formattedDate: string | null = null;
+  if (publishedDate) {
+    const date = dayjs(publishedDate);
+    if (date.isValid()) {
+      formattedDate = date.format('DD/MM/YYYY');
+    }
+  }
+  
+  const readTime = Math.ceil((summary?.length || 0) / 200);
 
   return (
     <Card
@@ -72,9 +80,9 @@ const ArticleItem = ({
       {/* Content Section */}
       <CardContent className="flex flex-1 flex-col p-5">
         {/* Published Date */}
-        {formattedDate && (
+        {formattedDate ? (
           <div className="mb-2 text-sm text-gray-500">{t('published_on', { date: formattedDate })}</div>
-        )}
+        ) : null}
 
         {/* Title */}
         <Link href={`${RouteConstant.article_detail.replace(':slug', slug)}`} className="mb-3">

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { RouteConstant } from '@/core/constants/route';
 import {
   BarChart3,
@@ -30,34 +31,40 @@ import {
   CommandList,
 } from '@/components/ui/command';
 
-const COMMAND_ITEMS = {
-  General: [
-    { label: 'Dashboard', icon: LayoutGrid, href: RouteConstant.admin_dashboard },
-    { label: 'User', icon: User, href: RouteConstant.admin_user },
-    { label: 'Role', icon: ShieldCheck, href: RouteConstant.admin_role },
+const COMMAND_SECTIONS = ['general', 'management'] as const;
+
+type CommandSectionKey = (typeof COMMAND_SECTIONS)[number];
+
+type CommandItem = {
+  labelKey: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  href: string;
+};
+
+type CommandConfig = Record<CommandSectionKey, CommandItem[]>;
+
+const COMMAND_ITEMS: CommandConfig = {
+  general: [
+    { labelKey: 'general.dashboard', icon: LayoutGrid, href: RouteConstant.admin_dashboard },
+    { labelKey: 'general.user', icon: User, href: RouteConstant.admin_user },
+    { labelKey: 'general.employee', icon: User, href: RouteConstant.admin_employee },
+    { labelKey: 'general.role', icon: ShieldCheck, href: RouteConstant.admin_role },
   ],
-  Functions: [
-    { label: 'Tour', icon: Compass, href: RouteConstant.admin_tour },
-    { label: 'Tour Assignment', icon: CalendarCheck, href: RouteConstant.admin_assigned_available_dates },
-    { label: 'Booking', icon: Calendar, href: RouteConstant.admin_booking },
-    { label: 'Order', icon: Package, href: RouteConstant.admin_order },
-    { label: 'Article', icon: Newspaper, href: RouteConstant.admin_article },
-    { label: 'Notification', icon: Bell, href: RouteConstant.admin_notification },
-    { label: 'Report', icon: BarChart3, href: RouteConstant.admin_report },
-    { label: 'Chatbot', icon: Bot, href: RouteConstant.admin_chatbot },
+  management: [
+    { labelKey: 'management.tour', icon: Compass, href: RouteConstant.admin_tour },
+    { labelKey: 'management.category', icon: LayoutGrid, href: RouteConstant.admin_category },
+    {
+      labelKey: 'management.tour_assignment',
+      icon: CalendarCheck,
+      href: RouteConstant.admin_assigned_available_dates,
+    },
+    { labelKey: 'management.booking', icon: Calendar, href: RouteConstant.admin_booking },
   ],
-  Create: [
-    { label: 'User Create', icon: User, href: RouteConstant.admin_user_create },
-    { label: 'Role Create', icon: ShieldCheck, href: RouteConstant.admin_role_create },
-    { label: 'Tour Create', icon: Compass, href: RouteConstant.admin_tour_create },
-    { label: 'Article Create', icon: Newspaper, href: RouteConstant.admin_article_create },
-    { label: 'Notification Create', icon: Bell, href: RouteConstant.admin_notification_create },
-    { label: 'Chatbot Information Create', icon: Bot, href: RouteConstant.admin_chatbot_create },
-  ],
-} as const;
+};
 
 export default function SearchCommand() {
   const router = useRouter();
+  const t = useTranslations('admin.search_command');
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -80,7 +87,7 @@ export default function SearchCommand() {
       >
         <div className="flex items-center gap-2">
           <Search className="!h-4 !w-4" />
-          Search
+          {t('trigger_placeholder')}
         </div>
         <p className="text-sm text-muted-foreground">
           {' '}
@@ -92,19 +99,32 @@ export default function SearchCommand() {
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <Command className="rounded-lg border shadow-md md:min-w-[450px]">
-          <CommandInput placeholder="Type a command or search..." />
+          <CommandInput placeholder={t('input_placeholder')} />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            {Object.entries(COMMAND_ITEMS).map(([section, items]) => (
-              <CommandGroup className="border-b py-2" heading={section} key={section}>
-                {items.map(item => (
-                  <CommandItem key={item.label} onSelect={() => router.push(item.href)}>
-                    <item.icon className="h-4 w-4" />
-                    {item.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            ))}
+            <CommandEmpty>{t('empty')}</CommandEmpty>
+            {COMMAND_SECTIONS.map(sectionKey => {
+              const items = COMMAND_ITEMS[sectionKey];
+              return (
+                <CommandGroup
+                  className="border-b py-2"
+                  heading={t(`sections.${sectionKey}`)}
+                  key={sectionKey}
+                >
+                  {items.map(item => (
+                    <CommandItem
+                      key={item.labelKey}
+                      onSelect={() => {
+                        router.push(item.href);
+                        setOpen(false);
+                      }}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {t(`items.${item.labelKey}`)}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              );
+            })}
           </CommandList>
         </Command>
       </CommandDialog>

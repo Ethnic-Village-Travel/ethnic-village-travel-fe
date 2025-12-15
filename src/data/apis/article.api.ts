@@ -5,6 +5,21 @@ import { encodeQueryData } from '@/core/api/utils';
 import { ApiResponse } from '@/types/api.type';
 import { Article, ArticleListRequest, ArticleListResponse } from '@/types/article.type';
 
+const normalizeArticle = (article: any): Article => {
+  const publishedDate = article.publishedDate || article.published_date;
+  return {
+    ...article,
+    publishedDate: publishedDate || null,
+  };
+};
+
+const normalizeArticleListResponse = (response: any): ArticleListResponse => {
+  return {
+    ...response,
+    content: response.content?.map(normalizeArticle) || [],
+  };
+};
+
 export const articleApi = {
   getArticleList: async (params?: ArticleListRequest): Promise<ApiResponse<ArticleListResponse>> => {
     try {
@@ -20,7 +35,10 @@ export const articleApi = {
       const queryString = encodeQueryData(queryParams);
       const { data } = await api.get<ApiResponse<ArticleListResponse>>(`${API.POST.GET_ALL}?${queryString}`);
 
-      return data;
+      return {
+        ...data,
+        data: data.data ? normalizeArticleListResponse(data.data) : data.data,
+      };
     } catch {
       throw new Error('Failed to get article list');
     }
@@ -29,7 +47,10 @@ export const articleApi = {
   getArticleDetail: async (slug: string): Promise<ApiResponse<Article>> => {
     try {
       const { data } = await api.get<ApiResponse<Article>>(`${API.POST.GET_ALL}/${slug}`);
-      return data;
+      return {
+        ...data,
+        data: data.data ? normalizeArticle(data.data) : data.data,
+      };
     } catch {
       throw new Error('Failed to get article detail');
     }

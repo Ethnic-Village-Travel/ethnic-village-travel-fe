@@ -72,24 +72,24 @@
 
 8. Article search page
 
-- item -> publish on -> chưa hiển thị ngày published ✅
+- [x] item -> publish on -> chưa hiển thị ngày published
 
 9. Article detail -> chưa có
 
-10. About + Services + Blog + Contact -> chưa có ✅
+10. About + Services + Blog + Contact
+
+- [x] About
+- [x] Services
+- [x] Blog
+- [x] Contact
 
 11. Admin common
 
-- Admin header -> Search -> Chưa translation tiếng việt
-- Admin header -> Search -> Item click được nhưng chuyển trang chưa tắt modal
-- Admin header -> Search
-- Khi đăng xuất -> Chuyển màn hình trước -> Xóa dữ liệu sau cho mượt(Ở personal cũng tương tự)
-
--> Dư 1 số item: booking/order, chatbot, notification, report, chatbot infomation
-
--> Thiếu: danh mục, employee,
-
-- Admin header -> Noti -> chưa có(k dùng thì xóa)
+- [x] Admin header -> Search -> Chưa translation tiếng việt => Fix xong
+- [x] Admin header -> Search -> Item click được nhưng chuyển trang chưa tắt modal => Fix xong
+- [x] Khi đăng xuất -> Chuyển màn hình trước -> Xóa dữ liệu sau cho mượt(Ở personal cũng tương tự) => Fix xong
+- [x] Dư 1 số item: booking/order, chatbot, notification, report, chatbot infomation
+- [x] Thiếu: danh mục, employee, => Fix xong
 
 12. Admin employee
 
@@ -97,8 +97,8 @@
 
 12. Admin user
 
-- Item -> Xóa được nhưng vòa DB vẫn còn (chưa hiểu luồng)
-- Search -> Mỗi khi search thì re-render cả content chứ không phải mỗi table
+- [x] Item -> Xóa được nhưng vòa DB vẫn còn (chưa hiểu luồng)
+- [x] Search -> Mỗi khi search thì re-render cả content chứ không phải mỗi table
 
 13. Admin tour
 
