@@ -5,23 +5,24 @@
 
 1. Home page
 
-- Category -> Xung đột ngôn ngữ
-- Article -> Mất content(layout)
-- Why book with us? -> Xung đột ngôn ngữ(chưa translations)
-- Header -> Loại bỏ Notification
-- Search tour -> Chọn ngày 3/12 nhưng qua trang Search tour page -> thành ngày 2/12(Query config lỗi)
+- Category -> Xung đột ngôn ngữ ❌
+- Article -> Mất content(layout) ✅
+- Why book with us? -> Xung đột ngôn ngữ(chưa translations) ✅
+- Header -> Loại bỏ Notification ✅
+- Header -> Khi reponsive thì menu click vào lỗi các button trong user menu ✅
+- Search tour -> Chọn ngày 3/12 nhưng qua trang Search tour page -> thành ngày 2/12(Query config lỗi) ✅
 
 2. Search tour page
 
-- Ethnic -> Click 1 checkbox -> Tour được search nhưng chỉ trả về đúng ethnic đó trong mỗi tour
+- Ethnic -> Click 1 checkbox -> Tour được search nhưng chỉ trả về đúng ethnic đó trong mỗi tour ✅
 
--> Tức ban đầu tour có 3 ethnics nhưng khi click chỉ lấy còn đúng ethnic đó
+-> Tức ban đầu tour có 3 ethnics nhưng khi click chỉ lấy còn đúng ethnic đó ✅
 
-- Popular filter -> Click On sale -> Data có 2 tour giảm giá -> Nhưng chỉ có 1 tour hiển thị
+- Popular filter -> Click On sale -> Data có 2 tour giảm giá -> Nhưng chỉ có 1 tour hiển thị ✅
 
--> Tour item lấy sai promotion để tính giảm giá (Dùng cả coupon code trong khi chỉ đc dùng direct discount)
+-> Tour item lấy sai promotion để tính giảm giá (Dùng cả coupon code trong khi chỉ đc dùng direct discount) ✅
 
-- Price -> Chỉ tính trên giá chưa giảm -> Chưa tính trên giá đã giảm
+- Price -> Chỉ tính trên giá chưa giảm -> Chưa tính trên giá đã giảm ✅
 
 3. Tour detail
 
@@ -52,30 +53,30 @@
 
 5. Personal - Bookmark page
 
-- Không dùng cho bài viết -> Xóa tab bài viết
-- Tour item -> không có nút bookmark để hủy bookmark (có vẻ xóa ở item so với trước đây)
-- Tab bên trái -> đang ở bookmark page -> Bookmark item phải có bgColor
+- Không dùng cho bài viết -> Xóa tab bài viết ✅
+- Tour item -> không có nút bookmark để hủy bookmark (có vẻ xóa ở item so với trước đây) ✅
+- Tab bên trái -> đang ở bookmark page -> Bookmark item phải có bgColor ✅
 
--> "Tiếng việt" thì có nhưng "English" thì không -> Có vẻ check theo pathname nên có thêm /en không check được
+-> "Tiếng việt" thì có nhưng "English" thì không -> Có vẻ check theo pathname nên có thêm /en không check được ✅
 
 6. Personal - Transaltion page
 
-- Tab bên trái -> Số lượng giao dịch không được hiển thị (luôn luôn là 0)
-- booking item -> Số 0 hiển thị dưới giá tiền là gì? (có thể giảm giá nhưng k cần hiển thị nếu là 0)
-- booking item -> Nút "Xem chi tiết" chưa action -> Nhấn title thì chuyển được
-- booking item -> Nút Cancel chưa action
-- booking item -> Đang ở "EN" nhưng price tính theo "VN"
-- Tab other bookings -> Lỗi API -> Có cập nhật ở API này nên đang gây lỗi
+- Tab bên trái -> Số lượng giao dịch không được hiển thị (luôn luôn là 0) ❌
+- booking item -> Số 0 hiển thị dưới giá tiền là gì? (có thể giảm giá nhưng k cần hiển thị nếu là 0) ✅
+- booking item -> Nút "Xem chi tiết" chưa action -> Nhấn title thì chuyển được ✅
+- booking item -> Nút Cancel chưa action ✅
+- booking item -> Đang ở "EN" nhưng price tính theo "VN" ✅
+- Tab other bookings -> Lỗi API -> Có cập nhật ở API này nên đang gây lỗi ✅
 
-7. Personal - Account -> Chưa có(nếu k làm thì xóa bên tab bên trái)
+7. Personal - Account -> Chưa có(nếu k làm thì xóa bên tab bên trái) ✅
 
 8. Article search page
 
-- item -> publish on -> chưa hiển thị ngày published
+- item -> publish on -> chưa hiển thị ngày published ✅
 
 9. Article detail -> chưa có
 
-10. About + Services + Blog + Contact -> chưa có
+10. About + Services + Blog + Contact -> chưa có ✅
 
 11. Admin common
 

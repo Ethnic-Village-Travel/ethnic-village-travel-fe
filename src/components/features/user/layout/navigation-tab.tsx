@@ -33,13 +33,13 @@ export default function PersonalNavigationTab() {
         href: RouteConstant.personal_bookmark,
         label: t('bookmark'),
         icon: Bookmark,
-        badge: details?.bookmarks?.filter(b => b.status === BookmarkStatus.ACTIVE).length || 0,
+        badge: details?.bookmarks?.filter(b => b.status === BookmarkStatus.ACTIVE).length || null,
       },
       {
         href: RouteConstant.personal_transaction,
         label: t('transaction'),
         icon: ScrollText,
-        badge: details?.pendingPaymentBookingsCount || 0,
+        badge: details?.pendingPaymentBookingsCount || null,
       },
       {
         href: RouteConstant.personal_account,
@@ -47,12 +47,19 @@ export default function PersonalNavigationTab() {
         icon: Settings,
       },
     ],
-    [details?.bookmarks, details?.pendingPaymentBookingsCount],
+    [details?.bookmarks, details?.pendingPaymentBookingsCount, t],
   );
 
   const handleLogout = () => {
     logout();
     router.push(RouteConstant.home);
+  };
+
+  // Helper function to check if path matches, handling locale prefix
+  const isPathActive = (href: string) => {
+    // Remove locale prefix (e.g., /en, /vi) from pathname
+    const pathnameWithoutLocale = pathname.replace(/^\/(en|vi)/, '');
+    return pathnameWithoutLocale === href || pathname === href;
   };
 
   return (
@@ -72,7 +79,7 @@ export default function PersonalNavigationTab() {
       <CardContent className="space-y-2">
         {navigationItems.map(item => {
           const IconComponent = item.icon;
-          const isActive = pathname === item.href;
+          const isActive = isPathActive(item.href);
 
           return (
             <Link key={item.href} href={item.href}>

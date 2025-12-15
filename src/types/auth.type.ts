@@ -16,6 +16,9 @@ export interface Personal {
   firstName: string;
   lastName: string;
   avatar?: string;
+  phoneNumber?: string;
+  address?: string;
+  dateOfBirth?: string;
 }
 
 export interface LoginResponse {

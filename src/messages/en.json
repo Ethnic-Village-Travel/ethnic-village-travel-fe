@@ -191,7 +191,24 @@
       "popular": "Popular",
       "outstanding": "Outstanding",
       "best_price": "Best Price"
-    }
+    },
+    "reasons": [
+      {
+        "icon": "reason-icon.png",
+        "title": "Meet all your needs",
+        "description": "From flights, accommodations to attractions, you can trust our complete travel products and guides."
+      },
+      {
+        "icon": "reason-icon.png",
+        "title": "Reasonable prices",
+        "description": "We're committed to bringing you amazing travel experiences at the most affordable prices."
+      },
+      {
+        "icon": "reason-icon.png",
+        "title": "24/7 Support",
+        "description": "Our support team is always ready to help you anytime, anywhere throughout your journey."
+      }
+    ]
   },
   "bookmark": {
     "auth_required": "Please login to save this item",
@@ -632,6 +649,14 @@
         "review": "Review",
         "view_details": "View Details"
       },
+      "cancel_success": "Booking Cancelled Successfully",
+      "cancel_success_description": "Your booking has been cancelled successfully",
+      "cancel_failed": "Cancel Booking Failed",
+      "cancel_failed_description": "Unable to cancel booking. Please try again",
+      "payment_error": "Payment Error",
+      "payment_error_description": "Unable to create payment link. Please try again",
+      "processing": "Processing...",
+      "cancelling": "Cancelling...",
       "pending_tab": "Pending Payment",
       "other_tab": "Other",
       "no_pending": "No pending bookings",
@@ -710,7 +735,39 @@
     "account": {
       "title": "Account Settings",
       "profile": "Profile Settings",
-      "security": "Security Settings"
+      "security": "Security Settings",
+      "personal_info": {
+        "title": "Personal Information",
+        "description": "Update your personal information and contact details",
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "phone_number": "Phone Number",
+        "date_of_birth": "Date of Birth",
+        "address": "Address",
+        "avatar": "Avatar URL",
+        "edit": "Edit",
+        "save_changes": "Save Changes",
+        "cancel": "Cancel",
+        "success": "Personal information updated successfully",
+        "error": "Failed to update personal information",
+        "updating": "Updating..."
+      },
+      "password": {
+        "title": "Change Password",
+        "description": "Update your password to keep your account secure",
+        "current_password": "Current Password",
+        "new_password": "New Password",
+        "confirm_password": "Confirm Password",
+        "requirements": "Password must be at least 8 characters",
+        "edit": "Change Password",
+        "change_password": "Change Password",
+        "cancel": "Cancel",
+        "success": "Password changed successfully",
+        "error": "Failed to change password",
+        "mismatch": "Passwords do not match",
+        "changing": "Changing...",
+        "no_edit_message": "Click the 'Change Password' button to update your password"
+      }
     },
     "booking_pending_list": {
       "loading": "Loading pending bookings...",
@@ -1180,7 +1237,7 @@
       "views": "{count} views",
       "upvotes": "{count} upvotes",
       "read_time": "{minutes} min read",
-      "published_on": "Published on"
+      "published_on": "Published on {date}"
     }
   }
 }

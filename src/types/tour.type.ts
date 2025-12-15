@@ -7,14 +7,14 @@ import { Review } from './review.type';
 import { TourServiceInfo } from './service-info.type';
 
 export interface Tour {
-  id?: string;
+  id: string;
   tourId?: string;
   imageUrl: string;
   title: string;
   slug?: string;
   overview?: string;
   status?: string;
-  duration?: number;
+  duration: number;
   pickUpLocation?: Location;
   adultPrice?: number;
   childPrice?: number;

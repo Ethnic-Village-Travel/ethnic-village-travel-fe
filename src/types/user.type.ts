@@ -9,7 +9,7 @@ export interface User {
   permissions: string[];
   createdAt: string;
   avatar?: string;
-  personal?: Personal;
+  personal?: UserPersonal;
 }
 
 export interface UserDetailsResponse extends ApiResponse {
