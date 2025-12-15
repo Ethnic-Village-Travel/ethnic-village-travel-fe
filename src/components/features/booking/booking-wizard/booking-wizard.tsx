@@ -220,7 +220,7 @@ function BookingWizardContent({ onComplete, onCancel, showSidePanel = true }: Bo
             <div className="sticky top-24">
               <BookingSummaryCard bookingData={bookingData} locale={locale} />
               {onCancel && (
-                <Button variant="ghost" className="mt-4 w-full text-gray-500" onClick={handleCancel}>
+                <Button variant="destructive" className="mt-4 w-full" onClick={handleCancel}>
                   <X className="mr-2 h-4 w-4" />
                   {t('cancel_booking')}
                 </Button>

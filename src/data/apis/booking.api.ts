@@ -92,4 +92,13 @@ export const bookingApi = {
       throw new Error('Failed to confirm booking');
     }
   },
+
+  cancel: async (id: string) => {
+    try {
+      const { data } = await api.post<ApiResponse<void>>(API.BOOKING.CANCEL.replace('{id}', id));
+      return data;
+    } catch {
+      throw new Error('Failed to cancel booking');
+    }
+  },
 };

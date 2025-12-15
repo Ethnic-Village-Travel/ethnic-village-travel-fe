@@ -62,7 +62,7 @@ export function TourDetailOverview({ tour }: TourDetailOverviewProps) {
               className="border-b border-gray-20 py-[10px] last:border-0"
             >
               <AccordionTrigger className="flex items-center justify-between py-0 hover:no-underline [&[data-state=open]>div>img]:rotate-180">
-                <h4 className="text-[18px] font-bold">Day {day.day}</h4>
+                <h4 className="text-[18px] font-bold">{t('day_label', { day: day.day })}</h4>
               </AccordionTrigger>
               <AccordionContent className="pt-[10px]">
                 <div className="space-y-4">

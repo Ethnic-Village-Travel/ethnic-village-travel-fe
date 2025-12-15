@@ -29,7 +29,7 @@ export const UserMenu = () => {
 
   const handleLogout = () => {
     logout();
-    router.push(RouteConstant.home);
+    router.refresh();
   };
 
   const handleNavigate = (path: string) => {

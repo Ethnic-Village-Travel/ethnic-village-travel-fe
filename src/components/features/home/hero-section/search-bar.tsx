@@ -41,6 +41,11 @@ export function SearchBar({ className }: SearchBarProps) {
 
   const { data: locationRes } = useLocationList();
 
+  const uniqueLocations =
+    locationRes?.data && locationRes.data.length > 0
+      ? Array.from(new Map(locationRes.data.map(location => [location.city, location])).values())
+      : [];
+
   const [searchData, setSearchData] = useState<SearchData>({
     location: queryConfig.l?.[0] || '',
     date: queryConfig.date ? parseISO(queryConfig.date) : undefined,
@@ -92,8 +97,8 @@ export function SearchBar({ className }: SearchBarProps) {
               />
             </SelectTrigger>
             <SelectContent>
-              {locationRes?.data?.map(location => (
-                <SelectItem key={location.id} value={location.city} className="text-base font-semibold">
+              {uniqueLocations.map(location => (
+                <SelectItem key={location.city} value={location.city} className="text-base font-semibold">
                   {location.city}
                 </SelectItem>
               ))}

@@ -11,11 +11,15 @@ import PriceFilterCard from '../filter-card/price-filter-card';
 
 export default function FilterSection() {
   const { data: locationRes } = useLocationList();
+  const uniqueLocations =
+    locationRes?.data && locationRes.data.length > 0
+      ? Array.from(new Map(locationRes.data.map(location => [location.city, location])).values())
+      : [];
   const locationItems: FilterItem[] =
-    locationRes?.data.map(l => ({
-      label: l.city,
-      value: l.city,
-      id: l.id,
+    uniqueLocations.map(location => ({
+      label: location.city,
+      value: location.city,
+      id: location.city,
     })) || [];
 
   const { data: ethnicRes } = useEthnicList();

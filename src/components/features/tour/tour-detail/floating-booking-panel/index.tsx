@@ -71,7 +71,7 @@ const FloatingBookingPanel = ({ tour }: FloatingBookingPanelProps) => {
   return (
     <div className="flex w-full flex-col gap-5 xl:w-[360px] xl:flex-shrink-0">
       <BookingCalculator tour={tour} onBook={handleBook} />
-      <GuildProfileCard />
+      <GuildProfileCard tour={tour} />
     </div>
   );
 };

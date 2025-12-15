@@ -80,3 +80,12 @@ export const useApiBookingConfirm = (id: string) => {
     },
   });
 };
+
+export const useApiBookingCancel = (id: string) => {
+  return useMutation({
+    mutationFn: async () => {
+      const { success } = await bookingApi.cancel(id);
+      return success;
+    },
+  });
+};
