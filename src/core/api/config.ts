@@ -9,6 +9,8 @@ export const API = {
   },
   USER: {
     DETAILS: '/user/details',
+    UPDATE_PERSONAL: '/user/personal',
+    UPDATE_PASSWORD: '/user/password',
   },
   CONTACT: {
     SEND: '/contact',

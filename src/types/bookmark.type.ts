@@ -4,7 +4,7 @@ import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 export interface Bookmark {
   id: number;
   entityType: EntityType;
-  entityId: number;
+  entityId: string;
   status: BookmarkStatus;
   createdAt: string;
   updatedAt: string;

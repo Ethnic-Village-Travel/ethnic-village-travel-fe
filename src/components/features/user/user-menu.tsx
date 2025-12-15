@@ -26,7 +26,6 @@ export const UserMenu = () => {
   const router = useRouter();
   const { user } = useAuthStore();
   const isHomePage = useIsHomePage();
-  const [unreadCount] = useState(5); // TODO: Replace with actual notification count
 
   const handleLogout = () => {
     router.push(RouteConstant.home);
@@ -44,23 +43,6 @@ export const UserMenu = () => {
 
   return (
     <div className="flex items-center gap-4">
-      <Button
-        variant="ghost"
-        size="icon"
-        className="relative hover:bg-white-10"
-        // onClick={() => handleNavigate(RouteConstant.notifications)}
-      >
-        <Bell className={cn(isHomePage ? 'text-white' : 'text-black')} />
-        {unreadCount > 0 && (
-          <Badge
-            variant="destructive"
-            className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full p-0 text-xs"
-          >
-            {unreadCount}
-          </Badge>
-        )}
-      </Button>
-
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="flex items-center gap-2 px-3 py-1 hover:bg-white-10">

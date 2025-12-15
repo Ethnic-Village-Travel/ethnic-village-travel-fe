@@ -6,9 +6,7 @@ import { useUserStore } from '@/stores/useUserStore';
 import { useTranslations } from 'next-intl';
 
 import { Bookmark } from '@/types/bookmark.type';
-import { Tabs, TabsContent, TabsContents, TabsList, TabsTrigger } from '@/components/ui/radix/tabs';
 
-import ArticleBookmarksTab from './article-bookmarks-tab';
 import TourBookmarksTab from './tour-bookmarks-tab';
 
 const ITEMS_PER_PAGE = 5;
@@ -21,7 +19,6 @@ type BookmarkMap = {
 export default function BookmarkTabContent() {
   const t = useTranslations('personal.bookmark');
   const [visibleTourItems, setVisibleTourItems] = useState(ITEMS_PER_PAGE);
-  const [visibleArticleItems, setVisibleArticleItems] = useState(ITEMS_PER_PAGE);
   const { details } = useUserStore();
 
   // Sử dụng useMemo thay vì useEffect + useState
@@ -29,7 +26,6 @@ export default function BookmarkTabContent() {
     if (!details?.bookmarks) {
       return {
         [EntityType.TOUR]: [],
-        [EntityType.ARTICLE]: [],
       };
     }
 
@@ -41,11 +37,22 @@ export default function BookmarkTabContent() {
 
       acc[bookmark.entityType].push(bookmark);
       return acc;
-    }, {} as BookmarkMap) || { [EntityType.TOUR]: [], [EntityType.ARTICLE]: [] };
+    }, {} as BookmarkMap) || { [EntityType.TOUR]: [] };
 
-    // Sort bookmarks by updated date
+    // Sort bookmarks: ACTIVE first, then DELETED, then by updated date (newest first)
     Object.keys(bookmarks).forEach(type => {
-      bookmarks[type as EntityType].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+      bookmarks[type as EntityType].sort((a, b) => {
+        // Sort by status first: ACTIVE (0) before DELETED (1)
+        const statusOrder = { ACTIVE: 0, INACTIVE: 1, DELETED: 2 };
+        const statusDiff = statusOrder[a.status] - statusOrder[b.status];
+
+        if (statusDiff !== 0) {
+          return statusDiff;
+        }
+
+        // If same status, sort by date (newest first)
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+      });
     });
 
     return bookmarks;
@@ -55,37 +62,14 @@ export default function BookmarkTabContent() {
     setVisibleTourItems(prev => prev + ITEMS_PER_PAGE);
   };
 
-  const handleLoadMoreArticles = () => {
-    setVisibleArticleItems(prev => prev + ITEMS_PER_PAGE);
-  };
-
   return (
     <div className="w-full">
       <h1 className="mb-6 text-2xl font-bold">{t('title')}</h1>
-      <Tabs defaultValue="tours" className="w-full">
-        <TabsList className="mb-6 grid w-full grid-cols-2">
-          <TabsTrigger value="tours">{t('saved_tours')}</TabsTrigger>
-          <TabsTrigger value="articles">{t('saved_articles')}</TabsTrigger>
-        </TabsList>
-
-        <TabsContents>
-          <TabsContent value="tours" className="w-full">
-            <TourBookmarksTab
-              bookmarks={sortedBookmarks[EntityType.TOUR]}
-              visibleItems={visibleTourItems}
-              onLoadMore={handleLoadMoreTours}
-            />
-          </TabsContent>
-
-          <TabsContent value="articles" className="w-full">
-            <ArticleBookmarksTab
-              bookmarks={sortedBookmarks[EntityType.ARTICLE]}
-              visibleItems={visibleArticleItems}
-              onLoadMore={handleLoadMoreArticles}
-            />
-          </TabsContent>
-        </TabsContents>
-      </Tabs>
+      <TourBookmarksTab
+        bookmarks={sortedBookmarks[EntityType.TOUR]}
+        visibleItems={visibleTourItems}
+        onLoadMore={handleLoadMoreTours}
+      />
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { cn } from '@/utils';
@@ -11,7 +11,9 @@ import { Menu } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ClassNameValue } from 'tailwind-merge';
 
+import { logout } from '@/libs/auth';
 import { useIsHomePage } from '@/hooks/use-is-home-page';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import Container from '@/components/ui/container';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -26,6 +28,7 @@ interface HeaderProps {
 const Header = ({ navItemClassName }: HeaderProps) => {
   const t = useTranslations('layout.header');
   const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isHomePage = useIsHomePage();
   const { user, setLoginOpen, setSignupOpen } = useAuthStore();
@@ -121,7 +124,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="hover:bg-white/10 h-10 w-10 text-white focus-visible:ring-0 lg:hidden"
+                  className="hover:bg-white/10 h-10 w-10 text-white hover:text-white focus-visible:ring-0 lg:hidden"
                 >
                   <Menu className="h-6 w-6" />
                   <span className="sr-only">Toggle menu</span>
@@ -148,8 +151,65 @@ const Header = ({ navItemClassName }: HeaderProps) => {
                     </div>
                   )}
                   {user && (
-                    <div className="border-t pt-4">
-                      <UserMenu />
+                    <div className="flex flex-col gap-2 border-t pt-4">
+                      <div className="mb-2 flex items-center gap-3 px-2">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src={user.avatar} />
+                          <AvatarFallback className="bg-gray-200 text-black">
+                            {user.personal?.firstName?.[0]}
+                            {user.personal?.lastName?.[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <span className="font-semibold">
+                            {user.personal?.firstName} {user.personal?.lastName}
+                          </span>
+                          <span className="text-sm text-gray-500">{user.email}</span>
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start"
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          router.push(RouteConstant.personal_bookmark);
+                        }}
+                      >
+                        {t('user_menu.profile.favorites')}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start"
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          router.push(RouteConstant.personal_transaction);
+                        }}
+                      >
+                        {t('user_menu.profile.transactions')}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start"
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          router.push(RouteConstant.personal_account);
+                        }}
+                      >
+                        {t('user_menu.profile.edit_profile')}
+                      </Button>
+                      <div className="border-t pt-2">
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start text-red-600 hover:text-red-700"
+                          onClick={() => {
+                            setIsMenuOpen(false);
+                            logout();
+                            router.push(RouteConstant.home);
+                          }}
+                        >
+                          {t('user_menu.profile.logout')}
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </div>
