@@ -31,7 +31,9 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const t = useTranslations('admin.sidebar');
   const { user } = useAuthStore();
-  const userName = user?.personal ? user?.personal?.firstName + user?.personal?.lastName : user?.roles[0] + ' User';
+  const userName = user?.personal
+    ? (user?.personal?.firstName ?? '') + user?.personal?.lastName
+    : user?.roles[0] + ' User';
   const userEmail = user?.email;
 
   const permissions = useMemo(() => {
@@ -41,8 +43,8 @@ export default function AdminSidebar() {
   }, [user]);
 
   const handleLogout = () => {
-    logout();
     router.push(RouteConstant.home);
+    logout();
   };
 
   return (
@@ -98,7 +100,10 @@ export default function AdminSidebar() {
 
       <SidebarFooter className="border-t">
         <SidebarMenuItem className="cursor-pointer list-none">
-          <SidebarMenuButton onClick={handleLogout} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+          <SidebarMenuButton
+            onClick={handleLogout}
+            className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+          >
             <LogOut className="h-4 w-4" /> {t('logout')}
           </SidebarMenuButton>
         </SidebarMenuItem>

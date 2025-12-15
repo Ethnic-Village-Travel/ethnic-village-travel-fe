@@ -41,6 +41,35 @@
       "chatbot": "Trợ lý ảo",
       "logout": "Đăng xuất"
     },
+    "search_command": {
+      "search": "Tìm kiếm",
+      "placeholder": "Nhập lệnh hoặc tìm kiếm...",
+      "no_results": "Không tìm thấy kết quả.",
+      "section": {
+        "general": "Tổng quan",
+        "functions": "Chức năng",
+        "create": "Tạo mới"
+      },
+      "items": {
+        "dashboard": "Bảng điều khiển",
+        "user": "Khách hàng",
+        "employee": "Nhân viên",
+        "role": "Vai trò & Quyền",
+        "tour": "Tour",
+        "tour_assignment": "Phân công Tour",
+        "booking": "Đặt chỗ",
+        "article": "Bài viết",
+        "notification": "Thông báo",
+        "category": "Danh mục",
+        "user_create": "Tạo Khách hàng",
+        "employee_create": "Tạo Nhân viên",
+        "role_create": "Tạo Vai trò",
+        "tour_create": "Tạo Tour",
+        "article_create": "Tạo Bài viết",
+        "notification_create": "Tạo Thông báo",
+        "category_create": "Tạo Danh mục"
+      }
+    },
     "tour": {
       "list": {
         "tour": "Tour",

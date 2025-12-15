@@ -80,16 +80,16 @@
 
 11. Admin common
 
-- Admin header -> Search -> Chưa translation tiếng việt
-- Admin header -> Search -> Item click được nhưng chuyển trang chưa tắt modal
-- Admin header -> Search
-- Khi đăng xuất -> Chuyển màn hình trước -> Xóa dữ liệu sau cho mượt(Ở personal cũng tương tự)
+- Admin header -> Search -> Chưa translation tiếng việt ✅
+- Admin header -> Search -> Item click được nhưng chuyển trang chưa tắt modal ✅
+- Khi đăng xuất -> Chuyển màn hình trước -> Xóa dữ liệu sau cho mượt(Ở personal cũng tương tự) ✅
+- Admin header -> Search ✅
 
--> Dư 1 số item: booking/order, chatbot, notification, report, chatbot infomation
+-> Dư 1 số item: booking/order, chatbot, notification, report, chatbot infomation ✅
 
--> Thiếu: danh mục, employee,
+-> Thiếu: danh mục, employee, ✅
 
-- Admin header -> Noti -> chưa có(k dùng thì xóa)
+- Admin header -> Noti -> chưa có(k dùng thì xóa) ✅
 
 12. Admin employee
 
@@ -111,3 +111,8 @@
 -> Là có hay không?
 
 15. Admin article -> chưa có
+
+16.
+
+- Transaltion ở admin lỗi khá nhiều -> kiểm tra toàn bộ page mới cũ thiếu thì thêm + thêm button đổi ngôn ngữ
+- Lỗi css header + content mất 1 phần bên phải(máy t bị) -> ![alt text](image-1.png)

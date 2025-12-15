@@ -51,8 +51,8 @@ export default function PersonalNavigationTab() {
   );
 
   const handleLogout = () => {
-    logout();
     router.push(RouteConstant.home);
+    logout();
   };
 
   // Helper function to check if path matches, handling locale prefix

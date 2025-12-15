@@ -4,20 +4,19 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import {
-  BarChart3,
   Bell,
-  Bot,
   Calendar,
   CalendarCheck,
   Compass,
-  FileText,
+  FolderTree,
   LayoutGrid,
   Newspaper,
-  Package,
   Search,
   ShieldCheck,
   User,
+  UserCog,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -30,35 +29,36 @@ import {
   CommandList,
 } from '@/components/ui/command';
 
-const COMMAND_ITEMS = {
-  General: [
-    { label: 'Dashboard', icon: LayoutGrid, href: RouteConstant.admin_dashboard },
-    { label: 'User', icon: User, href: RouteConstant.admin_user },
-    { label: 'Role', icon: ShieldCheck, href: RouteConstant.admin_role },
-  ],
-  Functions: [
-    { label: 'Tour', icon: Compass, href: RouteConstant.admin_tour },
-    { label: 'Tour Assignment', icon: CalendarCheck, href: RouteConstant.admin_assigned_available_dates },
-    { label: 'Booking', icon: Calendar, href: RouteConstant.admin_booking },
-    { label: 'Order', icon: Package, href: RouteConstant.admin_order },
-    { label: 'Article', icon: Newspaper, href: RouteConstant.admin_article },
-    { label: 'Notification', icon: Bell, href: RouteConstant.admin_notification },
-    { label: 'Report', icon: BarChart3, href: RouteConstant.admin_report },
-    { label: 'Chatbot', icon: Bot, href: RouteConstant.admin_chatbot },
-  ],
-  Create: [
-    { label: 'User Create', icon: User, href: RouteConstant.admin_user_create },
-    { label: 'Role Create', icon: ShieldCheck, href: RouteConstant.admin_role_create },
-    { label: 'Tour Create', icon: Compass, href: RouteConstant.admin_tour_create },
-    { label: 'Article Create', icon: Newspaper, href: RouteConstant.admin_article_create },
-    { label: 'Notification Create', icon: Bell, href: RouteConstant.admin_notification_create },
-    { label: 'Chatbot Information Create', icon: Bot, href: RouteConstant.admin_chatbot_create },
-  ],
-} as const;
-
 export default function SearchCommand() {
+  const t = useTranslations('admin.search_command');
   const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  const COMMAND_ITEMS = {
+    [t('section.general')]: [
+      { label: t('items.dashboard'), icon: LayoutGrid, href: RouteConstant.admin_dashboard },
+      { label: t('items.user'), icon: User, href: RouteConstant.admin_user },
+      { label: t('items.employee'), icon: UserCog, href: RouteConstant.admin_employee },
+      { label: t('items.role'), icon: ShieldCheck, href: RouteConstant.admin_role },
+    ],
+    [t('section.functions')]: [
+      { label: t('items.tour'), icon: Compass, href: RouteConstant.admin_tour },
+      { label: t('items.tour_assignment'), icon: CalendarCheck, href: RouteConstant.admin_assigned_available_dates },
+      { label: t('items.booking'), icon: Calendar, href: RouteConstant.admin_booking },
+      { label: t('items.article'), icon: Newspaper, href: RouteConstant.admin_article },
+      { label: t('items.notification'), icon: Bell, href: RouteConstant.admin_notification },
+      { label: t('items.category'), icon: FolderTree, href: RouteConstant.admin_category },
+    ],
+    [t('section.create')]: [
+      { label: t('items.user_create'), icon: User, href: RouteConstant.admin_user_create },
+      { label: t('items.employee_create'), icon: UserCog, href: RouteConstant.admin_employee_create },
+      { label: t('items.role_create'), icon: ShieldCheck, href: RouteConstant.admin_role_create },
+      { label: t('items.tour_create'), icon: Compass, href: RouteConstant.admin_tour_create },
+      { label: t('items.article_create'), icon: Newspaper, href: RouteConstant.admin_article_create },
+      { label: t('items.notification_create'), icon: Bell, href: RouteConstant.admin_notification_create },
+      { label: t('items.category_create'), icon: FolderTree, href: RouteConstant.admin_category_create },
+    ],
+  };
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -80,7 +80,7 @@ export default function SearchCommand() {
       >
         <div className="flex items-center gap-2">
           <Search className="!h-4 !w-4" />
-          Search
+          {t('search')}
         </div>
         <p className="text-sm text-muted-foreground">
           {' '}
@@ -92,13 +92,19 @@ export default function SearchCommand() {
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <Command className="rounded-lg border shadow-md md:min-w-[450px]">
-          <CommandInput placeholder="Type a command or search..." />
+          <CommandInput placeholder={t('placeholder')} />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty>{t('no_results')}</CommandEmpty>
             {Object.entries(COMMAND_ITEMS).map(([section, items]) => (
               <CommandGroup className="border-b py-2" heading={section} key={section}>
                 {items.map(item => (
-                  <CommandItem key={item.label} onSelect={() => router.push(item.href)}>
+                  <CommandItem
+                    key={item.label}
+                    onSelect={() => {
+                      router.push(item.href);
+                      setOpen(false);
+                    }}
+                  >
                     <item.icon className="h-4 w-4" />
                     {item.label}
                   </CommandItem>
