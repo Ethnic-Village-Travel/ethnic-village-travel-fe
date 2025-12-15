@@ -5,11 +5,12 @@
 
 1. Home page
 
-- Category -> Xung đột ngôn ngữ
-- Article -> Mất content(layout)
-- Why book with us? -> Xung đột ngôn ngữ(chưa translations)
-- Header -> Loại bỏ Notification
-- Search tour -> Chọn ngày 3/12 nhưng qua trang Search tour page -> thành ngày 2/12(Query config lỗi)
+- Category -> Xung đột ngôn ngữ ❌
+- Article -> Mất content(layout) ✅
+- Why book with us? -> Xung đột ngôn ngữ(chưa translations) ✅
+- Header -> Loại bỏ Notification ✅
+- Header -> Khi reponsive thì menu click vào lỗi các button trong user menu ✅
+- Search tour -> Chọn ngày 3/12 nhưng qua trang Search tour page -> thành ngày 2/12(Query config lỗi) ✅
 
 2. Search tour page
 
@@ -37,7 +38,6 @@
 - Sau khi thêm bookmark -> logout -> load lại trang vẫn còn bookmark
 
 - Khi logout -> Mặc định ra trang chủ -> Mặc dù chỉ đang đứng ở Tour detail(không cần auth)
--
 
 - Tour agency -> Chưa kéo dữ liệu hiển thị -> Chỉ đang dữ liệu mẫu(Check lại đúng thì sửa)
 - Included và Excluded service -> Các item chưa có translations
@@ -77,7 +77,7 @@
 
 8. Article search page
 
-- item -> publish on -> chưa hiển thị ngày published
+- item -> publish on -> chưa hiển thị ngày published ✅
 
 9. Article detail -> chưa có
 

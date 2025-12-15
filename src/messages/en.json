@@ -191,7 +191,24 @@
       "popular": "Popular",
       "outstanding": "Outstanding",
       "best_price": "Best Price"
-    }
+    },
+    "reasons": [
+      {
+        "icon": "reason-icon.png",
+        "title": "Meet all your needs",
+        "description": "From flights, accommodations to attractions, you can trust our complete travel products and guides."
+      },
+      {
+        "icon": "reason-icon.png",
+        "title": "Reasonable prices",
+        "description": "We're committed to bringing you amazing travel experiences at the most affordable prices."
+      },
+      {
+        "icon": "reason-icon.png",
+        "title": "24/7 Support",
+        "description": "Our support team is always ready to help you anytime, anywhere throughout your journey."
+      }
+    ]
   },
   "bookmark": {
     "auth_required": "Please login to save this item"
@@ -1166,7 +1183,7 @@
       "views": "{count} views",
       "upvotes": "{count} upvotes",
       "read_time": "{minutes} min read",
-      "published_on": "Published on"
+      "published_on": "Published on {date}"
     }
   }
 }
