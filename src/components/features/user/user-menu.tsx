@@ -29,8 +29,11 @@ export const UserMenu = () => {
   const [unreadCount] = useState(5); // TODO: Replace with actual notification count
 
   const handleLogout = () => {
-    logout();
-    router.refresh();
+    router.push(RouteConstant.home);
+    setTimeout(() => {
+      logout();
+      router.refresh();
+    }, 0);
   };
 
   const handleNavigate = (path: string) => {

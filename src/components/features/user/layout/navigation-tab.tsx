@@ -47,12 +47,14 @@ export default function PersonalNavigationTab() {
         icon: Settings,
       },
     ],
-    [details?.bookmarks, details?.pendingPaymentBookingsCount],
+    [details?.bookmarks, details?.pendingPaymentBookingsCount, t],
   );
 
   const handleLogout = () => {
-    logout();
     router.push(RouteConstant.home);
+    setTimeout(() => {
+      logout();
+    }, 0);
   };
 
   return (

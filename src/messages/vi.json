@@ -41,6 +41,44 @@
       "chatbot": "Trợ lý ảo",
       "logout": "Đăng xuất"
     },
+    "search_command": {
+      "trigger_placeholder": "Tìm nhanh trong trang quản trị...",
+      "input_placeholder": "Nhập để tìm trang hoặc thao tác...",
+      "empty": "Không tìm thấy kết quả phù hợp.",
+      "sections": {
+        "general": "Tổng quan",
+        "management": "Quản lý nghiệp vụ",
+        "create": "Tạo mới"
+      },
+      "items": {
+        "general": {
+          "dashboard": "Bảng điều khiển",
+          "user": "Khách hàng",
+          "employee": "Nhân viên",
+          "role": "Vai trò & Quyền"
+        },
+        "management": {
+          "tour": "Tour",
+          "category": "Danh mục trang chủ",
+          "tour_assignment": "Phân công hướng dẫn viên",
+          "booking": "Đặt chỗ",
+          "order": "Đơn hàng",
+          "article": "Bài viết",
+          "notification": "Thông báo hệ thống",
+          "report": "Báo cáo & Thống kê",
+          "chatbot": "Trợ lý ảo"
+        },
+        "create": {
+          "user": "Tạo khách hàng",
+          "employee": "Tạo nhân viên",
+          "role": "Tạo vai trò",
+          "tour": "Tạo tour",
+          "article": "Tạo bài viết",
+          "notification": "Tạo thông báo",
+          "chatbot": "Tạo nội dung chatbot"
+        }
+      }
+    },
     "tour": {
       "list": {
         "tour": "Tour",

@@ -75,20 +75,20 @@
 
 9. Article detail -> chưa có
 
-10. About + Services + Blog + Contact -> chưa có
+10. About + Services + Blog + Contact
+
+- [x] About
+- [x] Services
+- [x] Blog
+- [x] Contact
 
 11. Admin common
 
-- Admin header -> Search -> Chưa translation tiếng việt
-- Admin header -> Search -> Item click được nhưng chuyển trang chưa tắt modal
-- Admin header -> Search
-- Khi đăng xuất -> Chuyển màn hình trước -> Xóa dữ liệu sau cho mượt(Ở personal cũng tương tự)
-
--> Dư 1 số item: booking/order, chatbot, notification, report, chatbot infomation
-
--> Thiếu: danh mục, employee,
-
-- Admin header -> Noti -> chưa có(k dùng thì xóa)
+- [x] Admin header -> Search -> Chưa translation tiếng việt => Fix xong
+- [x] Admin header -> Search -> Item click được nhưng chuyển trang chưa tắt modal => Fix xong
+- [x] Khi đăng xuất -> Chuyển màn hình trước -> Xóa dữ liệu sau cho mượt(Ở personal cũng tương tự) => Fix xong
+- [x] Dư 1 số item: booking/order, chatbot, notification, report, chatbot infomation
+- [x] Thiếu: danh mục, employee, => Fix xong
 
 12. Admin employee
 
