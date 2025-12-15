@@ -37,9 +37,11 @@ export const BookmarkButton = ({
   const { mutate: removeBookmark, isPending: isRemoving } = useApiBookmarkRemove();
   const { toast } = useToast();
   const { user } = useAuthStore();
-  const { setUserBookmark } = useUserStore();
+  const { setUserBookmark, removeUserBookmark } = useUserStore();
 
   const isLoading = isAdding || isRemoving;
+  const labelText = isBookmarked ? t('saved') : t('save');
+  const tooltipText = isBookmarked ? t('remove_tooltip') : t('add_tooltip');
 
   const handleToggleBookmark = () => {
     if (isLoading) return;
@@ -61,8 +63,11 @@ export const BookmarkButton = ({
             title: response.message,
           });
 
-          if (!response.data) return;
-          setUserBookmark(response.data.bookmark);
+          if (response.data?.bookmark) {
+            removeUserBookmark(response.data.bookmark.entityId, response.data.bookmark.entityType);
+          } else {
+            removeUserBookmark(Number(entityId), entityType);
+          }
         },
         onError: (error: any) => {
           toast({
@@ -117,11 +122,11 @@ export const BookmarkButton = ({
                 isBookmarked ? 'fill-current' : 'fill-none',
               )}
             />
-            {showText && (isBookmarked ? 'Saved' : 'Save')}
+            {showText && labelText}
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>{isBookmarked ? 'Remove from bookmarks' : 'Add to bookmarks'}</p>
+          <p>{tooltipText}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

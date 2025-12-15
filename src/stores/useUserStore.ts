@@ -2,12 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { Bookmark } from '@/types/bookmark.type';
+import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { UserDetailsResponse } from '@/types/user.type';
 
 interface UserState {
   details: UserDetailsResponse | null;
   setUserDetails: (details: UserDetailsResponse) => void;
   setUserBookmark: (bookmark: Bookmark) => void;
+  removeUserBookmark: (entityId: number | string, entityType: Bookmark['entityType']) => void;
   setPendingPaymentBookingCount: (count: number) => void;
   clearUserData: () => void;
 }
@@ -29,6 +31,18 @@ export const useUserStore = create<UserState>()(
             b => b.entityId === bookmark.entityId && b.entityType === bookmark.entityType,
           );
 
+          if (bookmark.status !== BookmarkStatus.ACTIVE) {
+            return {
+              ...state,
+              details: {
+                ...state.details,
+                bookmarks: existingBookmarks.filter(
+                  b => !(b.entityId === bookmark.entityId && b.entityType === bookmark.entityType),
+                ),
+              },
+            };
+          }
+
           let updatedBookmarks;
           if (existingIndex >= 0) {
             // Update existing bookmark
@@ -44,6 +58,21 @@ export const useUserStore = create<UserState>()(
             details: {
               ...state.details,
               bookmarks: updatedBookmarks,
+            },
+          };
+        }),
+      removeUserBookmark: (entityId, entityType) =>
+        set(state => {
+          if (!state.details) return state;
+
+          const existingBookmarks = state.details.bookmarks || [];
+          return {
+            ...state,
+            details: {
+              ...state.details,
+              bookmarks: existingBookmarks.filter(
+                bookmark => !(bookmark.entityId === entityId && bookmark.entityType === entityType),
+              ),
             },
           };
         }),

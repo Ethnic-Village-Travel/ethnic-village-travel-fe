@@ -3,11 +3,9 @@
 import { EntityType } from '@/core/constants/entity';
 import { useUserStore } from '@/stores/useUserStore';
 import { calculateRatingStats } from '@/utils';
-import { Share2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { BookmarkButton } from '@/components/shared/bookmark-button';
 import StarRating from '@/components/shared/star-rating';
@@ -18,7 +16,9 @@ const TourDetailHeader = (tour: Tour) => {
   const t = useTranslations('tour.detail');
   const ratingObj = calculateRatingStats(tour.reviews || []);
   const { details } = useUserStore();
-  const isBookmarked = details?.bookmarks?.some(bookmark => bookmark.entityId === tour.id);
+  const isBookmarked = details?.bookmarks?.some(
+    bookmark => bookmark.entityId === Number(tour.id) && bookmark.entityType === EntityType.TOUR,
+  );
 
   return (
     <div className="flex flex-col gap-2.5">
@@ -36,7 +36,7 @@ const TourDetailHeader = (tour: Tour) => {
           <div className="flex flex-col gap-1.5">
             <span className="text-xs text-gray-500 sm:text-sm">{t('days')}</span>
             <span className="text-sm text-dark sm:text-base">
-              {t('duration_format', { days: tour.duration, nights: tour.duration - 1 })}
+              {t('duration_format', { days: tour.duration || 0, nights: (tour.duration || 0) - 1 })}
             </span>
           </div>
 
@@ -54,18 +54,10 @@ const TourDetailHeader = (tour: Tour) => {
           <BookmarkButton
             variant="outline"
             size="icon"
-            entityId={tour.id.toString()}
+            entityId={tour.id?.toString() || '0'}
             entityType={EntityType.TOUR}
             isBookmarkedDefault={isBookmarked}
           />
-
-          <Button
-            variant="outline"
-            className="hover:border-primary-500/80 hover:text-primary-500/80 h-[38px] border-primary-500 text-primary-500 [&_svg]:size-5"
-          >
-            <Share2 className="mr-2" />
-            <span className="hidden sm:inline">{t('share')}</span>
-          </Button>
         </div>
       </div>
 

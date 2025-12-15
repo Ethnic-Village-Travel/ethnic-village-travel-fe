@@ -194,7 +194,11 @@
     }
   },
   "bookmark": {
-    "auth_required": "Please login to save this item"
+    "auth_required": "Please login to save this item",
+    "add_tooltip": "Add to bookmarks",
+    "remove_tooltip": "Remove from bookmarks",
+    "save": "Save",
+    "saved": "Saved"
   },
   "search": {
     "location_placeholder": "Choose location",
@@ -269,6 +273,8 @@
       "location": "Location",
       "duration_format": "{days} Days/{nights} Nights",
       "share": "Share",
+      "share_success": "Tour link copied",
+      "share_error": "Unable to share, please try again",
       "overview_tab": "Overview",
       "reviews_tab": "Reviews",
       "loading": "Loading tour details...",
@@ -277,7 +283,8 @@
         "title": "Trip Overview",
         "included_excluded": "Included/Excluded Services",
         "trip_plan": "Trip Plan",
-        "no_overview": "No overview available"
+        "no_overview": "No overview available",
+        "day_label": "Day {day}"
       },
       "similar": {
         "title": "Similar Tours",
@@ -333,7 +340,14 @@
         "experience": "Experience: {years} years",
         "languages": "Languages",
         "achievements": "Achievements",
-        "description": "More than just a guide, a companion sharing local stories."
+        "description": "More than just a guide, a companion sharing local stories.",
+        "contact_title": "Tour contact",
+        "contact_phone": "Phone",
+        "contact_email": "Email",
+        "contact_zalo": "Zalo",
+        "contact_whatsapp": "WhatsApp",
+        "pickup_location": "Pickup location",
+        "contact_missing": "No contact information yet"
       }
     }
   },

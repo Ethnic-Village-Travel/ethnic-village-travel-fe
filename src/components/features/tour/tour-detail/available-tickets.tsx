@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useBookingStore } from '@/stores/useBookingStore';
 import { cn } from '@/utils';
 import { format } from 'date-fns';
-import { vi } from 'date-fns/locale';
+import { enUS, vi } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useDraggable } from 'react-use-draggable-scroll';
 
 import { Tour } from '@/types/tour.type';
@@ -19,6 +19,7 @@ interface AvailableTicketsProps {
 
 const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
   const t = useTranslations('tour.detail.available_tickets');
+  const locale = useLocale();
   const scrollRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
   const { events } = useDraggable(scrollRef);
 
@@ -26,7 +27,6 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
 
-  // Calculate booked slots from bookedPersonCounts
   const calculateBookedSlots = (bookedPersonCounts: { adult: number; child: number }[]) => {
     if (!bookedPersonCounts || bookedPersonCounts.length === 0) return 0;
     return bookedPersonCounts.reduce((total, booking) => {
@@ -34,10 +34,20 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
     }, 0);
   };
 
+  const dateLocale = useMemo(() => {
+    if (locale === 'en') return enUS;
+    return vi;
+  }, [locale]);
+
+  const sortedDates = useMemo(() => {
+    return [...(tour?.availableDates || [])].sort(
+      (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
+    );
+  }, [tour?.availableDates]);
+
   useEffect(() => {
-    // Select first available date by default
-    if (tour?.availableDates && tour?.availableDates.length > 0) {
-      const firstAvailableDate = tour.availableDates.find(date => {
+    if (sortedDates.length > 0) {
+      const firstAvailableDate = sortedDates.find(date => {
         const bookedSlots = calculateBookedSlots(date.bookedPersonCounts);
         return bookedSlots < date.maxSlots;
       });
@@ -46,7 +56,7 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
         setSelectedDate(firstAvailableDate.id, firstAvailableDate.maxSlots - bookedSlots);
       }
     }
-  }, [tour?.availableDates, setSelectedDate]);
+  }, [sortedDates, setSelectedDate]);
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -76,7 +86,7 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
         scrollElement.removeEventListener('scroll', checkScrollPosition);
       };
     }
-  }, []);
+  }, [sortedDates]);
 
   const handleDateClick = (dateId: number, availableSlots: number) => {
     setSelectedDate(dateId, availableSlots);
@@ -97,7 +107,7 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
           </Button>
         )}
         <div ref={scrollRef} {...events} className="custom-scrollbar flex gap-3">
-          {tour?.availableDates?.map(date => {
+          {sortedDates.map(date => {
             const startDate = new Date(date.startDate);
             const isSpecial = false;
             const bookedSlots = calculateBookedSlots(date.bookedPersonCounts);
@@ -128,7 +138,7 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
                   })}
                 >
                   {isSpecial && availableSlots > 0 ? '🔥 ' : ''}
-                  {format(startDate, 'EEEE', { locale: vi })}
+                  {format(startDate, 'EEEE', { locale: dateLocale })}
                 </span>
                 <span
                   className={cn('text-xl font-bold', {
@@ -136,7 +146,7 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
                     'text-gray-400': availableSlots <= 0,
                   })}
                 >
-                  {format(startDate, 'dd/MM', { locale: vi })}
+                  {format(startDate, 'dd/MM', { locale: dateLocale })}
                 </span>
                 <span
                   className={cn('text-sm font-bold', {

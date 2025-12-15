@@ -25,27 +25,21 @@
 
 3. Tour detail
 
-- Header -> Nút share chưa có event (làm hoặc xóa)
-- Available date -> Phần thứ(thứ hai, ba,..) -> Chưa được translations
-- Available date -> Lịch được sắp xếp lộn xộn -> phải sort theo ngày bắt đầu
-- Available date -> Thử đặt tour -> Giảm slot -> Hủy đặt tour -> Slot vẫn không tăng lại
-
--> Nhấn hủy nhưng chưa xóa hoặc chưa set deteled(booking) là true / Fix xong vẫn có thể bị lỗi cache(có thể bỏ qua)
-
-- Bookmark -> Khi hover chưa có translations
-- Bookmark -> Thêm -> Load(Đã thêm) -> Xóa -> Load(Vẫn không được xóa)
-- Sau khi thêm bookmark -> logout -> load lại trang vẫn còn bookmark
-
-- Khi logout -> Mặc định ra trang chủ -> Mặc dù chỉ đang đứng ở Tour detail(không cần auth)
--
-
-- Tour agency -> Chưa kéo dữ liệu hiển thị -> Chỉ đang dữ liệu mẫu(Check lại đúng thì sửa)
-- Included và Excluded service -> Các item chưa có translations
-
--> Có thể sửa (liên quan đến DB hoặc dùng trans của google -> thêm cấu hình cho next intl) hoặc không sửa
-
-- Lịch trình -> "Date 1, Date 2" -> Chưa translations
-- Similar tour -> Không hiển thị tours nào cả
+- [x] Header -> Nút share chưa có event (làm hoặc xóa) => Fix xong (Xóa nút share)
+- [x] Available date -> Phần thứ(thứ hai, ba,..) -> Chưa được translations => Fix xong
+- [x] Available date -> Lịch được sắp xếp lộn xộn -> phải sort theo ngày bắt đầu => Fix xong
+- [x] Available date -> Thử đặt tour -> Giảm slot -> Hủy đặt tour -> Slot vẫn không tăng lại -> Nhấn hủy nhưng chưa xóa
+      hoặc => Fix xong chưa set deleted (booking) là true
+- [x] Bookmark -> Khi hover chưa có translations => Fix xong
+- [x] Bookmark -> Thêm -> Load (Đã thêm) -> Xóa -> Load (Vẫn không được xóa) => Fix xong
+- [x] Sau khi thêm bookmark -> logout -> load lại trang vẫn còn bookmark => Fix xong
+- [x] Khi logout -> Mặc định ra trang chủ -> Mặc dù chỉ đang đứng ở Tour detail (không cần auth) => Fix xong
+- [x] Tour agency -> Chưa kéo dữ liệu hiển thị -> Chỉ đang dữ liệu mẫu (Check lại đúng thì sửa) => Fix xong (Đã kéo dữ
+      liệu hiển thị contact)
+- [x] Included và Excluded service -> Các item chưa có translations -> Có thể sửa (liên quan đến DB hoặc dùng trans của
+      google -> thêm cấu hình cho next intl) hoặc không sửa => Không sửa vì liên quan đến DB
+- [x] Lịch trình -> "Date 1, Date 2" -> Chưa translations => Không sửa vì liên quan đến DB
+- [x] Similar tour -> Không hiển thị tours nào cả => Fix xong
 
 4. Order page
 
@@ -55,6 +49,7 @@
 
 - Payment -> Chỉ có cho tiếng việt(sửa được nếu có thể)
 - Payment -> Có trang thì có phần "Nhấn chọn logo.." có trang thì không như ảnh((image.png))
+- Slot tối đa
 
 5. Personal - Bookmark page
 
