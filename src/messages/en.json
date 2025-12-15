@@ -1220,7 +1220,7 @@
       "views": "{count} views",
       "upvotes": "{count} upvotes",
       "read_time": "{minutes} min read",
-      "published_on": "Published on"
+      "published_on": "Published on: {date}"
     }
   }
 }

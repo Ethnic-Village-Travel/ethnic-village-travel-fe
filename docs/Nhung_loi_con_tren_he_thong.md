@@ -71,7 +71,7 @@
 
 8. Article search page
 
-- item -> publish on -> chưa hiển thị ngày published
+- [x] item -> publish on -> chưa hiển thị ngày published
 
 9. Article detail -> chưa có
 

@@ -1373,7 +1373,7 @@
       "views": "{count} lượt xem",
       "upvotes": "{count} upvotes",
       "read_time": "{minutes} phút đọc",
-      "published_on": "Ngày đăng"
+      "published_on": "Ngày đăng: {date}"
     }
   }
 }
