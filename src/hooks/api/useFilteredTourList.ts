@@ -53,16 +53,14 @@ export const useFilteredTourList = (pageSize: number = 12) => {
 
   const filterParams: TourListRequest = omitBy(
     {
-      page: queryConfig.page || 0,
+      page: queryConfig.page ? Number(queryConfig.page) - 1 : 0,
       size: pageSize,
       ethnicIds: getFilterIds(queryConfig.e, ethnics, ethnic => ethnic.code),
       locationIds: getFilterIds(queryConfig.l, locations, location => location.city),
       tagIds: getFilterIds(queryConfig.t, tags, tag => tag.slug),
       minPrice: queryConfig.min,
       maxPrice: queryConfig.max,
-      onSale: queryConfig.p
-        ? (Array.isArray(queryConfig.p) ? queryConfig.p : [queryConfig.p]).includes('on_sale')
-        : false,
+      onSale: (Array.isArray(queryConfig.p) ? queryConfig.p : [queryConfig.p]).includes('on_sale'),
       rating: getFilterValue(FILTERS.rating, queryConfig.r, (value): value is number => typeof value === 'number'),
       minDuration: getFilterValue(
         FILTERS.duration,

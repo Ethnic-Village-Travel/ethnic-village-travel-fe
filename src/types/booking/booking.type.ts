@@ -28,4 +28,7 @@ export interface TourInfo {
   locations?: Location[];
   reviews?: Review[];
   timeline?: TimelineDay[];
+  maxSlots?: number;
+  bookedSlots?: number;
+  remainingSlots?: number;
 }
