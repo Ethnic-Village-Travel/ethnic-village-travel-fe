@@ -6,7 +6,12 @@ import { RouteConstant } from '@/core/constants/route';
 import { BookingStatus } from '@/core/enum/booking.enum';
 import { useTranslations } from 'next-intl';
 
-import { useApiBookingConfirm, useApiBookingGet, useApiBookingUpdateContact } from '@/hooks/api/useBooking';
+import {
+  useApiBookingCancel,
+  useApiBookingConfirm,
+  useApiBookingGet,
+  useApiBookingUpdateContact,
+} from '@/hooks/api/useBooking';
 import { usePayment } from '@/hooks/api/usePayment';
 import { useToast } from '@/hooks/use-toast';
 import type { BookingData } from '@/components/features/booking/booking-wizard';
@@ -53,6 +58,7 @@ export default function OrderPage() {
   const { mutateAsync: confirmBooking, isPending: isConfirming } = useApiBookingConfirm(orderId);
   const { mutateAsync: updateContact } = useApiBookingUpdateContact();
   const { createPayment, isCreatingPayment } = usePayment();
+  const { mutateAsync: cancelBooking, isPending: isCancelling } = useApiBookingCancel(orderId);
 
   const isPaymentExpired = useMemo(() => {
     if (!booking?.paymentExpiredDate) return false;
@@ -174,9 +180,21 @@ export default function OrderPage() {
   );
 
   const handleCancel = useCallback(() => {
-    clearBookingState();
-    router.push(RouteConstant.tour);
-  }, [router]);
+    const doCancel = async () => {
+      try {
+        await cancelBooking();
+      } catch (error) {
+        console.error('Failed to cancel booking:', error);
+      } finally {
+        clearBookingState();
+        const redirectUrl = booking?.tour?.slug
+          ? RouteConstant.tour_detail.replace(':slug', booking.tour.slug)
+          : RouteConstant.tour;
+        router.push(redirectUrl);
+      }
+    };
+    doCancel();
+  }, [cancelBooking, router, booking?.tour?.slug]);
 
   if (isLoading) {
     return <OrderPageSkeleton />;

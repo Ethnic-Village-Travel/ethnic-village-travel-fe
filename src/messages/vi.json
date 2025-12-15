@@ -325,7 +325,11 @@
     }
   },
   "bookmark": {
-    "auth_required": "Vui lòng đăng nhập để lưu mục này"
+    "auth_required": "Vui lòng đăng nhập để lưu mục này",
+    "add_tooltip": "Thêm vào danh sách đã lưu",
+    "remove_tooltip": "Xóa khỏi danh sách đã lưu",
+    "save": "Lưu",
+    "saved": "Đã lưu"
   },
   "search": {
     "location_placeholder": "Chọn địa điểm",
@@ -406,6 +410,8 @@
       "location": "Địa điểm",
       "duration_format": "{days} Ngày/{nights} Đêm",
       "share": "Chia sẻ",
+      "share_success": "Đã sao chép liên kết tour",
+      "share_error": "Không thể chia sẻ, vui lòng thử lại",
       "overview_tab": "Tổng quan",
       "reviews_tab": "Đánh giá",
       "loading": "Đang tải thông tin tour...",
@@ -414,7 +420,8 @@
         "title": "Tổng quan chuyến đi",
         "included_excluded": "Dịch vụ bao gồm/không bao gồm",
         "trip_plan": "Lịch trình",
-        "no_overview": "Không có thông tin tổng quan"
+        "no_overview": "Không có thông tin tổng quan",
+        "day_label": "Ngày {day}"
       },
       "similar": {
         "title": "Tour tương tự",
@@ -470,7 +477,14 @@
         "experience": "Kinh nghiệm: {years} năm",
         "languages": "Ngôn ngữ",
         "achievements": "Thành tích",
-        "description": "Hơn cả một hướng dẫn viên, là người bạn đồng hành chia sẻ những câu chuyện địa phương."
+        "description": "Hơn cả một hướng dẫn viên, là người bạn đồng hành chia sẻ những câu chuyện địa phương.",
+        "contact_title": "Liên hệ tour",
+        "contact_phone": "Điện thoại",
+        "contact_email": "Email",
+        "contact_zalo": "Zalo",
+        "contact_whatsapp": "WhatsApp",
+        "pickup_location": "Điểm đón",
+        "contact_missing": "Chưa có thông tin liên hệ"
       }
     }
   },

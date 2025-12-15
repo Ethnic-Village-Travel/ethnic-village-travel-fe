@@ -1,7 +1,9 @@
 'use client';
 
+import { useMemo } from 'react';
 import { notFound } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { tourApi } from '@/data/apis/tour.api';
+import { useQuery } from '@tanstack/react-query';
 
 import { useTourDetail } from '@/hooks/api/useTour';
 
@@ -12,18 +14,36 @@ import TourDetailHeader from './tour-detail-header';
 import { TourDetailSkeleton } from './tour-detail-skeleton';
 
 const TourDetail = ({ slug }: { slug: string }) => {
-  const t = useTranslations('tour.detail');
   const { data: response, isLoading, isError } = useTourDetail(slug);
+  const tour = response?.data;
+
+  const ethnicIds = useMemo(
+    () => (tour?.ethnics || []).map(ethnic => ethnic.id).filter((id): id is string => Boolean(id)),
+    [tour?.ethnics],
+  );
+
+  const { data: similarTours } = useQuery({
+    queryKey: ['similar-tours', tour?.slug, ethnicIds],
+    queryFn: async () => {
+      const response = await tourApi.getTourList({
+        page: 0,
+        size: 4,
+        ethnicIds,
+      });
+
+      const content = response.data?.content || [];
+      return content.filter(similar => similar.slug !== tour?.slug).slice(0, 4);
+    },
+    enabled: !!tour && ethnicIds.length > 0,
+  });
 
   if (isLoading) {
     return <TourDetailSkeleton />;
   }
 
-  if (isError || !response || !response.data) {
+  if (isError || !tour) {
     return notFound();
   }
-
-  const tour = response.data;
 
   return (
     <div>
@@ -38,7 +58,7 @@ const TourDetail = ({ slug }: { slug: string }) => {
           </div>
           <FloatingBookingPanel tour={tour} />
         </div>
-        <SimilarTrip tours={[]} />
+        <SimilarTrip tours={similarTours || []} />
       </div>
     </div>
   );

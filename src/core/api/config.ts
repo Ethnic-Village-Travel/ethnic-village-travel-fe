@@ -51,6 +51,7 @@ export const API = {
     UPDATE: '/booking/update',
     UPDATE_CONTACT: '/booking/{id}/contact',
     CONFIRM: '/booking/{id}/confirm',
+    CANCEL: '/booking/{id}/cancel',
   },
   PROMOTION: {
     VALIDATE: '/promotion/validate',

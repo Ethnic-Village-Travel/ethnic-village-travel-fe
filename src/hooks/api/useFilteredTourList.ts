@@ -37,11 +37,11 @@ const getFilterIds = <T extends EntityWithId>(
 
   const values = Array.isArray(queryValue) ? queryValue : [queryValue];
 
-  return Array.from(
-    new Set(
-      values.map(value => entities.find(e => getMatchValue(e) === value)?.id).filter((id): id is string => Boolean(id)),
-    ),
+  const ids = values.flatMap(value =>
+    entities.filter(entity => getMatchValue(entity) === value).map(entity => entity.id),
   );
+
+  return Array.from(new Set(ids.filter((id): id is string => Boolean(id))));
 };
 
 export const useFilteredTourList = (pageSize: number = 12) => {
