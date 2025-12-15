@@ -44,13 +44,12 @@
 
 4. Order page
 
-- Step 1 -> chỗ còn trống -> hiển thị sai(hiển thị 999)
-- Step 1 -> Adult/Child $115.60/người -> Thiếu transaltions
-- Step 4 -> Promotion -> Apply mã xong -> Chỉ hiển thị cho tiếng việt
-
-- Payment -> Chỉ có cho tiếng việt(sửa được nếu có thể)
-- Payment -> Có trang thì có phần "Nhấn chọn logo.." có trang thì không như ảnh((image.png))
-- Slot tối đa
+- [x] Step 1 -> chỗ còn trống -> hiển thị sai(hiển thị 999) -> Chưa đồng bộ với BE => Fix xong
+- [x] Step 1 -> Adult/Child $115.60/người -> Thiếu transaltions => Fix xong
+- [x] Step 4 -> Promotion -> Apply mã xong -> Chỉ hiển thị cho tiếng việt => Do lấy data ở DB nên khỏi sửa
+- [x] Payment -> Chỉ có cho tiếng việt(sửa được nếu có thể) => Fix xong, dùng lib việt nên khỏi sửa
+- [] Payment -> Có trang thì có phần "Nhấn chọn logo.." có trang thì không như ảnh((image.png)) => Fix xong, dùng lib
+  việt nên khỏi sửa => Cái ni chắc lib nó mới update hay sao chứ trước giờ test không thấy show logo. Để xem sau lại sau
 
 5. Personal - Bookmark page
 

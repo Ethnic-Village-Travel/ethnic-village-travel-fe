@@ -7,7 +7,7 @@ export type QueryConfig = Partial<{
   search: string;
   status: string[];
   e: string[];
-  p: string[];
+  p: string[] | 'on_sale';
   l: string[];
   t: string[];
   d: string;
