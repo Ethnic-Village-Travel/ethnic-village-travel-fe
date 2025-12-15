@@ -66,6 +66,13 @@ export const API = {
   CATEGORY: {
     ENABLED: '/categories/enabled',
   },
+  NOTIFICATION: {
+    LIST: '/notifications',
+    UNREAD_COUNT: '/notifications/unread-count',
+    MARK_READ: '/notifications/{id}/read',
+    MARK_ALL_READ: '/notifications/read-all',
+    STREAM: '/notifications/stream',
+  },
 };
 
 export const AdminAPI = {
