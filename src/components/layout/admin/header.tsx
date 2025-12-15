@@ -1,14 +1,6 @@
-import { Bell } from 'lucide-react';
-
-import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import SearchCommand from '@/components/features/admin/search-command';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { NotificationBell } from '@/components/features/notification';
 
 export default function AdminHeader() {
   return (
@@ -18,19 +10,7 @@ export default function AdminHeader() {
           <SidebarTrigger />
           <div className="flex flex-1 items-center justify-end gap-3">
             <SearchCommand />
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="relative">
-                    <Bell className="h-5 w-5" />
-                    <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-primary"></span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Thông báo</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <NotificationBell />
           </div>
         </div>
       </div>
