@@ -44,7 +44,9 @@ export default function AdminSidebar() {
 
   const handleLogout = () => {
     router.push(RouteConstant.home);
-    logout();
+    setTimeout(() => {
+      logout();
+    }, 0);
   };
 
   return (

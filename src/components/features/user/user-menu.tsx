@@ -28,8 +28,11 @@ export const UserMenu = () => {
   const isHomePage = useIsHomePage();
 
   const handleLogout = () => {
-    logout();
-    router.refresh();
+    router.push(RouteConstant.home);
+    setTimeout(() => {
+      logout();
+      router.refresh();
+    }, 0);
   };
 
   const handleNavigate = (path: string) => {

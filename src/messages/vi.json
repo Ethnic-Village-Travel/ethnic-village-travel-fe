@@ -42,32 +42,41 @@
       "logout": "Đăng xuất"
     },
     "search_command": {
-      "search": "Tìm kiếm",
-      "placeholder": "Nhập lệnh hoặc tìm kiếm...",
-      "no_results": "Không tìm thấy kết quả.",
-      "section": {
+      "trigger_placeholder": "Tìm nhanh trong trang quản trị...",
+      "input_placeholder": "Nhập để tìm trang hoặc thao tác...",
+      "empty": "Không tìm thấy kết quả phù hợp.",
+      "sections": {
         "general": "Tổng quan",
-        "functions": "Chức năng",
+        "management": "Quản lý nghiệp vụ",
         "create": "Tạo mới"
       },
       "items": {
-        "dashboard": "Bảng điều khiển",
-        "user": "Khách hàng",
-        "employee": "Nhân viên",
-        "role": "Vai trò & Quyền",
-        "tour": "Tour",
-        "tour_assignment": "Phân công Tour",
-        "booking": "Đặt chỗ",
-        "article": "Bài viết",
-        "notification": "Thông báo",
-        "category": "Danh mục",
-        "user_create": "Tạo Khách hàng",
-        "employee_create": "Tạo Nhân viên",
-        "role_create": "Tạo Vai trò",
-        "tour_create": "Tạo Tour",
-        "article_create": "Tạo Bài viết",
-        "notification_create": "Tạo Thông báo",
-        "category_create": "Tạo Danh mục"
+        "general": {
+          "dashboard": "Bảng điều khiển",
+          "user": "Khách hàng",
+          "employee": "Nhân viên",
+          "role": "Vai trò & Quyền"
+        },
+        "management": {
+          "tour": "Tour",
+          "category": "Danh mục trang chủ",
+          "tour_assignment": "Phân công hướng dẫn viên",
+          "booking": "Đặt chỗ",
+          "order": "Đơn hàng",
+          "article": "Bài viết",
+          "notification": "Thông báo hệ thống",
+          "report": "Báo cáo & Thống kê",
+          "chatbot": "Trợ lý ảo"
+        },
+        "create": {
+          "user": "Tạo khách hàng",
+          "employee": "Tạo nhân viên",
+          "role": "Tạo vai trò",
+          "tour": "Tạo tour",
+          "article": "Tạo bài viết",
+          "notification": "Tạo thông báo",
+          "chatbot": "Tạo nội dung chatbot"
+        }
       }
     },
     "tour": {
@@ -1421,7 +1430,7 @@
       "views": "{count} lượt xem",
       "upvotes": "{count} upvotes",
       "read_time": "{minutes} phút đọc",
-      "published_on": "Ngày đăng {date}"
+      "published_on": "Ngày đăng: {date}"
     }
   }
 }

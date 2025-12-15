@@ -25,8 +25,10 @@
       },
       "dashboard": "Dashboard",
       "user": "User",
+      "employee": "Employee",
       "role": "Role",
       "tour": "Tour",
+      "category": "Homepage Category",
       "tour_assigned_available_dates": "Tour Guide Assignments",
       "booking": "Booking",
       "order": "Order",
@@ -37,32 +39,41 @@
       "logout": "Logout"
     },
     "search_command": {
-      "search": "Search",
-      "placeholder": "Type a command or search...",
-      "no_results": "No results found.",
-      "section": {
+      "trigger_placeholder": "Quick search in admin...",
+      "input_placeholder": "Type to search pages or actions...",
+      "empty": "No matching results.",
+      "sections": {
         "general": "General",
-        "functions": "Functions",
-        "create": "Create"
+        "management": "Business Management",
+        "create": "Create New"
       },
       "items": {
-        "dashboard": "Dashboard",
-        "user": "User",
-        "employee": "Employee",
-        "role": "Role",
-        "tour": "Tour",
-        "tour_assignment": "Tour Assignment",
-        "booking": "Booking",
-        "article": "Article",
-        "notification": "Notification",
-        "category": "Category",
-        "user_create": "Create User",
-        "employee_create": "Create Employee",
-        "role_create": "Create Role",
-        "tour_create": "Create Tour",
-        "article_create": "Create Article",
-        "notification_create": "Create Notification",
-        "category_create": "Create Category"
+        "general": {
+          "dashboard": "Dashboard",
+          "user": "Customer",
+          "employee": "Employee",
+          "role": "Roles & Permissions"
+        },
+        "management": {
+          "tour": "Tour",
+          "category": "Homepage Category",
+          "tour_assignment": "Tour Guide Assignments",
+          "booking": "Booking",
+          "order": "Order",
+          "article": "Article",
+          "notification": "System Notification",
+          "report": "Reports & Analytics",
+          "chatbot": "Chatbot"
+        },
+        "create": {
+          "user": "Create Customer",
+          "employee": "Create Employee",
+          "role": "Create Role",
+          "tour": "Create Tour",
+          "article": "Create Article",
+          "notification": "Create Notification",
+          "chatbot": "Create Chatbot Content"
+        }
       }
     },
     "tour": {
@@ -1266,7 +1277,7 @@
       "views": "{count} views",
       "upvotes": "{count} upvotes",
       "read_time": "{minutes} min read",
-      "published_on": "Published on {date}"
+      "published_on": "Published on: {date}"
     }
   }
 }
