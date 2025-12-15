@@ -1,5 +1,11 @@
 import { userAdminApi } from '@/data/apis/user.admin.api';
-import { getUserDetails } from '@/data/apis/user.api';
+import {
+  getUserDetails,
+  updatePassword,
+  UpdatePasswordRequest,
+  updatePersonalInfo,
+  UpdatePersonalRequest,
+} from '@/data/apis/user.api';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useUserStore } from '@/stores/useUserStore';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -23,6 +29,45 @@ export const useApiUserDetailsGet = () => {
       return response.data;
     },
     enabled: !!user?.id,
+  });
+};
+
+export const useUpdatePersonalInfo = () => {
+  const queryClient = useQueryClient();
+  const { user, setAuth, accessToken, refreshToken } = useAuthStore();
+
+  return useMutation({
+    mutationFn: (data: UpdatePersonalRequest) => updatePersonalInfo(data),
+    onSuccess: response => {
+      if (response.success && response.data && user) {
+        // Update user in AuthStore with new personal info from response
+        const updatedUser = {
+          ...user,
+          personal: {
+            id: response.data.id,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            fullName: response.data.fullName,
+            phoneNumber: response.data.phoneNumber,
+            avatar: response.data.avatar,
+            address: response.data.address,
+            dateOfBirth: response.data.dateOfBirth,
+          },
+        };
+        setAuth({
+          accessToken,
+          refreshToken,
+          user: updatedUser,
+        });
+        queryClient.invalidateQueries({ queryKey: ['user-details', user?.id] });
+      }
+    },
+  });
+};
+
+export const useUpdatePassword = () => {
+  return useMutation({
+    mutationFn: (data: UpdatePasswordRequest) => updatePassword(data),
   });
 };
 

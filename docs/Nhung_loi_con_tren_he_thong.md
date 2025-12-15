@@ -69,7 +69,7 @@
 - booking item -> Đang ở "EN" nhưng price tính theo "VN" ✅
 - Tab other bookings -> Lỗi API -> Có cập nhật ở API này nên đang gây lỗi ✅
 
-7. Personal - Account -> Chưa có(nếu k làm thì xóa bên tab bên trái)
+7. Personal - Account -> Chưa có(nếu k làm thì xóa bên tab bên trái) ✅
 
 8. Article search page
 
