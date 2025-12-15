@@ -79,6 +79,13 @@ export default function OrderPage() {
   const initialBookingData: Partial<BookingData> | undefined = useMemo(() => {
     if (!booking) return undefined;
 
+    const availableSlots =
+      booking.tour?.remainingSlots != null
+        ? booking.tour.remainingSlots
+        : booking.tour?.maxSlots && booking.tour.bookedSlots != null
+          ? Math.max(booking.tour.maxSlots - booking.tour.bookedSlots, 0)
+          : booking.tour?.maxSlots || 0;
+
     return {
       tourId: booking.tour.id,
       tourSlug: '',
@@ -91,7 +98,7 @@ export default function OrderPage() {
             year: 'numeric',
           })
         : '',
-      availableSlots: 999,
+      availableSlots,
       guestCount: {
         adult: booking.personCount?.adult || 1,
         child: booking.personCount?.child || 0,

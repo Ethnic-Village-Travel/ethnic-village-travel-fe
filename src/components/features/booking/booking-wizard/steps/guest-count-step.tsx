@@ -85,7 +85,9 @@ function GuestCounter({ label, price, value, locale, onChange, min = 0, max = 99
     <div className="flex items-center justify-between py-3">
       <div className="flex flex-col">
         <span className="text-base font-semibold text-gray-900">{label}</span>
-        <span className="text-sm text-gray-500">{formatCurrency(price, { locale })}/người</span>
+        <span className="text-sm text-gray-500">
+          {formatCurrency(price, { locale })}/{useTranslations('booking.wizard.guest_count')('per_person')}
+        </span>
       </div>
       <div className="flex items-center gap-3">
         <Button
@@ -124,6 +126,7 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
   const adultPrice = tourInfo?.adultPrice || 0;
   const childPrice = tourInfo?.childPrice || 0;
   const availableSlots = bookingData.availableSlots || 0;
+  const effectiveSlots = availableSlots > 0 ? availableSlots : Number.MAX_SAFE_INTEGER;
   const promotion = tourInfo?.promotions?.[0] || null;
 
   const { originalPrice, discountedPrice, discountAmount } = useMemo(
@@ -140,8 +143,8 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
   );
 
   const validation = useMemo(
-    () => validateGuestCount(bookingData.guestCount, availableSlots),
-    [bookingData.guestCount, availableSlots],
+    () => validateGuestCount(bookingData.guestCount, effectiveSlots),
+    [bookingData.guestCount, effectiveSlots],
   );
 
   const handleAdultChange = useCallback(
@@ -165,7 +168,7 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
   );
 
   const handleContinue = useCallback(() => {
-    const { isValid, errors } = validateGuestCount(bookingData.guestCount, availableSlots);
+    const { isValid, errors } = validateGuestCount(bookingData.guestCount, effectiveSlots);
 
     if (!isValid) {
       actions.setValidationErrors(BOOKING_STEPS.GUEST_COUNT, errors);
@@ -178,7 +181,7 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
     } else {
       actions.nextStep();
     }
-  }, [bookingData.guestCount, availableSlots, actions, onNext]);
+  }, [bookingData.guestCount, effectiveSlots, actions, onNext]);
 
   const totalGuests = bookingData.guestCount.adult + bookingData.guestCount.child;
   const stepErrors = validationErrors[BOOKING_STEPS.GUEST_COUNT] || [];
@@ -194,12 +197,14 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
             </span>
           </div>
 
-          <div className="mb-4 flex items-center gap-2 text-gray-600">
-            <Users className="h-5 w-5" />
-            <span className="text-sm">
-              {t('available_slots')}: <strong>{availableSlots}</strong>
-            </span>
-          </div>
+          {availableSlots > 0 && (
+            <div className="mb-4 flex items-center gap-2 text-gray-600">
+              <Users className="h-5 w-5" />
+              <span className="text-sm">
+                {t('available_slots')}: <strong>{availableSlots}</strong>
+              </span>
+            </div>
+          )}
 
           <Separator className="my-4" />
 
@@ -211,7 +216,7 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
               locale={locale}
               onChange={handleAdultChange}
               min={0}
-              max={availableSlots}
+              max={effectiveSlots}
               disabled={isLoading}
             />
             <Separator />
@@ -222,7 +227,7 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
               locale={locale}
               onChange={handleChildChange}
               min={0}
-              max={availableSlots - bookingData.guestCount.adult}
+              max={effectiveSlots - bookingData.guestCount.adult}
               disabled={isLoading}
             />
           </div>
