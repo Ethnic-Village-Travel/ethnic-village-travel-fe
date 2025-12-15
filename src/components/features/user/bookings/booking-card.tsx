@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import { getStatusBadgeVariant } from '@/core/enum/booking.enum';
 import { formatCurrency } from '@/utils/number';
@@ -10,6 +11,7 @@ import { CalendarDays, Clock, MapPin } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { BookingListResponse as BookingListItem } from '@/types/booking';
+import { useApiBookingCancel } from '@/hooks/api/useBooking';
 import { usePayment, usePaymentLink } from '@/hooks/api/usePayment';
 import { useToast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
@@ -23,6 +25,7 @@ interface BookingCardProps {
 export default function BookingCard({ booking }: BookingCardProps) {
   const t = useTranslations('personal.transaction');
   const locale = useLocale();
+  const router = useRouter();
   const detailUrl = `/${locale}${RouteConstant.personal_transaction_detail.replace(':id', booking.id)}`;
 
   // Payment hooks
@@ -32,6 +35,7 @@ export default function BookingCard({ booking }: BookingCardProps) {
     booking.id,
     booking.status === 'PENDING_PAYMENT',
   );
+  const { mutateAsync: cancelBooking, isPending: isCancelling } = useApiBookingCancel(booking.id);
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Guest count
@@ -73,17 +77,40 @@ export default function BookingCard({ booking }: BookingCardProps) {
         window.location.href = paymentData.checkoutUrl;
       } else {
         console.error('Invalid payment data:', paymentData);
-        throw new Error('Không thể tạo link thanh toán');
+        throw new Error(t('payment_error_description'));
       }
     } catch (error) {
       console.error('Failed to handle payment:', error);
       toast({
         variant: 'destructive',
-        title: 'Lỗi thanh toán',
-        description: 'Không thể tạo link thanh toán. Vui lòng thử lại.',
+        title: t('payment_error'),
+        description: t('payment_error_description'),
       });
     } finally {
       setIsProcessing(false);
+    }
+  };
+
+  // Cancel handler
+  const handleCancel = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      await cancelBooking();
+      toast({
+        title: t('cancel_success'),
+        description: t('cancel_success_description'),
+      });
+      // Reload the page to refresh the list
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to cancel booking:', error);
+      toast({
+        variant: 'destructive',
+        title: t('cancel_failed'),
+        description: t('cancel_failed_description'),
+      });
     }
   };
 
@@ -137,10 +164,14 @@ export default function BookingCard({ booking }: BookingCardProps) {
           {/* Price and Status */}
           <div className="mt-2 flex items-center justify-between">
             <div className="flex flex-col">
-              <span className="text-xl font-semibold text-primary">{formatCurrency(booking.totalPrice)}</span>
-              {booking.discountAmountApplied && booking.discountAmountApplied > 0 && (
+              <span className="text-xl font-semibold text-primary">
+                {formatCurrency(booking.totalPrice, { locale: locale as 'vi' | 'en' | 'ko' })}
+              </span>
+              {(booking.discountAmountApplied ?? 0) > 0 && (
                 <span className="text-base font-semibold text-gray-500 line-through">
-                  {formatCurrency(booking.totalPrice + booking.discountAmountApplied)}
+                  {formatCurrency(booking.totalPrice + (booking.discountAmountApplied ?? 0), {
+                    locale: locale as 'vi' | 'en' | 'ko',
+                  })}
                 </span>
               )}
             </div>
@@ -175,20 +206,18 @@ export default function BookingCard({ booking }: BookingCardProps) {
                 }
               >
                 {isCreatingPayment || isProcessing || isLoadingPaymentLink
-                  ? 'Đang xử lý...'
+                  ? t('processing')
                   : t('actions.pay_now' as any)}
               </Button>
             )}
             {['PENDING_PAYMENT', 'PAID', 'CONFIRMED'].includes(booking.status) && !isPaymentExpired && (
               <Button
                 variant="outline"
-                onClick={e => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  // Handle cancel action
-                }}
+                onClick={handleCancel}
+                disabled={isCancelling}
+                className={isCancelling ? 'cursor-not-allowed opacity-50' : ''}
               >
-                {t('actions.cancel' as any)}
+                {isCancelling ? t('cancelling') : t('actions.cancel' as any)}
               </Button>
             )}
             {booking.status === 'COMPLETED' && (
@@ -208,7 +237,7 @@ export default function BookingCard({ booking }: BookingCardProps) {
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
-                // This will be handled by the Link wrapper
+                router.push(detailUrl);
               }}
             >
               {t('actions.view_details' as any)}

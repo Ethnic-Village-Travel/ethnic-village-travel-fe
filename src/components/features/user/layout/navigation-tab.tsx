@@ -33,13 +33,13 @@ export default function PersonalNavigationTab() {
         href: RouteConstant.personal_bookmark,
         label: t('bookmark'),
         icon: Bookmark,
-        badge: details?.bookmarks?.filter(b => b.status === BookmarkStatus.ACTIVE).length || 0,
+        badge: details?.bookmarks?.filter(b => b.status === BookmarkStatus.ACTIVE).length || null,
       },
       {
         href: RouteConstant.personal_transaction,
         label: t('transaction'),
         icon: ScrollText,
-        badge: details?.pendingPaymentBookingsCount || 0,
+        badge: details?.pendingPaymentBookingsCount || null,
       },
       {
         href: RouteConstant.personal_account,

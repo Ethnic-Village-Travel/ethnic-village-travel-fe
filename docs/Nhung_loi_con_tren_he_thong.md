@@ -58,16 +58,16 @@
 - Tour item -> không có nút bookmark để hủy bookmark (có vẻ xóa ở item so với trước đây) ✅
 - Tab bên trái -> đang ở bookmark page -> Bookmark item phải có bgColor ✅
 
--> "Tiếng việt" thì có nhưng "English" thì không -> Có vẻ check theo pathname nên có thêm /en không check được
+-> "Tiếng việt" thì có nhưng "English" thì không -> Có vẻ check theo pathname nên có thêm /en không check được ✅
 
 6. Personal - Transaltion page
 
-- Tab bên trái -> Số lượng giao dịch không được hiển thị (luôn luôn là 0)
-- booking item -> Số 0 hiển thị dưới giá tiền là gì? (có thể giảm giá nhưng k cần hiển thị nếu là 0)
-- booking item -> Nút "Xem chi tiết" chưa action -> Nhấn title thì chuyển được
-- booking item -> Nút Cancel chưa action
-- booking item -> Đang ở "EN" nhưng price tính theo "VN"
-- Tab other bookings -> Lỗi API -> Có cập nhật ở API này nên đang gây lỗi
+- Tab bên trái -> Số lượng giao dịch không được hiển thị (luôn luôn là 0) ❌
+- booking item -> Số 0 hiển thị dưới giá tiền là gì? (có thể giảm giá nhưng k cần hiển thị nếu là 0) ✅
+- booking item -> Nút "Xem chi tiết" chưa action -> Nhấn title thì chuyển được ✅
+- booking item -> Nút Cancel chưa action ✅
+- booking item -> Đang ở "EN" nhưng price tính theo "VN" ✅
+- Tab other bookings -> Lỗi API -> Có cập nhật ở API này nên đang gây lỗi ✅
 
 7. Personal - Account -> Chưa có(nếu k làm thì xóa bên tab bên trái)
 
