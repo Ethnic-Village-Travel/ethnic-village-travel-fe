@@ -1,6 +1,7 @@
 'use client';
 
 import { EntityType } from '@/core/constants/entity';
+import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { useUserStore } from '@/stores/useUserStore';
 import { calculateRatingStats } from '@/utils';
 import { useTranslations } from 'next-intl';
@@ -17,7 +18,10 @@ const TourDetailHeader = (tour: Tour) => {
   const ratingObj = calculateRatingStats(tour.reviews || []);
   const { details } = useUserStore();
   const isBookmarked = details?.bookmarks?.some(
-    bookmark => bookmark.entityId === Number(tour.id) && bookmark.entityType === EntityType.TOUR,
+    bookmark =>
+      bookmark.entityId === tour.id &&
+      bookmark.entityType === EntityType.TOUR &&
+      bookmark.status === BookmarkStatus.ACTIVE,
   );
 
   return (

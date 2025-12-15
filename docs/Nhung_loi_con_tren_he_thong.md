@@ -54,9 +54,9 @@
 
 5. Personal - Bookmark page
 
-- Không dùng cho bài viết -> Xóa tab bài viết
-- Tour item -> không có nút bookmark để hủy bookmark (có vẻ xóa ở item so với trước đây)
-- Tab bên trái -> đang ở bookmark page -> Bookmark item phải có bgColor
+- Không dùng cho bài viết -> Xóa tab bài viết ✅
+- Tour item -> không có nút bookmark để hủy bookmark (có vẻ xóa ở item so với trước đây) ✅
+- Tab bên trái -> đang ở bookmark page -> Bookmark item phải có bgColor ✅
 
 -> "Tiếng việt" thì có nhưng "English" thì không -> Có vẻ check theo pathname nên có thêm /en không check được
 

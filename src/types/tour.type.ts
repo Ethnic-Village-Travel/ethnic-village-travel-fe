@@ -7,7 +7,7 @@ import { Review } from './review.type';
 import { TourServiceInfo } from './service-info.type';
 
 export interface Tour {
-  id?: string;
+  id: string;
   tourId?: string;
   imageUrl: string;
   title: string;

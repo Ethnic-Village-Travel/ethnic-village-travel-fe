@@ -1,5 +1,8 @@
 import Link from 'next/link';
+import { EntityType } from '@/core/constants/entity';
 import { RouteConstant } from '@/core/constants/route';
+import { BookmarkStatus } from '@/core/enum/bookmark.enum';
+import { useUserStore } from '@/stores/useUserStore';
 import { calculateRatingStats, cn } from '@/utils';
 import { formatCurrency } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
@@ -8,6 +11,7 @@ import { useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
 import { Card, CardContent } from '@/components/ui/card';
+import { BookmarkButton } from '@/components/shared/bookmark-button';
 import StarRating from '@/components/shared/star-rating';
 
 type TourItemProps = {
@@ -20,6 +24,13 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
     ? { average: tour.avgRating, total: tour.ratingCount }
     : calculateRatingStats(tour.reviews || []);
   const t = useTranslations('tour.item');
+  const { details } = useUserStore();
+  const isBookmarked = details?.bookmarks?.some(
+    bookmark =>
+      bookmark.entityId === tour.id &&
+      bookmark.entityType === EntityType.TOUR &&
+      bookmark.status === BookmarkStatus.ACTIVE,
+  );
 
   // Prioritize DIRECT_DISCOUNT promotion for display
   const promotion = tour.promotions?.find(p => p.type === 'DIRECT_DISCOUNT' && p.status === 'ACTIVE');
@@ -62,11 +73,28 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
       <CardContent className={cn('flex flex-1 flex-col p-3')}>
         <div className="flex flex-1 flex-col">
           {/* Title */}
-          <Link href={`${RouteConstant.tour}/${tour.slug}`} className="group/title mb-2 block h-14">
-            <h3 className="line-clamp-2 text-lg font-bold leading-snug transition-colors group-hover/title:text-primary">
-              {tour.title}
-            </h3>
-          </Link>
+          <div className="mb-2 flex items-start justify-between gap-2">
+            <Link href={`${RouteConstant.tour}/${tour.slug}`} className="group/title block flex-1">
+              <h3
+                className={cn(
+                  'text-lg font-bold leading-snug transition-colors group-hover/title:text-primary',
+                  layout === 'horizontal' ? 'line-clamp-2 h-14' : 'line-clamp-2 h-14',
+                )}
+              >
+                {tour.title}
+              </h3>
+            </Link>
+            {layout === 'horizontal' && (
+              <BookmarkButton
+                entityId={tour.id}
+                entityType={EntityType.TOUR}
+                isBookmarkedDefault={isBookmarked}
+                variant="ghost"
+                size="icon"
+                className="shrink-0"
+              />
+            )}
+          </div>
 
           <div className="mb-3 space-y-2">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
