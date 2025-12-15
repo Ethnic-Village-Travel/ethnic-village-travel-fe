@@ -97,8 +97,8 @@
 
 12. Admin user
 
-- Item -> Xóa được nhưng vòa DB vẫn còn (chưa hiểu luồng)
-- Search -> Mỗi khi search thì re-render cả content chứ không phải mỗi table
+- [x] Item -> Xóa được nhưng vòa DB vẫn còn (chưa hiểu luồng)
+- [x] Search -> Mỗi khi search thì re-render cả content chứ không phải mỗi table
 
 13. Admin tour
 
