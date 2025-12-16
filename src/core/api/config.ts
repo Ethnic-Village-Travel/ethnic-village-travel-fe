@@ -145,4 +145,12 @@ export const AdminAPI = {
     REMOVE_TOURS: '/admin/categories',
     TOGGLE_STATUS: '/admin/categories',
   },
+  ARTICLE: {
+    LIST: '/admin/articles',
+    DETAIL: '/admin/articles',
+    CREATE: '/admin/articles',
+    UPDATE: '/admin/articles',
+    DELETE: '/admin/articles',
+    UPDATE_STATUS: '/admin/articles',
+  },
 };

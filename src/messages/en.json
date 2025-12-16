@@ -4,6 +4,8 @@
     "no_results": "No results found",
     "view_more": "View more"
   },
+  "uploading": "Uploading image...",
+  "clear_image": "Remove image",
   "admin": {
     "status": {
       "DRAFT": "Draft",
@@ -74,6 +76,58 @@
           "notification": "Create Notification",
           "chatbot": "Create Chatbot Content"
         }
+      }
+    },
+    "article": {
+      "list": {
+        "title": "Article management",
+        "description": "Search, edit, publish/unpublish or delete articles",
+        "search": "Search",
+        "status": "Status",
+        "all": "All",
+        "column_title": "Title",
+        "column_status": "Status",
+        "column_created_at": "Created at",
+        "column_updated_at": "Updated at",
+        "column_actions": "Actions",
+        "empty": "No articles",
+        "create": "Create article",
+        "edit": "Edit",
+        "publish": "Publish",
+        "unpublish": "Unpublish",
+        "delete": "Delete",
+        "prev": "Previous",
+        "next": "Next",
+        "confirm_delete": "Are you sure you want to delete this article?",
+        "toast_delete_success": "Article deleted",
+        "toast_delete_failed": "Delete article failed",
+        "toast_status_success": "Status updated successfully",
+        "toast_status_failed": "Update status failed",
+        "open_menu": "Open menu"
+      },
+      "form": {
+        "title_create": "Create article",
+        "title_edit": "Edit article",
+        "subtitle_create": "Fill information and save to publish later",
+        "subtitle_edit": "Update content and status",
+        "info": "Article information",
+        "field_title": "Title *",
+        "field_slug": "Slug",
+        "field_status": "Status",
+        "field_thumbnail": "Thumbnail",
+        "field_summary": "Summary",
+        "field_content": "Content *",
+        "field_tags": "Tags",
+        "save": "Save article",
+        "saving": "Saving...",
+        "back": "Back",
+        "not_found": "Article not found",
+        "toast_create_success": "Article created successfully",
+        "toast_create_failed": "Create article failed",
+        "toast_update_success": "Article updated successfully",
+        "toast_update_failed": "Update article failed",
+        "uploading": "Uploading image...",
+        "clear_image": "Remove image"
       }
     },
     "tour": {

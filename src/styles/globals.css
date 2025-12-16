@@ -223,3 +223,63 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .article-content {
+    max-width: none;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: hsl(var(--foreground));
+  }
+
+  .article-content > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .article-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+
+  .article-content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: hsl(var(--foreground) / 0.9);
+  }
+
+  .article-content p {
+    margin: 0 0 1rem;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .article-content a {
+    color: hsl(var(--primary));
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 150ms ease;
+  }
+
+  .article-content a:hover {
+    color: hsl(var(--primary) / 0.8);
+  }
+
+  .article-content strong {
+    color: hsl(var(--foreground));
+  }
+
+  .article-content ul,
+  .article-content ol {
+    margin: 0 0 1rem 1.25rem;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .article-content li {
+    margin-bottom: 0.25rem;
+  }
+}

@@ -10,9 +10,9 @@ export default function ArticleDetailContent({ article }: ArticleDetailContentPr
 
   return (
     <Card className="border-none bg-card/80 shadow-none">
-      <CardContent className="prose prose-neutral prose-headings:mt-8 prose-headings:mb-4 prose-p:mb-4 prose-li:mb-1 max-w-none p-0 py-8 text-base leading-relaxed">
+      <CardContent className="p-0 py-8">
         <article
-          className="space-y-4"
+          className="article-content"
           dangerouslySetInnerHTML={{
             __html: content || '',
           }}

@@ -4,6 +4,8 @@
     "no_results": "Không có kết quả",
     "view_more": "Xem thêm"
   },
+  "uploading": "Đang tải ảnh...",
+  "clear_image": "Xóa ảnh",
   "admin": {
     "status": {
       "DRAFT": "Nháp",
@@ -77,6 +79,58 @@
           "notification": "Tạo thông báo",
           "chatbot": "Tạo nội dung chatbot"
         }
+      }
+    },
+    "article": {
+      "list": {
+        "title": "Quản lý bài viết",
+        "description": "Tìm kiếm, chỉnh sửa, xuất bản hoặc xóa bài viết",
+        "search": "Tìm kiếm",
+        "status": "Trạng thái",
+        "all": "Tất cả",
+        "column_title": "Tiêu đề",
+        "column_status": "Trạng thái",
+        "column_created_at": "Ngày tạo",
+        "column_updated_at": "Ngày cập nhật",
+        "column_actions": "Hành động",
+        "empty": "Không có bài viết",
+        "create": "Tạo bài viết",
+        "edit": "Sửa",
+        "publish": "Xuất bản",
+        "unpublish": "Gỡ xuống",
+        "delete": "Xóa",
+        "prev": "Trước",
+        "next": "Sau",
+        "confirm_delete": "Bạn có chắc muốn xóa bài viết này?",
+        "toast_delete_success": "Đã xóa bài viết",
+        "toast_delete_failed": "Xóa bài viết thất bại",
+        "toast_status_success": "Cập nhật trạng thái thành công",
+        "toast_status_failed": "Cập nhật trạng thái thất bại",
+        "open_menu": "Mở menu"
+      },
+      "form": {
+        "title_create": "Tạo bài viết",
+        "title_edit": "Chỉnh sửa bài viết",
+        "subtitle_create": "Điền thông tin và lưu lại để xuất bản sau",
+        "subtitle_edit": "Cập nhật nội dung và trạng thái",
+        "info": "Thông tin bài viết",
+        "field_title": "Tiêu đề *",
+        "field_slug": "Slug",
+        "field_status": "Trạng thái",
+        "field_thumbnail": "Ảnh thumbnail",
+        "field_summary": "Tóm tắt",
+        "field_content": "Nội dung *",
+        "field_tags": "Tags",
+        "save": "Lưu bài viết",
+        "saving": "Đang lưu...",
+        "back": "Quay lại",
+        "not_found": "Không tìm thấy bài viết",
+        "toast_create_success": "Tạo bài viết thành công",
+        "toast_create_failed": "Tạo bài viết thất bại",
+        "toast_update_success": "Cập nhật bài viết thành công",
+        "toast_update_failed": "Cập nhật bài viết thất bại",
+        "uploading": "Đang tải ảnh...",
+        "clear_image": "Xóa ảnh"
       }
     },
     "tour": {
