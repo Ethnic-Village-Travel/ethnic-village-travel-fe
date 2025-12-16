@@ -93,7 +93,7 @@
 
 12. Admin employee
 
-- Item -> Vô hiệu xóa -> Action không có bỏ vô hiệu hóa(phải chỉnh sửa với cập nhật lại được)
+- [x] Item -> Vô hiệu xóa -> Action không có bỏ vô hiệu hóa(phải chỉnh sửa với cập nhật lại được)
 
 12. Admin user
 

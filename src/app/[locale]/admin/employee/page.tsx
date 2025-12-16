@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MoreHorizontal, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Pencil, Plus, RotateCcw, Search, Trash2 } from 'lucide-react';
 
 import type { EmployeeAdmin, EmployeeFilters } from '@/types/employee.type';
-import { useAdminEmployees, useDeleteAdminEmployee } from '@/hooks/api/useEmployee';
+import { useAdminEmployees, useDeleteAdminEmployee, useUpdateAdminEmployee } from '@/hooks/api/useEmployee';
 import { toast } from '@/hooks/use-toast';
 import {
   AlertDialog,
@@ -34,10 +34,11 @@ export default function EmployeeListPage() {
   const [page, setPage] = useState(0);
   const [filters, setFilters] = useState<EmployeeFilters>({});
   const [searchValue, setSearchValue] = useState('');
-  const [deleteEmployee, setDeleteEmployee] = useState<EmployeeAdmin | null>(null);
+  const [actionEmployee, setActionEmployee] = useState<{ employee: EmployeeAdmin; type: 'delete' | 'restore' } | null>(null);
 
   const { data, isLoading } = useAdminEmployees(page, 10, filters);
   const deleteEmployeeMutation = useDeleteAdminEmployee();
+  const updateEmployeeMutation = useUpdateAdminEmployee();
 
   const handleSearch = () => {
     setFilters({ ...filters, search: searchValue });
@@ -52,14 +53,24 @@ export default function EmployeeListPage() {
     router.push(`/admin/employee/${employee.id}`);
   };
 
-  const handleDeleteEmployee = async () => {
-    if (!deleteEmployee) return;
+  const handleActionEmployee = async () => {
+    if (!actionEmployee) return;
     try {
-      await deleteEmployeeMutation.mutateAsync(deleteEmployee.id);
-      toast({ title: 'Thành công', description: 'Đã vô hiệu hóa nhân viên' });
-      setDeleteEmployee(null);
+      if (actionEmployee.type === 'delete') {
+        await deleteEmployeeMutation.mutateAsync(actionEmployee.employee.id);
+        toast({ title: 'Thành công', description: 'Đã vô hiệu hóa nhân viên' });
+      } else {
+        await updateEmployeeMutation.mutateAsync({ id: actionEmployee.employee.id, data: { isActive: true } });
+        toast({ title: 'Thành công', description: 'Đã bỏ vô hiệu hóa nhân viên' });
+      }
+      setActionEmployee(null);
     } catch {
-      toast({ title: 'Lỗi', description: 'Không thể vô hiệu hóa nhân viên', variant: 'destructive' });
+      if (actionEmployee.type === 'delete') {
+        toast({ title: 'Lỗi', description: 'Không thể vô hiệu hóa nhân viên', variant: 'destructive' });
+      } else {
+        toast({ title: 'Lỗi', description: 'Không thể bỏ vô hiệu hóa nhân viên', variant: 'destructive' });
+      }
+      setActionEmployee(null);
     }
   };
 
@@ -148,9 +159,15 @@ export default function EmployeeListPage() {
                         <DropdownMenuItem onClick={() => handleEditEmployee(employee)}>
                           <Pencil className="mr-2 h-4 w-4" /> Chỉnh sửa
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setDeleteEmployee(employee)} className="text-red-600">
-                          <Trash2 className="mr-2 h-4 w-4" /> Vô hiệu hóa
-                        </DropdownMenuItem>
+                        {employee.isActive ? (
+                          <DropdownMenuItem onClick={() => setActionEmployee({ employee, type: 'delete' })} className="text-red-600">
+                            <Trash2 className="mr-2 h-4 w-4" /> Vô hiệu hóa
+                          </DropdownMenuItem>
+                        ) : (
+                          <DropdownMenuItem onClick={() => setActionEmployee({ employee, type: 'restore' })}>
+                            <RotateCcw className="mr-2 h-4 w-4" /> Bỏ vô hiệu hóa
+                          </DropdownMenuItem>
+                        )}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -163,15 +180,21 @@ export default function EmployeeListPage() {
 
       <SimplePagination page={page} totalPages={data?.totalPages || 1} onPageChange={setPage} className="mt-4" />
 
-      <AlertDialog open={!!deleteEmployee} onOpenChange={() => setDeleteEmployee(null)}>
+      <AlertDialog open={!!actionEmployee} onOpenChange={() => setActionEmployee(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Vô hiệu hóa nhân viên</AlertDialogTitle>
-            <AlertDialogDescription>Bạn có chắc chắn muốn vô hiệu hóa nhân viên này không?</AlertDialogDescription>
+            <AlertDialogTitle>
+              {actionEmployee?.type === 'delete' ? 'Vô hiệu hóa nhân viên' : 'Bỏ vô hiệu hóa nhân viên'}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {actionEmployee?.type === 'delete'
+                ? 'Bạn có chắc chắn muốn vô hiệu hóa nhân viên này không?'
+                : 'Bạn có chắc chắn muốn bỏ vô hiệu hóa nhân viên này không?'}
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Hủy</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteEmployee}>Xác nhận</AlertDialogAction>
+            <AlertDialogAction onClick={handleActionEmployee}>Xác nhận</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
