@@ -74,7 +74,9 @@
 
 - [x] item -> publish on -> chưa hiển thị ngày published
 
-9. Article detail -> chưa có
+9. Article detail
+
+- [x] Content
 
 10. About + Services + Blog + Contact
 
