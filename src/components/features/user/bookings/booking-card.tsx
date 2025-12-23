@@ -339,8 +339,8 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
                     onClick={handlePayNow}
                     disabled={isCreatingPayment || isProcessing || isLoadingPaymentLink}
                     className={cn(
-                      'flex items-center gap-1.5 rounded-md bg-secondary px-3 py-1.5 text-xs font-semibold text-white transition-all',
-                      'hover:bg-secondary-600',
+                      'flex items-center gap-1.5 rounded-md bg-secondary-500 px-3 py-1.5 text-xs font-semibold shadow-sm transition-all',
+                      'hover:bg-secondary-600 hover:shadow-md',
                       'disabled:cursor-not-allowed disabled:opacity-50',
                     )}
                   >

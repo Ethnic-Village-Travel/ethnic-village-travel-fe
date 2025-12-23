@@ -89,6 +89,15 @@ export const tourApi = {
     }
   },
 
+  getSimilarTours: async (slug: string, limit: number = 4): Promise<ApiResponse<Tour[]>> => {
+    try {
+      const { data } = await api.get<ApiResponse<Tour[]>>(`${API.TOUR.DETAIL}/${slug}/similar?limit=${limit}`);
+      return data;
+    } catch {
+      throw new Error('Failed to get similar tours');
+    }
+  },
+
   //-------------------------Admin------------------------------------------------
 
   getAdminTourList: async (params: TourAdminListRequest): Promise<ApiResponse<TourListResponse>> => {

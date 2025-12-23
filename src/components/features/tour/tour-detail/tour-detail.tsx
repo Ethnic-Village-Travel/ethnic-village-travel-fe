@@ -1,6 +1,5 @@
 'use client';
 
-import { useMemo } from 'react';
 import { notFound } from 'next/navigation';
 import { tourApi } from '@/data/apis/tour.api';
 import { useQuery } from '@tanstack/react-query';
@@ -17,24 +16,15 @@ const TourDetail = ({ slug }: { slug: string }) => {
   const { data: response, isLoading, isError } = useTourDetail(slug);
   const tour = response?.data;
 
-  const ethnicIds = useMemo(
-    () => (tour?.ethnics || []).map(ethnic => ethnic.id).filter((id): id is string => Boolean(id)),
-    [tour?.ethnics],
-  );
-
-  const { data: similarTours } = useQuery({
-    queryKey: ['similar-tours', tour?.slug, ethnicIds],
+  // Use ML-based similar tours
+  const { data: similarToursResponse } = useQuery({
+    queryKey: ['similar-tours', tour?.slug],
     queryFn: async () => {
-      const response = await tourApi.getTourList({
-        page: 0,
-        size: 4,
-        ethnicIds,
-      });
-
-      const content = response.data?.content || [];
-      return content.filter(similar => similar.slug !== tour?.slug).slice(0, 4);
+      if (!tour?.slug) return [];
+      const response = await tourApi.getSimilarTours(tour.slug, 4);
+      return response.data || [];
     },
-    enabled: !!tour && ethnicIds.length > 0,
+    enabled: !!tour?.slug,
   });
 
   if (isLoading) {
@@ -58,7 +48,7 @@ const TourDetail = ({ slug }: { slug: string }) => {
           </div>
           <FloatingBookingPanel tour={tour} />
         </div>
-        <SimilarTrip tours={similarTours || []} />
+        <SimilarTrip tours={similarToursResponse || []} />
       </div>
     </div>
   );
