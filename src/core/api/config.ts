@@ -54,6 +54,7 @@ export const API = {
     UPDATE_CONTACT: '/booking/{id}/contact',
     CONFIRM: '/booking/{id}/confirm',
     CANCEL: '/booking/{id}/cancel',
+    CANCEL_BY_ORDER_CODE: '/booking/cancel-by-order-code',
   },
   PROMOTION: {
     VALIDATE: '/promotion/validate',

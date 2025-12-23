@@ -14,12 +14,8 @@ export const paymentApi = {
   createPayment: async (bookingId: string): Promise<PaymentLinkResponse> => {
     try {
       const { data } = await api.post<ApiResponse<PaymentLinkResponse>>(API.PAYMENT.CREATE.replace('{id}', bookingId));
-      console.log('Raw API response:', data);
-      console.log('data.data:', data.data);
-      console.log('data.data type:', typeof data.data);
 
       if (!data.data) {
-        console.error('data.data is falsy:', data.data);
         throw new Error('Invalid response format');
       }
       return data.data;

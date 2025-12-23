@@ -675,10 +675,18 @@
   "personal": {
     "navigation": {
       "title": "Navigation",
-      "bookmark": "Bookmark",
-      "transaction": "Transaction",
+      "bookmark": "Saved",
+      "bookmark_desc": "Saved tours and articles",
+      "transaction": "Bookings",
+      "transaction_desc": "Manage your tour bookings",
       "account": "Account",
-      "logout": "Logout"
+      "account_desc": "Account settings",
+      "logout": "Logout",
+      "saved": "Saved",
+      "pending": "Pending",
+      "help_title": "Need Help?",
+      "help_desc": "Contact us for booking assistance.",
+      "contact_support": "Contact Support"
     },
     "bookmark": {
       "title": "Bookmarks",
@@ -688,6 +696,7 @@
     },
     "transaction": {
       "title": "My Bookings",
+      "description": "Track and manage your tour bookings",
       "tabs": {
         "pending": "Pending Payment",
         "other": "Other Bookings"
@@ -696,12 +705,21 @@
       "error_loading": "Error loading bookings",
       "details": "Details",
       "booking_id": "Booking ID",
+      "booking_code": "Booking code",
       "duration": "Duration",
       "days": "days",
+      "location": "Location",
+      "date": "Date",
+      "guests": "Guests",
+      "people": "people",
       "payment_method_label": "Payment Method",
       "payment_date": "Payment Date",
       "discount": "Discount",
       "booked_on": "Booked on",
+      "deadline": {
+        "expired": "Expired",
+        "urgent": "Payment deadline approaching!"
+      },
       "status": {
         "darft": "Draft",
         "pending_payment": "Pending Payment",
@@ -727,6 +745,8 @@
         "vnpay": "VNPay"
       },
       "filters": {
+        "title": "Search Filters",
+        "subtitle": "Find bookings by date and status",
         "date_range": "Date range",
         "start_date": "Start date",
         "end_date": "End date",
@@ -866,12 +886,24 @@
     "booking_pending_list": {
       "loading": "Loading pending bookings...",
       "error": "Error loading pending bookings",
-      "empty": "No pending bookings"
+      "empty": "No pending bookings",
+      "empty_title": "No bookings yet",
+      "empty_description": "Pending payment bookings will appear here. Explore our amazing tours!",
+      "explore_tours": "Explore Tours",
+      "error_title": "Error occurred",
+      "error_description": "Unable to load booking list. Please try again later.",
+      "retry": "Retry"
     },
     "booking_other_list": {
       "loading": "Loading other bookings...",
       "error": "Error loading other bookings",
-      "empty": "No other bookings"
+      "empty": "No other bookings",
+      "empty_title": "No bookings yet",
+      "empty_description": "Completed, confirmed, or cancelled bookings will appear here.",
+      "explore_tours": "Explore Tours",
+      "error_title": "Error occurred",
+      "error_description": "Unable to load booking list. Please try again later.",
+      "retry": "Retry"
     }
   },
   "payment": {

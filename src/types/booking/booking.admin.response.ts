@@ -45,7 +45,5 @@ export interface AdminBookingDetail {
     adultCount: number;
     childCount: number;
   };
-  paymentDate: string | null;
-  paymentMethod: string | null;
   bookingDate: string;
 }

@@ -829,9 +829,17 @@
     "navigation": {
       "title": "Điều hướng",
       "bookmark": "Đã lưu",
+      "bookmark_desc": "Tours và bài viết đã lưu",
       "transaction": "Giao dịch",
+      "transaction_desc": "Quản lý đặt tour của bạn",
       "account": "Tài khoản",
-      "logout": "Đăng xuất"
+      "account_desc": "Cài đặt tài khoản",
+      "logout": "Đăng xuất",
+      "saved": "Đã lưu",
+      "pending": "Chờ TT",
+      "help_title": "Cần hỗ trợ?",
+      "help_desc": "Liên hệ với chúng tôi để được hỗ trợ về đặt tour.",
+      "contact_support": "Liên hệ hỗ trợ"
     },
     "bookmark": {
       "title": "Danh sách đã lưu",
@@ -841,6 +849,7 @@
     },
     "transaction": {
       "title": "Đơn Đặt Của Tôi",
+      "description": "Theo dõi và quản lý đặt tour của bạn",
       "tabs": {
         "pending": "Chờ Thanh Toán",
         "other": "Các Đơn Khác"
@@ -849,12 +858,21 @@
       "error_loading": "Lỗi tải đơn đặt",
       "details": "Chi tiết",
       "booking_id": "Mã đặt tour",
+      "booking_code": "Mã đặt chỗ",
       "duration": "Thời gian",
       "days": "ngày",
+      "location": "Địa điểm",
+      "date": "Ngày đi",
+      "guests": "Khách",
+      "people": "người",
       "payment_method_label": "Phương thức thanh toán",
       "payment_date": "Ngày thanh toán",
       "discount": "Giảm giá",
       "booked_on": "Đặt vào ngày",
+      "deadline": {
+        "expired": "Đã hết hạn",
+        "urgent": "Sắp hết hạn thanh toán!"
+      },
       "status": {
         "darft": "Nháp",
         "pending_payment": "Chờ thanh toán",
@@ -880,9 +898,11 @@
         "vnpay": "VNPay"
       },
       "filters": {
+        "title": "Bộ lọc tìm kiếm",
+        "subtitle": "Tìm giao dịch theo ngày và trạng thái",
         "date_range": "Khoảng thời gian",
-        "start_date": "Ngày bắt đầu",
-        "end_date": "Ngày kết thúc",
+        "start_date": "Từ ngày",
+        "end_date": "Đến ngày",
         "status": "Trạng thái",
         "all_statuses": "Tất cả trạng thái",
         "selected": "đã chọn",
@@ -1019,12 +1039,24 @@
     "booking_pending_list": {
       "loading": "Đang tải đơn chờ thanh toán...",
       "error": "Lỗi tải đơn chờ thanh toán",
-      "empty": "Không có đơn chờ thanh toán"
+      "empty": "Không có đơn chờ thanh toán",
+      "empty_title": "Chưa có giao dịch nào",
+      "empty_description": "Các giao dịch đang chờ thanh toán sẽ hiển thị tại đây. Hãy khám phá các tour du lịch tuyệt vời của chúng tôi!",
+      "explore_tours": "Khám phá tour",
+      "error_title": "Đã xảy ra lỗi",
+      "error_description": "Không thể tải danh sách giao dịch. Vui lòng thử lại sau.",
+      "retry": "Thử lại"
     },
     "booking_other_list": {
       "loading": "Đang tải các đơn khác...",
       "error": "Lỗi tải các đơn khác",
-      "empty": "Không có đơn khác"
+      "empty": "Không có đơn khác",
+      "empty_title": "Chưa có giao dịch nào",
+      "empty_description": "Lịch sử các giao dịch đã hoàn thành, đã xác nhận hoặc đã hủy sẽ hiển thị tại đây.",
+      "explore_tours": "Khám phá tour",
+      "error_title": "Đã xảy ra lỗi",
+      "error_description": "Không thể tải danh sách giao dịch. Vui lòng thử lại sau.",
+      "retry": "Thử lại"
     }
   },
   "payment": {
