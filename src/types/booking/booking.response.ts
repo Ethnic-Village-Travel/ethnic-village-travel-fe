@@ -1,4 +1,4 @@
-import { BookingStatus, PaymentMethod } from '@/core/enum/booking.enum';
+import { BookingStatus } from '@/core/enum/booking.enum';
 
 import { TourInfo } from './booking.type';
 
@@ -34,8 +34,6 @@ export interface BookingGetResponse {
   bookingDate: string;
   startDate: string;
   endDate: string;
-  paymentMethod: PaymentMethod;
-  paymentDate: string;
   discountAmountApplied: number;
   tour: TourInfo;
   additionalInformation?: string;
@@ -51,8 +49,6 @@ export interface BookingListResponse {
   startDate: Date;
   endDate: Date;
   paymentExpiredDate: Date;
-  paymentMethod?: string;
-  paymentDate?: Date;
   discountAmountApplied?: number;
   tour: TourInfo;
 }

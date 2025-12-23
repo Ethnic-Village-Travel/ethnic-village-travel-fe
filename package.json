@@ -61,6 +61,7 @@
     "react-day-picker": "^9.11.1",
     "react-dom": "^18",
     "react-hook-form": "^7.56.3",
+    "react-quill": "^2.0.0",
     "react-use-draggable-scroll": "^0.4.7",
     "recharts": "^3.5.1",
     "sharp": "^0.34.4",

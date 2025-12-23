@@ -33,3 +33,32 @@ export interface ArticleListResponse {
   size: number;
   number: number;
 }
+
+export interface ArticleAdmin extends Article {
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ArticleAdminListRequest {
+  searchKey?: string;
+  status?: ArticleStatus;
+  page?: number;
+  size?: number;
+  sortBy?: string;
+  order?: string;
+}
+
+export interface ArticleAdminPayload {
+  title: string;
+  slug?: string;
+  status?: ArticleStatus;
+  summary?: string;
+  content: string;
+  imageUrl?: string;
+  publishedDate?: string | null;
+  tagIds?: string[];
+}
+
+export interface ArticleAdminStatusPayload {
+  status: ArticleStatus;
+}

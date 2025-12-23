@@ -1,4 +1,4 @@
-import { BookingStatus, PaymentMethod } from '@/core/enum/booking.enum';
+import { BookingStatus } from '@/core/enum/booking.enum';
 import { TourAvailableDateStatus } from '@/core/enum/tour.enum';
 
 export interface AdminBookingListRequest {
@@ -33,8 +33,6 @@ export interface AdminBooking {
   totalPrice: number;
   discountAmountApplied?: number;
   bookingStatus: string;
-  paymentMethod?: PaymentMethod;
-  paymentDate?: string;
   createdAt: string;
   tourAvailableDate: {
     id: string;

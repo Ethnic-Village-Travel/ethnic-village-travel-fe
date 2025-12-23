@@ -40,6 +40,7 @@ export default function TourEditContent({ tourId }: TourEditContentProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const { data: tourResponse, isLoading } = useAdminTourDetail(tourId);
   const tourData = tourResponse?.data;
@@ -200,20 +201,53 @@ export default function TourEditContent({ tourId }: TourEditContentProps) {
                     <span className="text-destructive"> *</span>
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="https://example.com/image.jpg" />
-                  </FormControl>
-                  {imageUrl && (
-                    <div className="relative mt-2 h-40 w-full overflow-hidden rounded-lg border bg-muted">
-                      {imageUrl.startsWith('http') ? (
-                        <Image src={imageUrl} alt="Tour preview" fill className="object-cover" />
-                      ) : (
-                        <div className="flex h-full items-center justify-center text-muted-foreground">
-                          <ImageIcon className="mr-2 h-6 w-6" />
-                          <span>URL không hợp lệ</span>
+                    <div className="flex flex-col gap-2">
+                      <Input
+                        placeholder="https://..."
+                        value={field.value || ''}
+                        onChange={e => field.onChange(e.target.value)}
+                      />
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={e => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            setUploading(true);
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                              const result = reader.result as string;
+                              form.setValue('image', result, { shouldValidate: true });
+                              setUploading(false);
+                            };
+                            reader.onerror = () => setUploading(false);
+                            reader.readAsDataURL(file);
+                          }}
+                        />
+                        {uploading && (
+                          <span className="text-xs text-muted-foreground">{t('uploading' as any) || 'Uploading...'}</span>
+                        )}
+                      </div>
+                      {field.value && (
+                        <div className="flex flex-col items-start gap-2">
+                          <img
+                            src={field.value}
+                            alt="preview"
+                            className="aspect-video w-full max-w-[400px] rounded-md border object-cover"
+                          />
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            type="button"
+                            onClick={() => form.setValue('image', '', { shouldValidate: true })}
+                          >
+                            {t('clear_image' as any) || 'Clear'}
+                          </Button>
                         </div>
                       )}
                     </div>
-                  )}
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

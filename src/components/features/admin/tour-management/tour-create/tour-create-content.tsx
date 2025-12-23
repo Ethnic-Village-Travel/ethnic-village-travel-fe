@@ -7,6 +7,7 @@ import { currencyToNumber, formatCurrency } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 import { TourCreateRequest } from '@/types/tour.type';
 import { createTourSchema, TourCreateFormValues } from '@/libs/schemas/tour.schema';
@@ -31,6 +32,7 @@ export default function TourCreateContent() {
   const t = useTranslations();
   const router = useRouter();
   const { toast } = useToast();
+  const [uploading, setUploading] = useState(false);
   const form = useForm<TourCreateFormValues>({
     resolver: zodResolver(createTourSchema((key: string) => t.raw(key as any))),
     defaultValues: {
@@ -128,8 +130,53 @@ export default function TourCreateContent() {
                           <span className="text-destructive"> {t('tourCreate.required')}</span>
                         </FormLabel>
                       </div>
-                      <FormControl className="mt-4">
-                        <Input type="file" {...field} />
+                      <FormControl>
+                        <div className="mt-2 flex flex-col gap-2">
+                          <Input
+                            placeholder="https://..."
+                            value={field.value || ''}
+                            onChange={e => field.onChange(e.target.value)}
+                          />
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={e => {
+                                const file = e.target.files?.[0];
+                                if (!file) return;
+                                setUploading(true);
+                                const reader = new FileReader();
+                                reader.onload = () => {
+                                  const result = reader.result as string;
+                                  form.setValue('image', result, { shouldValidate: true });
+                                  setUploading(false);
+                                };
+                                reader.onerror = () => setUploading(false);
+                                reader.readAsDataURL(file);
+                              }}
+                            />
+                            {uploading && (
+                              <span className="text-xs text-muted-foreground">{t('uploading' as any) || 'Đang tải...'}</span>
+                            )}
+                          </div>
+                          {field.value && (
+                            <div className="flex flex-col items-start gap-2">
+                              <img
+                                src={field.value}
+                                alt="preview"
+                                className="aspect-video w-full max-w-[400px] rounded-md border object-cover"
+                              />
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                type="button"
+                                onClick={() => form.setValue('image', '', { shouldValidate: true })}
+                              >
+                                {t('clear_image' as any) || 'Xóa ảnh'}
+                              </Button>
+                            </div>
+                          )}
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

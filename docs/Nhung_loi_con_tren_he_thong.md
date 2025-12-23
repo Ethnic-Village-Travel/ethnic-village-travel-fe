@@ -74,7 +74,9 @@
 
 - [x] item -> publish on -> chưa hiển thị ngày published
 
-9. Article detail -> chưa có
+9. Article detail
+
+- [x] Content
 
 10. About + Services + Blog + Contact
 
@@ -93,7 +95,7 @@
 
 12. Admin employee
 
-- Item -> Vô hiệu xóa -> Action không có bỏ vô hiệu hóa(phải chỉnh sửa với cập nhật lại được)
+- [x] Item -> Vô hiệu xóa -> Action không có bỏ vô hiệu hóa(phải chỉnh sửa với cập nhật lại được)
 
 12. Admin user
 
@@ -106,8 +108,11 @@
 
 14. Admin tour agency assigned
 
-- Table -> cột nhân viên được phân công -> hiển thị "không có" và cả mail của agency được phân công
+- [x] Table -> cột nhân viên được phân công -> hiển thị "không có" và cả mail của agency được phân công => Chắc lo lỗi
+      init data
 
--> Là có hay không?
+15. Admin article
 
-15. Admin article -> chưa có
+- [x] Thêm
+- [x] Sửa
+- [x] Xóa

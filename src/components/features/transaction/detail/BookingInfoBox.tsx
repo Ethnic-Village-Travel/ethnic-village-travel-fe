@@ -71,13 +71,6 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
     });
   };
 
-  // Payment method display
-  const getPaymentMethodText = (method: string) => {
-    const tPayment = useTranslations('personal.transaction.payment_method');
-    const methodKey = method.toLowerCase();
-    return tPayment(methodKey) || method;
-  };
-
   return (
     <div className="bg-white-500 rounded-lg border border-light-500 p-6 shadow-sm transition-shadow hover:shadow-md">
       {/* Header */}
@@ -99,19 +92,9 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
         <InfoRow label={t('booking_info.end_date')} value={formatDate(booking.endDate)} />
         <InfoRow label={t('booking_info.guest_count')} value={formatPersonCount(booking.personCount)} />
 
-        {/* Payment Info */}
+        {/* Pricing */}
         <div className="border-light-light-10 border-t pt-3">
           <h4 className="text-dark-500 mb-2 font-semibold">{t('booking_info.payment_info')}</h4>
-
-          {booking.paymentMethod && (
-            <InfoRow label={t('booking_info.payment_method')} value={getPaymentMethodText(booking.paymentMethod)} />
-          )}
-
-          {booking.paymentDate && (
-            <InfoRow label={t('booking_info.payment_date')} value={formatDateTime(booking.paymentDate)} />
-          )}
-
-          {/* Pricing */}
           {booking.discountAmountApplied > 0 && (
             <>
               <InfoRow
