@@ -20,6 +20,11 @@ export interface PromotionValidateResponse {
   errorCode: PromotionErrorCode;
 }
 
+export enum PromotionType {
+  COUPON_CODE = 'COUPON_CODE',
+  DIRECT_DISCOUNT = 'DIRECT_DISCOUNT',
+}
+
 export interface Promotion {
   id: string;
   name: string;
@@ -28,9 +33,59 @@ export interface Promotion {
   endDate: string;
   maxDiscountAmount: number;
   discountPercent: number;
-  status?: string;
-  type: string;
+  status: PromotionStatus;
+  type: PromotionType;
   code?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  usageLimit: number;
+  usedCount: number;
+  createdAt: string;
+  updatedAt: string;
+  tours?: { id: string; title: string }[]; // Tours this promotion applies to
+}
+
+export interface PromotionCreateRequest {
+  name: string;
+  description?: string;
+  discountPercent: number;
+  maxDiscountAmount: number;
+  startDate: string; // ISO datetime string
+  endDate: string; // ISO datetime string
+  status: PromotionStatus;
+  type: PromotionType;
+  code?: string; // Required if type = COUPON_CODE
+  usageLimit: number;
+  tourIds?: string[]; // Empty = applies to all tours
+}
+
+export interface PromotionUpdateRequest {
+  name: string;
+  description?: string;
+  discountPercent: number;
+  maxDiscountAmount: number;
+  startDate: string;
+  endDate: string;
+  status: PromotionStatus;
+  usageLimit?: number;
+  tourIds?: string[];
+  // Note: type and code cannot be updated
+}
+
+export interface PromotionAdminListRequest {
+  search?: string; // Search by name or code
+  status?: PromotionStatus;
+  type?: PromotionType;
+  fromDate?: string; // ISO datetime string
+  toDate?: string; // ISO datetime string
+  page?: number;
+  size?: number;
+  sortBy?: string;
+  sortDirection?: 'ASC' | 'DESC';
+}
+
+export interface PromotionListResponse {
+  content: Promotion[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
 }

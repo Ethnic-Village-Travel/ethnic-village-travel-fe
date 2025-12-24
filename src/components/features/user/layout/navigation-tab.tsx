@@ -8,20 +8,14 @@ import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useUserStore } from '@/stores/useUserStore';
 import { cn, getInitialName } from '@/utils';
-import {
-  Heart,
-  LogOut,
-  Receipt,
-  UserCircle,
-  ChevronRight,
-  Headphones,
-  Menu,
-  X,
-} from 'lucide-react';
+import { Activity, ChevronRight, Heart, LogOut, Menu, Receipt, TrendingUp, UserCircle, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { logout } from '@/libs/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 
 export default function PersonalNavigationTab() {
   const router = useRouter();
@@ -72,119 +66,118 @@ export default function PersonalNavigationTab() {
 
   // Sidebar content
   const SidebarContent = () => (
-    <div className="space-y-3">
-      {/* Profile Card */}
-      <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-        <div className="bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-11 w-11 border-2 border-white/30">
+    <div className="space-y-4">
+      {/* User Profile Card */}
+      <Card className="overflow-hidden">
+        <div className="relative h-20 bg-gradient-to-br from-primary via-primary-600 to-secondary">
+          <div className="absolute -bottom-8 left-4">
+            <Avatar className="h-16 w-16 border-4 border-background shadow-lg">
               <AvatarImage src={user?.personal?.avatar} alt={fullName} className="object-cover" />
-              <AvatarFallback className="bg-white text-sm font-semibold text-primary">
+              <AvatarFallback className="bg-white text-lg font-bold text-primary">
                 {getInitialName(firstName, lastName) || 'U'}
               </AvatarFallback>
             </Avatar>
-            <div className="min-w-0 flex-1">
-              <h2 className="truncate text-sm font-semibold text-white">{fullName}</h2>
-              <p className="truncate text-xs text-white/70">{user?.email}</p>
+          </div>
+        </div>
+        <CardContent className="pb-4 pt-10">
+          <h2 className="font-roboto text-lg font-bold text-foreground">{fullName}</h2>
+          <p className="mt-0.5 text-sm text-muted-foreground">{user?.email}</p>
+
+          {/* Quick Stats */}
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            <div className="bg-primary/5 rounded-lg p-3 text-center">
+              <div className="flex items-center justify-center gap-1.5">
+                <Heart className="h-4 w-4 text-primary" />
+                <p className="font-roboto text-xl font-bold text-primary">
+                  {details?.bookmarks?.filter(b => b.status === BookmarkStatus.ACTIVE).length || 0}
+                </p>
+              </div>
+              <p className="mt-1 text-xs font-medium text-foreground">{t('saved')}</p>
+            </div>
+            <div className="rounded-lg bg-secondary/5 p-3 text-center">
+              <div className="flex items-center justify-center gap-1.5">
+                <Receipt className="h-4 w-4 text-primary" />
+                <p className="font-roboto text-xl font-bold text-primary">
+                  {details?.pendingPaymentBookingsCount || 0}
+                </p>
+              </div>
+              <p className="mt-1 text-xs font-medium text-foreground">{t('pending')}</p>
             </div>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        {/* Stats */}
-        <div className="flex divide-x divide-border">
-          <div className="flex-1 px-4 py-2.5 text-center">
-            <p className="text-base font-bold text-primary">
-              {details?.bookmarks?.filter(b => b.status === BookmarkStatus.ACTIVE).length || 0}
-            </p>
-            <p className="text-[11px] text-muted-foreground">{t('saved') || 'Saved'}</p>
-          </div>
-          <div className="flex-1 px-4 py-2.5 text-center">
-            <p className="text-base font-bold text-secondary">
-              {details?.pendingPaymentBookingsCount || 0}
-            </p>
-            <p className="text-[11px] text-muted-foreground">{t('pending') || 'Pending'}</p>
-          </div>
-        </div>
-      </div>
+      {/* Navigation Menu */}
+      <Card>
+        <CardContent className="p-2">
+          <nav>
+            <ul className="space-y-1">
+              {navigationItems.map(item => {
+                const IconComponent = item.icon;
+                const isActive = isPathActive(item.href);
 
-      {/* Navigation */}
-      <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-        <nav className="p-1.5">
-          <ul className="space-y-0.5">
-            {navigationItems.map((item) => {
-              const IconComponent = item.icon;
-              const isActive = isPathActive(item.href);
-
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      'group flex items-center gap-3 rounded-md px-3 py-2.5 transition-all',
-                      isActive
-                        ? 'bg-primary/10 text-primary'
-                        : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                    )}
-                  >
-                    <div
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
                       className={cn(
-                        'flex h-8 w-8 items-center justify-center rounded-md transition-all',
-                        isActive ? 'bg-primary text-white' : 'bg-muted text-muted-foreground group-hover:text-foreground',
+                        'group flex items-center justify-between rounded-lg px-3 py-3 font-roboto transition-all',
+                        isActive ? 'bg-primary text-white shadow-sm' : 'text-foreground hover:bg-muted',
                       )}
                     >
-                      <IconComponent className="h-4 w-4" strokeWidth={2} />
-                    </div>
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={cn(
+                            'flex h-10 w-10 items-center justify-center rounded-lg transition-all',
+                            isActive ? 'bg-white/20' : 'bg-muted group-hover:bg-muted-foreground/10',
+                          )}
+                        >
+                          <IconComponent className="h-5 w-5" strokeWidth={2.5} />
+                        </div>
+                        <span className="text-sm font-medium">{item.label}</span>
+                      </div>
 
-                    <span className="flex-1 text-sm font-medium">
-                      {item.label}
-                    </span>
+                      {item.badge ? (
+                        <Badge
+                          className={cn(
+                            'font-roboto text-xs',
+                            isActive ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-secondary text-white',
+                          )}
+                        >
+                          {item.badge}
+                        </Badge>
+                      ) : (
+                        <ChevronRight
+                          className={cn(
+                            'h-4 w-4 transition-transform group-hover:translate-x-1',
+                            isActive ? 'text-white/70' : 'text-muted-foreground',
+                          )}
+                        />
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
 
-                    {item.badge ? (
-                      <span
-                        className={cn(
-                          'flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-semibold',
-                          isActive ? 'bg-primary text-white' : 'bg-secondary/20 text-secondary',
-                        )}
-                      >
-                        {item.badge}
-                      </span>
-                    ) : (
-                      <ChevronRight className="h-4 w-4 opacity-40 transition-transform group-hover:translate-x-0.5" />
-                    )}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+            <Separator className="my-3" />
 
-          <div className="my-1.5 h-px bg-border" />
-
-          <button
-            onClick={handleLogout}
-            className="group flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-muted-foreground transition-all hover:bg-destructive/10 hover:text-destructive"
-          >
-            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-muted transition-all group-hover:bg-destructive/20">
-              <LogOut className="h-4 w-4" strokeWidth={2} />
-            </span>
-            <span className="text-sm font-medium">{t('logout')}</span>
-          </button>
-        </nav>
-      </div>
-
-      {/* Help Card */}
-      <div className="overflow-hidden rounded-lg border border-border bg-card p-3 shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-green">
-            <Headphones className="h-4 w-4 text-white" strokeWidth={2} />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-sm font-medium text-foreground">{t('help_title') || 'Need help?'}</h3>
-            <p className="text-xs text-muted-foreground">{t('help_desc') || 'Contact support'}</p>
-          </div>
-          <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
-        </div>
-      </div>
+            <button
+              onClick={handleLogout}
+              className="group flex w-full items-center justify-between rounded-lg px-3 py-3 font-roboto text-foreground transition-all hover:bg-destructive/10 hover:text-destructive"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted transition-all group-hover:bg-destructive/20">
+                  <LogOut className="h-5 w-5" strokeWidth={2.5} />
+                </div>
+                <span className="text-sm font-medium">{t('logout')}</span>
+              </div>
+              <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
+            </button>
+          </nav>
+        </CardContent>
+      </Card>
     </div>
   );
 
@@ -198,7 +191,8 @@ export default function PersonalNavigationTab() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-all hover:bg-primary-600 hover:shadow-xl lg:hidden"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-custom-blue transition-all hover:scale-105 hover:shadow-xl lg:hidden"
+        aria-label="Toggle menu"
       >
         {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </button>
@@ -206,7 +200,7 @@ export default function PersonalNavigationTab() {
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-dark-50 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -214,13 +208,13 @@ export default function PersonalNavigationTab() {
       {/* Mobile Sidebar */}
       <aside
         className={cn(
-          'fixed bottom-0 left-0 right-0 z-40 max-h-[80vh] overflow-y-auto rounded-t-2xl bg-background p-4 shadow-2xl transition-transform duration-300 lg:hidden',
+          'fixed bottom-0 left-0 right-0 z-40 max-h-[85vh] overflow-y-auto rounded-t-2xl bg-background p-5 shadow-2xl transition-transform duration-300 ease-out lg:hidden',
           isMobileMenuOpen ? 'translate-y-0' : 'translate-y-full',
         )}
       >
-        <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-muted" />
+        <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-muted-foreground/20" />
         <SidebarContent />
-        <div className="h-16" />
+        <div className="h-20" />
       </aside>
     </>
   );

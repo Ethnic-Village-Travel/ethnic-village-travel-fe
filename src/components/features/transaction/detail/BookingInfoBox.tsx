@@ -1,7 +1,10 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
+import { Calendar, Users, Receipt } from 'lucide-react';
 
 import { BookingGetResponse } from '@/types/booking';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 
 interface BookingInfoBoxProps {
   booking: BookingGetResponse;
@@ -13,11 +16,11 @@ const InfoRow: React.FC<{
   value: string;
   valueClass?: string;
   highlight?: boolean;
-}> = ({ label, value, valueClass = 'text-dark-500 font-semibold', highlight = false }) => (
+}> = ({ label, value, valueClass = 'font-semibold text-foreground', highlight = false }) => (
   <div
-    className={`flex items-center justify-between py-2 ${!highlight ? 'border-light-light-10 border-b' : 'bg-primary-primary-5 rounded-lg px-3'}`}
+    className={`flex items-center justify-between py-2.5 ${!highlight ? 'border-b border-border' : 'rounded-lg bg-primary/5 px-4 py-3'}`}
   >
-    <span className="font-medium text-gray-500">{label}:</span>
+    <span className="font-medium text-muted-foreground">{label}:</span>
     <span className={valueClass}>{value}</span>
   </div>
 );
@@ -72,19 +75,16 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
   };
 
   return (
-    <div className="bg-white-500 rounded-lg border border-light-500 p-6 shadow-sm transition-shadow hover:shadow-md">
-      {/* Header */}
-      <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-dark-500 flex items-center text-lg font-bold">
-          <span className="bg-primary-primary-100 mr-2 flex h-6 w-6 items-center justify-center rounded-full text-sm font-bold text-primary-600">
-            📋
-          </span>
+    <Card className="shadow-sm transition-shadow hover:shadow-md">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+            <Receipt className="h-4 w-4 text-primary" strokeWidth={2.5} />
+          </div>
           {t('booking_info.title')}
-        </h3>
-      </div>
-
-      {/* Content */}
-      <div className="space-y-3">
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
         {/* Booking Details */}
         <InfoRow label={t('booking_info.booking_id')} value={`#${booking.id.slice(-8)}`} />
         <InfoRow label={t('booking_info.booking_date')} value={formatDate(booking.bookingDate)} />
@@ -93,19 +93,20 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
         <InfoRow label={t('booking_info.guest_count')} value={formatPersonCount(booking.personCount)} />
 
         {/* Pricing */}
-        <div className="border-light-light-10 border-t pt-3">
-          <h4 className="text-dark-500 mb-2 font-semibold">{t('booking_info.payment_info')}</h4>
+        <Separator className="my-4" />
+        <div>
+          <h4 className="mb-3 font-roboto font-semibold text-foreground">{t('booking_info.payment_info')}</h4>
           {booking.discountAmountApplied > 0 && (
             <>
               <InfoRow
                 label={t('booking_info.original_price')}
                 value={formatCurrency(booking.totalPrice + booking.discountAmountApplied)}
-                valueClass="text-gray-400 line-through"
+                valueClass="text-muted-foreground line-through"
               />
               <InfoRow
                 label={t('booking_info.discount')}
                 value={`-${formatCurrency(booking.discountAmountApplied)}`}
-                valueClass="text-green-600 font-semibold"
+                valueClass="font-semibold text-green-600"
               />
             </>
           )}
@@ -113,15 +114,15 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
           <InfoRow
             label={t('booking_info.total_amount')}
             value={formatCurrency(booking.totalPrice)}
-            valueClass="text-primary-600 font-bold text-xl"
+            valueClass="text-xl font-bold text-primary"
             highlight
           />
         </div>
 
         {/* Payment Expired Date */}
         {booking.paymentExpiredDate && booking.status === 'PENDING_PAYMENT' && (
-          <div className="mt-4 rounded-lg border border-yellow-200 bg-yellow-50 p-3">
-            <p className="text-sm text-yellow-800">
+          <div className="mt-4 rounded-lg border border-yellow/30 bg-yellow/10 p-3">
+            <p className="text-sm text-foreground">
               <span className="font-medium">{t('booking_info.payment_deadline')}: </span>
               {formatDateTime(booking.paymentExpiredDate)}
             </p>
@@ -130,12 +131,12 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
 
         {/* Additional Information */}
         {booking.additionalInformation && (
-          <div className="bg-light-light-5 mt-4 rounded-lg p-3">
-            <p className="mb-1 text-sm text-gray-500">{t('booking_info.additional_info')}:</p>
-            <p className="text-dark-500 text-sm">{booking.additionalInformation}</p>
+          <div className="mt-4 rounded-lg bg-muted p-3">
+            <p className="mb-1 text-sm text-muted-foreground">{t('booking_info.additional_info')}:</p>
+            <p className="text-sm text-foreground">{booking.additionalInformation}</p>
           </div>
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };

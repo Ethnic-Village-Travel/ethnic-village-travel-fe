@@ -7,6 +7,7 @@ import { ChevronDown, ChevronUp, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
+import { promotionApi } from '@/data/apis/promotion.api';
 
 import { clearBookingState, loadBookingState, saveBookingState } from './booking-persistence';
 import type { BookingData } from './booking-wizard-context';
@@ -128,6 +129,32 @@ function BookingWizardContent({ onComplete, onCancel, showSidePanel = true }: Bo
       actions.updateBookingData(savedState.bookingData);
     }
   }, []);
+
+  // Auto-fetch best direct discount when wizard initializes
+  useEffect(() => {
+    const fetchDirectDiscount = async () => {
+      if (bookingData.tourId && !bookingData.promotion) {
+        try {
+          const response = await promotionApi.getBestDirectDiscount(bookingData.tourId);
+          if (response.data) {
+            actions.updateBookingData({
+              promotion: {
+                id: response.data.id,
+                name: response.data.name,
+                discountPercent: response.data.discountPercent,
+                maxDiscountAmount: response.data.maxDiscountAmount,
+              },
+            });
+          }
+        } catch (error) {
+          // Silently handle - no direct discount available is not an error
+          console.log('No direct discount available for tour:', bookingData.tourId);
+        }
+      }
+    };
+
+    fetchDirectDiscount();
+  }, [bookingData.tourId, bookingData.promotion, actions]);
 
   useEffect(() => {
     if (bookingData.tourId) {

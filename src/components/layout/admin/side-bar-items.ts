@@ -11,6 +11,7 @@ import {
   LayoutGrid,
   Newspaper,
   Package,
+  Percent,
   ShieldCheck,
   Tags,
   User,
@@ -64,6 +65,12 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       icon: Tags,
       href: RouteConstant.admin_category,
       permission: PermissionMap[RouteConstant.admin_category],
+    },
+    {
+      label: 'promotion',
+      icon: Percent,
+      href: RouteConstant.admin_promotion,
+      permission: PermissionMap[RouteConstant.admin_promotion],
     },
     {
       label: 'tour_assigned_available_dates',
