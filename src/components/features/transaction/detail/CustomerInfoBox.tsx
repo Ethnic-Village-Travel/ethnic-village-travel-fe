@@ -1,7 +1,12 @@
 import React from 'react';
+import { Mail, Phone, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { BookingGetResponse } from '@/types/booking';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 
 interface CustomerInfoBoxProps {
   booking: BookingGetResponse;
@@ -29,6 +34,16 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
     return phone;
   };
 
+  // Get initials for avatar
+  const getInitials = (name: string) => {
+    if (!name || name === t('customer_info.not_updated')) return '?';
+    const parts = name.split(' ');
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return name[0].toUpperCase();
+  };
+
   // Create mailto link
   const createMailtoLink = () => {
     const subject = `Liên hệ về đơn đặt tour #${booking.id.slice(-8)}`;
@@ -42,97 +57,95 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
     return `tel:${customerPhone}`;
   };
 
-  return (
-    <div
-      className={`bg-white-500 rounded-lg border border-light-500 p-6 shadow-sm transition-shadow hover:shadow-md ${className}`}
-    >
-      {/* Header */}
-      <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-dark-500 flex items-center text-lg font-bold">
-          <span className="bg-secondary-secondary-100 mr-2 flex h-6 w-6 items-center justify-center rounded-full text-sm font-bold text-secondary-600">
-            👤
-          </span>
-          {t('customer_info.title')}
-        </h3>
-      </div>
+  const isValidEmail = customerEmail !== t('customer_info.not_updated');
+  const isValidPhone = customerPhone !== t('customer_info.not_updated');
+  const isLoyalCustomer = booking.status === 'CONFIRMED';
 
-      {/* Customer Details */}
-      <div className="space-y-4">
-        {/* Avatar and Name */}
-        <div className="flex items-center space-x-3">
-          <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-gray-100">
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary-400 to-secondary-400">
-              <span className="text-lg font-bold text-white">
-                {customerName ? customerName.charAt(0).toUpperCase() : '?'}
-              </span>
-            </div>
+  return (
+    <Card className={`shadow-sm transition-shadow hover:shadow-md ${className}`}>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary/10">
+            <User className="h-4 w-4 text-secondary" strokeWidth={2.5} />
           </div>
-          <div>
-            <h4 className="text-dark-500 font-semibold">{customerName}</h4>
-            <p className="text-sm text-gray-500">{t('customer_info.customer')}</p>
+          {t('customer_info.title')}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-5">
+        {/* Customer Profile */}
+        <div className="flex items-center gap-4">
+          <Avatar className="h-14 w-14 border-2 border-secondary/20">
+            <AvatarFallback className="bg-gradient-to-br from-primary to-secondary font-roboto text-lg font-bold text-white">
+              {getInitials(customerName)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1">
+            <h4 className="font-roboto font-bold text-foreground">{customerName}</h4>
+            <div className="mt-1 flex items-center gap-2">
+              <Badge variant="outline" className="text-xs">
+                {isLoyalCustomer ? t('customer_info.loyal_customer') : t('customer_info.new_customer')}
+              </Badge>
+            </div>
           </div>
         </div>
 
         {/* Contact Information */}
         <div className="space-y-3">
           {/* Email */}
-          <div className="flex items-center space-x-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50">
-              <span className="text-sm text-blue-600">✉️</span>
+          <div className="flex items-start gap-3 rounded-lg bg-muted/50 p-3 transition-colors hover:bg-muted">
+            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-blue-500/10">
+              <Mail className="h-4 w-4 text-blue-600" strokeWidth={2.5} />
             </div>
-            <div className="flex-1">
-              <p className="text-sm text-gray-500">{t('customer_info.email')}</p>
-              <p className="text-dark-500 break-all font-medium">{customerEmail}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-medium text-muted-foreground">{t('customer_info.email')}</p>
+              <p className="mt-0.5 truncate font-medium text-foreground">{customerEmail}</p>
             </div>
           </div>
 
           {/* Phone */}
-          <div className="flex items-center space-x-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-50">
-              <span className="text-sm text-green-600">📞</span>
+          <div className="flex items-start gap-3 rounded-lg bg-muted/50 p-3 transition-colors hover:bg-muted">
+            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-green-500/10">
+              <Phone className="h-4 w-4 text-green-600" strokeWidth={2.5} />
             </div>
-            <div className="flex-1">
-              <p className="text-sm text-gray-500">{t('customer_info.phone')}</p>
-              <p className="text-dark-500 font-medium">{formatPhoneNumber(customerPhone)}</p>
-            </div>
-          </div>
-
-          {/* Booking Statistics (if needed) */}
-          <div className="flex items-center space-x-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-50">
-              <span className="text-sm text-purple-600">📊</span>
-            </div>
-            <div className="flex-1">
-              <p className="text-sm text-gray-500">{t('customer_info.status')}</p>
-              <p className="text-dark-500 font-medium">
-                {booking.status === 'CONFIRMED' ? t('customer_info.loyal_customer') : t('customer_info.new_customer')}
-              </p>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-medium text-muted-foreground">{t('customer_info.phone')}</p>
+              <p className="mt-0.5 font-medium text-foreground">{formatPhoneNumber(customerPhone)}</p>
             </div>
           </div>
         </div>
 
         {/* Contact Actions */}
-        {(customerEmail !== t('customer_info.not_updated') || customerPhone !== t('customer_info.not_updated')) && (
-          <div className="border-light-light-10 flex space-x-2 border-t pt-4">
-            {customerEmail !== t('customer_info.not_updated') && (
-              <a
-                href={createMailtoLink()}
-                className="bg-primary-primary-5 hover:bg-primary-primary-10 flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium text-primary-600 transition-colors"
+        {(isValidEmail || isValidPhone) && (
+          <div className="flex gap-2 border-t border-border pt-4">
+            {isValidEmail && (
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50"
               >
-                {t('customer_info.send_email')}
-              </a>
+                <a href={createMailtoLink()}>
+                  <Mail className="mr-2 h-4 w-4" />
+                  {t('customer_info.send_email')}
+                </a>
+              </Button>
             )}
-            {customerPhone !== t('customer_info.not_updated') && (
-              <a
-                href={createTelLink()}
-                className="bg-secondary-secondary-5 hover:bg-secondary-secondary-10 flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium text-secondary-600 transition-colors"
+            {isValidPhone && (
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="flex-1 border-green-200 text-green-600 hover:bg-green-50"
               >
-                {t('customer_info.make_call')}
-              </a>
+                <a href={createTelLink()}>
+                  <Phone className="mr-2 h-4 w-4" />
+                  {t('customer_info.make_call')}
+                </a>
+              </Button>
             )}
           </div>
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };

@@ -35,6 +35,7 @@
       "role": "Role",
       "tour": "Tour",
       "category": "Homepage Category",
+      "promotion": "Promotion",
       "tour_assigned_available_dates": "Tour Guide Assignments",
       "booking": "Booking",
       "order": "Order",
@@ -1394,6 +1395,7 @@
         "adult": "Adult",
         "child": "Child",
         "discount": "Discount",
+        "auto_applied": "Auto-applied",
         "total": "Total",
         "per_person": "person",
         "errors": {
