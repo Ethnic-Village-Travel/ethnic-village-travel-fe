@@ -19,7 +19,7 @@ export interface ChatbotV2Config {
 
 export const defaultChatbotV2Config: ChatbotV2Config = {
   // FastAPI endpoint from main.py
-  apiUrl: process.env.NEXT_PUBLIC_CHATBOT_V2_API_URL || 'http://localhost:8001/api',
+  apiUrl: process.env.NEXT_PUBLIC_CHATBOT_V2_API_URL || 'http://localhost:8000/api',
   title: 'Trợ lý Du lịch AI',
   placeholder: 'Hỏi về tour du lịch làng dân tộc...',
   welcomeMessage:
