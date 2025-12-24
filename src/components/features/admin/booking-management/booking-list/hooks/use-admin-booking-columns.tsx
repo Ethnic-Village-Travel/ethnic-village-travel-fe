@@ -1,4 +1,3 @@
-import { PaymentMethod } from '@/core/enum/booking.enum';
 import { formatCurrency } from '@/utils/number';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
@@ -186,33 +185,6 @@ export function useAdminBookingColumns(): ColumnDef<AdminBooking>[] {
         return value.includes(row.getValue(id));
       },
       enableSorting: false,
-    },
-    {
-      accessorKey: 'paymentMethod',
-      header: ({ column }) => <DataTableColumnHeader column={column} title={t('booking.list.table.payment_method')} />,
-      cell: ({ row }) => {
-        const booking = row.original;
-        const { paymentMethod } = booking;
-
-        const getPaymentMethodText = (method: PaymentMethod | undefined) => {
-          switch (method) {
-            case PaymentMethod.BANK_TRANSFER:
-              return 'Chuyển khoản';
-            case PaymentMethod.CREDIT_CARD:
-              return 'Thẻ tín dụng';
-            case PaymentMethod.E_WALLET:
-              return 'Ví điện tử';
-            default:
-              return method || 'Chưa xác định';
-          }
-        };
-
-        return (
-          <div className="min-w-[120px] text-sm">
-            <div className="font-medium">{getPaymentMethodText(paymentMethod)}</div>
-          </div>
-        );
-      },
     },
     // {
     //   accessorKey: 'createdAt',

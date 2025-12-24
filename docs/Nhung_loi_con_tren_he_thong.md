@@ -111,8 +111,3 @@
 -> Là có hay không?
 
 15. Admin article -> chưa có
-
-16.
-
-- Transaltion ở admin lỗi khá nhiều -> kiểm tra toàn bộ page mới cũ thiếu thì thêm + thêm button đổi ngôn ngữ
-- Lỗi css header + content mất 1 phần bên phải(máy t bị) -> ![alt text](image-1.png)

@@ -46,10 +46,20 @@ export const articleApi = {
 
   getArticleDetail: async (slug: string): Promise<ApiResponse<Article>> => {
     try {
-      const { data } = await api.get<ApiResponse<Article>>(`${API.POST.GET_ALL}/${slug}`);
+      const queryParams = {
+        page: 0,
+        size: 100,
+      };
+
+      const queryString = encodeQueryData(queryParams);
+      const { data } = await api.get<ApiResponse<ArticleListResponse>>(`${API.POST.GET_ALL}?${queryString}`);
+
+      const list = data.data ? normalizeArticleListResponse(data.data) : null;
+      const found = list?.content.find(article => article.slug === slug) || null;
+
       return {
         ...data,
-        data: data.data ? normalizeArticle(data.data) : data.data,
+        data: found ? normalizeArticle(found) : (null as any),
       };
     } catch {
       throw new Error('Failed to get article detail');

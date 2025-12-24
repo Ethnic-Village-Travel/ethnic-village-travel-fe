@@ -54,6 +54,7 @@ export const API = {
     UPDATE_CONTACT: '/booking/{id}/contact',
     CONFIRM: '/booking/{id}/confirm',
     CANCEL: '/booking/{id}/cancel',
+    CANCEL_BY_ORDER_CODE: '/booking/cancel-by-order-code',
   },
   PROMOTION: {
     VALIDATE: '/promotion/validate',
@@ -144,5 +145,13 @@ export const AdminAPI = {
     ADD_TOURS: '/admin/categories',
     REMOVE_TOURS: '/admin/categories',
     TOGGLE_STATUS: '/admin/categories',
+  },
+  ARTICLE: {
+    LIST: '/admin/articles',
+    DETAIL: '/admin/articles',
+    CREATE: '/admin/articles',
+    UPDATE: '/admin/articles',
+    DELETE: '/admin/articles',
+    UPDATE_STATUS: '/admin/articles',
   },
 };

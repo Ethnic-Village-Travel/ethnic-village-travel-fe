@@ -4,14 +4,13 @@ import { useState } from 'react';
 import { BookingStatus } from '@/core/enum/booking.enum';
 import { cn } from '@/utils/classnames';
 import { format, parse, startOfDay } from 'date-fns';
-import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
+import { CalendarIcon, Check, ChevronsUpDown, Filter, RotateCcw, SlidersHorizontal } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { BookingListRequest } from '@/types/booking';
 import { useBookingQueryConfig } from '@/hooks/use-query-config';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { Card, CardContent } from '@/components/ui/card';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
@@ -98,100 +97,172 @@ export default function BookingFilters({ onFilterChange, showStatusFilter = true
     });
   };
 
-  return (
-    <Card>
-      <CardContent className="p-4">
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex flex-col space-y-1">
-            <span className="text-sm font-medium">{t('filters.date_range')}</span>
-            <div className="flex items-center space-x-2">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className={cn(
-                      'w-[130px] justify-start text-left font-normal',
-                      !startDate && 'text-muted-foreground',
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {startDate ? format(startDate, 'PPP') : t('filters.start_date')}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar mode="single" selected={startDate} onSelect={handleStartDateChange} initialFocus />
-                </PopoverContent>
-              </Popover>
-              <span>-</span>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className={cn('w-[130px] justify-start text-left font-normal', !endDate && 'text-muted-foreground')}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {endDate ? format(endDate, 'PPP') : t('filters.end_date')}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar mode="single" selected={endDate} onSelect={handleEndDateChange} initialFocus />
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
+  const hasActiveFilters = startDate || endDate || selectedStatuses.length > 0;
 
-          {showStatusFilter && (
-            <div className="flex flex-col space-y-1">
-              <span className="text-sm font-medium">{t('filters.status')}</span>
-              <Popover open={statusesOpen} onOpenChange={setStatusesOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={statusesOpen}
-                    className="w-[200px] justify-between"
-                    size="sm"
-                  >
-                    {selectedStatuses.length > 0
-                      ? `${selectedStatuses.length} ${t('filters.selected')}`
-                      : t('filters.all_statuses')}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder={t('filters.search_status')} />
-                    <CommandEmpty>{t('filters.no_results')}</CommandEmpty>
-                    <CommandGroup>
-                      {statusOptions.map(status => (
-                        <CommandItem
-                          key={status.value}
-                          value={status.value}
-                          onSelect={() => handleStatusChange(status.value)}
+  return (
+    <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
+      {/* Header */}
+      <div className="mb-3 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+            <SlidersHorizontal className="h-4 w-4 text-primary" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-foreground">{t('filters.title') || 'Search Filters'}</h3>
+            <p className="text-xs text-muted-foreground">{t('filters.subtitle') || 'Filter by date and status'}</p>
+          </div>
+        </div>
+
+        {hasActiveFilters && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clearFilters}
+            className="group/btn flex items-center gap-1.5 rounded-md text-xs text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+          >
+            <RotateCcw className="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:-rotate-180" />
+            <span>{t('filters.clear')}</span>
+          </Button>
+        )}
+      </div>
+
+      {/* Filters Grid */}
+      <div className="flex flex-wrap items-end gap-3">
+        {/* Date Range Section */}
+        <div className="flex-1 min-w-[260px]">
+          <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <CalendarIcon className="h-3.5 w-3.5" />
+            {t('filters.date_range')}
+          </label>
+          <div className="flex items-center gap-2">
+            {/* Start Date */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    'h-9 flex-1 justify-start rounded-md border-border px-3 text-left text-xs font-normal',
+                    startDate && 'border-primary/50 bg-primary/5 text-foreground',
+                    !startDate && 'text-muted-foreground',
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-3.5 w-3.5" />
+                  <span className="truncate">
+                    {startDate ? format(startDate, 'dd/MM/yyyy') : t('filters.start_date')}
+                  </span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto rounded-lg border-border p-0 shadow-lg" align="start">
+                <Calendar
+                  mode="single"
+                  selected={startDate}
+                  onSelect={handleStartDateChange}
+                  initialFocus
+                  className="rounded-lg"
+                />
+              </PopoverContent>
+            </Popover>
+
+            {/* Separator */}
+            <div className="h-px w-2 bg-border" />
+
+            {/* End Date */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    'h-9 flex-1 justify-start rounded-md border-border px-3 text-left text-xs font-normal',
+                    endDate && 'border-primary/50 bg-primary/5 text-foreground',
+                    !endDate && 'text-muted-foreground',
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-3.5 w-3.5" />
+                  <span className="truncate">{endDate ? format(endDate, 'dd/MM/yyyy') : t('filters.end_date')}</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto rounded-lg border-border p-0 shadow-lg" align="start">
+                <Calendar mode="single" selected={endDate} onSelect={handleEndDateChange} initialFocus className="rounded-lg" />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
+
+        {/* Status Filter */}
+        {showStatusFilter && (
+          <div className="min-w-[180px]">
+            <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+              <Filter className="h-3.5 w-3.5" />
+              {t('filters.status')}
+            </label>
+            <Popover open={statusesOpen} onOpenChange={setStatusesOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={statusesOpen}
+                  className={cn(
+                    'h-9 w-full justify-between rounded-md border-border px-3 text-xs font-normal',
+                    selectedStatuses.length > 0 && 'border-primary/50 bg-primary/5',
+                  )}
+                >
+                  <span className="flex items-center gap-1.5">
+                    {selectedStatuses.length > 0 ? (
+                      <>
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
+                          {selectedStatuses.length}
+                        </span>
+                        <span className="text-foreground">{t('filters.selected')}</span>
+                      </>
+                    ) : (
+                      <span className="text-muted-foreground">{t('filters.all_statuses')}</span>
+                    )}
+                  </span>
+                  <ChevronsUpDown className="ml-2 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[180px] rounded-lg border-border p-0 shadow-lg">
+                <Command className="rounded-lg">
+                  <CommandInput
+                    placeholder={t('filters.search_status')}
+                    className="border-0 text-xs focus:ring-0"
+                  />
+                  <CommandEmpty className="py-3 text-center text-xs text-muted-foreground">
+                    {t('filters.no_results')}
+                  </CommandEmpty>
+                  <CommandGroup className="p-1.5">
+                    {statusOptions.map(status => (
+                      <CommandItem
+                        key={status.value}
+                        value={status.value}
+                        onSelect={() => handleStatusChange(status.value)}
+                        className="cursor-pointer rounded-md px-2.5 py-2 text-xs"
+                      >
+                        <div
+                          className={cn(
+                            'mr-2 flex h-4 w-4 items-center justify-center rounded border transition-all',
+                            selectedStatuses.includes(status.value)
+                              ? 'border-primary bg-primary'
+                              : 'border-border bg-card',
+                          )}
                         >
                           <Check
                             className={cn(
-                              'mr-2 h-4 w-4',
+                              'h-2.5 w-2.5 text-white transition-opacity',
                               selectedStatuses.includes(status.value) ? 'opacity-100' : 'opacity-0',
                             )}
                           />
-                          {status.label}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
-          )}
-
-          <Button variant="ghost" size="sm" onClick={clearFilters} className="ml-auto">
-            {t('filters.clear')}
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+                        </div>
+                        <span className="font-medium">{status.label}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

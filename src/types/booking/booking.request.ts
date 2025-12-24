@@ -1,4 +1,4 @@
-import { BookingStatus, PaymentMethod, PaymentStatus } from '@/core/enum/booking.enum';
+import { BookingStatus, PaymentStatus } from '@/core/enum/booking.enum';
 import { PersonInfo } from '@/stores/useBookingStore';
 
 import { TourInfo } from './booking.type';
@@ -20,7 +20,6 @@ export interface BookingUpdateRequest {
   createdAt?: string;
   updatedAt?: string;
   status?: BookingStatus;
-  paymentMethod?: PaymentMethod;
   paymentStatus?: PaymentStatus;
   contactInformation?: any;
   guestInformation?: any;

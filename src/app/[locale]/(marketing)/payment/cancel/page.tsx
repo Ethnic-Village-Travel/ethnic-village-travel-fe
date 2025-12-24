@@ -1,12 +1,15 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { bookingApi } from '@/data/apis/booking.api';
 import { AlertCircle, MapPin } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getRetryPaymentUrl, getTourListingUrl } from '@/components/features/payment/payment-navigation';
+import { useRouter } from '@/libs/i18n-navigation';
 
 export default function PaymentCancelPage() {
   const router = useRouter();
@@ -14,6 +17,34 @@ export default function PaymentCancelPage() {
   const t = useTranslations('payment');
 
   const orderCode = searchParams.get('orderCode');
+  const [isCancelling, setIsCancelling] = useState(false);
+  const [cancelled, setCancelled] = useState(false);
+
+  useEffect(() => {
+    const softCancelBooking = async () => {
+      if (!orderCode || cancelled || isCancelling) {
+        return;
+      }
+
+      try {
+        setIsCancelling(true);
+
+        // Soft cancel - don't block UI if fails (Tier 2)
+        await bookingApi.cancelByOrderCode(orderCode).catch((error) => {
+          console.warn('Soft cancel failed, scheduler will handle it (Tier 3):', error);
+        });
+
+        setCancelled(true);
+      } catch (error) {
+        // Graceful degradation - scheduler will cleanup
+        console.warn('Error during soft cancel:', error);
+      } finally {
+        setIsCancelling(false);
+      }
+    };
+
+    softCancelBooking();
+  }, [orderCode, cancelled, isCancelling]);
 
   const handleRetryPayment = () => {
     if (orderCode) {

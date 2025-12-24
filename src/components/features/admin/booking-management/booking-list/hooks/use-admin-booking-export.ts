@@ -92,20 +92,6 @@ export function useAdminBookingExport() {
       },
     },
     {
-      key: 'paymentMethod',
-      title: t('table.payment_method') || 'Phương thức thanh toán',
-      dataType: 'string',
-      formatter: value => {
-        if (!value) return '-';
-        const methodMap: Record<string, string> = {
-          BANK_TRANSFER: 'Chuyển khoản',
-          CREDIT_CARD: 'Thẻ tín dụng',
-          E_WALLET: 'Ví điện tử',
-        };
-        return methodMap[value] || value;
-      },
-    },
-    {
       key: 'bookingDate',
       title: 'Ngày đặt tour',
       dataType: 'date',

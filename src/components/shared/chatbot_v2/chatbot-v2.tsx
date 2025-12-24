@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { useChatSession } from '@/stores/useChatSession';
 import { Bot, Loader2, MessageCircle, RotateCcw, Send, Sparkles, User, X } from 'lucide-react';
 
@@ -35,6 +36,9 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     chatbotConfig.sessionConfig.storageKey,
     chatbotConfig.sessionConfig.maxMessages,
   );
+
+  // Get auth token from store
+  const { accessToken, isAuthenticated } = useAuthStore();
 
   // Auto-scroll to bottom when messages change
   const scrollToBottom = () => {
@@ -102,11 +106,23 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
         session_id: sessionId,
         history_count: history.length,
         cache_keys: Object.keys(cache),
+        has_auth: isAuthenticated,
       });
+
+      // Prepare headers with optional Authorization
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      // Add Authorization header if user is logged in
+      if (isAuthenticated && accessToken) {
+        headers['Authorization'] = `Bearer ${accessToken}`;
+        console.log('Sending with auth token');
+      }
 
       const response = await fetch(`${chatbotConfig.apiUrl}/chat`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: headers,
         body: JSON.stringify(requestBody),
       });
 

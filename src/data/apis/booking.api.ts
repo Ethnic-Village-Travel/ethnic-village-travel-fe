@@ -101,4 +101,15 @@ export const bookingApi = {
       throw new Error('Failed to cancel booking');
     }
   },
+
+  cancelByOrderCode: async (orderCode: string) => {
+    try {
+      const { data } = await api.post<ApiResponse<void>>(
+        `${API.BOOKING.CANCEL_BY_ORDER_CODE}?orderCode=${orderCode}`,
+      );
+      return data;
+    } catch {
+      throw new Error('Failed to cancel booking');
+    }
+  },
 };

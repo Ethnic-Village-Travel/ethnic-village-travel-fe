@@ -1,15 +1,19 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { formatCurrency } from '@/utils/number';
-import { Clock, Mail, MapPin, Phone, User } from 'lucide-react';
+import { canRetryPayment, getTimeRemaining } from '@/utils/payment';
+import { paymentApi } from '@/data/apis/payment.api';
+import { Clock, CreditCard, Mail, MapPin, Phone, User, XCircle } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import type { TimelineDay } from '@/types/booking/booking.type';
 import { Link } from '@/libs/i18n-navigation';
 import { useApiBookingGetByOrderCode } from '@/hooks/api/useBooking';
 import { Button } from '@/components/ui/button';
+import { bookingApi } from '@/data/apis/booking.api';
 
 const statusConfig: Record<string, { style: string; label: string }> = {
   PAID: { style: 'bg-green-100 text-green-700', label: 'Đã thanh toán' },
@@ -70,11 +74,67 @@ function TourTimeline({ timeline }: { timeline: TimelineDay[] }) {
 
 export default function OrderViewPage() {
   const params = useParams();
+  const router = useRouter();
   const orderCode = params.orderCode as string;
   const t = useTranslations('order');
   const locale = useLocale() as 'vi' | 'en';
 
   const { data: booking, isLoading, isError } = useApiBookingGetByOrderCode(orderCode);
+
+  // Payment states (Tier 1 UX)
+  const [timeRemaining, setTimeRemaining] = useState<string | null>(null);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
+
+  // Update countdown every second
+  useEffect(() => {
+    if (!booking?.paymentExpiredDate) return;
+
+    const updateTimer = () => {
+      setTimeRemaining(getTimeRemaining(booking.paymentExpiredDate));
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(interval);
+  }, [booking?.paymentExpiredDate]);
+
+  const handleContinuePayment = async () => {
+    if (!booking?.id) return;
+
+    try {
+      setIsProcessingPayment(true);
+
+      // Create/get payment link
+      const paymentData = await paymentApi.createPayment(booking.id);
+
+      // Redirect to PayOS
+      window.location.href = paymentData.checkoutUrl;
+    } catch (error) {
+      console.error('Failed to create payment link:', error);
+      alert('Không thể tạo link thanh toán. Vui lòng thử lại.');
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
+
+  const handleCancelBooking = async () => {
+    if (!orderCode || !confirm('Bạn có chắc muốn hủy booking này?')) return;
+
+    try {
+      setIsCancelling(true);
+      await bookingApi.cancelByOrderCode(orderCode);
+
+      // Reload to show updated status
+      router.refresh();
+    } catch (error) {
+      console.error('Failed to cancel booking:', error);
+      alert('Không thể hủy booking. Vui lòng thử lại.');
+    } finally {
+      setIsCancelling(false);
+    }
+  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US', {
@@ -150,9 +210,44 @@ export default function OrderViewPage() {
                 </div>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <span className={`rounded-full px-3 py-1 text-sm font-medium ${status.style}`}>{status.label}</span>
-                  <span className="font-mono text-sm text-gray-500">#{orderCode}</span>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    <span className={`rounded-full px-3 py-1 text-sm font-medium ${status.style}`}>{status.label}</span>
+                    <span className="font-mono text-sm text-gray-500">#{orderCode}</span>
+                  </div>
+
+                  {/* Tier 1 UX: Payment Actions */}
+                  {canRetryPayment(booking.status, booking.paymentExpiredDate) && (
+                    <div className="flex flex-col gap-2">
+                      {timeRemaining && (
+                        <div className="flex items-center gap-1 text-sm text-orange-600">
+                          <Clock className="h-4 w-4" />
+                          <span>Còn {timeRemaining} để thanh toán</span>
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={handleContinuePayment}
+                          disabled={isProcessingPayment}
+                          size="sm"
+                          className="gap-1"
+                        >
+                          <CreditCard className="h-4 w-4" />
+                          {isProcessingPayment ? 'Đang xử lý...' : 'Tiếp tục thanh toán'}
+                        </Button>
+                        <Button
+                          onClick={handleCancelBooking}
+                          disabled={isCancelling}
+                          variant="outline"
+                          size="sm"
+                          className="gap-1"
+                        >
+                          <XCircle className="h-4 w-4" />
+                          {isCancelling ? 'Đang hủy...' : 'Hủy booking'}
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
