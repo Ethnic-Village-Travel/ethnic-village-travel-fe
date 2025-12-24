@@ -61,6 +61,10 @@ export const RouteConstant = {
   admin_category_create: '/admin/category/create',
   admin_category_edit: '/admin/category/:id/edit',
 
+  admin_promotion: '/admin/promotion',
+  admin_promotion_create: '/admin/promotion/create',
+  admin_promotion_edit: '/admin/promotion/:id/edit',
+
   admin_order: '/admin/order',
 
   admin_notification: '/admin/notification',

@@ -8,23 +8,13 @@ import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useUserStore } from '@/stores/useUserStore';
 import { cn, getInitialName } from '@/utils';
-import {
-  Heart,
-  LogOut,
-  Receipt,
-  UserCircle,
-  ChevronRight,
-  Menu,
-  X,
-  TrendingUp,
-  Activity,
-} from 'lucide-react';
+import { Activity, ChevronRight, Heart, LogOut, Menu, Receipt, TrendingUp, UserCircle, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { logout } from '@/libs/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
 export default function PersonalNavigationTab() {
@@ -89,13 +79,13 @@ export default function PersonalNavigationTab() {
             </Avatar>
           </div>
         </div>
-        <CardContent className="pt-10 pb-4">
+        <CardContent className="pb-4 pt-10">
           <h2 className="font-roboto text-lg font-bold text-foreground">{fullName}</h2>
           <p className="mt-0.5 text-sm text-muted-foreground">{user?.email}</p>
 
           {/* Quick Stats */}
           <div className="mt-4 grid grid-cols-2 gap-3">
-            <div className="rounded-lg bg-primary/5 p-3 text-center">
+            <div className="bg-primary/5 rounded-lg p-3 text-center">
               <div className="flex items-center justify-center gap-1.5">
                 <Heart className="h-4 w-4 text-primary" />
                 <p className="font-roboto text-xl font-bold text-primary">
@@ -122,7 +112,7 @@ export default function PersonalNavigationTab() {
         <CardContent className="p-2">
           <nav>
             <ul className="space-y-1">
-              {navigationItems.map((item) => {
+              {navigationItems.map(item => {
                 const IconComponent = item.icon;
                 const isActive = isPathActive(item.href);
 
@@ -133,18 +123,14 @@ export default function PersonalNavigationTab() {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={cn(
                         'group flex items-center justify-between rounded-lg px-3 py-3 font-roboto transition-all',
-                        isActive
-                          ? 'bg-primary text-white shadow-sm'
-                          : 'text-foreground hover:bg-muted',
+                        isActive ? 'bg-primary text-white shadow-sm' : 'text-foreground hover:bg-muted',
                       )}
                     >
                       <div className="flex items-center gap-3">
                         <div
                           className={cn(
                             'flex h-10 w-10 items-center justify-center rounded-lg transition-all',
-                            isActive
-                              ? 'bg-white/20'
-                              : 'bg-muted group-hover:bg-muted-foreground/10',
+                            isActive ? 'bg-white/20' : 'bg-muted group-hover:bg-muted-foreground/10',
                           )}
                         >
                           <IconComponent className="h-5 w-5" strokeWidth={2.5} />
@@ -156,9 +142,7 @@ export default function PersonalNavigationTab() {
                         <Badge
                           className={cn(
                             'font-roboto text-xs',
-                            isActive
-                              ? 'bg-white/20 text-white hover:bg-white/30'
-                              : 'bg-secondary text-white',
+                            isActive ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-secondary text-white',
                           )}
                         >
                           {item.badge}

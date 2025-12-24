@@ -58,6 +58,7 @@ export const API = {
   },
   PROMOTION: {
     VALIDATE: '/promotion/validate',
+    BEST_DIRECT_DISCOUNT: '/promotion/best-direct-discount',
   },
   BOOKMARK: {
     BASE: '/bookmark',
@@ -153,5 +154,12 @@ export const AdminAPI = {
     UPDATE: '/admin/articles',
     DELETE: '/admin/articles',
     UPDATE_STATUS: '/admin/articles',
+  },
+  PROMOTION: {
+    LIST: '/admin/promotion',
+    DETAIL: '/admin/promotion',
+    CREATE: '/admin/promotion/store',
+    UPDATE: '/admin/promotion',
+    DELETE: '/admin/promotion',
   },
 };

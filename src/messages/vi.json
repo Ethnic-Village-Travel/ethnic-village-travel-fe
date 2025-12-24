@@ -34,6 +34,7 @@
       "role": "Vai trò & Quyền",
       "tour": "Quản lý Tour",
       "category": "Danh mục trang chủ",
+      "promotion": "Khuyến mãi",
       "tour_assigned_available_dates": "Phân công hướng dẫn viên",
       "booking": "Quản lý đặt chỗ",
       "order": "Quản lý đơn hàng",
@@ -1393,6 +1394,7 @@
         "adult": "Người lớn",
         "child": "Trẻ em",
         "discount": "Giảm giá",
+        "auto_applied": "Tự động",
         "total": "Tổng cộng",
         "per_person": "người",
         "errors": {
