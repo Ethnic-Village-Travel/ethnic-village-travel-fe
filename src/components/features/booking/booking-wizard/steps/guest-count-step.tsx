@@ -3,7 +3,7 @@
 import { useCallback, useMemo } from 'react';
 import { cn } from '@/utils/classnames';
 import { formatCurrency } from '@/utils/number';
-import { AlertCircle, Calendar, Minus, Plus, Users } from 'lucide-react';
+import { AlertCircle, BadgePercent, Calendar, Minus, Plus, Users } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
@@ -127,7 +127,9 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
   const childPrice = tourInfo?.childPrice || 0;
   const availableSlots = bookingData.availableSlots || 0;
   const effectiveSlots = availableSlots > 0 ? availableSlots : Number.MAX_SAFE_INTEGER;
-  const promotion = tourInfo?.promotions?.[0] || null;
+
+  // Use auto-applied promotion from bookingData, fallback to tour promotions
+  const promotion = bookingData.promotion || tourInfo?.promotions?.[0] || null;
 
   const { originalPrice, discountedPrice, discountAmount } = useMemo(
     () =>
@@ -266,10 +268,18 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
             {discountAmount > 0 && (
               <>
                 <Separator />
-                <div className="flex justify-between text-sm text-green-600">
-                  <span>
-                    {t('discount')} ({promotion?.discountPercent}%)
-                  </span>
+                <div className="flex items-center justify-between text-sm text-green-600">
+                  <div className="flex items-center gap-1.5">
+                    <BadgePercent className="h-4 w-4" />
+                    <span>
+                      {t('discount')} ({promotion?.discountPercent}%)
+                    </span>
+                    {bookingData.promotion && (
+                      <span className="ml-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                        {t('auto_applied')}
+                      </span>
+                    )}
+                  </div>
                   <span>-{formatCurrency(discountAmount, { locale })}</span>
                 </div>
               </>
