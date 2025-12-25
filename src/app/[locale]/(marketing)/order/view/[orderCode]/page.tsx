@@ -283,12 +283,6 @@ export default function OrderViewPage() {
                     {booking.personCount?.child ? `, ${booking.personCount.child} ${t('children')}` : ''}
                   </span>
                 </div>
-                {booking.paymentDate && (
-                  <div className="border-light-light-10 flex items-center justify-between border-b py-2">
-                    <span className="font-medium text-gray-500">Ngày thanh toán:</span>
-                    <span className="text-dark-500 font-semibold">{formatDateTime(booking.paymentDate)}</span>
-                  </div>
-                )}
                 {booking.discountAmountApplied > 0 && (
                   <div className="border-light-light-10 flex items-center justify-between border-b py-2">
                     <span className="font-medium text-gray-500">Giảm giá:</span>

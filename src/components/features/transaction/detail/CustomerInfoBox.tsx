@@ -3,10 +3,10 @@ import { Mail, Phone, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { BookingGetResponse } from '@/types/booking';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface CustomerInfoBoxProps {
   booking: BookingGetResponse;
