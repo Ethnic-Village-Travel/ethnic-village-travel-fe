@@ -1,29 +1,29 @@
-import { TourStatus } from '@/core/enum/tour.enum';
+import { TourAvailableDateStatus, TourStatus } from '@/core/enum/tour.enum';
 
 import type { EmployeeBasicResponse } from './employee.type';
 import { Location } from './location.type';
 import { TourAvailableDate } from './tour.type';
 
-export interface TourAssignmentRequest {
+export type TourAssignmentRequest = {
   assignments: {
     [availableDateId: string]: string; // Single guideId per date
   };
-}
+};
 
-export interface TourAssignmentResponse {
+export type TourAssignmentResponse = {
   id: string;
   guide: EmployeeBasicResponse;
   tourAvailableDateId: string;
   assignedBy: string;
-}
+};
 
-export interface SingleAssignmentRequest {
+export type SingleAssignmentRequest = {
   tourAvailableDateId: string;
   guideId: string;
-}
+};
 
 // New types for Assigned Available Dates feature
-export interface AssignedAvailableDatesRequest {
+export type AssignedAvailableDatesRequest = {
   page: number;
   size: number;
   sortBy: string;
@@ -38,9 +38,9 @@ export interface AssignedAvailableDatesRequest {
 
   // Admin-only filters
   employeeIds?: string[]; // Filter by specific employees (Admin only)
-}
+};
 
-export interface TourBasicInfo {
+export type TourBasicInfo = {
   id: string;
   title: string;
   slug: string;
@@ -48,9 +48,9 @@ export interface TourBasicInfo {
   status: TourStatus;
   duration: number;
   pickUpLocation?: Location;
-}
+};
 
-export interface AssignedAvailableDateResponse {
+export type AssignedAvailableDateResponse = {
   assignmentId: string;
   assignedBy: string;
   assignedDate?: string;
@@ -63,9 +63,9 @@ export interface AssignedAvailableDateResponse {
 
   // Guide Information (only visible to Admin)
   guide?: EmployeeBasicResponse;
-}
+};
 
-export interface AssignedAvailableDateListResponse {
+export type AssignedAvailableDateListResponse = {
   content: AssignedAvailableDateResponse[];
   totalElements: number;
   totalPages: number;
@@ -74,16 +74,16 @@ export interface AssignedAvailableDateListResponse {
   first: boolean;
   last: boolean;
   numberOfElements: number;
-}
+};
 
 // Calendar View Types
-export interface CalendarAssignmentsRequest {
+export type CalendarAssignmentsRequest = {
   startDate: string; // ISO date string
   endDate: string; // ISO date string
   tourId?: string; // Optional filter by tour
-}
+};
 
-export interface CalendarAssignmentResponse {
+export type CalendarAssignmentResponse = {
   assignmentId: string;
   startDate: string; // ISO date string
   endDate: string; // ISO date string
@@ -104,16 +104,16 @@ export interface CalendarAssignmentResponse {
   guideId: string;
   guideName: string;
   guideEmail: string;
-}
+};
 
 // Assignment History Types
-export interface AssignmentHistoryRequest {
+export type AssignmentHistoryRequest = {
   assignmentId?: string;
   tourAvailableDateId?: string;
   guideId?: string;
-}
+};
 
-export interface AssignmentHistoryResponse {
+export type AssignmentHistoryResponse = {
   id: string;
   assignmentId: string;
   tourAvailableDateId: string;
@@ -129,4 +129,17 @@ export interface AssignmentHistoryResponse {
   newStatus?: string;
 
   createdAt: string; // ISO datetime string
-}
+};
+
+// Tour Status Update Types
+export type UpdateTourAvailableDateStatusRequest = {
+  tourAvailableDateId: string;
+  status: TourAvailableDateStatus;
+};
+
+export type TourAvailableDateStatusUpdateResponse = {
+  tourAvailableDateId: string;
+  previousStatus: TourAvailableDateStatus;
+  newStatus: TourAvailableDateStatus;
+  updatedAt: string;
+};

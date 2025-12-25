@@ -214,6 +214,14 @@
         "no_data": "Không có dữ liệu",
         "actions": "Hành động",
         "not_available": "Không có",
+        "update_status": "Cập nhật trạng thái",
+        "update_status_title": "Cập nhật trạng thái tour",
+        "current_status": "Trạng thái hiện tại",
+        "select_new_status": "Chọn trạng thái mới",
+        "status_updated_success": "Đã cập nhật",
+        "status_updated_desc": "Trạng thái tour đã được cập nhật thành công",
+        "status_update_failed": "Cập nhật thất bại",
+        "no_status_transition_available": "Không có trạng thái khả dụng để chuyển từ trạng thái hiện tại",
         "view_history": "Xem lịch sử"
       }
     },

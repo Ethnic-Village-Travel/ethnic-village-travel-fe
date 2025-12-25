@@ -1,5 +1,5 @@
 import { tourAssignmentApi } from '@/data/apis/tour-assignment.api';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import type {
   AssignedAvailableDatesRequest,
@@ -7,6 +7,7 @@ import type {
   CalendarAssignmentsRequest,
   SingleAssignmentRequest,
   TourAssignmentRequest,
+  UpdateTourAvailableDateStatusRequest,
 } from '@/types/tour-assignment.type';
 
 export const useAssignTourEmployees = () => {
@@ -104,6 +105,23 @@ export const useAssignmentHistory = (
         return false;
       }
       return failureCount < 3;
+    },
+  });
+};
+
+/**
+ * Hook for updating tour available date status
+ * Used by tour guides to update tour progress status
+ */
+export const useUpdateTourAvailableDateStatus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: UpdateTourAvailableDateStatusRequest) =>
+      tourAssignmentApi.updateTourAvailableDateStatus(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['assigned-available-dates'] });
+      queryClient.invalidateQueries({ queryKey: ['calendar-assignments'] });
     },
   });
 };

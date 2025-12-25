@@ -211,6 +211,14 @@
         "no_data": "No data available",
         "actions": "Actions",
         "not_available": "N/A",
+        "update_status": "Update Status",
+        "update_status_title": "Update Tour Status",
+        "current_status": "Current Status",
+        "select_new_status": "Select New Status",
+        "status_updated_success": "Status Updated",
+        "status_updated_desc": "Tour status has been updated successfully",
+        "status_update_failed": "Update Failed",
+        "no_status_transition_available": "No status transitions available from current status",
         "view_history": "View History"
       }
     },

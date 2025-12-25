@@ -6,7 +6,7 @@ import { RouteConstant } from '@/core/constants/route';
 import { TourAvailableDateStatusEnum } from '@/core/enum/tour.enum';
 import type { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import { CalendarDays, Clock, History, MapPin, MoreHorizontal, Users, X } from 'lucide-react';
+import { CalendarDays, Clock, History, MapPin, MoreHorizontal, RefreshCw, Users, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { AssignedAvailableDateResponse } from '@/types/tour-assignment.type';
@@ -21,17 +21,17 @@ import {
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { DataTableColumnHeader } from '@/components/shared/data-table/data-table-column-header';
 
-interface GetAssignedAvailableDatesTableColumnsProps {
+type GetAssignedAvailableDatesTableColumnsProps = {
   t: ReturnType<typeof useTranslations>;
   isAdmin: boolean;
   setRowAction?: React.Dispatch<
     React.SetStateAction<{
       id: string;
-      action: 'cancel' | 'history';
+      action: 'cancel' | 'history' | 'update-status';
       row?: AssignedAvailableDateResponse;
     } | null>
   >;
-}
+};
 
 export function getAssignedAvailableDatesTableColumns({
   t,
@@ -145,7 +145,7 @@ export function getAssignedAvailableDatesTableColumns({
       header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.assigned_dates.assigned_date')} />,
       cell: ({ row }) => {
         const assignment = row.original;
-        
+
         if (!assignment.assignedDate) {
           return (
             <div className="min-w-[100px]">
@@ -203,9 +203,7 @@ export function getAssignedAvailableDatesTableColumns({
     columns.push({
       id: 'guide',
       accessorFn: row =>
-        row.guide?.personal
-          ? `${row.guide.personal.firstName} ${row.guide.personal.lastName}`
-          : undefined,
+        row.guide?.personal ? `${row.guide.personal.firstName} ${row.guide.personal.lastName}` : undefined,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('tour.assigned_dates.assigned_employee')} />
       ),
@@ -251,6 +249,18 @@ export function getAssignedAvailableDatesTableColumns({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              onClick={() =>
+                setRowAction({
+                  id: assignment.assignmentId,
+                  action: 'update-status',
+                  row: assignment,
+                })
+              }
+            >
+              <RefreshCw className="mr-2 h-4 w-4" />
+              {t('tour.assigned_dates.update_status')}
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
                 setRowAction({

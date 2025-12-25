@@ -12,6 +12,8 @@ import type {
   SingleAssignmentRequest,
   TourAssignmentRequest,
   TourAssignmentResponse,
+  UpdateTourAvailableDateStatusRequest,
+  TourAvailableDateStatusUpdateResponse,
 } from '@/types/tour-assignment.type';
 
 export const tourAssignmentApi = {
@@ -75,6 +77,20 @@ export const tourAssignmentApi = {
         throw new Error(`Failed to fetch assignment history: ${error.message}`);
       }
       throw new Error('Failed to fetch assignment history');
+    }
+  },
+
+  updateTourAvailableDateStatus: async (
+    payload: UpdateTourAvailableDateStatusRequest,
+  ): Promise<ApiResponse<TourAvailableDateStatusUpdateResponse>> => {
+    try {
+      const { data } = await api.post(AdminAPI.TOUR_ASSIGNMENT.UPDATE_STATUS, payload);
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to update tour status: ${error.message}`);
+      }
+      throw new Error('Failed to update tour status');
     }
   },
 };
