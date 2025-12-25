@@ -26,7 +26,7 @@ const FloatingBookingPanel = ({ tour }: FloatingBookingPanelProps) => {
   const handleBook = async (
     tourSlug: string,
     quantities: { adult: number; child: number },
-    availableDateId?: number,
+    availableDateId?: string | number,
   ) => {
     try {
       if (!tourSlug || !availableDateId || (!quantities.adult && !quantities.child)) {

@@ -26,9 +26,10 @@ function ArticleBookmarksTab({ bookmarks, visibleItems, onLoadMore }: ArticleBoo
   return (
     <div className="w-full">
       <div className="flex flex-col gap-3">
-        {articles.map(article => (
-          <ArticleItem key={article.id} {...article} layout="horizontal" />
-        ))}
+        {articles.map(article => {
+          const { id, content, ...articleProps } = article as any;
+          return <ArticleItem key={article.slug || String(id)} {...(articleProps as any)} layout="horizontal" />;
+        })}
       </div>
       {hasMoreItems && (
         <div className="mt-8 flex justify-center">

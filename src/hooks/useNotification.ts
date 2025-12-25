@@ -5,6 +5,7 @@ import { getCookie } from '@/utils/cookie';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Notification, NotificationListRequest, NotificationListResponse } from '@/types/notification.type';
+import { ApiResponse } from '@/types/api.type';
 
 export const NOTIFICATION_QUERY_KEY = {
   LIST: 'notification-list',
@@ -97,7 +98,7 @@ export const useNotificationSSE = () => {
       eventSource.onmessage = event => {
         try {
           const notification: Notification = JSON.parse(event.data);
-          queryClient.setQueryData<NotificationListResponse>(
+          queryClient.setQueryData<ApiResponse<NotificationListResponse>>(
             [NOTIFICATION_QUERY_KEY.LIST, { page: 0, size: 10 }],
             old => {
               if (!old?.data) return old;
@@ -123,7 +124,7 @@ export const useNotificationSSE = () => {
       eventSource.addEventListener('notification', (event: MessageEvent) => {
         try {
           const notification: Notification = JSON.parse(event.data);
-          queryClient.setQueryData<NotificationListResponse>(
+          queryClient.setQueryData<ApiResponse<NotificationListResponse>>(
             [NOTIFICATION_QUERY_KEY.LIST, { page: 0, size: 10 }],
             old => {
               if (!old?.data) return old;

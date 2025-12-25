@@ -4,6 +4,14 @@ export interface Permission {
   url?: string;
   prefix?: string;
   parentId?: string;
+  category?: string;
+  code?: string;
+}
+
+export interface PermissionCategory {
+  id: string;
+  name: string;
+  permissions: Permission[];
 }
 
 export interface PermissionGroup {

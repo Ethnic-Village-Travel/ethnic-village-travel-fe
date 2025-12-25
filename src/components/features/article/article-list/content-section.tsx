@@ -71,9 +71,10 @@ export default function ArticleContentSection() {
         ) : (
           <>
             <div className="grid grid-cols-1 gap-6">
-              {articles.map(article => (
-                <ArticleItem key={article.id} {...article} layout="horizontal" />
-              ))}
+              {articles.map(article => {
+                const { id, content, ...articleProps } = article as any;
+                return <ArticleItem key={article.slug || String(id)} {...(articleProps as any)} layout="horizontal" />;
+              })}
             </div>
 
             {totalPages > 1 && (

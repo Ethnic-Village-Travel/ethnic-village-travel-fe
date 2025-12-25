@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { ApiResponse } from '@/types/api.type';
 
 export function getErrorMessage(err: unknown) {
-  let unknownError = 'An unexpected error occurred';
+  const unknownError = 'An unexpected error occurred';
 
   if (err instanceof z.ZodError) {
     const errors = err.errors.map(error => error.message);

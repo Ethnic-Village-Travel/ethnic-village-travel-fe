@@ -24,6 +24,7 @@ export interface AdminBookingResponse {
   totalPages: number;
   size: number;
   number: number;
+  last: boolean;
 }
 
 export interface AdminBookingDetail {

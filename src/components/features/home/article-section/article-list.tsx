@@ -26,9 +26,10 @@ const ArticleList = ({ className }: ArticleListProps) => {
         className,
       )}
     >
-      {articles.map(article => (
-        <ArticleItem key={article.id} layout="vertical" {...article} />
-      ))}
+      {articles.map(article => {
+        const { id, content, ...articleProps } = article as any;
+        return <ArticleItem key={article.slug || String(id)} layout="vertical" {...(articleProps as any)} />;
+      })}
     </div>
   );
 };

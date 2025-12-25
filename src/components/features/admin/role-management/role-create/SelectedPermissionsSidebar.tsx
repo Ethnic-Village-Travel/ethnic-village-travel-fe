@@ -13,7 +13,9 @@ export function SelectedPermissionsSidebar() {
   const { watch } = useFormContext();
   const selectedPermissions: Permission[] = watch('selectedPermissions') || [];
   const selectedPermissionsByCategory = selectedPermissions.reduce((acc: Record<string, Permission[]>, permission) => {
-    acc[permission.category] = [...(acc[permission.category] || []), permission];
+    if (permission.category) {
+      acc[permission.category] = [...(acc[permission.category] || []), permission];
+    }
     return acc;
   }, {});
 

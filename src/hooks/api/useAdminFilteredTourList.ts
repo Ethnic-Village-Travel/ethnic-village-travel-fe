@@ -1,13 +1,13 @@
 import { omitBy } from 'lodash';
 
-import { TourListRequest } from '@/types/tour.type';
+import { Tour, TourListRequest } from '@/types/tour.type';
 
 import { useQueryConfig } from '../use-query-config';
 import { useFetchEthnics, useFetchLocations } from './useMetaData';
 import { useAdminTourList } from './useTour';
 
 type EntityWithId = {
-  id: number;
+  id: string | number;
   code?: string;
   city?: string;
 };
@@ -16,14 +16,14 @@ const getFilterIds = <T extends EntityWithId>(
   queryValue: string | string[] | undefined,
   entities: T[] | undefined,
   getMatchValue: (entity: T) => string,
-): number[] => {
+): string[] => {
   if (!queryValue || !entities) return [];
 
   const values = Array.isArray(queryValue) ? queryValue : [queryValue];
 
   return Array.from(
     new Set(
-      values.map(value => entities.find(e => getMatchValue(e) === value)?.id).filter((id): id is number => Boolean(id)),
+      values.map(value => entities.find(e => getMatchValue(e) === value)?.id).filter((id): id is string | number => id !== undefined).map(id => String(id)),
     ),
   );
 };
@@ -60,8 +60,10 @@ export const useAdminFilteredTourList = (pageSize: number = 12) => {
 
   const isArrayResponse = Array.isArray(tourRes?.data);
 
+  const tours: Tour[] = isArrayResponse ? ((tourRes?.data as unknown as Tour[]) || []) : (tourRes?.data?.content || []);
+
   return {
-    tours: isArrayResponse ? tourRes?.data || [] : tourRes?.data?.content || [],
+    tours,
     totalPages: isArrayResponse ? 1 : tourRes?.data?.totalPages || 0,
     isLoading,
   };

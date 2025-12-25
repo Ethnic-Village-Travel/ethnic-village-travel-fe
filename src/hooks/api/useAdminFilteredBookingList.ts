@@ -10,22 +10,31 @@ import { useAdminBookingQueryConfig } from '../use-query-config';
 export const useAdminFilteredBookingList = (pageSize: number = 10) => {
   const queryConfig = useAdminBookingQueryConfig();
 
-  const filterParams: AdminBookingListRequest = omitBy(
-    {
-      page: queryConfig.page ? Number(queryConfig.page) - 1 : 0,
-      size: pageSize,
-      tourId: queryConfig.tourId,
-      tourAvailableDateIds: queryConfig.tourAvailableDateIds,
-      status: queryConfig.status as BookingStatus[],
-      fromDate: queryConfig.start_date,
-      toDate: queryConfig.end_date,
-      sortBy: queryConfig.sort_by,
-      order: queryConfig.order as 'asc' | 'desc',
-    },
-    v => {
+  const baseParams = {
+    page: queryConfig.page ? Number(queryConfig.page) - 1 : 0,
+    size: pageSize,
+    tourId: queryConfig.tourId,
+    tourAvailableDateIds: queryConfig.tourAvailableDateIds,
+    status: queryConfig.status as BookingStatus[],
+    fromDate: queryConfig.start_date,
+    toDate: queryConfig.end_date,
+    sortBy: queryConfig.sort_by,
+    order: queryConfig.order as 'asc' | 'desc',
+  };
+
+  const filteredParams = omitBy(
+    baseParams,
+    (v, k) => {
+      if (k === 'page' || k === 'size') return false;
       return v === undefined || v === null || (Array.isArray(v) && v.length === 0);
     },
-  );
+  ) as Omit<AdminBookingListRequest, 'page' | 'size'>;
+
+  const filterParams: AdminBookingListRequest = {
+    ...filteredParams,
+    page: baseParams.page,
+    size: baseParams.size,
+  };
 
   console.log('useAdminFilteredBookingList - queryConfig:', queryConfig);
   console.log('useAdminFilteredBookingList - filterParams:', filterParams);

@@ -1,63 +1,76 @@
 import { ArticleItemProps } from '@/components/features/article/article-item';
+import { Tag } from '@/types/tag.type';
 
 /**
  * Mock data for articles
  */
 export const MOCK_ARTICLES: ArticleItemProps[] = [
   {
-    id: 1,
     title: 'Các nguồn tài nguyên hữu ích cho 1 front-end developer',
-    author: 'Doan Tran',
-    readTime: 12,
     slug: 'cac-nguon-tai-nguyen-huu-ich-cho-1-front-end-developer',
-    thumbnailUrl: '/images/blog-card-thumbnail.png',
-    tags: ['Front-end', 'Development', 'Resources'],
-    description:
-      'Tổng hợp các nguồn tài nguyên hữu ích dành cho front-end developer từ các thư viện, framework cho đến các công cụ thiết kế và tài liệu tham khảo.',
-    date: '2023/06/22',
+    status: 'PUBLISHED' as any,
+    summary: 'Tổng hợp các nguồn tài nguyên hữu ích dành cho front-end developer từ các thư viện, framework cho đến các công cụ thiết kế và tài liệu tham khảo.',
+    imageUrl: '/images/blog-card-thumbnail.png',
+    upvote: 0,
+    downvote: 0,
+    views: 0,
+    publishedDate: '2023-06-22',
+    tags: ['Front-end', 'Development', 'Resources'].map((name, idx) => ({
+      id: String(idx),
+      name,
+      color: 'gray',
+      slug: name.toLowerCase(),
+    })) as Tag[],
   },
   {
-    id: 2,
     title: 'Khám phá vẻ đẹp văn hóa dân tộc vùng cao Tây Bắc',
-    author: 'Minh Anh',
-    readTime: 8,
     slug: 'kham-pha-ve-dep-van-hoa-dan-toc-vung-cao-tay-bac',
-    tags: ['Du lịch', 'Văn hóa', 'Tây Bắc'],
-    description:
-      'Hành trình khám phá vẻ đẹp văn hóa đặc sắc của các dân tộc vùng cao Tây Bắc, từ phong tục tập quán đến lễ hội truyền thống và ẩm thực đặc trưng.',
-    date: '2023/06/22',
+    status: 'PUBLISHED' as any,
+    summary: 'Hành trình khám phá vẻ đẹp văn hóa đặc sắc của các dân tộc vùng cao Tây Bắc, từ phong tục tập quán đến lễ hội truyền thống và ẩm thực đặc trưng.',
+    imageUrl: '/images/blog-card-thumbnail.png',
+    upvote: 0,
+    downvote: 0,
+    views: 0,
+    publishedDate: '2023-06-22',
+    tags: ['Du lịch', 'Văn hóa', 'Tây Bắc'].map((name, idx) => ({
+      id: String(idx + 10),
+      name,
+      color: 'gray',
+      slug: name.toLowerCase(),
+    })) as Tag[],
   },
   {
-    id: 3,
     title: 'Ẩm thực đặc trưng của các dân tộc thiểu số Việt Nam',
-    author: 'Thu Hà',
-    readTime: 15,
     slug: 'am-thuc-dac-trung-cua-cac-dan-toc-thieu-so-viet-nam',
-    tags: ['Ẩm thực', 'Văn hóa', 'Dân tộc'],
-    description:
-      'Khám phá nét đặc sắc trong ẩm thực của các dân tộc thiểu số Việt Nam, những món ăn truyền thống và bí quyết chế biến được lưu truyền qua nhiều thế hệ.',
-    date: '2023/06/22',
+    status: 'PUBLISHED' as any,
+    summary: 'Khám phá nét đặc sắc trong ẩm thực của các dân tộc thiểu số Việt Nam, những món ăn truyền thống và bí quyết chế biến được lưu truyền qua nhiều thế hệ.',
+    imageUrl: '/images/blog-card-thumbnail.png',
+    upvote: 0,
+    downvote: 0,
+    views: 0,
+    publishedDate: '2023-06-22',
+    tags: ['Ẩm thực', 'Văn hóa', 'Dân tộc'].map((name, idx) => ({
+      id: String(idx + 20),
+      name,
+      color: 'gray',
+      slug: name.toLowerCase(),
+    })) as Tag[],
   },
   {
-    id: 4,
     title: 'Những điểm du lịch văn hóa bạn nên ghé thăm trong năm 2023',
-    author: 'Quang Dũng',
-    readTime: 10,
     slug: 'nhung-diem-du-lich-van-hoa-ban-nen-ghe-tham-trong-nam-2023',
-    tags: ['Du lịch', 'Văn hóa', '2023'],
-    description:
-      'Gợi ý các điểm đến du lịch văn hóa nổi bật tại Việt Nam trong năm 2023, từ các làng nghề truyền thống đến các lễ hội đặc sắc và khu bảo tồn văn hóa.',
-    date: '2023/06/22',
+    status: 'PUBLISHED' as any,
+    summary: 'Gợi ý các điểm đến du lịch văn hóa nổi bật tại Việt Nam trong năm 2023, từ các làng nghề truyền thống đến các lễ hội đặc sắc và khu bảo tồn văn hóa.',
+    imageUrl: '/images/blog-card-thumbnail.png',
+    upvote: 0,
+    downvote: 0,
+    views: 0,
+    publishedDate: '2023-06-22',
+    tags: ['Du lịch', 'Văn hóa', '2023'].map((name, idx) => ({
+      id: String(idx + 30),
+      name,
+      color: 'gray',
+      slug: name.toLowerCase(),
+    })) as Tag[],
   },
-  {
-    id: 4,
-    title: 'Những điểm du lịch văn hóa bạn nên ghé thăm trong năm 2023',
-    author: 'Quang Dũng',
-    readTime: 10,
-    slug: 'nhung-diem-du-lich-van-hoa-ban-nen-ghe-tham-trong-nam-2023',
-    tags: ['Du lịch', 'Văn hóa', '2023'],
-    description:
-      'Gợi ý các điểm đến du lịch văn hóa nổi bật tại Việt Nam trong năm 2023, từ các làng nghề truyền thống đến các lễ hội đặc sắc và khu bảo tồn văn hóa.',
-    date: '2023/06/22',
-  },
-];
+] as any;
