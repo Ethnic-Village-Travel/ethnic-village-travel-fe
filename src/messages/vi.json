@@ -26,7 +26,8 @@
         "general": "Tổng quan",
         "users": "Người dùng & Phân quyền",
         "business": "Kinh doanh",
-        "content": "Nội dung & Tiện ích"
+        "content": "Nội dung & Tiện ích",
+        "functions": "Chức năng"
       },
       "dashboard": "Bảng điều khiển",
       "user": "Khách hàng",
@@ -414,6 +415,19 @@
       "search": "Tìm",
       "no_results": "Không tìm thấy kết quả",
       "no_tours": "Chưa có tour nào trong danh mục"
+    },
+    "promotion": {
+      "title": "Quản lý khuyến mãi",
+      "description": "Quản lý các chương trình khuyến mãi và mã giảm giá",
+      "create": "Tạo khuyến mãi",
+      "edit": "Chỉnh sửa",
+      "delete": "Xóa",
+      "status": "Trạng thái",
+      "code": "Mã",
+      "discount": "Giảm giá",
+      "start_date": "Ngày bắt đầu",
+      "end_date": "Ngày kết thúc",
+      "empty": "Chưa có khuyến mãi nào"
     }
   },
   "home": {

@@ -14,6 +14,7 @@
       "APPROVED": "Approved",
       "SCHEDULED": "Scheduled",
       "PUBLISHED": "Published",
+      "AVAILABLE": "Available",
       "FULLY_BOOKED": "Fully Booked",
       "ONGOING": "Ongoing",
       "PAUSED": "Paused",
@@ -23,6 +24,9 @@
     "sidebar": {
       "section": {
         "general": "General",
+        "users": "Users & Permissions",
+        "business": "Business",
+        "content": "Content & Utilities",
         "functions": "Functions"
       },
       "dashboard": "Dashboard",
@@ -526,6 +530,12 @@
         "duration": "Duration"
       }
     },
+    "edit": {
+      "title": "Edit Tour"
+    },
+    "update": {
+      "success": "Tour updated successfully"
+    },
     "detail": {
       "review": "Review",
       "days": "Days",
@@ -830,6 +840,12 @@
       "delete": "Delete",
       "back": "Back",
       "next": "Next"
+    }
+  },
+  "Filter": {
+    "title": "Filters",
+    "button": {
+      "apply": "Apply"
     }
   },
   "personal": {
