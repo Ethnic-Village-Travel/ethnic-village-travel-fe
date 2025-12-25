@@ -23,7 +23,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-const DEFAULT_ROLES = ['ADMIN', 'USER', 'TOUR_AGENCY', 'CONTENT_AGENCY'];
+const DEFAULT_ROLES = ['ADMIN', 'USER', 'TOUR_AGENCY'];
 
 export default function RoleListPage() {
   const router = useRouter();
