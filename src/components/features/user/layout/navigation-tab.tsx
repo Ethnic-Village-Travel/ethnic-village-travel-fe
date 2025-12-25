@@ -8,7 +8,7 @@ import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useUserStore } from '@/stores/useUserStore';
 import { cn, getInitialName } from '@/utils';
-import { Activity, ChevronRight, Heart, LogOut, Menu, Receipt, TrendingUp, UserCircle, X } from 'lucide-react';
+import { ChevronRight, Heart, LogOut, Menu, Receipt, UserCircle, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { logout } from '@/libs/auth';
@@ -139,14 +139,7 @@ export default function PersonalNavigationTab() {
                       </div>
 
                       {item.badge ? (
-                        <Badge
-                          className={cn(
-                            'font-roboto text-xs',
-                            isActive ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-secondary text-white',
-                          )}
-                        >
-                          {item.badge}
-                        </Badge>
+                        <Badge className={cn('bg-primary font-roboto text-xs text-white')}>{item.badge}</Badge>
                       ) : (
                         <ChevronRight
                           className={cn(
