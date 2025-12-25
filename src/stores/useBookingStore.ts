@@ -9,13 +9,13 @@ export type PersonInfo = {
 };
 
 interface BookingStore {
-  selectedDateId: number | undefined;
+  selectedDateId: string | number | undefined;
   availableSlots: number | undefined;
   guestInfo: PersonInfo | null;
   additionalInfo: string;
   bookingType: BookingType;
   contactInfo: PersonInfo | null;
-  setSelectedDate: (dateId: number | undefined, slots: number | undefined) => void;
+  setSelectedDate: (dateId: string | number | undefined, slots: number | undefined) => void;
   setGuestInfo: (info: PersonInfo | null) => void;
   setAdditionalInfo: (info: string) => void;
   setBookingType: (type: 'self' | 'others') => void;

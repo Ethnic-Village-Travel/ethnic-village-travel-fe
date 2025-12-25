@@ -64,7 +64,7 @@ export function TourDetailReviews({ tour }: TourDetailReviewsProps) {
     addReview(
       {
         ...data,
-        entityId: tour.id,
+        entityId: Number(tour.id) || 0,
         entityType: 'tour',
       },
       {

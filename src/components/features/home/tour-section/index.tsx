@@ -29,7 +29,7 @@ const fixedTabs: TabItem[] = [
 const TourSection = () => {
   const [activeTab, setActiveTab] = useState<string>('popular');
   const t = useTranslations('common');
-  const tTour = useTranslations('home.tour');
+  const tTour = useTranslations('home.tour' as any) as any;
 
   const { data: categoryData, isLoading: isCategoriesLoading } = useEnabledCategories();
   const categories = categoryData?.data || [];
@@ -91,7 +91,7 @@ const TourSection = () => {
               )}
               onClick={() => setActiveTab(tabId)}
             >
-              {tab.type === 'fixed' ? tTour(tab.id) : tab.name}
+              {tab.type === 'fixed' ? (tTour as any)(tab.id) : tab.name}
             </button>
           );
         })}

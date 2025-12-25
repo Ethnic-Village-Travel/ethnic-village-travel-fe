@@ -198,7 +198,7 @@ export default function RoleListPage() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t('delete.title')}</AlertDialogTitle>
-            <AlertDialogDescription>{t('delete.description', { name: selectedRole?.name })}</AlertDialogDescription>
+            <AlertDialogDescription>{t('delete.description', { name: selectedRole?.name ?? '' })}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t('delete.cancel')}</AlertDialogCancel>

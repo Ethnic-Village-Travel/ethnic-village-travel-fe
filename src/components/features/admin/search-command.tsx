@@ -119,7 +119,7 @@ export default function SearchCommand() {
                       }}
                     >
                       <item.icon className="h-4 w-4" />
-                      {t(`items.${item.labelKey}`)}
+                      {t(`items.${item.labelKey}` as any)}
                     </CommandItem>
                   ))}
                 </CommandGroup>

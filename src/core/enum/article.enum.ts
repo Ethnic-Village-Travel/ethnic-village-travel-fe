@@ -15,33 +15,33 @@ export const ArticleStatusEnum: Record<
     label: string;
   }
 > = {
-  DRAFT: {
-    value: 'DRAFT',
+  [ArticleStatus.DRAFT]: {
+    value: ArticleStatus.DRAFT,
     variant: 'gray',
     label: 'DRAFT',
   },
-  REVIEWING: {
-    value: 'REVIEWING',
+  [ArticleStatus.REVIEWING]: {
+    value: ArticleStatus.REVIEWING,
     variant: 'indigo',
     label: 'REVIEWING',
   },
-  REJECTED: {
-    value: 'REJECTED',
+  [ArticleStatus.REJECTED]: {
+    value: ArticleStatus.REJECTED,
     variant: 'red',
     label: 'REJECTED',
   },
-  APPROVED: {
-    value: 'APPROVED',
+  [ArticleStatus.APPROVED]: {
+    value: ArticleStatus.APPROVED,
     variant: 'blue',
     label: 'APPROVED',
   },
-  SCHEDULED: {
-    value: 'SCHEDULED',
+  [ArticleStatus.SCHEDULED]: {
+    value: ArticleStatus.SCHEDULED,
     variant: 'purple',
     label: 'SCHEDULED',
   },
-  PUBLISHED: {
-    value: 'PUBLISHED',
+  [ArticleStatus.PUBLISHED]: {
+    value: ArticleStatus.PUBLISHED,
     variant: 'teal',
     label: 'PUBLISHED',
   },

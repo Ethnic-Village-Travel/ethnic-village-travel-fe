@@ -88,7 +88,7 @@ const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
     }
   }, [sortedDates]);
 
-  const handleDateClick = (dateId: number, availableSlots: number) => {
+  const handleDateClick = (dateId: string | number, availableSlots: number) => {
     setSelectedDate(dateId, availableSlots);
   };
 
