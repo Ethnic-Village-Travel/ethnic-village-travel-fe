@@ -105,7 +105,7 @@ const ActionButtons: React.FC<{ booking: BookingGetResponse }> = ({ booking }) =
 };
 
 const BackButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
-  const tCommon = useTranslations('Common');
+  const tCommon = useTranslations('Common' as any) as any;
 
   return (
     <Button

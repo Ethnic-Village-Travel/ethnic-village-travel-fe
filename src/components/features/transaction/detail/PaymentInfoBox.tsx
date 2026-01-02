@@ -51,7 +51,7 @@ export const PaymentInfoBox: React.FC<PaymentInfoBoxProps> = ({ payment, payment
   // Payment method display
   const getPaymentMethodText = (method: string) => {
     const methodKey = method.toLowerCase();
-    return tPayment(methodKey) || method;
+    return (tPayment as any)(methodKey) || method;
   };
 
   // Format currency

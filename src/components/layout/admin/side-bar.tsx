@@ -31,9 +31,12 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const t = useTranslations('admin.sidebar');
   const { user } = useAuthStore();
-  const userName = user?.personal
-    ? (user?.personal?.firstName ?? '') + user?.personal?.lastName
-    : user?.roles[0] + ' User';
+  const userName =
+    user?.personal?.firstName && user?.personal?.lastName
+      ? `${user.personal.firstName} ${user.personal.lastName}`
+      : user?.roles?.[0]
+        ? `${user.roles[0]} User`
+        : 'User';
   const userEmail = user?.email;
 
   const permissions = useMemo(() => {

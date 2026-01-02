@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useProgressStore } from '@/stores/useProgressStore';
 import { useNProgress } from '@tanem/react-nprogress';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { UserDetailsLoader } from '@/components/features/auth';
 
@@ -71,7 +70,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <Progress isAnimating={isAnimating} />
       <UserDetailsLoader />
       {children}
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }

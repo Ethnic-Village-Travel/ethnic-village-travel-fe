@@ -2,38 +2,15 @@
 
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { MoreHorizontal } from 'lucide-react';
-
 import { RouteConstant } from '@/core/constants/route';
 import { ArticleStatus, ArticleStatusEnum } from '@/core/enum/article.enum';
-import {
-  useAdminArticleList,
-  useDeleteAdminArticle,
-  useUpdateAdminArticleStatus,
-} from '@/hooks/api/useArticleAdmin';
+import { MoreHorizontal } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import { useAdminArticleList, useDeleteAdminArticle, useUpdateAdminArticleStatus } from '@/hooks/api/useArticleAdmin';
 import { useToast } from '@/hooks/use-toast';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Shell } from '@/components/shared/shell';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,6 +18,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Shell } from '@/components/shared/shell';
 
 export function ArticleListContent() {
   const router = useRouter();
@@ -182,7 +165,11 @@ export function ArticleListContent() {
                         <div className="line-clamp-2 text-sm text-muted-foreground">{article.summary}</div>
                       </TableCell>
                       <TableCell>
-                        {statusInfo ? <Badge variant={statusInfo.variant}>{tStatus(statusInfo.value)}</Badge> : article.status}
+                        {statusInfo ? (
+                          <Badge variant={statusInfo.variant as any}>{tStatus(statusInfo.value)}</Badge>
+                        ) : (
+                          article.status
+                        )}
                       </TableCell>
                       <TableCell>{article.createdAt ? new Date(article.createdAt).toLocaleString() : '-'}</TableCell>
                       <TableCell>{article.updatedAt ? new Date(article.updatedAt).toLocaleString() : '-'}</TableCell>
@@ -230,7 +217,12 @@ export function ArticleListContent() {
             {currentPage + 1} / {Math.max(totalPages, 1)}
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" disabled={currentPage <= 0} onClick={() => setPage(p => Math.max(0, p - 1))}>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={currentPage <= 0}
+              onClick={() => setPage(p => Math.max(0, p - 1))}
+            >
               {t('article.list.prev')}
             </Button>
             <Button
@@ -247,4 +239,3 @@ export function ArticleListContent() {
     </div>
   );
 }
-

@@ -1,23 +1,30 @@
 'use client';
 
-import React from 'react';
 import { useRouter } from 'next/navigation';
 import { bookingApi } from '@/data/apis/booking.api';
 import { useQuery } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
-import { ArrowLeft, Download, Printer, Calendar, Users, MapPin, DollarSign, Mail, Phone, User, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
-
 import {
-  BookingInfoBox,
-  CustomerInfoBox,
-  TourDetailsBox,
-  TransactionHeader,
-} from '@/components/features/transaction/detail';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+  AlertCircle,
+  ArrowLeft,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  DollarSign,
+  Download,
+  Mail,
+  MapPin,
+  Phone,
+  Printer,
+  User,
+  Users,
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 
 interface TransactionDetailPageProps {
   params: {
@@ -74,27 +81,27 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
       PENDING_PAYMENT: {
         color: 'bg-yellow/10 text-yellow-800 border-yellow/30',
         icon: AlertCircle,
-        iconColor: 'text-yellow-600'
+        iconColor: 'text-yellow-600',
       },
       PAID: {
         color: 'bg-green/10 text-green-700 border-green/30',
         icon: CheckCircle2,
-        iconColor: 'text-green-600'
+        iconColor: 'text-green-600',
       },
       CONFIRMED: {
         color: 'bg-primary/10 text-primary border-primary/30',
         icon: CheckCircle2,
-        iconColor: 'text-primary'
+        iconColor: 'text-primary',
       },
       CANCELLED: {
         color: 'bg-destructive/10 text-destructive border-destructive/30',
         icon: AlertCircle,
-        iconColor: 'text-destructive'
+        iconColor: 'text-destructive',
       },
       COMPLETED: {
         color: 'bg-green text-white border-green',
         icon: CheckCircle2,
-        iconColor: 'text-white'
+        iconColor: 'text-white',
       },
     };
     return configs[status as keyof typeof configs] || configs.PENDING_PAYMENT;
@@ -151,11 +158,7 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
       <div className="mx-auto max-w-7xl px-4 py-6">
         {/* Header with Back Button */}
         <div className="mb-6 flex items-center justify-between">
-          <Button
-            variant="ghost"
-            onClick={() => router.back()}
-            className="gap-2"
-          >
+          <Button variant="ghost" onClick={() => router.back()} className="gap-2">
             <ArrowLeft className="h-4 w-4" />
             Quay lại
           </Button>
@@ -172,7 +175,10 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
         </div>
 
         {/* Status Banner */}
-        <Card className="mb-6 overflow-hidden border-l-4" style={{ borderLeftColor: statusConfig.iconColor.replace('text-', '') }}>
+        <Card
+          className="mb-6 overflow-hidden border-l-4"
+          style={{ borderLeftColor: statusConfig.iconColor.replace('text-', '') }}
+        >
           <CardContent className="p-6">
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-4">
@@ -184,20 +190,14 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                     <h1 className="font-roboto text-2xl font-bold text-foreground">
                       Đơn đặt tour #{bookingData.id.slice(-8)}
                     </h1>
-                    <Badge className={`${statusConfig.color} border`}>
-                      {bookingData.status}
-                    </Badge>
+                    <Badge className={`${statusConfig.color} border`}>{bookingData.status}</Badge>
                   </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Đặt ngày {formatDate(bookingData.bookingDate)}
-                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">Đặt ngày {formatDate(bookingData.bookingDate)}</p>
                 </div>
               </div>
               <div className="text-right">
                 <p className="text-sm text-muted-foreground">Tổng thanh toán</p>
-                <p className="font-roboto text-3xl font-bold text-primary">
-                  {formatCurrency(bookingData.totalPrice)}
-                </p>
+                <p className="font-roboto text-3xl font-bold text-primary">{formatCurrency(bookingData.totalPrice)}</p>
               </div>
             </div>
           </CardContent>
@@ -231,13 +231,13 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                     )}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-roboto text-lg font-bold text-foreground">
-                      {bookingData.tour.title}
-                    </h3>
+                    <h3 className="font-roboto text-lg font-bold text-foreground">{bookingData.tour.title}</h3>
                     <div className="mt-3 space-y-2">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <MapPin className="h-4 w-4" />
-                        <span>{bookingData.tour.pickUpLocation?.city}, {bookingData.tour.pickUpLocation?.province}</span>
+                        <span>
+                          {bookingData.tour.pickUpLocation?.city}, {bookingData.tour.pickUpLocation?.province}
+                        </span>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-4 w-4" />
@@ -266,32 +266,28 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                   {/* Timeline Item - Booking Date */}
                   <div className="flex gap-4">
                     <div className="flex flex-col items-center">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                      <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-full">
                         <CheckCircle2 className="h-5 w-5 text-primary" />
                       </div>
                       <div className="h-full w-0.5 bg-border"></div>
                     </div>
                     <div className="flex-1 pb-8">
                       <p className="font-medium text-foreground">Đặt tour</p>
-                      <p className="text-sm text-muted-foreground">
-                        {formatDate(bookingData.bookingDate)}
-                      </p>
+                      <p className="text-sm text-muted-foreground">{formatDate(bookingData.bookingDate)}</p>
                     </div>
                   </div>
 
                   {/* Timeline Item - Start Date */}
                   <div className="flex gap-4">
                     <div className="flex flex-col items-center">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green/10">
+                      <div className="bg-green/10 flex h-10 w-10 items-center justify-center rounded-full">
                         <Calendar className="h-5 w-5 text-green-600" />
                       </div>
                       <div className="h-full w-0.5 bg-border"></div>
                     </div>
                     <div className="flex-1 pb-8">
                       <p className="font-medium text-foreground">Ngày khởi hành</p>
-                      <p className="text-sm text-muted-foreground">
-                        {formatDate(bookingData.startDate)}
-                      </p>
+                      <p className="text-sm text-muted-foreground">{formatDate(bookingData.startDate)}</p>
                     </div>
                   </div>
 
@@ -304,9 +300,7 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                     </div>
                     <div className="flex-1">
                       <p className="font-medium text-foreground">Ngày kết thúc</p>
-                      <p className="text-sm text-muted-foreground">
-                        {formatDate(bookingData.endDate)}
-                      </p>
+                      <p className="text-sm text-muted-foreground">{formatDate(bookingData.endDate)}</p>
                     </div>
                   </div>
                 </div>
@@ -326,7 +320,7 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                   <>
                     <div className="flex items-center justify-between">
                       <span className="text-muted-foreground">Giá gốc</span>
-                      <span className="line-through text-muted-foreground">
+                      <span className="text-muted-foreground line-through">
                         {formatCurrency(bookingData.totalPrice + bookingData.discountAmountApplied)}
                       </span>
                     </div>
@@ -347,7 +341,7 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                 </div>
 
                 {bookingData.paymentExpiredDate && bookingData.status === 'PENDING_PAYMENT' && (
-                  <div className="mt-4 rounded-lg border border-yellow/30 bg-yellow/10 p-3">
+                  <div className="border-yellow/30 bg-yellow/10 mt-4 rounded-lg border p-3">
                     <p className="text-sm text-foreground">
                       <span className="font-medium">Hạn thanh toán: </span>
                       {formatDate(bookingData.paymentExpiredDate)}
@@ -376,7 +370,7 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-16 w-16 border-2 border-primary/20">
+                  <Avatar className="border-primary/20 h-16 w-16 border-2">
                     <AvatarFallback className="bg-gradient-to-br from-primary to-secondary font-roboto text-xl font-bold text-white">
                       {getInitials(bookingData.bookerDetail?.fullName || bookingData.bookerDetail?.name || '')}
                     </AvatarFallback>
@@ -394,7 +388,7 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                 <Separator />
 
                 <div className="space-y-3">
-                  <div className="flex items-start gap-3 rounded-lg bg-muted/50 p-3">
+                  <div className="flex items-start gap-3">
                     <Mail className="h-5 w-5 flex-shrink-0 text-blue-600" />
                     <div className="min-w-0 flex-1">
                       <p className="text-xs text-muted-foreground">Email</p>
@@ -404,7 +398,7 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 rounded-lg bg-muted/50 p-3">
+                  <div className="flex items-start gap-3">
                     <Phone className="h-5 w-5 flex-shrink-0 text-green-600" />
                     <div className="min-w-0 flex-1">
                       <p className="text-xs text-muted-foreground">Điện thoại</p>
@@ -413,19 +407,6 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                       </p>
                     </div>
                   </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2">
-                  <Button variant="outline" size="sm" className="w-full justify-start gap-2">
-                    <Mail className="h-4 w-4" />
-                    Gửi email
-                  </Button>
-                  <Button variant="outline" size="sm" className="w-full justify-start gap-2">
-                    <Phone className="h-4 w-4" />
-                    Gọi điện
-                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -436,17 +417,14 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                 <CardTitle className="text-base">Dịch vụ bao gồm</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                {[
-                  'Hướng dẫn viên chuyên nghiệp',
-                  'Phương tiện di chuyển',
-                  'Bảo hiểm du lịch',
-                  'Hỗ trợ 24/7',
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-green-600" />
-                    <span className="text-foreground">{item}</span>
-                  </div>
-                ))}
+                {['Hướng dẫn viên chuyên nghiệp', 'Phương tiện di chuyển', 'Bảo hiểm du lịch', 'Hỗ trợ 24/7'].map(
+                  (item, index) => (
+                    <div key={index} className="flex items-center gap-2 text-sm">
+                      <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-green-600" />
+                      <span className="text-foreground">{item}</span>
+                    </div>
+                  ),
+                )}
               </CardContent>
             </Card>
           </div>

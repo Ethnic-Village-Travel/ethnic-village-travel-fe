@@ -25,7 +25,7 @@ export function ToursTable() {
   const { tours, totalPages, isLoading } = useAdminFilteredTourList(queryConfig.perPage || 10);
 
   const [rowAction, setRowAction] = React.useState<{
-    id: number;
+    id: string | number;
     action: 'edit' | 'delete' | 'status' | 'assign';
     row?: Tour;
   } | null>(null);

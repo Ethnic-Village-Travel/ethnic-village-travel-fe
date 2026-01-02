@@ -118,7 +118,7 @@ export function useAdminBookingExport() {
   const fetchAllBookings = useCallback(async (filters?: AdminBookingListRequest) => {
     try {
       // Fetch all pages of data with current filters
-      let allBookings = [];
+      const allBookings = [];
       let currentPage = 0;
       let hasMoreData = true;
 
@@ -129,8 +129,12 @@ export function useAdminBookingExport() {
           size: 100, // Large page size for efficient fetching
         });
 
-        allBookings.push(...response.data.content);
-        hasMoreData = !response.data.last;
+        if (response.data) {
+          allBookings.push(...response.data.content);
+          hasMoreData = !response.data.last;
+        } else {
+          break;
+        }
         currentPage++;
 
         // Safety check to prevent infinite loop

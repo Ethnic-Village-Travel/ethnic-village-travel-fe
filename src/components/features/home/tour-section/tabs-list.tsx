@@ -13,7 +13,7 @@ interface TabsListProps {
 }
 
 const TabsList = ({ tabs, activeTab, setActiveTab }: TabsListProps) => {
-  const t = useTranslations('home.tour');
+  const t = useTranslations('home.tour' as any) as any;
   const [isPending, startTransition] = useTransition();
 
   const handleTabChange = (tabId: TabType) => {

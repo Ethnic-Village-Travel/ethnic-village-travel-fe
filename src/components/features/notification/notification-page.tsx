@@ -21,8 +21,8 @@ export function NotificationPage() {
     size,
   });
 
-  const notifications = notificationsData?.data?.data?.content || [];
-  const totalPages = notificationsData?.data?.data?.totalPages || 0;
+  const notifications = notificationsData?.data?.content || [];
+  const totalPages = notificationsData?.data?.totalPages || 0;
 
   const markAsRead = useMarkAsRead();
   const markAllAsRead = useMarkAllAsRead();

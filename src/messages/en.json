@@ -298,41 +298,34 @@
         "new_bookings": "New Bookings",
         "new_bookings_desc": "Tour bookings today",
         "upcoming_departures": "Upcoming Departures",
-        "upcoming_departures_desc": "Tours departing in 48 hours",
-        "pending_bookings": "Pending Reservations",
-        "pending_bookings_desc": "Awaiting payment, urgent confirmation needed",
+        "upcoming_departures_desc": "Tours departing in next 48h",
+        "pending_bookings": "Pending Bookings",
+        "pending_bookings_desc": "Awaiting payment, need urgent confirmation",
         "compared_to_last_month": "compared to last month"
       },
       "upcoming_departures": {
         "title": "Upcoming Departures",
-        "description": "Tours departing within the next 7 days",
+        "description": "Tours departing in the next 7 days",
         "tour_name": "Tour Name",
-        "departure_date": "Departure Date",
-        "slots": "Slots",
-        "status": "Status",
-        "empty": "No tours departing during this period"
-      },
-      "revenue_chart": {
         "title": "Revenue Chart",
-        "description": "Compare revenue with same period last month",
         "current": "Actual Revenue",
         "previous": "Same Period Last Month"
       },
       "top_destinations": {
         "title": "Top Destinations",
         "description": "Booking distribution by location this month",
-        "empty": "No booking data available"
+        "empty": "No booking data yet"
       },
       "recent_bookings": {
         "title": "Recent Bookings",
-        "description": "Latest bookings requiring processing",
+        "description": "Latest bookings that need processing",
         "id": "ID",
         "customer": "Customer",
         "tour": "Tour",
         "departure_date": "Departure Date",
-        "total": "Total Amount",
+        "total": "Total",
         "status": "Status",
-        "empty": "No new bookings"
+        "empty": "No new bookings yet"
       }
     },
     "role": {
@@ -340,7 +333,7 @@
         "title": "Role Management",
         "description": "Manage roles and access permissions in the system",
         "createNew": "Create Role",
-        "empty": "No roles available",
+        "empty": "No roles yet",
         "table": {
           "name": "Role Name",
           "description": "Description",
@@ -357,8 +350,8 @@
         "title": "Create New Role",
         "description": "Create and configure a role with appropriate access permissions for users in the system",
         "role_name_label": "Role Name",
-        "role_name_placeholder": "Example: Content Editor",
-        "permissions_label": "Permissions",
+        "role_name_placeholder": "e.g., Content Editor",
+        "permissions_label": "Access Permissions",
         "selected_permissions_label": "Selected Permissions",
         "reset": "Reset",
         "create": "Create Role",
@@ -372,7 +365,7 @@
       },
       "edit": {
         "title": "Edit Role",
-        "description": "Update information and access permissions for the role"
+        "description": "Update role information and access permissions"
       }
     },
     "category": {
@@ -384,8 +377,8 @@
       "display_order": "Display Order",
       "status": "Status",
       "actions": "Actions",
-      "no_categories": "No categories available",
-      "delete_confirm_title": "Confirm Deletion",
+      "no_categories": "No categories yet",
+      "delete_confirm_title": "Confirm Delete",
       "delete_confirm_description": "Are you sure you want to delete this category?",
       "cancel": "Cancel",
       "delete": "Delete",
@@ -393,8 +386,8 @@
       "edit_title": "Edit Category",
       "category_info": "Category Information",
       "name_placeholder": "Enter category name",
-      "description_placeholder": "Brief description of the category",
-      "image_url": "Thumbnail Image URL",
+      "description_placeholder": "Short description about the category",
+      "image_url": "Image URL",
       "enable_on_homepage": "Display on Homepage",
       "creating": "Creating...",
       "create": "Create Category",
@@ -402,11 +395,24 @@
       "save": "Save Changes",
       "tours_in_category": "Tours in Category",
       "add_tour": "Add Tour",
-      "add_tour_dialog_title": "Search and Add Tour",
+      "add_tour_dialog_title": "Find and Add Tour",
       "search_tour_placeholder": "Enter tour name to search",
       "search": "Search",
       "no_results": "No results found",
-      "no_tours": "No tours in this category"
+      "no_tours": "No tours in category yet"
+    },
+    "promotion": {
+      "title": "Promotion Management",
+      "description": "Manage promotions and discount codes",
+      "create": "Create Promotion",
+      "edit": "Edit",
+      "delete": "Delete",
+      "status": "Status",
+      "code": "Code",
+      "discount": "Discount",
+      "start_date": "Start Date",
+      "end_date": "End Date",
+      "empty": "No promotions yet"
     }
   },
   "home": {

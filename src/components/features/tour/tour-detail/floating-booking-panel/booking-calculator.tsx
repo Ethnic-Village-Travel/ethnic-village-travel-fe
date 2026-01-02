@@ -47,7 +47,7 @@ const PersonTypeCalculator = ({ label, price, value, locale, onChange }: PersonT
 
 export type BookingCalculatorProps = {
   tour: Tour;
-  onBook?: (tourSlug: string, quantities: { adult: number; child: number }, availableDateId?: number) => void;
+  onBook?: (tourSlug: string, quantities: { adult: number; child: number }, availableDateId?: string | number) => void;
 };
 
 export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
@@ -120,7 +120,7 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
       </div>
 
       <Button
-        onClick={() => onBook?.(tour.slug, quantities, selectedDateId)}
+        onClick={() => onBook?.(tour.slug || '', quantities, selectedDateId)}
         disabled={
           !selectedDateId ||
           !availableSlots ||

@@ -1,4 +1,4 @@
-export interface ChatbotV2Config {
+export interface ChatbotV3Config {
   apiUrl: string;
   title: string;
   placeholder: string;
@@ -17,7 +17,7 @@ export interface ChatbotV2Config {
   };
 }
 
-export const defaultChatbotV2Config: ChatbotV2Config = {
+export const defaultChatbotV3Config: ChatbotV3Config = {
   // FastAPI endpoint from main.py
   apiUrl: process.env.NEXT_PUBLIC_CHATBOT_V2_API_URL || 'http://localhost:8000/api',
   title: 'Trợ lý Du lịch AI',
@@ -34,11 +34,11 @@ export const defaultChatbotV2Config: ChatbotV2Config = {
   },
   sessionConfig: {
     maxMessages: 50, // Keep last 50 messages
-    storageKey: 'chatbot_v2_session',
+    storageKey: 'chatbot_v3_session', // Different storage key from V2
   },
 };
 
-export const getChatbotPosition = (position: ChatbotV2Config['position']) => {
+export const getChatbotPosition = (position: ChatbotV3Config['position']) => {
   switch (position) {
     case 'bottom-left':
       return 'bottom-4 left-4';
