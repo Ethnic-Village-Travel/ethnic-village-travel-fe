@@ -12,13 +12,13 @@ export type ChatbotV3Config = {
     borderColor: string;
   };
   sessionConfig: {
-    maxMessages: number; // Maximum messages to keep in history
-    storageKey: string; // localStorage key for session persistence
+    maxMessages: number;
+    storageKey: string;
   };
 }
 
 export const defaultChatbotV3Config: ChatbotV3Config = {
-  // FastAPI endpoint from main.py
+
   apiUrl: process.env.NEXT_PUBLIC_CHATBOT_V2_API_URL || 'http://localhost:8000/api',
   title: 'Trợ lý Du lịch AI',
   placeholder: 'Hỏi về tour du lịch làng dân tộc...',
@@ -33,8 +33,8 @@ export const defaultChatbotV3Config: ChatbotV3Config = {
     borderColor: 'border-gray-200',
   },
   sessionConfig: {
-    maxMessages: 50, // Keep last 50 messages
-    storageKey: 'chatbot_v3_session', // Different storage key from V2
+    maxMessages: 50,
+    storageKey: 'chatbot_v3_session',
   },
 };
 

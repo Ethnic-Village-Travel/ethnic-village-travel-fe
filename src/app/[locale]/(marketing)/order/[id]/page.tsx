@@ -121,8 +121,7 @@ export default function OrderPage() {
         : null,
       bookingType: 'self',
       promotion: (() => {
-        // Use promotions[0] to match Tour Detail display logic (same as tour.promotions[0] in tour detail)
-        // Sort by id to ensure consistent ordering (matching Tour API behavior)
+
         const activeDirectDiscounts = booking.tour.promotions
           ?.filter(p => p.type === PromotionType.DIRECT_DISCOUNT && p.status === 'ACTIVE')
           .sort((a, b) => a.id.localeCompare(b.id)) || [];

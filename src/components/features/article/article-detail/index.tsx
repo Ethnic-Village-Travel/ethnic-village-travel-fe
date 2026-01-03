@@ -17,6 +17,3 @@ export default function ArticleDetailPageContent({ article }: ArticleDetailPageC
     </div>
   );
 }
-
-
-

@@ -82,7 +82,6 @@ export default function OrderViewPage() {
 
   const { data: booking, isLoading, isError } = useApiBookingGetByOrderCode(orderCode);
 
-  // Payment states (Tier 1 UX)
   const [timeRemaining, setTimeRemaining] = useState<string | null>(null);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
@@ -108,7 +107,6 @@ export default function OrderViewPage() {
 
       const paymentData = await paymentApi.createPayment(booking.id);
 
-      // Redirect to PayOS
       window.location.href = paymentData.checkoutUrl;
     } catch (error) {
       logger.error('Failed to create payment link:', error);
@@ -125,7 +123,6 @@ export default function OrderViewPage() {
       setIsCancelling(true);
       await bookingApi.cancelByOrderCode(orderCode);
 
-      // Reload to show updated status
       router.refresh();
     } catch (error) {
       logger.error('Failed to cancel booking:', error);
@@ -215,7 +212,6 @@ export default function OrderViewPage() {
                     <span className="font-mono text-sm text-gray-500">#{orderCode}</span>
                   </div>
 
-                  {/* Tier 1 UX: Payment Actions */}
                   {canRetryPayment(booking.status, booking.paymentExpiredDate) && (
                     <div className="flex flex-col gap-2">
                       {timeRemaining && (

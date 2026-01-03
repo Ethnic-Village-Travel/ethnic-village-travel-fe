@@ -68,4 +68,3 @@ export default function ArticleEditContent({ id }: ArticleEditContentProps) {
     </div>
   );
 }
-

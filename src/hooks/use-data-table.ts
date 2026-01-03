@@ -99,7 +99,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
 
   const pagination: PaginationState = React.useMemo(() => {
     return {
-      pageIndex: page - 1, // zero-based index -> one-based index
+      pageIndex: page - 1,
       pageSize: perPage,
     };
   }, [page, perPage]);
@@ -125,7 +125,6 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
   const [sortBy, setSortBy] = useQueryState('sort_by');
   const [order, setOrder] = useQueryState('order');
 
-  // Khởi tạo sorting từ sortBy và order
   const sorting = React.useMemo(() => {
     return sortBy ? [{ id: sortBy, desc: order === 'desc' }] : [];
   }, [sortBy, order]);

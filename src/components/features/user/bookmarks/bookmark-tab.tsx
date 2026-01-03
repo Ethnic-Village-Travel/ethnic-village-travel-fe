@@ -21,7 +21,6 @@ export default function BookmarkTabContent() {
   const [visibleTourItems, setVisibleTourItems] = useState(ITEMS_PER_PAGE);
   const { details } = useUserStore();
 
-  // Sử dụng useMemo thay vì useEffect + useState
   const sortedBookmarks = useMemo(() => {
     if (!details?.bookmarks) {
       return {
@@ -29,7 +28,6 @@ export default function BookmarkTabContent() {
       };
     }
 
-    // Group and sort bookmarks by entity type
     const bookmarks = details.bookmarks.reduce((acc, bookmark) => {
       if (!acc[bookmark.entityType]) {
         acc[bookmark.entityType] = [];
@@ -48,7 +46,6 @@ export default function BookmarkTabContent() {
           return statusDiff;
         }
 
-        // If same status, sort by date (newest first)
         return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
       });
     });

@@ -25,11 +25,9 @@ export default function BookingFilters({ onFilterChange, showStatusFilter = true
   const t = useTranslations('personal.transaction');
   const queryConfig = useBookingQueryConfig();
 
-  // Parse initial dates from query config, ensuring only date part is used
   const startDateStr = queryConfig.start_date as string | undefined;
   const endDateStr = queryConfig.end_date as string | undefined;
 
-  // Parse initial statuses from query config
   const initialStatuses = queryConfig.status
     ? (queryConfig.status as string[]).map(status => status as BookingStatus)
     : [];
@@ -82,7 +80,6 @@ export default function BookingFilters({ onFilterChange, showStatusFilter = true
 
     setSelectedStatuses(newStatuses);
 
-    // Call onFilterChange for parent component
     onFilterChange({ status: newStatuses.length > 0 ? newStatuses : undefined });
   };
 
@@ -101,7 +98,7 @@ export default function BookingFilters({ onFilterChange, showStatusFilter = true
 
   return (
     <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
-      {/* Header */}
+      
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
@@ -126,16 +123,15 @@ export default function BookingFilters({ onFilterChange, showStatusFilter = true
         )}
       </div>
 
-      {/* Filters Grid */}
       <div className="flex flex-wrap items-end gap-3">
-        {/* Date Range Section */}
+        
         <div className="flex-1 min-w-[260px]">
           <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
             <CalendarIcon className="h-3.5 w-3.5" />
             {t('filters.date_range')}
           </label>
           <div className="flex items-center gap-2">
-            {/* Start Date */}
+            
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -163,10 +159,8 @@ export default function BookingFilters({ onFilterChange, showStatusFilter = true
               </PopoverContent>
             </Popover>
 
-            {/* Separator */}
             <div className="h-px w-2 bg-border" />
 
-            {/* End Date */}
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -188,7 +182,6 @@ export default function BookingFilters({ onFilterChange, showStatusFilter = true
           </div>
         </div>
 
-        {/* Status Filter */}
         {showStatusFilter && (
           <div className="min-w-[180px]">
             <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">

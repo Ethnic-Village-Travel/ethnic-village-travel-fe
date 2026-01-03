@@ -86,13 +86,12 @@ export default function CardUpdate({
       if (onSubmit) {
         await onSubmit(data);
       } else {
-        // Default submit behavior
+
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => {
           formData.append(key, value);
         });
 
-        // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1500));
       }
 
@@ -101,7 +100,6 @@ export default function CardUpdate({
         message: 'Form submitted successfully!',
       });
 
-      // Always set isUpdating to false after successful submission
       setIsUpdating(false);
     } catch (error) {
       logger.error('Error submitting form:', error);

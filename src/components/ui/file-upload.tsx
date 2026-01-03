@@ -1306,9 +1306,7 @@ export {
   ItemPreview,
   ItemProgress,
   List,
-  //
   Root,
   Trigger,
-  //
   useStore as useFileUpload,
 };

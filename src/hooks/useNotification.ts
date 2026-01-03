@@ -45,13 +45,12 @@ export const useMarkAllAsRead = () => {
   return useMutation({
     mutationFn: () => notificationApi.markAllAsRead(),
     onSuccess: () => {
-      // giảm count về 0
+
       queryClient.setQueryData([NOTIFICATION_QUERY_KEY.UNREAD_COUNT], (old: any) => {
         if (!old?.data) return { data: 0, success: true };
         return { ...old, data: 0 };
       });
 
-      // giữ list, chỉ cập nhật isRead/readAt
       queryClient.setQueryData([NOTIFICATION_QUERY_KEY.LIST, { page: 0, size: 10 }], (old: any) => {
         if (!old?.data?.content) return old;
         return {
@@ -112,7 +111,7 @@ export const useNotificationSSE = () => {
               };
             },
           );
-          // tăng unread count ngay
+
           queryClient.setQueryData([NOTIFICATION_QUERY_KEY.UNREAD_COUNT], (old: any) => {
             const current = old?.data ?? 0;
             return { success: true, data: current + 1 };

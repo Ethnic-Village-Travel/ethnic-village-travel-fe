@@ -17,9 +17,6 @@ type UseChatSessionReturn = {
   saveSession: () => void;
 }
 
-/**
- * Generate UUID v4
- */
 const generateUUID = (): string => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
     const r = (Math.random() * 16) | 0;
@@ -28,9 +25,6 @@ const generateUUID = (): string => {
   });
 };
 
-/**
- * Get session ID from cookie
- */
 const getSessionFromCookie = (): string | null => {
   if (typeof document === 'undefined') return null;
 
@@ -39,9 +33,6 @@ const getSessionFromCookie = (): string | null => {
   return sessionCookie ? sessionCookie.split('=')[1] : null;
 };
 
-/**
- * Save session ID to cookie (7 days expiry)
- */
 const saveSessionToCookie = (sessionId: string): void => {
   if (typeof document === 'undefined') return;
 
@@ -50,21 +41,12 @@ const saveSessionToCookie = (sessionId: string): void => {
   document.cookie = `chatbot_session_id=${sessionId}; expires=${expiryDate.toUTCString()}; path=/; SameSite=Lax`;
 };
 
-/**
- * Clear session cookie
- */
 const clearSessionCookie = (): void => {
   if (typeof document === 'undefined') return;
 
   document.cookie = 'chatbot_session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 };
 
-/**
- * Custom hook for managing chat session with localStorage persistence
- * - Session ID: Stored in cookie (UUID)
- * - Messages: Stored in localStorage (history)
- * - Cache: Stored in localStorage (tour data, booking info, etc.)
- */
 export const useChatSession = (storageKey: string, maxMessages: number = 50): UseChatSessionReturn => {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -106,12 +88,12 @@ export const useChatSession = (storageKey: string, maxMessages: number = 50): Us
     if (!sessionId) return;
 
     try {
-      // Keep only last N messages to avoid localStorage quota issues
+
       const messagesToSave = messages.slice(-maxMessages);
       localStorage.setItem(messagesStorageKey, JSON.stringify(messagesToSave));
     } catch (error) {
       logger.error('Failed to save messages to localStorage:', error);
-      // If quota exceeded, try to save with fewer messages
+
       if (error instanceof Error && error.name === 'QuotaExceededError') {
         try {
           const reducedMessages = messages.slice(-Math.floor(maxMessages / 2));

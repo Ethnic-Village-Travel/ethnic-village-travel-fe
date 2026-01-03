@@ -49,7 +49,6 @@ export const useFilteredTours = (tabType: TabType, page: number = 0, size: numbe
   });
 };
 
-//-------------------------ADMIN--------------------------------
 export const useAdminTourList = (params: TourAdminListRequest) => {
   return useQuery({
     queryKey: [TOUR_QUERY_KEY.ADMIN_LIST, params],

@@ -24,7 +24,7 @@ export function usePaymentLink(bookingId: string, enabled = true) {
     queryKey: ['payment-link', bookingId],
     queryFn: () => paymentApi.getPaymentLink(bookingId),
     enabled: enabled && !!bookingId,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
     retry: 2,
   });
 }

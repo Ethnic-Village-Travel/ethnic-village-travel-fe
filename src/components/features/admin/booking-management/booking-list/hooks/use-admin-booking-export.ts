@@ -116,7 +116,6 @@ export function useAdminBookingExport() {
 
   const fetchAllBookings = useCallback(async (filters?: AdminBookingListRequest) => {
     try {
-      // Fetch all pages of data with current filters
       const allBookings = [];
       let currentPage = 0;
       let hasMoreData = true;
@@ -125,7 +124,7 @@ export function useAdminBookingExport() {
         const response = await bookingAdminApi.getAdminBookingList({
           ...filters,
           page: currentPage,
-          size: 100, // Large page size for efficient fetching
+          size: 100,
         });
 
         if (response.data) {
@@ -136,7 +135,6 @@ export function useAdminBookingExport() {
         }
         currentPage++;
 
-        // Safety check to prevent infinite loop
         if (currentPage > 100) {
           logger.warn('Reached maximum page limit (100), stopping fetch');
           break;

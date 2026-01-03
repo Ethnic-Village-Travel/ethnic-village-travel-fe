@@ -11,11 +11,10 @@ export type TourAssignments = {
 }
 
 type TourAssignmentStore = {
-  // State
+
   tourAssignments: TourAssignments;
   activeTourId: string | null;
 
-  // Actions
   setActiveTourId: (tourId: string | null) => void;
   setTourAssignments: (tourId: string, assignments: AssignedGuideByDate) => void;
   updateTourAssignments: (tourId: string, newAssignments: AssignedGuideByDate) => void;
@@ -23,11 +22,10 @@ type TourAssignmentStore = {
 }
 
 export const useTourAssignmentStore = create<TourAssignmentStore>(set => ({
-  // Initial state
+
   tourAssignments: {},
   activeTourId: null,
 
-  // Actions
   setActiveTourId: tourId => set({ activeTourId: tourId }),
 
   setTourAssignments: (tourId, assignments) =>

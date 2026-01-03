@@ -3,13 +3,13 @@ import { cn } from '@/utils/classnames';
 import { useTranslations } from 'next-intl';
 
 import { Checkbox } from '@/components/ui/checkbox';
-// import { DatePicker } from '@/components/ui/date-picker';
+
 import { FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
-// import { Switch } from '@/components/ui/switch';
+
 import { Textarea } from '@/components/ui/textarea';
 
 export type InputType =
@@ -119,12 +119,6 @@ export default function SharedFormField({
 
       case 'checkbox':
         return <Checkbox {...commonProps} checked={field.value} onCheckedChange={field.onChange} />;
-
-      // case 'datepicker':
-      //   return <DatePicker {...commonProps} selected={field.value} onSelect={field.onChange} />;
-
-      // case 'switch':
-      //   return <Switch {...commonProps} checked={field.value} onCheckedChange={field.onChange} />;
 
       case 'radio':
         return (

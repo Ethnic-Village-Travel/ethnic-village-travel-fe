@@ -38,7 +38,7 @@ export function getAssignedAvailableDatesTableColumns({
   isAdmin,
   setRowAction,
 }: GetAssignedAvailableDatesTableColumnsProps): ColumnDef<AssignedAvailableDateResponse>[] {
-  // Calculate booked slots from bookedPersonCounts
+
   const calculateBookedSlots = (bookedPersonCounts: { adult: number; child: number }[]) => {
     if (!bookedPersonCounts || bookedPersonCounts.length === 0) return 0;
     return bookedPersonCounts.reduce((total, booking) => {
@@ -49,7 +49,7 @@ export function getAssignedAvailableDatesTableColumns({
   const columns: ColumnDef<AssignedAvailableDateResponse>[] = [
     {
       id: 'title',
-      // accessorKey: 'tour.title',
+
       accessorFn: row => row.tour?.title,
       header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.assigned_dates.tour')} />,
       cell: ({ row }) => {
@@ -113,7 +113,7 @@ export function getAssignedAvailableDatesTableColumns({
     },
     {
       id: 'startDate',
-      // accessorKey: 'tourAvailableDate.startDate',
+
       accessorFn: row => row.tourAvailableDate?.startDate,
       header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.assigned_dates.available_date')} />,
       cell: ({ row }) => {
@@ -181,7 +181,7 @@ export function getAssignedAvailableDatesTableColumns({
     },
     {
       id: 'status',
-      // accessorKey: 'tourAvailableDate.status',
+
       accessorFn: row => row.tourAvailableDate?.status,
       header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.assigned_dates.status')} />,
       cell: ({ row }) => {
@@ -198,7 +198,6 @@ export function getAssignedAvailableDatesTableColumns({
     },
   ];
 
-  // Add employee column only for Admin
   if (isAdmin) {
     columns.push({
       id: 'guide',

@@ -15,7 +15,7 @@ export const useChatbotUser = () => {
   const [userId, setUserId] = useState<string>('');
 
   useEffect(() => {
-    // Thử lấy thông tin user từ localStorage hoặc session
+
     const tryGetUserFromStorage = () => {
       try {
         const storedUser = localStorage.getItem('user');
@@ -42,7 +42,6 @@ export const useChatbotUser = () => {
       return null;
     };
 
-    // Thử lấy từ window object (nếu có global user state)
     const tryGetUserFromWindow = () => {
       try {
         if (typeof window !== 'undefined' && (window as any).user) {

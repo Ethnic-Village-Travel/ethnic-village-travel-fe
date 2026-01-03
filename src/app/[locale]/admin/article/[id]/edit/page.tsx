@@ -9,4 +9,3 @@ type AdminArticleEditPageProps = {
 export default function AdminArticleEditPage({ params }: AdminArticleEditPageProps) {
   return <ArticleEditContent id={params.id} />;
 }
-

@@ -54,11 +54,7 @@ export function TourHeader({ sortBy, onSortByChange, viewMode, onViewModeChange,
                 {t(option.labelKey)}
               </SelectItem>
             ))}
-            {/* <SelectItem value="default">{t('sort.default')}</SelectItem>
-            <SelectItem value="price-asc">{t('sort.price_low_high')}</SelectItem>
-            <SelectItem value="price-desc">{t('sort.price_high_low')}</SelectItem>
-            <SelectItem value="rating-desc">{t('sort.rating')}</SelectItem>
-            <SelectItem value="duration-desc">{t('sort.duration')}</SelectItem> */}
+            
           </SelectContent>
         </Select>
 

@@ -25,7 +25,7 @@ export function EnterOtpPopup() {
   });
 
   const handleSubmit = (values: OtpFormValues) => {
-    // TODO: Implement OTP verification logic
+
     setEnterOtpOpen(false);
   };
 

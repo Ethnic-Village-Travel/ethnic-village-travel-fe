@@ -21,7 +21,6 @@ export function setDefaultHeaders(headers: Record<string, string>): void {
   });
 }
 
-// Request interceptor
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const authStore = useAuthStore.getState();
@@ -38,14 +37,13 @@ instance.interceptors.request.use(
   },
 );
 
-// Response interceptor
 instance.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => {
     return response;
   },
   (error: AxiosError): Promise<AxiosError> => {
     if (!error.response) {
-      // Network error
+
       return Promise.reject({
         message: 'Network error. Please check your internet connection.',
         error: 'NETWORK_ERROR',
@@ -53,7 +51,6 @@ instance.interceptors.response.use(
       });
     }
 
-    // Handle unauthorized access
     if (error.response.status === 401) {
       logout();
     }

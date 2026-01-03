@@ -14,7 +14,6 @@ type TransactionHeaderProps = {
   onBack: () => void;
 }
 
-// Status styling helper
 const getStatusStyle = (status: string) => {
   const statusMap: Record<string, string> = {
     PENDING_PAYMENT: 'bg-yellow text-foreground',
@@ -27,17 +26,15 @@ const getStatusStyle = (status: string) => {
 };
 
 const getStatusText = (status: string, tTransaction: any, tAdmin: any) => {
-  // Use admin status for COMPLETED and CANCELLED
+
   if (status === 'COMPLETED' || status === 'CANCELLED') {
     return tAdmin(`admin.status.${status}`);
   }
 
-  // Use personal transaction status for other statuses
   const statusKey = status.toLowerCase();
   return tTransaction(statusKey) || status;
 };
 
-// Action buttons based on status
 const ActionButtons: React.FC<{ booking: BookingGetResponse }> = ({ booking }) => {
   const t = useTranslations('personal.detail');
   const { toast } = useToast();
@@ -123,10 +120,10 @@ export const TransactionHeader: React.FC<TransactionHeaderProps> = ({ booking, o
 
   return (
     <div className="mb-6 w-full">
-      {/* Tour Info Section */}
+      
       <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
         <div className="flex flex-col gap-6 p-6 lg:flex-row">
-          {/* Tour Image */}
+          
           <div className="lg:w-1/3">
             <img
               src={booking.tour.imageUrl || '/images/tour-placeholder.jpg'}
@@ -139,7 +136,6 @@ export const TransactionHeader: React.FC<TransactionHeaderProps> = ({ booking, o
             />
           </div>
 
-          {/* Tour Info + Status + Actions */}
           <div className="flex flex-col justify-between lg:w-2/3">
             <div>
               <h1 className="mb-3 font-roboto text-2xl font-bold text-foreground lg:text-3xl">{booking.tour.title}</h1>
@@ -153,7 +149,6 @@ export const TransactionHeader: React.FC<TransactionHeaderProps> = ({ booking, o
               </div>
             </div>
 
-            {/* Status and Actions */}
             <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border pt-4">
               <div className="flex flex-wrap items-center gap-3">
                 <Badge className={`border px-3 py-1 font-medium ${getStatusStyle(booking.status)}`}>

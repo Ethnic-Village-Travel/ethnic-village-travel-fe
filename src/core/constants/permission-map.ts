@@ -4,7 +4,7 @@ export const ACCOUNT_LOCKED = 'ACCOUNT_LOCKED';
 export const ADMIN_DASHBOARD_READ = 'ADMIN_DASHBOARD_READ';
 
 export const PermissionMap: { [key: string]: string[] } = {
-  //pathname
+
   [RouteConstant.admin_dashboard]: [ADMIN_DASHBOARD_READ],
   [RouteConstant.admin_user]: ['ADMIN_USER_READ'],
   [RouteConstant.admin_user_create]: ['ADMIN_USER_WRITE'],
@@ -29,7 +29,6 @@ export const PermissionMap: { [key: string]: string[] } = {
   [RouteConstant.admin_chatbot_create]: ['ADMIN_CHATBOT_WRITE'],
   [RouteConstant.admin_chatbot_edit]: ['ADMIN_CHATBOT_WRITE'],
 
-  //function
   [RouteConstant.admin_employee]: ['ADMIN_EMPLOYEE_READ'],
   [RouteConstant.admin_category]: ['ADMIN_CATEGORY_READ'],
   [RouteConstant.admin_category_create]: ['ADMIN_CATEGORY_WRITE'],

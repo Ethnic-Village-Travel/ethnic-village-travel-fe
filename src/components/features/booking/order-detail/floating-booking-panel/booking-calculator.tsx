@@ -64,12 +64,10 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
       return applyPromotionToTotal(totalPrice, promotion);
     }
 
-    // Otherwise, check if tour has auto-applied direct discount
     if (booking.tour.promotions?.length) {
       return calculateTotalPriceWithPromotion(quantities, booking.tour);
     }
 
-    // No promotion
     return totalPrice;
   }, [totalPrice, promotion, quantities, booking.tour]);
 

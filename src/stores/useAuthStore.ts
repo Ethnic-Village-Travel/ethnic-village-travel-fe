@@ -59,7 +59,6 @@ export const useAuthStore = create<AuthState>()(
       setEnterOtpOpen: open => set({ enterOtpOpen: open }),
       setOtpEmail: email => set({ otpEmail: email }),
       logout: () => {
-        // Clear cookies
         if (typeof window !== 'undefined') {
           setCookie('accessToken', '', -1);
           setCookie('refreshToken', '', -1);

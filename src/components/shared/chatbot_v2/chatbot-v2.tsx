@@ -12,16 +12,6 @@ type ChatbotV2Props = {
   config?: Partial<ChatbotV2Config>;
 }
 
-/**
- * Chatbot V2 - Using FastAPI from main.py
- *
- * Features:
- * - Session management with localStorage persistence
- * - Connects to FastAPI backend (main.py)
- * - Automatic session restoration
- * - Typing indicator
- * - Message history
- */
 const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -37,7 +27,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     chatbotConfig.sessionConfig.maxMessages,
   );
 
-  // Auto-scroll to bottom when messages change
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -137,7 +126,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     }
   };
 
-  // Reset chat session
   const handleReset = async () => {
     if (!confirm('Bạn có chắc muốn xóa toàn bộ lịch sử chat?')) return;
 
@@ -156,7 +144,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     }
   };
 
-  // Typing indicator component
   const TypingIndicator = () => (
     <div className="flex items-start space-x-2">
       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-white">
@@ -173,19 +160,18 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     </div>
   );
 
-  // Format message content (support line breaks and clickable links)
   const formatContent = (content: string) => {
-    // Regular expression to detect URLs
+
     const urlRegex = /(https?:\/\/[^\s]+)/g;
 
     return content.split('\n').map((line, lineIndex) => {
-      // Split line by URLs
+
       const parts = line.split(urlRegex);
 
       return (
         <React.Fragment key={lineIndex}>
           {parts.map((part, partIndex) => {
-            // Check if this part is a URL
+
             if (urlRegex.test(part)) {
               return (
                 <a
@@ -210,7 +196,7 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
 
   return (
     <div className={`fixed ${getChatbotPosition(chatbotConfig.position)} z-50`}>
-      {/* Chat Toggle Button */}
+      
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -225,12 +211,11 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
         </button>
       )}
 
-      {/* Chatbot Window */}
       {isOpen && (
         <div
           className={`${chatbotConfig.theme.backgroundColor} rounded-lg border shadow-2xl ${chatbotConfig.theme.borderColor} flex h-[600px] w-[400px] flex-col transition-all duration-300`}
         >
-          {/* Header */}
+          
           <div
             className={`${chatbotConfig.theme.primaryColor} flex items-center justify-between rounded-t-lg p-4 text-white shadow-md`}
           >
@@ -262,13 +247,13 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
               </button>
             </div>
           </div>
-          {/* API Error Alert */}
+          
           {apiError && (
             <div className="border-b border-red-200 bg-red-50 p-2 text-center">
               <p className="text-xs text-red-600">{apiError}</p>
             </div>
           )}
-          {/* Messages Container */}
+          
           {isLoading ? (
             <div className="flex flex-1 items-center justify-center bg-gray-50">
               <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
@@ -303,7 +288,7 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
                   key={index}
                   className={`flex items-start space-x-2 ${msg.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
                 >
-                  {/* Avatar */}
+                  
                   <div
                     className={`flex h-8 min-w-8 items-center justify-center rounded-full text-xs text-white shadow-md ${
                       msg.role === 'user'
@@ -314,7 +299,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
                     {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                   </div>
 
-                  {/* Message bubble */}
                   <div className="flex max-w-[75%] flex-col">
                     <div
                       className={`rounded-lg p-3 shadow-sm ${
@@ -340,7 +324,7 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
               {showTypingIndicator && <TypingIndicator />}
             </div>
           )}
-          {/* Input Area */}
+          
           <div className="rounded-b-lg border-t border-gray-200 bg-white p-4 shadow-inner">
             <div className="flex space-x-2">
               <input
@@ -362,17 +346,7 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
               </button>
             </div>
           </div>
-          {/* Cache Debug Panel (Development Only)
-          {process.env.NODE_ENV === 'development' && Object.keys(cache).length > 0 && (
-            <details className="border-t border-gray-200 bg-gray-50 p-2">
-              <summary className="cursor-pointer text-xs font-medium text-gray-600 hover:text-gray-800">
-                🔍 Cache Data (Dev Only)
-              </summary>
-              <div className="mt-2 max-h-40 overflow-auto rounded border border-gray-200 bg-white p-2">
-                <pre className="text-xs text-gray-700">{JSON.stringify(cache, null, 2)}</pre>
-              </div>
-            </details>
-          )} */}
+          
         </div>
       )}
     </div>

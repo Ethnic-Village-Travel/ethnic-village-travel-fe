@@ -23,7 +23,6 @@ export const useApiValidatePromotion = () => {
   });
 };
 
-// Admin hooks
 export const PROMOTION_QUERY_KEY = {
   LIST: 'promotion-admin-list',
   DETAIL: 'promotion-admin-detail',
@@ -78,4 +77,3 @@ export const useDeleteAdminPromotion = () => {
     },
   });
 };
-

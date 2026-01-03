@@ -98,13 +98,13 @@ export type TourCreateRequest = {
   title: string;
   imageUrl: string;
   overview?: string;
-  status?: string; // TourStatus, dùng string cho linh hoạt
+  status?: string;
   duration: number;
   pickUpLocationId: string;
   adultPrice: number;
   childPrice: number;
   contacts?: any;
-  timeline: any; // JsonNode, dùng any hoặc object tuỳ UI
+  timeline: any;
   availableSlots?: any;
   ethnicIds?: string[];
   locationIds?: string[];

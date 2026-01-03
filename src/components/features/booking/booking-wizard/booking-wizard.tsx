@@ -131,7 +131,6 @@ function BookingWizardContent({ onComplete, onCancel, showSidePanel = true }: Bo
     }
   }, []);
 
-  // Auto-fetch best direct discount when wizard initializes
   useEffect(() => {
     const fetchDirectDiscount = async () => {
       if (bookingData.tourId && !bookingData.promotion) {
@@ -148,7 +147,7 @@ function BookingWizardContent({ onComplete, onCancel, showSidePanel = true }: Bo
             });
           }
         } catch (error) {
-          // Silently handle - no direct discount available is not an error
+
         }
       }
     };

@@ -62,5 +62,3 @@ export default function ArticleDetailHeader({ article }: ArticleDetailHeaderProp
     </header>
   );
 }
-
-

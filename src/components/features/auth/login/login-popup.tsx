@@ -45,7 +45,6 @@ export function LoginPopup() {
       if (response.success && response.data) {
         const { accessToken, refreshToken, user } = response.data;
 
-        // Đóng tất cả popup auth ngay lập tức
         closeAllPopups();
 
         setAuth({

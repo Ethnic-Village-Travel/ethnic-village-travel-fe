@@ -22,7 +22,7 @@ export function TourDetailContent({ tour }: TourDetailContentProps) {
 
   return (
     <div className="w-full">
-      {/* Tabs */}
+      
       <div className="relative mb-[30px] border-b border-gray-200 pb-3">
         <div className="flex gap-[30px]">
           {TABS.map(tab => (
@@ -45,7 +45,6 @@ export function TourDetailContent({ tour }: TourDetailContentProps) {
         />
       </div>
 
-      {/* Content */}
       {activeTab === 'overview_tab' ? <TourDetailOverview tour={tour} /> : <TourDetailReviews tour={tour} />}
     </div>
   );

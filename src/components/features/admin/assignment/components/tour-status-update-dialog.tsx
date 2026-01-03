@@ -38,7 +38,6 @@ export function TourStatusUpdateDialog({ open, onOpenChange, assignment }: TourS
 
   const currentStatus = assignment.tourAvailableDate.status;
 
-  // Determine available next statuses based on current status
   const getAvailableStatuses = (): TourAvailableDateStatus[] => {
     if (currentStatus === TourAvailableDateStatus.AVAILABLE || currentStatus === TourAvailableDateStatus.FULLY_BOOKED) {
       return [TourAvailableDateStatus.ONGOING];

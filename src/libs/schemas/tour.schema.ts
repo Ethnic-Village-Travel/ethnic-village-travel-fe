@@ -50,7 +50,7 @@ export const createTourSchema = (t: (key: string) => string, isUpdate: boolean =
         .array(
           z.object({
             startDate: z.date({ required_error: t('tourCreate.validation.startDateRequired') }),
-            // endDate is calculated from startDate + duration on the fly
+
             maxSlots: z.number().min(1, { message: t('tourCreate.validation.maxSlotsMin') }),
           }),
         )
@@ -58,7 +58,7 @@ export const createTourSchema = (t: (key: string) => string, isUpdate: boolean =
     })
     .refine(
       data => {
-        // Validate published date constraint
+
         if (isUpdate) return true;
         if (!data.publishedDate) return true;
         const currentDate = new Date();

@@ -10,7 +10,6 @@ type BookingInfoBoxProps = {
   booking: BookingGetResponse;
 }
 
-// Utility components
 const InfoRow: React.FC<{
   label: string;
   value: string;
@@ -28,12 +27,10 @@ const InfoRow: React.FC<{
 export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
   const t = useTranslations('personal.detail');
 
-  // Format person count display
   const formatPersonCount = (count: any) => {
     if (!count) return t('format.not_specified');
     const parts = [];
 
-    // Handle both 'adult'/'adults' and 'child'/'children' formats
     const adultCount = count.adult || count.adults || 0;
     const childCount = count.child || count.children || 0;
     const infantCount = count.infant || count.infants || 0;
@@ -45,7 +42,6 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
     return parts.join(', ') || t('format.not_specified');
   };
 
-  // Format currency
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -53,7 +49,6 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
     }).format(amount);
   };
 
-  // Format date
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('vi-VN', {
       weekday: 'short',
@@ -63,7 +58,6 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
     });
   };
 
-  // Format date time
   const formatDateTime = (dateString: string) => {
     return new Date(dateString).toLocaleString('vi-VN', {
       year: 'numeric',
@@ -85,14 +79,13 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
-        {/* Booking Details */}
+        
         <InfoRow label={t('booking_info.booking_id')} value={`#${booking.id.slice(-8)}`} />
         <InfoRow label={t('booking_info.booking_date')} value={formatDate(booking.bookingDate)} />
         <InfoRow label={t('booking_info.start_date')} value={formatDate(booking.startDate)} />
         <InfoRow label={t('booking_info.end_date')} value={formatDate(booking.endDate)} />
         <InfoRow label={t('booking_info.guest_count')} value={formatPersonCount(booking.personCount)} />
 
-        {/* Pricing */}
         <Separator className="my-4" />
         <div>
           <h4 className="mb-3 font-roboto font-semibold text-foreground">{t('booking_info.payment_info')}</h4>
@@ -119,7 +112,6 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
           />
         </div>
 
-        {/* Payment Expired Date */}
         {booking.paymentExpiredDate && booking.status === 'PENDING_PAYMENT' && (
           <div className="mt-4 rounded-lg border border-yellow/30 bg-yellow/10 p-3">
             <p className="text-sm text-foreground">
@@ -129,7 +121,6 @@ export const BookingInfoBox: React.FC<BookingInfoBoxProps> = ({ booking }) => {
           </div>
         )}
 
-        {/* Additional Information */}
         {booking.additionalInformation && (
           <div className="mt-4 rounded-lg bg-muted p-3">
             <p className="mb-1 text-sm text-muted-foreground">{t('booking_info.additional_info')}:</p>

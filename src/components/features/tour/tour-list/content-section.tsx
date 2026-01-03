@@ -57,7 +57,6 @@ export default function TourContentSection() {
         disabled={isEmpty}
       />
 
-      {/* Show results count when not loading and has results */}
       {!isLoading && tours.length > 0 && (
         <div className="mb-4">
           <p className="text-sm text-gray-600">{t('results_count', { count: tours.length })}</p>

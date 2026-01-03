@@ -47,7 +47,6 @@ export function SignupPopup() {
           variant: 'default',
         });
 
-        // Đóng popup đăng ký và mở popup đăng nhập
         setSignupOpen(false);
         setLoginOpen(true);
         form.reset();

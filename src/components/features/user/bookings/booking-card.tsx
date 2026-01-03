@@ -36,7 +36,6 @@ type BookingCardProps = {
   index?: number;
 }
 
-// Status configuration with unified design system colors
 const STATUS_CONFIG: Record<
   string,
   {
@@ -84,7 +83,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
   const router = useRouter();
   const detailUrl = `/${locale}${RouteConstant.personal_transaction_detail.replace(':id', booking.id)}`;
 
-  // Payment hooks
   const { toast } = useToast();
   const { createPayment, isCreatingPayment } = usePayment();
   const { data: existingPaymentLink, isLoading: isLoadingPaymentLink } = usePaymentLink(
@@ -94,12 +92,10 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
   const { mutateAsync: cancelBooking, isPending: isCancelling } = useApiBookingCancel(booking.id);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Guest count
   const guestCount = booking.personCount
     ? Object.values(booking.personCount).reduce((sum, v) => sum + (typeof v === 'number' ? v : 0), 0)
     : 1;
 
-  // Location
   const location =
     booking.tour?.locations && booking.tour.locations.length > 0
       ? booking.tour.locations[0].city || booking.tour.locations[0].province
@@ -141,7 +137,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
 
   const deadlineInfo = getPaymentDeadlineInfo();
 
-  // Payment handler
   const handlePayNow = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -154,7 +149,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
         return;
       }
 
-      // Create new payment link if none exists
       const paymentData = await createPayment(booking.id);
 
       if (paymentData?.checkoutUrl) {
@@ -173,7 +167,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
     }
   };
 
-  // Cancel handler
   const handleCancel = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -220,7 +213,7 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
           statusConfig.borderColor,
         )}
       >
-        {/* Urgent deadline warning banner */}
+        
         {deadlineInfo?.urgent && !deadlineInfo.expired && (
           <div className="flex items-center justify-between bg-destructive px-4 py-2 text-sm font-medium text-white">
             <div className="flex items-center gap-2">
@@ -234,7 +227,7 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
         )}
 
         <div className="flex flex-col lg:flex-row">
-          {/* Image Section */}
+          
           <div className="relative h-40 w-full flex-shrink-0 overflow-hidden lg:h-auto lg:w-48">
             <img
               src={booking.tour?.imageUrl || '/images/placeholder.jpg'}
@@ -244,9 +237,8 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
           </div>
 
-          {/* Content Section */}
           <div className="flex flex-1 flex-col p-4">
-            {/* Header: Title + Status */}
+            
             <div className="mb-3 flex items-start justify-between gap-3">
               <div className="flex-1">
                 <h3 className="mb-1 text-base font-bold leading-tight text-foreground transition-colors group-hover:text-primary">
@@ -257,7 +249,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
                 </p>
               </div>
 
-              {/* Status Badge */}
               <div
                 className={cn(
                   'flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-semibold',
@@ -271,9 +262,8 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
               </div>
             </div>
 
-            {/* Info Grid */}
             <div className="mb-3 grid grid-cols-2 gap-2 lg:grid-cols-4">
-              {/* Location */}
+              
               <div className="flex items-center gap-2 rounded-md bg-muted/50 px-2 py-1.5">
                 <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
@@ -281,7 +271,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
                 </div>
               </div>
 
-              {/* Date */}
               <div className="flex items-center gap-2 rounded-md bg-muted/50 px-2 py-1.5">
                 <CalendarDays className="h-3.5 w-3.5 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
@@ -291,7 +280,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
                 </div>
               </div>
 
-              {/* Duration */}
               <div className="flex items-center gap-2 rounded-md bg-muted/50 px-2 py-1.5">
                 <Clock className="h-3.5 w-3.5 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
@@ -301,7 +289,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
                 </div>
               </div>
 
-              {/* Guests */}
               <div className="flex items-center gap-2 rounded-md bg-muted/50 px-2 py-1.5">
                 <Users className="h-3.5 w-3.5 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
@@ -312,9 +299,8 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
               </div>
             </div>
 
-            {/* Price + Actions */}
             <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-border pt-3">
-              {/* Price Section */}
+              
               <div className="flex items-baseline gap-2">
                 <span className="text-lg font-bold text-primary">
                   {formatCurrency(booking.totalPrice, { locale: locale as 'vi' | 'en' | 'ko' })}
@@ -328,7 +314,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
                 )}
               </div>
 
-              {/* Action Buttons */}
               <div className="flex items-center gap-2">
                 {booking.status === 'PENDING_PAYMENT' && !isPaymentExpired && (
                   <button

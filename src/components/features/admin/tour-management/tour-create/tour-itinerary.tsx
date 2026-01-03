@@ -21,7 +21,6 @@ export default function TourItinerary({ form }: TourItineraryProps) {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
-  // Watch itinerary to trigger re-renders
   const itinerary = form.watch('itinerary');
 
   const handleAddOrUpdateItinerary = () => {

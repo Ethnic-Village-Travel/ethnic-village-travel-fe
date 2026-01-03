@@ -1,6 +1,3 @@
-/**
- * TypeScript types matching FastAPI Pydantic models from main.py
- */
 
 export type MessageItem = {
   role: 'user' | 'assistant';
@@ -75,18 +72,12 @@ export type HealthResponse = {
   version: string;
 }
 
-/**
- * Frontend message type for UI display
- */
 export type Message = {
   role: 'user' | 'assistant';
   content: string;
   timestamp: number;
 }
 
-/**
- * Session storage structure for localStorage
- */
 export type ChatSession = {
   session_id: string;
   messages: Message[];

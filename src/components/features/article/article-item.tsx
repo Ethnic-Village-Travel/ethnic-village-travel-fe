@@ -53,7 +53,7 @@ const ArticleItem = ({
         className,
       )}
     >
-      {/* Image Section */}
+      
       <Link
         href={`${RouteConstant.article_detail.replace(':slug', slug)}`}
         className={cn('relative shrink-0 overflow-hidden', {
@@ -77,19 +77,16 @@ const ArticleItem = ({
         </div>
       </Link>
 
-      {/* Content Section */}
       <CardContent className="flex flex-1 flex-col p-5">
-        {/* Published Date */}
+        
         {formattedDate ? (
           <div className="mb-2 text-sm text-gray-500">{t('published_on', { date: formattedDate })}</div>
         ) : null}
 
-        {/* Title */}
         <Link href={`${RouteConstant.article_detail.replace(':slug', slug)}`} className="mb-3">
           <h3 className="line-clamp-2 text-xl font-bold transition-colors hover:text-primary">{title}</h3>
         </Link>
 
-        {/* Tags */}
         {tags && tags.length > 0 && (
           <div className="mb-3 flex flex-wrap gap-1.5">
             {tags.map(tag => (
@@ -108,10 +105,8 @@ const ArticleItem = ({
           </div>
         )}
 
-        {/* Summary */}
         {summary && <p className="mb-auto line-clamp-3 text-sm text-gray-600">{summary}</p>}
 
-        {/* Meta Info */}
         <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
           <div className="flex w-full items-center justify-between gap-4">
             <div className="flex items-center gap-1">

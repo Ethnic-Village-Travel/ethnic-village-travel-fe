@@ -79,19 +79,17 @@ export function ReviewItem({
         <>
           <div className="flex items-start justify-between">
             <div className="flex items-start gap-4">
-              {/* Avatar */}
+              
               <div className="relative h-full w-10 overflow-hidden rounded-full bg-gray-100">
                 {userAvatar && <img src={userAvatar} alt={userName} className="object-cover" />}
               </div>
 
-              {/* User info */}
               <div className="flex flex-col">
                 <h4 className="font-semibold">{userName}</h4>
                 <StarRating average={review.rating} readOnly />
               </div>
             </div>
 
-            {/* Actions dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -142,10 +140,8 @@ export function ReviewItem({
             </DropdownMenu>
           </div>
 
-          {/* Review content */}
           <p className="text-gray-600">{review.content}</p>
 
-          {/* Review metadata */}
           <div className="flex items-center gap-2 text-sm text-gray-500">
             {review.isPinned && (
               <>

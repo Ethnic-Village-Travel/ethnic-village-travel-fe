@@ -16,14 +16,13 @@ export function TourDetailOverview({ tour }: TourDetailOverviewProps) {
 
   return (
     <div className="flex flex-col gap-[30px]">
-      {/* Trip Overview */}
+      
       <div className="flex flex-col gap-[20px]">
         <h3 className="text-[20px] font-bold">{t('title')}</h3>
         <p className="text-[16px]">{tour.overview || t('no_overview')}</p>
         <div className="h-[1px] w-full bg-gray-20" />
       </div>
 
-      {/* Included/Excluded */}
       <div className="flex flex-col gap-[20px]">
         <h3 className="text-[20px] font-bold">{t('included_excluded')}</h3>
         <div className="grid grid-cols-2 gap-x-[30px]">
@@ -51,7 +50,6 @@ export function TourDetailOverview({ tour }: TourDetailOverviewProps) {
         <div className="h-[1px] w-full bg-gray-20" />
       </div>
 
-      {/* Trip Plan */}
       <div className="flex flex-col gap-[20px]">
         <h3 className="text-[20px] font-bold">{t('trip_plan')}</h3>
         <Accordion type="single" collapsible defaultValue="day-1" className="w-full">

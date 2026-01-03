@@ -30,14 +30,13 @@ export default function PaymentCancelPage() {
       try {
         setIsCancelling(true);
 
-        // Soft cancel - don't block UI if fails (Tier 2)
         await bookingApi.cancelByOrderCode(orderCode).catch((error) => {
           logger.warn('Soft cancel failed, scheduler will handle it (Tier 3):', error);
         });
 
         setCancelled(true);
       } catch (error) {
-        // Graceful degradation - scheduler will cleanup
+
         logger.warn('Error during soft cancel:', error);
       } finally {
         setIsCancelling(false);

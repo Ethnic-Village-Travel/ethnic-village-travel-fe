@@ -16,12 +16,10 @@ import { ToursTableActionBar } from './tour-table-action-bar';
 import { getTourTableColumns } from './tour-table-columns';
 import { TourTableFilter } from './tour-table-filter';
 
-// Local interface for DataTable props
 export function ToursTable() {
   const queryConfig = useQueryConfig();
   const t = useTranslations('admin');
 
-  // Use useFilteredTourList with a custom page size for admin table
   const { tours, totalPages, isLoading } = useAdminFilteredTourList(queryConfig.perPage || 10);
 
   const [rowAction, setRowAction] = React.useState<{
@@ -67,20 +65,14 @@ export function ToursTable() {
           </div>
         </div>
       </DataTable>
-      {/* TODO: Implement UpdateTourSheet
-      <UpdateTourSheet
-        open={rowAction?.variant === 'update'}
-        onOpenChange={() => setRowAction(null)}
-        tour={rowAction?.row.original ?? null}
-      />
-      */}
+      
       <DeleteTourDialog
         open={rowAction?.action === 'delete'}
         onOpenChange={() => setRowAction(null)}
         tours={rowAction?.row ? [rowAction.row] : []}
         showTrigger={false}
         onSuccess={() => {
-          // TODO: Implement refresh logic here
+
           setRowAction(null);
         }}
       />

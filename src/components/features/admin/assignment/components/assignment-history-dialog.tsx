@@ -172,4 +172,3 @@ export function AssignmentHistoryDialog({ open, onOpenChange, request }: Assignm
     </Dialog>
   );
 }
-

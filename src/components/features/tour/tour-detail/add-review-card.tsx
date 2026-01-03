@@ -26,7 +26,7 @@ export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddRevi
     e.preventDefault();
     if (rating === 0) return;
     onSubmit({ rating, content });
-    // Reset form
+
     setRating(0);
     setContent('');
   };
@@ -68,10 +68,9 @@ export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddRevi
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      {/* User info */}
+      
       {renderUser()}
 
-      {/* Rating */}
       <div className="flex flex-col gap-1">
         <span className="text-sm text-gray-500">{t('your_rating')}</span>
         <div className="flex items-center gap-1">
@@ -98,7 +97,6 @@ export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddRevi
         </div>
       </div>
 
-      {/* Comment */}
       <div className="flex flex-col gap-2">
         <span className="text-sm text-gray-500">{t('your_review')}</span>
         <Textarea
@@ -110,7 +108,6 @@ export function AddReviewCard({ review, onSubmit, onCancel, isLoading }: AddRevi
         />
       </div>
 
-      {/* Submit */}
       <div className="flex justify-end gap-4">
         {review && (
           <Button variant="outline" type="button" onClick={onCancel}>

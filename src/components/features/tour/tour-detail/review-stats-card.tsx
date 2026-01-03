@@ -15,7 +15,7 @@ export function ReviewStatsCard({ stats }: ReviewStatsCardProps) {
   const t = useTranslations('tour.detail.reviews');
   const { totalReviews, averageRating, ratingCounts } = stats;
   const percentages = calculateRatingPercentage(ratingCounts, totalReviews);
-  const ratings = [5, 4, 3, 2, 1]; // Display in descending order
+  const ratings = [5, 4, 3, 2, 1];
 
   return (
     <div className="flex flex-col gap-8 rounded-2xl bg-primary-10 px-6 py-4">

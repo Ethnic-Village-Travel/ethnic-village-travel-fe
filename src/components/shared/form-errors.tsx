@@ -1,7 +1,7 @@
 import { FieldErrors } from 'react-hook-form';
 
 type FormErrorsProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   errors: FieldErrors<any>;
 }
 

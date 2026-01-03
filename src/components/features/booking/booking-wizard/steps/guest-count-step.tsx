@@ -131,7 +131,6 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
   const availableSlots = bookingData.availableSlots || 0;
   const effectiveSlots = availableSlots > 0 ? availableSlots : Number.MAX_SAFE_INTEGER;
 
-  // Use auto-applied promotion from bookingData, fallback to tour promotions
   const promotion = bookingData.promotion || tourInfo?.promotions?.[0] || null;
 
   const { originalPrice, discountedPrice, discountAmount } = useMemo(

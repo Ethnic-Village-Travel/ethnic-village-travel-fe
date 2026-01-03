@@ -1,16 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import { TourStatusEnum } from '@/core/enum/tour.enum';
 import { currencyToNumber, formatCurrency } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ImageIcon, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import logger from '@/libs/logger';
 
 import { TourCreateRequest } from '@/types/tour.type';
 import { createTourSchema, TourCreateFormValues } from '@/libs/schemas/tour.schema';
@@ -222,7 +220,9 @@ export default function TourEditContent({ tourId }: TourEditContentProps) {
                           }}
                         />
                         {uploading && (
-                          <span className="text-xs text-muted-foreground">{t('uploading' as any) || 'Uploading...'}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {t('uploading' as any) || 'Uploading...'}
+                          </span>
                         )}
                       </div>
                       {field.value && (

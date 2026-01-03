@@ -32,11 +32,6 @@ export const tourAssignmentApi = {
     return data;
   },
 
-  /**
-   * Get assigned available dates with role-based filtering and pagination
-   * Tour Agency: only see their own assignments
-   * Admin: see all assignments with optional filters
-   */
   getAssignedAvailableDates: async (
     payload: AssignedAvailableDatesRequest,
   ): Promise<ApiResponse<AssignedAvailableDateListResponse>> => {
@@ -44,7 +39,7 @@ export const tourAssignmentApi = {
       const { data } = await api.post(AdminAPI.TOUR_ASSIGNMENT.ASSIGNED_AVAILABLE_DATES, payload);
       return data;
     } catch (error) {
-      // Enhanced error handling for specific cases
+
       if (error instanceof Error) {
         throw new Error(`Failed to fetch assigned available dates: ${error.message}`);
       }

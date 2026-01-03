@@ -32,7 +32,6 @@ export function OrderDetail() {
       });
     }
 
-    // Redirect to payment page if booking is pending payment
     if (
       booking &&
       'status' in booking &&

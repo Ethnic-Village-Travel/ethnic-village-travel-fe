@@ -31,20 +31,6 @@ type ChatbotV3Props = {
   config?: Partial<ChatbotV3Config>;
 }
 
-/**
- * Chatbot V3 - Modern Minimal UI with Enhanced UX
- *
- * Features:
- * - Fully responsive (mobile-first)
- * - Smooth animations with framer-motion
- * - Markdown support with syntax highlighting
- * - Message actions (copy, regenerate)
- * - Auto-resizing textarea
- * - Keyboard shortcuts (ESC to close, Shift+Enter for newline)
- * - Focus management and accessibility
- * - Unread badge notification
- * - Toast notifications for actions
- */
 const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -64,7 +50,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     chatbotConfig.sessionConfig.maxMessages,
   );
 
-  // Auto-scroll to bottom when messages change
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -75,7 +60,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     scrollToBottom();
   }, [messages, showTypingIndicator, isOpen]);
 
-  // Track unread messages
   useEffect(() => {
     if (!isOpen && messages.length > lastMessageCountRef.current) {
       const newMessages = messages.length - lastMessageCountRef.current;
@@ -84,21 +68,18 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     lastMessageCountRef.current = messages.length;
   }, [messages, isOpen]);
 
-  // Clear unread count when opening
   useEffect(() => {
     if (isOpen) {
       setUnreadCount(0);
     }
   }, [isOpen]);
 
-  // Focus input when opening
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isOpen]);
 
-  // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -250,7 +231,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     }
   };
 
-  // Typing indicator component
   const TypingIndicator = () => (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -309,7 +289,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     <>
       <Toaster position="top-center" richColors />
       <div className={`fixed ${getChatbotPosition(chatbotConfig.position)} z-50`}>
-        {/* Chat Toggle Button */}
         <AnimatePresence>
           {!isOpen && (
             <motion.button
@@ -340,7 +319,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
           )}
         </AnimatePresence>
 
-        {/* Chatbot Window */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -352,7 +330,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                 h-[600px] w-[400px] max-sm:fixed max-sm:inset-4 max-sm:h-auto max-sm:w-auto
                 md:h-[600px] md:w-[400px]`}
             >
-              {/* Header */}
               <div
                 className={`${chatbotConfig.theme.primaryColor} flex items-center justify-between rounded-t-lg p-4 text-white shadow-md`}
               >
@@ -389,7 +366,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                 </div>
               </div>
 
-              {/* API Error Alert */}
               {apiError && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
@@ -401,7 +377,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                 </motion.div>
               )}
 
-              {/* Messages Container */}
               {isLoading ? (
                 <div className="flex flex-1 items-center justify-center bg-gray-50">
                   <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
@@ -447,7 +422,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                         transition={{ duration: 0.2 }}
                         className={`group flex items-start space-x-2 ${msg.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
                       >
-                        {/* Avatar */}
                         <div
                           className={`flex h-8 min-w-8 items-center justify-center rounded-full text-xs text-white shadow-md ${
                             msg.role === 'user'
@@ -458,7 +432,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                           {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                         </div>
 
-                        {/* Message bubble */}
                         <div className="flex max-w-[75%] flex-col">
                           <div
                             className={`rounded-lg p-3 shadow-sm ${
@@ -478,7 +451,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                             )}
                           </div>
 
-                          {/* Message Actions */}
                           <div className="mt-1 flex items-center justify-between px-1">
                             <p className={`text-xs ${msg.role === 'user' ? 'text-blue-400' : 'text-gray-400'}`}>
                               {new Date(msg.timestamp).toLocaleTimeString('vi-VN', {
@@ -519,7 +491,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                 </div>
               )}
 
-              {/* Input Area */}
               <div className="rounded-b-lg border-t border-gray-200 bg-white p-4 shadow-inner">
                 <div className="flex space-x-2">
                   <TextareaAutosize

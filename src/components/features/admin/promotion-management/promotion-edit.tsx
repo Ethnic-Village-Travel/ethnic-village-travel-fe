@@ -30,7 +30,6 @@ export default function PromotionEditContent({ id }: PromotionEditContentProps) 
   const updatePromotion = useUpdateAdminPromotion();
   const { toast } = useToast();
 
-  // Fetch tours for selection
   const { data: toursData, isLoading: isLoadingTours } = useQuery({
     queryKey: ['tours-for-promotion'],
     queryFn: () => tourApi.getTourList({ page: 0, size: 1000 }),
@@ -229,7 +228,7 @@ export default function PromotionEditContent({ id }: PromotionEditContentProps) 
                   onChange={e =>
                     setFormData(prev => ({ ...prev, usageLimit: parseInt(e.target.value) || 1 }))
                   }
-                  min={promotion.usedCount} // Cannot set below current usage
+                  min={promotion.usedCount}
                 />
               </div>
 

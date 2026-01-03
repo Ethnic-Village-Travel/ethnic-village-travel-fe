@@ -1,6 +1,6 @@
 export type FilterItem = {
   label: string;
-  value: string; // Used for URL query params
+  value: string;
   apiValue?:
     | {
         min?: number;
@@ -8,7 +8,7 @@ export type FilterItem = {
       }
     | string
     | number
-    | boolean; // Used for API parameters
+    | boolean;
   id?: string;
 };
 
@@ -45,9 +45,7 @@ export const FILTERS: Record<string, FilterConfig> = {
     name: 'p',
     items: [
       { label: 'filters.popular.on_sale', value: 'on_sale', apiValue: true },
-      // { label: '8+ Ấn tượng', value: 'rating_gte_8' },
-      // { label: 'Được yêu thích nhất', value: 'most_favorited' },
-      // { label: '7+ Days', value: 'duration_gte_7' },
+
     ],
     maxVisible: 4,
   },

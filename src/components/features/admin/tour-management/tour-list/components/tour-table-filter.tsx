@@ -53,7 +53,6 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
         }
       });
 
-      // Reset to page 1 when filters change
       params.set('page', '0');
 
       const newUrl = `?${params.toString()}`;
@@ -63,7 +62,6 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
     [router, searchParams],
   );
 
-  // Handle status filter change
   const handleStatusChange = React.useCallback(
     (values: string[]) => {
       updateFilters({ status: values.length > 0 ? values : undefined });
@@ -87,10 +85,9 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
   return (
     <div className={`flex w-full items-start justify-between gap-2 p-1 ${className || ''}`}>
       <div className="flex flex-1 flex-wrap items-center gap-2">
-        {/* Search Input */}
+        
         <SearchFilter title={t('tour.list.search_tour')} defaultValue={currentSearch} onChange={updateFilters} />
 
-        {/* Status Filter */}
         <StatusFilter
           title={t('tour.list.status')}
           options={statusOptions}
@@ -98,7 +95,6 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
           onSelectionChange={handleStatusChange}
         />
 
-        {/* Ethnic Filter */}
         <EthnicFilter
           title={t('tour.list.ethnic')}
           options={ethnicOptions}
@@ -106,7 +102,6 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
           onSelectionChange={handleEthnicChange}
         />
 
-        {/* Reset Button */}
         {hasActiveFilters && (
           <Button
             aria-label={t('tour.list.reset_filters')}

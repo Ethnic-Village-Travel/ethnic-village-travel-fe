@@ -37,33 +37,6 @@ export function ToursTableActionBar({ table }: ToursTableActionBarProps) {
 
   const onTourUpdate = () => {};
 
-  // const onTourUpdate = React.useCallback(
-  //   ({
-  //     field,
-  //     value,
-  //   }: {
-  //     field: "status" | "priority";
-  //     value: Tour["status"] | Tour["priority"];
-  //   }) => {
-  //     setCurrentAction(
-  //       field === "status" ? "update-status" : "update-priority",
-  //     );
-  //     startTransition(async () => {
-  //       const { error } = await updateTours({
-  //         ids: rows.map((row) => row.original.id),
-  //         [field]: value,
-  //       });
-
-  //       if (error) {
-  //         toast.error(error);
-  //         return;
-  //       }
-  //       toast.success("Tours updated");
-  //     });
-  //   },
-  //   [rows],
-  // );
-
   const onTourExport = React.useCallback(() => {
     setCurrentAction('export');
     startTransition(() => {
@@ -76,24 +49,13 @@ export function ToursTableActionBar({ table }: ToursTableActionBarProps) {
 
   const onTourDelete = () => {};
 
-  //     if (error) {
-  //       toast.error(error);
-  //       return;
-  //     }
-  //     table.toggleAllRowsSelected(false);
-  //   });
-  // }, [rows, table]);
-
   return (
     <DataTableActionBar table={table} visible={rows.length > 0}>
       <DataTableActionBarSelection table={table} />
       <Separator orientation="vertical" className="hidden data-[orientation=vertical]:h-5 sm:block" />
       <div className="flex items-center gap-1.5">
         <Select
-          onValueChange={(value: Tour['status']) =>
-            // onTourUpdate({ field: "status", value })
-            onTourUpdate()
-          }
+          onValueChange={(value: Tour['status']) => onTourUpdate()}
         >
           <DataTableActionBarAction
             asChild

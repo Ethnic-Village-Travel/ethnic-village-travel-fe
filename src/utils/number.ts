@@ -53,8 +53,6 @@ export function calculateTotalPriceWithPromotion(quantities: { adult: number; ch
     return totalPrice;
   }
 
-  // Apply discount to total price (matching backend logic)
-  // Backend: MIN(basePrice × discountPercent ÷ 100, maxDiscountAmount)
   const promotion = tour.promotions[0];
   const discount = (promotion.discountPercent / 100) * totalPrice;
   const maxDiscount = promotion.maxDiscountAmount ?? Number.MAX_VALUE;

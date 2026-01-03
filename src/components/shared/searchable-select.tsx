@@ -21,7 +21,7 @@ type SearchableSelectProps = {
   onSearch: (searchKey: string) => void;
   loading?: boolean;
   clearable?: boolean;
-  loadOnMount?: boolean; // Có load data khi mount hay không
+  loadOnMount?: boolean;
 }
 
 export const SearchableSelect = ({
@@ -43,7 +43,7 @@ export const SearchableSelect = ({
       onSearch(searchKey.trim());
       setHasSearched(true);
     }, 300),
-    [], // Không phụ thuộc vào hasSearched
+    [],
   );
 
   useEffect(() => {
@@ -53,7 +53,6 @@ export const SearchableSelect = ({
   }, [loadOnMount, debouncedSearch]);
 
   useEffect(() => {
-    // Luôn gọi debounced search khi searchValue thay đổi
     debouncedSearch(searchValue);
   }, [searchValue, debouncedSearch]);
 
@@ -67,11 +66,9 @@ export const SearchableSelect = ({
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
-    // Khi mở popover, load data nếu chưa có
     if (newOpen && !hasSearched && options.length === 0) {
       debouncedSearch(searchValue);
     }
-    // Reset search khi đóng popover
     if (!newOpen && searchValue) {
       setSearchValue('');
     }
@@ -137,7 +134,6 @@ export const SearchableSelect = ({
   );
 };
 
-// Debounce utility function
 function debounce<T extends (...args: any[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
   return (...args: Parameters<T>) => {

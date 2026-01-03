@@ -58,7 +58,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     defaultOptions: {
       queries: {
         retry: false,
-        staleTime: 60 * 1000 * 5, // 5 minutes
+        staleTime: 60 * 1000 * 5,
         refetchOnWindowFocus: false,
         refetchOnMount: 'always',
       },
@@ -70,7 +70,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <Progress isAnimating={isAnimating} />
       <UserDetailsLoader />
       {children}
-      {/* <ReactQueryDevtools /> */}
+      
     </QueryClientProvider>
   );
 }

@@ -18,10 +18,8 @@ function BookingTable() {
   const t = useTranslations('admin.booking.list');
   const queryConfig = useAdminBookingQueryConfig();
 
-  // Use the same pattern as tour table
   const { bookings, totalPages, isLoading, error } = useAdminFilteredBookingList(queryConfig.perPage || 10);
 
-  // Export functionality
   const { fetchAllBookings, exportColumns } = useAdminBookingExport();
 
   const { table } = useDataTable<AdminBooking>({

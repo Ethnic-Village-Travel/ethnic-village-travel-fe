@@ -52,7 +52,6 @@ export const BookingTableFilter = () => {
     toDate: queryConfig.end_date,
   };
 
-  // Date change handlers
   const handleStartDateChange = (date: Date | undefined) => {
     setStartDate(date);
     if (date) {
@@ -106,13 +105,11 @@ export const BookingTableFilter = () => {
       params.delete('end_date');
     }
 
-    // Reset to first page when filters change
     params.set('page', '1');
 
     router.replace(`?${params.toString()}`);
   };
 
-  // Load tours for search
   const handleTourSearch = (searchKey: string) => {
     setIsLoadingTours(true);
     bookingAdminApi
@@ -148,7 +145,6 @@ export const BookingTableFilter = () => {
     }
   }, [filters.tourId]);
 
-  // Handle filter changes
   const updateFilter = (key: keyof BookingFilters, value: any) => {
     const newFilters = { ...filters, [key]: value };
 
@@ -163,7 +159,6 @@ export const BookingTableFilter = () => {
     const newFilters = { ...filters };
     delete newFilters[key];
 
-    // Also clear tour dates if clearing tour
     if (key === 'tourId') {
       delete newFilters.tourAvailableDateIds;
     }
@@ -183,7 +178,6 @@ export const BookingTableFilter = () => {
     });
   };
 
-  // Booking status options
   const getStatusText = (status: BookingStatus) => {
     const statusKey = status.toLowerCase();
     return tStatus(statusKey as any) || status;
@@ -194,13 +188,11 @@ export const BookingTableFilter = () => {
     id: status,
   }));
 
-  // Tour options for select (SearchableSelect uses label/value)
   const tourOptions = tours.map(tour => ({
     label: tour.title.length > 50 ? `${tour.title.substring(0, 50)}...` : tour.title,
     value: tour.tourId,
   }));
 
-  // Tour date options for multi-select
   const tourDateOptions = tourDates.map(date => ({
     name: `${format(new Date(date.startDate), 'dd/MM/yyyy')} - ${format(new Date(date.endDate), 'dd/MM/yyyy')}`,
     id: date.id,
@@ -210,9 +202,9 @@ export const BookingTableFilter = () => {
 
   return (
     <div className="space-y-4">
-      {/* Hàng 1: Tour, Status, Available Date */}
+      
       <div className="flex flex-wrap gap-4">
-        {/* Tour Select */}
+        
         <div className="w-full md:w-80">
           <SearchableSelect
             placeholder={t('tour')}
@@ -226,7 +218,6 @@ export const BookingTableFilter = () => {
           />
         </div>
 
-        {/* Tour Available Dates Multi-Select */}
         <div className="w-full md:w-96">
           <MultiSelect
             placeholder={t('tour_dates')}
@@ -238,7 +229,6 @@ export const BookingTableFilter = () => {
           />
         </div>
 
-        {/* Status Multi-Select */}
         <div className="w-full md:w-auto">
           <MultiSelect
             placeholder={t('status')}
@@ -250,9 +240,8 @@ export const BookingTableFilter = () => {
         </div>
       </div>
 
-      {/* Hàng 2: From Date, To Date, Clear Button */}
       <div className="flex flex-wrap gap-4">
-        {/* From Date */}
+        
         <div className="w-full md:w-48">
           <Popover open={fromDateOpen} onOpenChange={setFromDateOpen}>
             <PopoverTrigger asChild>
@@ -276,7 +265,6 @@ export const BookingTableFilter = () => {
           </Popover>
         </div>
 
-        {/* To Date */}
         <div className="w-full md:w-48">
           <Popover open={toDateOpen} onOpenChange={setToDateOpen}>
             <PopoverTrigger asChild>
@@ -300,7 +288,6 @@ export const BookingTableFilter = () => {
           </Popover>
         </div>
 
-        {/* Clear All Button */}
         {hasFilters && (
           <Button variant="ghost" onClick={clearAllFilters} className="h-10">
             Xóa bộ lọc
@@ -308,7 +295,6 @@ export const BookingTableFilter = () => {
         )}
       </div>
 
-      {/* Active Filters - Chỉ hiển thị available dates và status */}
       {
         <div className="flex flex-wrap gap-2">
           {filters.tourAvailableDateIds?.length || filters.status?.length ? (

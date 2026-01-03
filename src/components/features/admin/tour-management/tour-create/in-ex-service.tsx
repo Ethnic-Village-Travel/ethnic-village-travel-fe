@@ -18,18 +18,16 @@ export default function InExService({ form }: InExServiceProps) {
   const { data: serviceInfoList = [], isLoading, error } = useServiceInfoList();
   const t = useTranslations();
 
-  // Watch form values to get current state
   const includedValue = form.watch('included') || [];
   const excludedValue = form.watch('excluded') || [];
 
   return (
     <>
-      {/* Debug info */}
+      
       {isLoading && <div className="text-sm text-gray-500">Loading services...</div>}
       {error && <div className="text-sm text-red-500">Error loading services: {error.message}</div>}
       {!isLoading && serviceInfoList.length === 0 && <div className="text-sm text-yellow-600">No services found</div>}
 
-      {/* Included Services */}
       <FormField
         control={form.control}
         name="included"
@@ -62,7 +60,6 @@ export default function InExService({ form }: InExServiceProps) {
         )}
       />
 
-      {/* Excluded Services */}
       <FormField
         control={form.control}
         name="excluded"

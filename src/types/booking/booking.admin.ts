@@ -5,9 +5,9 @@ export type AdminBookingListRequest = {
   tourId?: string;
   tourAvailableDateIds?: string[];
   status?: BookingStatus[];
-  fromDate?: string; // yyyy-MM-dd format
-  toDate?: string; // yyyy-MM-dd format
-  page: number; // 0-based pagination
+  fromDate?: string;
+  toDate?: string;
+  page: number;
   size: number;
   sortBy?: string;
   order?: 'asc' | 'desc';

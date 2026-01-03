@@ -28,8 +28,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
   const searchParams = useSearchParams();
   const { user } = useAuthStore();
 
-  // Check if user is admin
-  // Backend returns roles with "ROLE_" prefix (e.g., "ROLE_ADMIN")
   const isAdmin = user?.roles?.some(role => {
     const normalizedRole = role?.toUpperCase().replace(/^ROLE_/, '');
     return normalizedRole === 'ADMIN';
@@ -41,21 +39,17 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
   const currentToDate = searchParams.get('end_date') || '';
   const currentEmployeeIds = searchParams.get('employee_ids')?.split(',') || [];
 
-  // Fetch active employees for filter (Admin only)
   const { data: employees = [], isLoading: isLoadingEmployees } = useActiveEmployees();
 
-  // Local state for form inputs
   const [searchInput, setSearchInput] = useState(currentSearch);
   const [fromDate, setFromDate] = useState<Date | undefined>(currentFromDate ? new Date(currentFromDate) : undefined);
   const [toDate, setToDate] = useState<Date | undefined>(currentToDate ? new Date(currentToDate) : undefined);
 
-  // Create status options
   const statusOptions: Option[] = Object.values(TourAvailableDateStatusEnum).map(status => ({
     label: t(`available_date_status.${status.value}` as any) || status.value,
     value: status.value,
   }));
 
-  // Update URL with new filter values
   const updateFilters = useCallback(
     (updates: Record<string, string | string[] | undefined>) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -70,7 +64,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
         }
       });
 
-      // Reset to first page when filters change
       params.set('page', '1');
 
       router.replace(`?${params.toString()}`);
@@ -78,13 +71,11 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
     [router, searchParams],
   );
 
-  // Handle search submit
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateFilters({ search: searchInput });
   };
 
-  // Handle date range change
   const handleDateRangeChange = () => {
     updateFilters({
       start_date: fromDate ? format(fromDate, 'yyyy-MM-dd') : undefined,
@@ -92,7 +83,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
     });
   };
 
-  // Apply date filter when dates change
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       handleDateRangeChange();
@@ -101,17 +91,14 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
     return () => clearTimeout(timeoutId);
   }, [fromDate, toDate]);
 
-  // Handle status filter change
   const handleStatusChange = (statuses: string[]) => {
     updateFilters({ status: statuses });
   };
 
-  // Handle employee filter change (Admin only)
   const handleEmployeeChange = (employeeIds: string[]) => {
     updateFilters({ employee_ids: employeeIds });
   };
 
-  // Clear all filters
   const clearFilters = () => {
     setSearchInput('');
     setFromDate(undefined);
@@ -138,7 +125,7 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
   return (
     <div className={cn('space-y-4', className)}>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-        {/* Search Filter */}
+        
         <div className="flex-1 space-y-2">
           <form onSubmit={handleSearchSubmit} className="flex gap-2">
             <Input
@@ -151,7 +138,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
           </form>
         </div>
 
-        {/* Date Range Filter */}
         <div className="space-y-2">
           <div className="flex gap-2">
             <Popover>
@@ -186,7 +172,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
           </div>
         </div>
 
-        {/* Status Filter */}
         <div className="space-y-2">
           <StatusFilter
             title={t('tour.assigned_dates.filter_status')}
@@ -196,7 +181,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
           />
         </div>
 
-        {/* Clear Filters Button */}
         {hasActiveFilters && (
           <Button variant="ghost" size="sm" onClick={clearFilters} className="h-9 px-2 lg:px-3">
             {t('tour.assigned_dates.clear_filters')}
@@ -205,7 +189,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
         )}
       </div>
 
-      {/* Employee Filter for Admin */}
       {isAdmin && (
         <div className="border-t pt-4">
           <div className="mb-2 text-sm font-medium">{t('tour.assigned_dates.filter_employee')}</div>

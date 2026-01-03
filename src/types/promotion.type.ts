@@ -40,7 +40,7 @@ export type Promotion = {
   usedCount: number;
   createdAt: string;
   updatedAt: string;
-  tours?: { id: string; title: string }[]; // Tours this promotion applies to
+  tours?: { id: string; title: string }[];
 }
 
 export type PromotionCreateRequest = {
@@ -48,13 +48,13 @@ export type PromotionCreateRequest = {
   description?: string;
   discountPercent: number;
   maxDiscountAmount: number;
-  startDate: string; // ISO datetime string
-  endDate: string; // ISO datetime string
+  startDate: string;
+  endDate: string;
   status: PromotionStatus;
   type: PromotionType;
-  code?: string; // Required if type = COUPON_CODE
+  code?: string;
   usageLimit: number;
-  tourIds?: string[]; // Empty = applies to all tours
+  tourIds?: string[];
 }
 
 export type PromotionUpdateRequest = {
@@ -67,15 +67,15 @@ export type PromotionUpdateRequest = {
   status: PromotionStatus;
   usageLimit?: number;
   tourIds?: string[];
-  // Note: type and code cannot be updated
+
 }
 
 export type PromotionAdminListRequest = {
-  search?: string; // Search by name or code
+  search?: string;
   status?: PromotionStatus;
   type?: PromotionType;
-  fromDate?: string; // ISO datetime string
-  toDate?: string; // ISO datetime string
+  fromDate?: string;
+  toDate?: string;
   page?: number;
   size?: number;
   sortBy?: string;

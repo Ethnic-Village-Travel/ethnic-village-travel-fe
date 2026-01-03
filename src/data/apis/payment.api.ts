@@ -6,7 +6,7 @@ import { ApiResponse } from '@/types/api.type';
 
 export type PaymentLinkResponse = {
   checkoutUrl: string;
-  orderCode: number | string; // Backend có thể trả về long
+  orderCode: number | string;
   qrCode?: string;
   paymentLinkId?: string;
 }
