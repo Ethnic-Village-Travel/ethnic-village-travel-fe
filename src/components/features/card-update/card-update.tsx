@@ -5,6 +5,7 @@ import { cn } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import logger from '@/libs/logger';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,7 +39,6 @@ export default function CardUpdate({
 }: CardUpdateProps) {
   type FormData = z.infer<typeof formSchema>;
 
-  // Check if all required fields have values
   const hasAllRequiredFields = () => {
     return fields.every(field => {
       if (field.required) {
@@ -104,7 +104,7 @@ export default function CardUpdate({
       // Always set isUpdating to false after successful submission
       setIsUpdating(false);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      logger.error('Error submitting form:', error);
       setSubmitResult({
         success: false,
         message: 'An error occurred while submitting the form.',

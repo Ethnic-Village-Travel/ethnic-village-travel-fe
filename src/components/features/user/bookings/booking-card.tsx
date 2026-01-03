@@ -105,13 +105,11 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
       ? booking.tour.locations[0].city || booking.tour.locations[0].province
       : 'Unknown';
 
-  // Check if payment is expired
   const isPaymentExpired =
     booking.status === 'PENDING_PAYMENT' &&
     booking.paymentExpiredDate &&
     new Date(booking.paymentExpiredDate) <= new Date();
 
-  // Payment deadline info
   const getPaymentDeadlineInfo = () => {
     if (!booking.paymentExpiredDate || booking.status !== 'PENDING_PAYMENT') return null;
 
@@ -151,7 +149,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
     try {
       setIsProcessing(true);
 
-      // Check if payment link already exists
       if (existingPaymentLink?.checkoutUrl) {
         window.location.href = existingPaymentLink.checkoutUrl;
         return;
@@ -197,7 +194,6 @@ export default function BookingCard({ booking, index = 0 }: BookingCardProps) {
     }
   };
 
-  // Get display status
   const getDisplayStatus = () => {
     if (isPaymentExpired) {
       return 'expired_payment';

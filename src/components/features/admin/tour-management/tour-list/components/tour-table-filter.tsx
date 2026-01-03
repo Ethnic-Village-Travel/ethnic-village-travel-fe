@@ -22,18 +22,15 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
   const ethnics = useMetaStore(state => state.ethnics);
   const locations = useMetaStore(state => state.locations);
 
-  // Get current filter values from URL
   const currentSearch = searchParams.get('search') || '';
   const currentStatus = searchParams.get('status')?.split(',') || [];
   const currentEthnic = searchParams.get('e')?.split(',') || [];
 
-  // Create status options
   const statusOptions: Option[] = Object.values(TourStatusEnum).map(status => ({
     label: t(('status.' + status.value) as any),
     value: status.value,
   }));
 
-  // Create ethnic options from store data
   const ethnicOptions: Option[] = React.useMemo(() => {
     if (!ethnics) return [];
     return ethnics.map(ethnic => ({
@@ -42,7 +39,6 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
     }));
   }, [ethnics]);
 
-  // Update URL with new filter values
   const updateFilters = React.useCallback(
     (updates: Record<string, string | string[] | undefined>) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -61,9 +57,7 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
       params.set('page', '0');
 
       const newUrl = `?${params.toString()}`;
-      console.log('Updating filters:', updates, 'New URL:', newUrl);
 
-      // Use router.push to ensure the component re-renders
       router.push(newUrl, { scroll: false });
     },
     [router, searchParams],
@@ -77,7 +71,6 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
     [updateFilters],
   );
 
-  // Handle ethnic filter change
   const handleEthnicChange = React.useCallback(
     (values: string[]) => {
       updateFilters({ e: values.length > 0 ? values : undefined });
@@ -85,7 +78,6 @@ export function TourTableFilter({ className }: TourTableFilterProps) {
     [updateFilters],
   );
 
-  // Reset all filters
   const handleReset = React.useCallback(() => {
     updateFilters({ search: undefined, status: undefined, e: undefined });
   }, [updateFilters]);

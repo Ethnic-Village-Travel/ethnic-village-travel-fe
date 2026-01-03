@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import logger from '@/libs/logger';
 
 type User = {
   id: string;
@@ -36,7 +37,7 @@ export const useChatbotUser = () => {
           return parsedUser;
         }
       } catch (error) {
-        console.error('Error parsing user from storage:', error);
+        logger.error('Error parsing user from storage:', error);
       }
       return null;
     };
@@ -52,7 +53,7 @@ export const useChatbotUser = () => {
           return windowUser;
         }
       } catch (error) {
-        console.error('Error getting user from window:', error);
+        logger.error('Error getting user from window:', error);
       }
       return null;
     };
@@ -60,7 +61,6 @@ export const useChatbotUser = () => {
     const foundUser = tryGetUserFromStorage() || tryGetUserFromWindow();
 
     if (!foundUser) {
-      // Tạo guest user với ID unique
       const guestId =
         localStorage.getItem('guest_id') || `guest_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 

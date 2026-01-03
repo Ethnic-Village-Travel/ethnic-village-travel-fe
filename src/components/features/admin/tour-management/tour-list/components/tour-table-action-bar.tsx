@@ -75,12 +75,6 @@ export function ToursTableActionBar({ table }: ToursTableActionBarProps) {
   }, [table]);
 
   const onTourDelete = () => {};
-  // const onTourDelete = React.useCallback(() => {
-  //   setCurrentAction("delete");
-  //   startTransition(async () => {
-  //     const { error } = await deleteTours({
-  //       ids: rows.map((row) => row.original.id),
-  //     });
 
   //     if (error) {
   //       toast.error(error);

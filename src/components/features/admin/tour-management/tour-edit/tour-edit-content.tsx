@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ImageIcon, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
+import logger from '@/libs/logger';
 
 import { TourCreateRequest } from '@/types/tour.type';
 import { createTourSchema, TourCreateFormValues } from '@/libs/schemas/tour.schema';
@@ -174,11 +175,6 @@ export default function TourEditContent({ tourId }: TourEditContentProps) {
   };
 
   const onError = (errors: any) => {
-    console.log('=== VALIDATION ERRORS ===');
-    console.log(JSON.stringify(errors, null, 2));
-    Object.keys(errors).forEach(key => {
-      console.log(`Field: ${key}`, errors[key]);
-    });
     toast({
       title: 'Vui lòng kiểm tra lại thông tin',
       description: Object.keys(errors).join(', '),

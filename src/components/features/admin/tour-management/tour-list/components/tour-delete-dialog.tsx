@@ -30,8 +30,6 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 
-// import { deleteTour } from '../_lib/actions';
-
 type DeleteTourDialogProps = {
   tours: Row<Tour>['original'][];
   showTrigger?: boolean;
@@ -45,18 +43,6 @@ export default function DeleteTourDialog({ tours, showTrigger = true, onSuccess,
   const t = useTranslations('admin.tour.list');
 
   function onDelete() {
-    // startDeleteTransition(async () => {
-    //   const { error } = await deleteTour({
-    //     ids: tours.map(task => task.id),
-    //   });
-    //   if (error) {
-    //     toast({ title: error, variant: 'destructive' });
-    //     return;
-    //   }
-    //   props.onOpenChange?.(false);
-    //   toast({ title: 'Tour deleted', variant: 'default' });
-    //   onSuccess?.();
-    // });
   }
 
   if (isDesktop) {

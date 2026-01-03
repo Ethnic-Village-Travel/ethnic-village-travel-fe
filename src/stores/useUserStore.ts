@@ -45,11 +45,9 @@ export const useUserStore = create<UserState>()(
 
           let updatedBookmarks;
           if (existingIndex >= 0) {
-            // Update existing bookmark
             updatedBookmarks = [...existingBookmarks];
             updatedBookmarks[existingIndex] = bookmark;
           } else {
-            // Add new bookmark
             updatedBookmarks = [...existingBookmarks, bookmark];
           }
 

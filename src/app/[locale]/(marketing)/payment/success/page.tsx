@@ -6,6 +6,7 @@ import { bookingApi } from '@/data/apis/booking.api';
 import { formatCurrency } from '@/utils/number';
 import { CheckCircle, Mail, MapPin, Receipt, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import { BookingGetResponse } from '@/types/booking';
 import { useRouter } from '@/libs/i18n-navigation';
@@ -37,7 +38,7 @@ export default function PaymentSuccessPage() {
           setBookingDetails(response.data);
         }
       } catch (error) {
-        console.error('Failed to fetch booking details:', error);
+        logger.error('Failed to fetch booking details:', error);
       } finally {
         setIsLoading(false);
       }

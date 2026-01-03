@@ -30,8 +30,6 @@ export function ContactForm() {
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      console.log('Form submitted:', values);
-
       toast({
         title: t('success'),
         variant: 'default',

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useChatSession } from '@/stores/useChatSession';
+import logger from '@/libs/logger';
 import {
   Bot,
   Loader2,
@@ -109,7 +110,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  // Check API health on mount
   useEffect(() => {
     const checkHealth = async () => {
       try {
@@ -118,7 +118,7 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
           setApiError('API không khả dụng');
         }
       } catch (error) {
-        console.error('Health check failed:', error);
+        logger.error('Health check failed:', error);
         setApiError('Không thể kết nối API');
       }
     };
@@ -126,12 +126,10 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     checkHealth();
   }, [chatbotConfig.apiUrl]);
 
-  // Send message to FastAPI
   const sendMessage = async (retryMessage?: string) => {
     const messageToSend = retryMessage || inputValue.trim();
     if (isWaitingResponse || messageToSend === '' || !chatbotConfig.apiUrl) return;
 
-    // Add user message to UI (only if not retry)
     if (!retryMessage) {
       addMessage({
         role: 'user',
@@ -146,13 +144,11 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     setApiError(null);
 
     try {
-      // Convert messages to history format for backend
       const history = messages.map(msg => ({
         role: msg.role,
         content: msg.content,
       }));
 
-      // Prepare request matching FastAPI ChatRequest model
       const requestBody: ChatRequest = {
         message: messageToSend,
         session_id: sessionId || undefined,
@@ -174,21 +170,19 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
 
       setShowTypingIndicator(false);
 
-      // Add assistant message to UI
       addMessage({
         role: 'assistant',
         content: data.response,
         timestamp: Date.now(),
       });
 
-      // Update cache from backend response
       if (data.cache) {
         updateCache(data.cache);
       }
 
       toast.success('Đã nhận phản hồi từ AI');
     } catch (error) {
-      console.error('Chatbot error:', error);
+      logger.error('Chatbot error:', error);
       setShowTypingIndicator(false);
       setApiError(chatbotConfig.errorMessage);
 
@@ -204,7 +198,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     }
   };
 
-  // Handle textarea key press
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && !isWaitingResponse) {
       e.preventDefault();
@@ -212,7 +205,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     }
   };
 
-  // Reset chat session
   const handleReset = async () => {
     if (!confirm('Bạn có chắc muốn xóa toàn bộ lịch sử chat?')) return;
 
@@ -228,12 +220,11 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
       setApiError(null);
       toast.success('Đã xóa lịch sử chat');
     } catch (error) {
-      console.error('Failed to reset chat:', error);
+      logger.error('Failed to reset chat:', error);
       toast.error('Không thể xóa lịch sử');
     }
   };
 
-  // Copy message to clipboard
   const handleCopy = async (content: string, index: number) => {
     try {
       await navigator.clipboard.writeText(content);
@@ -245,19 +236,15 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     }
   };
 
-  // Regenerate last assistant message
   const handleRegenerate = () => {
     if (messages.length < 2) return;
 
-    // Find the last user message
     const lastUserMessage = [...messages].reverse().find(msg => msg.role === 'user');
     if (lastUserMessage) {
-      // Remove last assistant message
       const updatedMessages = messages.slice(0, -1);
       clearMessages();
       updatedMessages.forEach(msg => addMessage(msg));
 
-      // Resend the user message
       sendMessage(lastUserMessage.content);
       toast.info('Đang tạo lại phản hồi...');
     }
@@ -285,7 +272,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     </motion.div>
   );
 
-  // Markdown components with syntax highlighting
   const markdownComponents = {
     code({ node, inline, className, children, ...props }: any) {
       const match = /language-(\w+)/.exec(className || '');

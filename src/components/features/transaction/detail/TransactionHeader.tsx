@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import { BookingGetResponse } from '@/types/booking';
 import { usePayment, usePaymentLink } from '@/hooks/api/usePayment';
@@ -51,25 +52,21 @@ const ActionButtons: React.FC<{ booking: BookingGetResponse }> = ({ booking }) =
     try {
       setIsProcessing(true);
 
-      // Check if payment link already exists
       if (existingPaymentLink?.checkoutUrl) {
-        console.log('Using existing payment link:', existingPaymentLink.checkoutUrl);
         window.location.href = existingPaymentLink.checkoutUrl;
         return;
       }
 
-      // Create new payment link if none exists
       const paymentData = await createPayment(booking.id);
-      console.log('New payment data received:', paymentData);
 
       if (paymentData?.checkoutUrl) {
         window.location.href = paymentData.checkoutUrl;
       } else {
-        console.error('Invalid payment data:', paymentData);
+        logger.error('Invalid payment data:', paymentData);
         throw new Error('Không thể tạo link thanh toán');
       }
     } catch (error) {
-      console.error('Failed to handle payment:', error);
+      logger.error('Failed to handle payment:', error);
       toast({
         variant: 'destructive',
         title: 'Lỗi thanh toán',

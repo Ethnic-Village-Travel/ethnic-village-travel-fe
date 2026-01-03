@@ -229,7 +229,6 @@ export function getAssignedAvailableDatesTableColumns({
     });
   }
 
-  // Add Actions column
   columns.push({
     id: 'actions',
     header: () => <span className="sr-only">{t('tour.assigned_dates.actions')}</span>,

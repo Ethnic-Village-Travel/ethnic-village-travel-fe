@@ -19,7 +19,7 @@ const FooterNewsletter: React.FC = () => {
   });
 
   const onSubmit = (data: { email: string }) => {
-    console.log('Subscribing email:', data.email);
+    // TODO: Implement newsletter subscription
   };
 
   return (

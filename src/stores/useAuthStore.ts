@@ -37,7 +37,6 @@ export const useAuthStore = create<AuthState>()(
       enterOtpOpen: false,
       otpEmail: '',
       setAuth: ({ accessToken, refreshToken, user }) => {
-        // Set cookies cho middleware
         if (typeof window !== 'undefined') {
           setCookie('accessToken', accessToken, 1);
           setCookie('refreshToken', refreshToken, 7);

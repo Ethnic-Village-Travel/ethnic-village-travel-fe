@@ -35,7 +35,6 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
     return normalizedRole === 'ADMIN';
   }) ?? false;
 
-  // Get current filter values from URL
   const currentSearch = searchParams.get('search') || '';
   const currentStatus = searchParams.get('status')?.split(',') || [];
   const currentFromDate = searchParams.get('start_date') || '';
@@ -126,11 +125,9 @@ export function AssignedAvailableDatesTableFilter({ className }: AssignedAvailab
     });
   };
 
-  // Check if any filters are active
   const hasActiveFilters =
     currentSearch || currentStatus.length > 0 || currentFromDate || currentToDate || currentEmployeeIds.length > 0;
 
-  // Prepare employee options for MultiSelect
   const employeeOptions = employees.map(emp => ({
     id: String(emp.id),
     name: emp.personal

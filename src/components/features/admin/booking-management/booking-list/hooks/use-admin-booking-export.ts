@@ -3,6 +3,7 @@ import { bookingAdminApi } from '@/data/apis/booking.admin.api';
 import { formatDate } from '@/utils/date';
 import { formatCurrency } from '@/utils/number';
 import { useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import { AdminBookingListRequest } from '@/types/booking/booking.admin';
 import { ExportColumn } from '@/types/export/export.types';
@@ -85,9 +86,7 @@ export function useAdminBookingExport() {
       dataType: 'string',
       formatter: value => {
         if (!value) return '-';
-        // Try to get translation from status namespace first
         const translatedStatus = statusT(value.toLowerCase());
-        // If translation key not found, return the original value
         return translatedStatus !== value.toLowerCase() ? translatedStatus : value;
       },
     },
@@ -139,14 +138,14 @@ export function useAdminBookingExport() {
 
         // Safety check to prevent infinite loop
         if (currentPage > 100) {
-          console.warn('Reached maximum page limit (100), stopping fetch');
+          logger.warn('Reached maximum page limit (100), stopping fetch');
           break;
         }
       }
 
       return allBookings;
     } catch (error) {
-      console.error('Failed to fetch all bookings for export:', error);
+      logger.error('Failed to fetch all bookings for export:', error);
       throw error;
     }
   }, []);

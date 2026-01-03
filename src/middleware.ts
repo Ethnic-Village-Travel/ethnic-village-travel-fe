@@ -46,7 +46,6 @@ function hasAccess(userPermissions: string[], path: string): boolean {
     return false;
   }
 
-  // Check admin dashboard access first
   if (path.startsWith('/admin') && !userPermissions.includes(ADMIN_DASHBOARD_READ)) {
     return false;
   }

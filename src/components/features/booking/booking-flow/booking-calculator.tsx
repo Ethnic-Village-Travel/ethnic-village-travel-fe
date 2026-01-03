@@ -5,6 +5,7 @@ import { useBookingStore } from '@/stores/useBookingStore';
 import { applyPromotionToTotal, calculateTotalPrice, calculateTotalPriceWithPromotion, formatCurrency } from '@/utils';
 import { cn } from '@/utils/classnames';
 import { useLocale, useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import { BookingGetResponse } from '@/types/booking/booking.response';
 import { PromotionValidateResponse } from '@/types/promotion.type';
@@ -58,20 +59,15 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
 
   const totalPrice = useMemo(() => calculateTotalPrice(quantities, booking.tour), [quantities, booking.tour]);
 
-  // Calculate final discounted price based on promotions
-  // Priority: Manual coupon code > Auto-applied direct discount
   const discountedPrice = useMemo(() => {
-    // If user has entered a coupon code, use that
     if (promotion) {
       return applyPromotionToTotal(totalPrice, promotion);
     }
 
-    // Otherwise, check if tour has auto-applied direct discount
     if (booking.tour.promotions?.length) {
       return calculateTotalPriceWithPromotion(quantities, booking.tour);
     }
 
-    // No promotion
     return totalPrice;
   }, [totalPrice, promotion, quantities, booking.tour]);
 
@@ -100,7 +96,6 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
         return;
       }
 
-      // Đợi confirm booking hoàn thành
       await confirmBooking({
         promotionId: promotion?.id,
         discountAmountApplied: totalPrice - discountedPrice,
@@ -110,18 +105,16 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
         tourData: booking.tour,
       });
 
-      // Tạo payment link và redirect
       const paymentData = await createPayment(booking.id);
-      console.log('Payment data received:', paymentData);
 
       if (paymentData?.checkoutUrl) {
         window.location.href = paymentData.checkoutUrl;
       } else {
-        console.error('Invalid payment data:', paymentData);
+        logger.error('Invalid payment data:', paymentData);
         throw new Error('Không thể tạo link thanh toán');
       }
     } catch (error) {
-      console.error('Failed to confirm booking:', error);
+      logger.error('Failed to confirm booking:', error);
       toast({
         variant: 'destructive',
         title: t('booking_calculator.confirm_failed'),

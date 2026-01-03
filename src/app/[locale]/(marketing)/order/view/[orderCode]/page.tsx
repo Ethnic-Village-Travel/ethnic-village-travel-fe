@@ -8,6 +8,7 @@ import { canRetryPayment, getTimeRemaining } from '@/utils/payment';
 import { paymentApi } from '@/data/apis/payment.api';
 import { Clock, CreditCard, Mail, MapPin, Phone, User, XCircle } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import type { TimelineDay } from '@/types/booking/booking.type';
 import { Link } from '@/libs/i18n-navigation';
@@ -86,7 +87,6 @@ export default function OrderViewPage() {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
 
-  // Update countdown every second
   useEffect(() => {
     if (!booking?.paymentExpiredDate) return;
 
@@ -106,13 +106,12 @@ export default function OrderViewPage() {
     try {
       setIsProcessingPayment(true);
 
-      // Create/get payment link
       const paymentData = await paymentApi.createPayment(booking.id);
 
       // Redirect to PayOS
       window.location.href = paymentData.checkoutUrl;
     } catch (error) {
-      console.error('Failed to create payment link:', error);
+      logger.error('Failed to create payment link:', error);
       alert('Không thể tạo link thanh toán. Vui lòng thử lại.');
     } finally {
       setIsProcessingPayment(false);
@@ -129,7 +128,7 @@ export default function OrderViewPage() {
       // Reload to show updated status
       router.refresh();
     } catch (error) {
-      console.error('Failed to cancel booking:', error);
+      logger.error('Failed to cancel booking:', error);
       alert('Không thể hủy booking. Vui lòng thử lại.');
     } finally {
       setIsCancelling(false);

@@ -47,7 +47,6 @@ export const SearchableSelect = ({
   );
 
   useEffect(() => {
-    // Load initial data khi mount nếu được enable
     if (loadOnMount && !hasSearched) {
       debouncedSearch('');
     }

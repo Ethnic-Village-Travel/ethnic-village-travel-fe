@@ -8,6 +8,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { promotionApi } from '@/data/apis/promotion.api';
+import logger from '@/libs/logger';
 
 import { clearBookingState, loadBookingState, saveBookingState } from './booking-persistence';
 import type { BookingData } from './booking-wizard-context';
@@ -148,7 +149,6 @@ function BookingWizardContent({ onComplete, onCancel, showSidePanel = true }: Bo
           }
         } catch (error) {
           // Silently handle - no direct discount available is not an error
-          console.log('No direct discount available for tour:', bookingData.tourId);
         }
       }
     };

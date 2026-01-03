@@ -28,13 +28,11 @@ export default function TourItinerary({ form }: TourItineraryProps) {
     if (itineraryTitle && itineraryDesc) {
       const currentItinerary = form.getValues('itinerary') || [];
       if (editIndex !== null) {
-        // Update existing item
         const updatedItinerary = [...currentItinerary];
         updatedItinerary[editIndex] = { title: itineraryTitle, description: itineraryDesc };
         form.setValue('itinerary', updatedItinerary);
         setEditIndex(null);
       } else {
-        // Add new item
         form.setValue('itinerary', [...currentItinerary, { title: itineraryTitle, description: itineraryDesc }]);
       }
       setItineraryTitle('');

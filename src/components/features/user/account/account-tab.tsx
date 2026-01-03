@@ -167,7 +167,6 @@ export default function AccountTabContent() {
         variant: 'destructive',
       });
 
-      // Set field errors if available
       if (error?.response?.data?.errors) {
         setPasswordErrors(error.response.data.errors);
       } else if (errorMessage.includes('incorrect') || errorMessage.includes('không đúng')) {

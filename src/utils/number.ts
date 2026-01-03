@@ -26,12 +26,10 @@ export function formatShortNumber(number: number | string | bigint | undefined |
   if (Math.abs(value) < 1000) {
     formattedValue = Number(value.toFixed(decimals));
   } else if (value < 1e15) {
-    // Standard suffixes: K, M, B, T
     const exponent = Math.min(Math.floor(Math.log10(value) / 3), STANDARD_SUFFIXES.length - 1);
     formattedValue = value / 10 ** (exponent * 3);
     suffix = STANDARD_SUFFIXES[exponent];
   } else {
-    // Extended suffixes: aa, ab, ..., cz
     const exponent = Math.floor(Math.log10(value) / 3) - 4;
     if (exponent >= EXTENDED_SUFFIXES.length) return '999cz';
     formattedValue = value / 10 ** ((exponent + 4) * 3);
@@ -137,7 +135,6 @@ export function formatCurrency(
     number = calculateDiscount(number, discount_percent, max_discount_amount);
   }
 
-  // Convert VND to USD for English locale
   if (locale === 'en') {
     number = Math.round((number / VND_TO_USD_RATE) * 100) / 100;
   }

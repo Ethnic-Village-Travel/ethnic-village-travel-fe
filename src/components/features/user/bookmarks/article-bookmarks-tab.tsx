@@ -18,7 +18,6 @@ type ArticleBookmarksTabProps = {
 function ArticleBookmarksTab({ bookmarks, visibleItems, onLoadMore }: ArticleBookmarksTabProps) {
   const t = useTranslations('personal.bookmark');
 
-  // Note: Using mock data for now since article API is not implemented
   const articles = useMemo(() => MOCK_ARTICLES.slice(0, visibleItems), [visibleItems]);
 
   const hasMoreItems = visibleItems < (bookmarks?.length || 0);

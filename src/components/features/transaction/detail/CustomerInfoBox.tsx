@@ -34,7 +34,6 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
     return phone;
   };
 
-  // Get initials for avatar
   const getInitials = (name: string) => {
     if (!name || name === t('customer_info.not_updated')) return '?';
     const parts = name.split(' ');

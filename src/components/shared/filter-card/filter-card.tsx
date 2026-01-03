@@ -52,7 +52,6 @@ export function FilterCard({ filter, isTranslated = false, className }: FilterCa
       [filter.name]: values,
     });
 
-    console.log('replace', query.toString());
     router.replace(`?${query.toString()}`);
   };
 

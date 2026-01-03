@@ -28,7 +28,6 @@ export default function GuestInformationCard({ booking }: GuestInformationCardPr
   };
 
   const getGuestInformation = (guestInfo: PersonInfo | null): CardUpdateField[] => {
-    // Get detail based on booking type
     const detail = guestInfo || booking?.bookerDetail || booking?.passengerDetail;
 
     return [

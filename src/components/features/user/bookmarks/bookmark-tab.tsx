@@ -39,10 +39,8 @@ export default function BookmarkTabContent() {
       return acc;
     }, {} as BookmarkMap) || { [EntityType.TOUR]: [] };
 
-    // Sort bookmarks: ACTIVE first, then DELETED, then by updated date (newest first)
     Object.keys(bookmarks).forEach(type => {
       bookmarks[type as EntityType].sort((a, b) => {
-        // Sort by status first: ACTIVE (0) before DELETED (1)
         const statusOrder = { ACTIVE: 0, INACTIVE: 1, DELETED: 2 };
         const statusDiff = statusOrder[a.status] - statusOrder[b.status];
 

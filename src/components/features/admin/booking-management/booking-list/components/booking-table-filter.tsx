@@ -8,6 +8,7 @@ import { cn } from '@/utils';
 import { format, parse, startOfDay } from 'date-fns';
 import { CalendarIcon, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import { BookingFilters } from '@/types/booking';
 import { TourAvailableDateResponse, TourBasicResponse } from '@/types/booking/booking.admin.response';
@@ -32,7 +33,6 @@ export const BookingTableFilter = () => {
   const [fromDateOpen, setFromDateOpen] = useState(false);
   const [toDateOpen, setToDateOpen] = useState(false);
 
-  // Parse initial dates from query config
   const startDateStr = queryConfig.start_date as string | undefined;
   const endDateStr = queryConfig.end_date as string | undefined;
 
@@ -44,7 +44,6 @@ export const BookingTableFilter = () => {
     return endDateStr ? parse(endDateStr, 'yyyy-MM-dd', new Date()) : undefined;
   });
 
-  // Initialize filter values from URL
   const filters: BookingFilters = {
     tourId: queryConfig.tourId,
     tourAvailableDateIds: queryConfig.tourAvailableDateIds || [],
@@ -74,11 +73,9 @@ export const BookingTableFilter = () => {
     setToDateOpen(false);
   };
 
-  // Helper function to update URL parameters
   const updateUrlParams = (newFilters: Partial<BookingFilters>) => {
     const params = new URLSearchParams(window.location.search);
 
-    // Update or remove parameters based on new filter values
     if (newFilters.tourId) {
       params.set('tourId', newFilters.tourId);
     } else if (newFilters.tourId === undefined) {
@@ -125,7 +122,7 @@ export const BookingTableFilter = () => {
         setTours(tours);
       })
       .catch(error => {
-        console.error('Error searching tours:', error);
+        logger.error('Error searching tours:', error);
         setTours([]);
       })
       .finally(() => {
@@ -133,7 +130,6 @@ export const BookingTableFilter = () => {
       });
   };
 
-  // Load available dates when tour is selected
   useEffect(() => {
     if (filters.tourId) {
       setIsLoadingDates(true);
@@ -143,7 +139,7 @@ export const BookingTableFilter = () => {
           setTourDates(res.data || []);
         })
         .catch(error => {
-          console.error('Error loading tour dates:', error);
+          logger.error('Error loading tour dates:', error);
           setTourDates([]);
         })
         .finally(() => setIsLoadingDates(false));
@@ -156,7 +152,6 @@ export const BookingTableFilter = () => {
   const updateFilter = (key: keyof BookingFilters, value: any) => {
     const newFilters = { ...filters, [key]: value };
 
-    // Reset tour dates when tour changes
     if (key === 'tourId') {
       newFilters.tourAvailableDateIds = [];
     }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@/utils';
 import { AlertTriangle, RefreshCcw } from 'lucide-react';
+import logger from '@/libs/logger';
 
 import { Button } from '@/components/ui/button';
 
@@ -14,7 +15,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
 
   useEffect(() => {
     // Log the error
-    console.error(error);
+    logger.error('Global error:', error);
 
     // Trigger glitch effect at random intervals
     const glitchInterval = setInterval(

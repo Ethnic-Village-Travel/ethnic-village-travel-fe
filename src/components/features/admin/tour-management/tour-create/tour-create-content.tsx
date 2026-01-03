@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import logger from '@/libs/logger';
 
 import { TourCreateRequest } from '@/types/tour.type';
 import { createTourSchema, TourCreateFormValues } from '@/libs/schemas/tour.schema';
@@ -56,10 +57,8 @@ export default function TourCreateContent() {
   const onSubmit = async (data: TourCreateFormValues) => {
     if (!data) return;
 
-    // Use form duration instead of calculating
     const duration = data.duration;
 
-    // Map form data to TourCreateRequest
     const payload: TourCreateRequest = {
       title: data.title,
       imageUrl: data.image,
@@ -104,8 +103,7 @@ export default function TourCreateContent() {
   };
 
   const onError = (errors: any) => {
-    console.log('❌ Form validation errors:', errors);
-    console.log('Form state:', form.formState);
+    logger.warn('Form validation errors:', errors);
   };
 
   return (

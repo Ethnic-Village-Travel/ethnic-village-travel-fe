@@ -1,6 +1,7 @@
 import { PersonInfo, useBookingStore } from '@/stores/useBookingStore';
 import { useTranslations } from 'next-intl';
 import { z } from 'zod';
+import logger from '@/libs/logger';
 
 import { BookingGetResponse } from '@/types/booking';
 import { useApiBookingUpdateContact } from '@/hooks/api/useBooking';
@@ -61,7 +62,7 @@ export default function ContactInformationCard({ booking }: ContactInformationCa
         setGuestInfo(contactInfo);
       }
     } catch (error) {
-      console.error('Failed to update booking:', error);
+      logger.error('Failed to update booking:', error);
     }
   };
 

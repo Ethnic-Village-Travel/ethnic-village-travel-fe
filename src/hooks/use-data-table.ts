@@ -159,7 +159,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     if (enableAdvancedFilter) return {};
 
     return filterableColumns.reduce<Record<string, Parser<string> | Parser<string[]>>>((acc, column) => {
-      if (column.meta?.options) {
+      if ((column.meta as { options?: Array<{ label: string; value: string }> } | undefined)?.options) {
         acc[column.id ?? ''] = parseAsArrayOf(parseAsString, ARRAY_SEPARATOR).withOptions(queryStateOptions);
       } else {
         acc[column.id ?? ''] = parseAsString.withOptions(queryStateOptions);

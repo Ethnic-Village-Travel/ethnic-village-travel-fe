@@ -20,7 +20,6 @@ export function AssignedAvailableDatesTable() {
   const queryConfig = useQueryConfig();
   const t = useTranslations('admin');
   const { user } = useAuthStore();
-  // Backend returns roles with "ROLE_" prefix (e.g., "ROLE_ADMIN")
   const isAdmin =
     user?.roles?.some(role => {
       const normalizedRole = role?.toUpperCase().replace(/^ROLE_/, '');
@@ -45,7 +44,6 @@ export function AssignedAvailableDatesTable() {
       order: (queryConfig.order as 'asc' | 'desc') || 'desc',
     } as any;
 
-    // Add filters if present
     if (queryConfig.search) {
       params.searchKey = queryConfig.search as string;
     }
@@ -54,7 +52,6 @@ export function AssignedAvailableDatesTable() {
       params.tourStatus = statusArray;
     }
 
-    // Use existing date fields from queryConfig
     if (queryConfig.start_date) {
       params.fromDate = queryConfig.start_date as string;
     }
@@ -62,7 +59,6 @@ export function AssignedAvailableDatesTable() {
       params.toDate = queryConfig.end_date as string;
     }
 
-    // Add employee filter (Admin only)
     if (queryConfig.employee_ids) {
       const employeeIdsArray = Array.isArray(queryConfig.employee_ids)
         ? queryConfig.employee_ids
@@ -195,7 +191,6 @@ export function AssignedAvailableDatesTable() {
               <button
                 onClick={() => {
                   // TODO: Implement cancel assignment API call
-                  console.log('Cancel assignment:', rowAction.id);
                   setRowAction(null);
                 }}
                 className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"

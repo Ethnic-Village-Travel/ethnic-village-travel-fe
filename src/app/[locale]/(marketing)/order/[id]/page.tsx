@@ -5,6 +5,7 @@ import { notFound, useParams, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import { BookingStatus } from '@/core/enum/booking.enum';
 import { useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import {
   useApiBookingCancel,
@@ -195,7 +196,7 @@ export default function OrderPage() {
           throw new Error('Cannot create payment link');
         }
       } catch (error) {
-        console.error('Failed to complete booking:', error);
+        logger.error('Failed to complete booking:', error);
         toast({
           variant: 'destructive',
           title: t('confirm_failed'),
@@ -212,7 +213,7 @@ export default function OrderPage() {
       try {
         await cancelBooking();
       } catch (error) {
-        console.error('Failed to cancel booking:', error);
+        logger.error('Failed to cancel booking:', error);
       } finally {
         clearBookingState();
         const redirectUrl = booking?.tour?.slug

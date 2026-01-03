@@ -11,7 +11,6 @@ import PaginationClient from '@/components/shared/pagination-client';
 import BookingCard from './booking-card';
 import { TABS } from './booking-tab';
 
-// Loading Skeleton Component
 const BookingCardSkeleton = ({ index }: { index: number }) => (
   <div
     className="relative overflow-hidden rounded-lg border border-border bg-card"

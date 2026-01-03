@@ -56,7 +56,14 @@ type DataTableToolbarFilterProps<TData> = {
 
 function DataTableToolbarFilter<TData>({ column }: DataTableToolbarFilterProps<TData>) {
   {
-    const columnMeta = column.columnDef.meta;
+    const columnMeta = column.columnDef.meta as {
+      variant?: string;
+      placeholder?: string;
+      label?: string;
+      options?: Array<{ label: string; value: string }>;
+      range?: [number, number];
+      unit?: string;
+    } | undefined;
 
     const onFilterRender = React.useCallback(() => {
       if (!columnMeta?.variant) return null;

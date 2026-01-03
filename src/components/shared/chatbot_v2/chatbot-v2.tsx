@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useChatSession } from '@/stores/useChatSession';
 import { Bot, Loader2, MessageCircle, RotateCcw, Send, Sparkles, User, X } from 'lucide-react';
+import logger from '@/libs/logger';
 
 import { defaultChatbotV2Config, getChatbotPosition, type ChatbotV2Config } from './chatbot-config-v2';
 import type { ChatRequest, ChatResponse } from './types';
@@ -47,7 +48,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     scrollToBottom();
   }, [messages, showTypingIndicator, isOpen]);
 
-  // Check API health on mount
   useEffect(() => {
     const checkHealth = async () => {
       try {
@@ -56,7 +56,7 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
           setApiError('API không khả dụng');
         }
       } catch (error) {
-        console.error('Health check failed:', error);
+        logger.error('Health check failed:', error);
         setApiError('Không thể kết nối API');
       }
     };
@@ -64,13 +64,11 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     checkHealth();
   }, [chatbotConfig.apiUrl]);
 
-  // Send message to FastAPI
   const sendMessage = async () => {
     if (isWaitingResponse || inputValue.trim() === '' || !chatbotConfig.apiUrl) return;
 
     const userMessage = inputValue.trim();
 
-    // Add user message to UI
     addMessage({
       role: 'user',
       content: userMessage,
@@ -83,26 +81,17 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     setApiError(null);
 
     try {
-      // Convert messages to history format for backend
       const history = messages.map(msg => ({
         role: msg.role,
         content: msg.content,
       }));
 
-      // Prepare request matching FastAPI ChatRequest model
       const requestBody: ChatRequest = {
         message: userMessage,
         session_id: sessionId || undefined,
-        history: history, // Send full history to backend
-        cache: cache, // Send cache to backend
+        history: history,
+        cache: cache,
       };
-
-      console.log('Sending request:', {
-        message: userMessage,
-        session_id: sessionId,
-        history_count: history.length,
-        cache_keys: Object.keys(cache),
-      });
 
       const response = await fetch(`${chatbotConfig.apiUrl}/chat`, {
         method: 'POST',
@@ -115,28 +104,20 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
       }
 
       const data: ChatResponse = await response.json();
-      console.log('Received response:', {
-        response_length: data.response.length,
-        session_id: data.session_id,
-        cache_keys: Object.keys(data.cache || {}),
-      });
 
       setShowTypingIndicator(false);
 
-      // Add assistant message to UI
       addMessage({
         role: 'assistant',
         content: data.response,
         timestamp: Date.now(),
       });
 
-      // Update cache from backend response
       if (data.cache) {
         updateCache(data.cache);
-        console.log('Cache updated from backend:', Object.keys(data.cache));
       }
     } catch (error) {
-      console.error('Chatbot error:', error);
+      logger.error('Chatbot error:', error);
       setShowTypingIndicator(false);
       setApiError(chatbotConfig.errorMessage);
 
@@ -150,7 +131,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     }
   };
 
-  // Handle Enter key press
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !isWaitingResponse) {
       sendMessage();
@@ -163,7 +143,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
 
     try {
       if (sessionId) {
-        // Call FastAPI reset endpoint
         await fetch(`${chatbotConfig.apiUrl}/chat/reset`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -172,9 +151,8 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
 
       clearMessages();
       setApiError(null);
-      console.log('Chat reset successfully');
     } catch (error) {
-      console.error('Failed to reset chat:', error);
+      logger.error('Failed to reset chat:', error);
     }
   };
 

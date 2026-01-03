@@ -1,5 +1,6 @@
 import api from '@/core/api/api';
 import { API } from '@/core/api/config';
+import logger from '@/libs/logger';
 
 import { ApiResponse } from '@/types/api.type';
 
@@ -20,7 +21,7 @@ export const paymentApi = {
       }
       return data.data;
     } catch (error) {
-      console.error('Error creating payment:', error);
+      logger.error('Error creating payment:', error);
       throw new Error('Cannot create payment link');
     }
   },
@@ -35,7 +36,7 @@ export const paymentApi = {
       }
       return data.data;
     } catch (error) {
-      console.error('Error getting payment link:', error);
+      logger.error('Error getting payment link:', error);
       throw new Error('Cannot get payment link');
     }
   },

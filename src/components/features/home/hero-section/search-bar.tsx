@@ -1,6 +1,5 @@
 'use client';
 
-import { log } from 'node:console';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
@@ -59,8 +58,6 @@ export function SearchBar({ className }: SearchBarProps) {
       l: [searchData.location],
       date: searchData.date ? format(searchData.date, 'yyyy-MM-dd') : undefined,
     });
-
-    console.log(searchData);
 
     router.push(`${RouteConstant.tour}?${params.toString()}`);
   };
