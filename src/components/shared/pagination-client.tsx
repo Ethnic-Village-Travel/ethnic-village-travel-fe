@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { createSearchParams } from '@/utils';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { QueryConfig } from '@/types/query.type';
 import {
@@ -11,18 +12,16 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from '@/components/ui/pagination';
 
 const DEFAULT_RANGE = 2;
 
-interface PaginationClientProps {
+type PaginationClientProps = {
   queryConfig: QueryConfig;
   pageSize: number;
   range?: number;
   showFirstLast?: boolean;
-}
+};
 
 export default function PaginationClient({
   queryConfig,
@@ -33,21 +32,23 @@ export default function PaginationClient({
   const pathname = usePathname();
   const page = Number(queryConfig.page || '1');
 
-  // Don't render pagination if there's only 1 page or no pages
-  if (pageSize <= 1) return null;
-
-  const createPageUrl = (pageNumber: number) => ({
-    pathname,
-    query: createSearchParams({
-      ...queryConfig,
-      page: pageNumber.toString(),
-    }).toString(),
-  });
+  const createPageUrl = useCallback(
+    (pageNumber: number) => ({
+      pathname,
+      query: createSearchParams({
+        ...queryConfig,
+        page: pageNumber.toString(),
+      }).toString(),
+    }),
+    [pathname, queryConfig],
+  );
 
   const pages = useMemo(() => {
     const items: React.ReactNode[] = [];
+    const shouldShowFirst = showFirstLast && page > 1 + range;
+    const shouldShowLast = showFirstLast && page < pageSize - range;
 
-    if (showFirstLast && page > 1 + range) {
+    if (shouldShowFirst) {
       items.push(
         <PaginationItem key="first">
           <PaginationLink href={createPageUrl(1)}>1</PaginationLink>
@@ -57,9 +58,10 @@ export default function PaginationClient({
 
     let startPage = Math.max(1, page - range);
     let endPage = Math.min(pageSize, page + range);
-
     const visiblePages = range * 2 + 1;
-    if (endPage - startPage + 1 < visiblePages) {
+    const currentVisible = endPage - startPage + 1;
+
+    if (currentVisible < visiblePages) {
       if (startPage === 1) {
         endPage = Math.min(pageSize, startPage + visiblePages - 1);
       } else if (endPage === pageSize) {
@@ -67,7 +69,8 @@ export default function PaginationClient({
       }
     }
 
-    if (startPage > 1 + (showFirstLast ? 1 : 0)) {
+    const ellipsisOffset = showFirstLast ? 1 : 0;
+    if (startPage > 1 + ellipsisOffset) {
       items.push(
         <PaginationItem key="ellipsis-before">
           <PaginationEllipsis />
@@ -85,7 +88,7 @@ export default function PaginationClient({
       );
     }
 
-    if (endPage < pageSize - (showFirstLast ? 1 : 0)) {
+    if (endPage < pageSize - ellipsisOffset) {
       items.push(
         <PaginationItem key="ellipsis-after">
           <PaginationEllipsis />
@@ -93,7 +96,7 @@ export default function PaginationClient({
       );
     }
 
-    if (showFirstLast && page < pageSize - range) {
+    if (shouldShowLast) {
       items.push(
         <PaginationItem key="last">
           <PaginationLink href={createPageUrl(pageSize)}>{pageSize}</PaginationLink>
@@ -102,32 +105,42 @@ export default function PaginationClient({
     }
 
     return items;
-  }, [page, pageSize, range, showFirstLast]);
+  }, [page, pageSize, range, showFirstLast, createPageUrl]);
+
+  if (pageSize <= 1) return null;
+
+  const disabledIconClass = 'flex h-9 w-9 items-center justify-center text-muted-foreground';
+  const isFirstPage = page === 1;
+  const isLastPage = page === pageSize;
 
   return (
     <Pagination>
       <PaginationContent>
-        {page === 1 ? (
-          <PaginationItem>
-            <span className="px-3 py-2 text-sm text-muted-foreground">Previous</span>
-          </PaginationItem>
-        ) : (
-          <PaginationItem>
-            <PaginationPrevious href={createPageUrl(page - 1)} />
-          </PaginationItem>
-        )}
+        <PaginationItem>
+          {isFirstPage ? (
+            <span className={disabledIconClass}>
+              <ChevronLeft className="h-4 w-4" />
+            </span>
+          ) : (
+            <PaginationLink href={createPageUrl(page - 1)} aria-label="Go to previous page">
+              <ChevronLeft className="h-4 w-4" />
+            </PaginationLink>
+          )}
+        </PaginationItem>
 
         {pages}
 
-        {page === pageSize ? (
-          <PaginationItem>
-            <span className="px-3 py-2 text-sm text-muted-foreground">Next</span>
-          </PaginationItem>
-        ) : (
-          <PaginationItem>
-            <PaginationNext href={createPageUrl(page + 1)} />
-          </PaginationItem>
-        )}
+        <PaginationItem>
+          {isLastPage ? (
+            <span className={disabledIconClass}>
+              <ChevronRight className="h-4 w-4" />
+            </span>
+          ) : (
+            <PaginationLink href={createPageUrl(page + 1)} aria-label="Go to next page">
+              <ChevronRight className="h-4 w-4" />
+            </PaginationLink>
+          )}
+        </PaginationItem>
       </PaginationContent>
     </Pagination>
   );

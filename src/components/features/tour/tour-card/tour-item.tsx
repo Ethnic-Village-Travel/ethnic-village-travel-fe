@@ -20,9 +20,10 @@ type TourItemProps = {
 };
 
 export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
-  const ratingObj = tour.avgRating
-    ? { average: tour.avgRating, total: tour.ratingCount }
-    : calculateRatingStats(tour.reviews || []);
+  const ratingObj =
+    tour.avgRating && tour.ratingCount !== undefined && tour.ratingCount !== null
+      ? { average: tour.avgRating, total: tour.ratingCount }
+      : calculateRatingStats(tour.reviews || []);
   const t = useTranslations('tour.item');
   const { details } = useUserStore();
   const isBookmarked = details?.bookmarks?.some(
