@@ -6,7 +6,7 @@ import { BookingGetResponse } from '@/types/booking';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
-interface BookingInfoBoxProps {
+type BookingInfoBoxProps = {
   booking: BookingGetResponse;
 }
 

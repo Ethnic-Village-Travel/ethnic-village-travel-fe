@@ -1,4 +1,4 @@
-export interface ChatbotV3Config {
+export type ChatbotV3Config = {
   apiUrl: string;
   title: string;
   placeholder: string;

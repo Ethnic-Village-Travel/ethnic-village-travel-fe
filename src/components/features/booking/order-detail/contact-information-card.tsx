@@ -14,7 +14,7 @@ const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
 });
 
-interface ContactInformationCardProps {
+type ContactInformationCardProps = {
   booking?: BookingGetResponse;
 }
 

@@ -1,4 +1,4 @@
-export interface Permission {
+export type Permission = {
   id: string;
   name: string;
   url?: string;
@@ -8,19 +8,19 @@ export interface Permission {
   code?: string;
 }
 
-export interface PermissionCategory {
+export type PermissionCategory = {
   id: string;
   name: string;
   permissions: Permission[];
 }
 
-export interface PermissionGroup {
+export type PermissionGroup = {
   prefix: string;
   displayName: string;
   permissions: Permission[];
 }
 
-export interface Role {
+export type Role = {
   id: string;
   name: string;
   description: string;
@@ -30,25 +30,25 @@ export interface Role {
   updatedAt: string;
 }
 
-export interface CreateRoleRequest {
+export type CreateRoleRequest = {
   name: string;
   description?: string;
   permissionIds: string[];
 }
 
-export interface UpdateRoleRequest {
+export type UpdateRoleRequest = {
   name: string;
   description?: string;
   permissionIds: string[];
 }
 
-export interface CreateRoleFormData {
+export type CreateRoleFormData = {
   roleName: string;
   description?: string;
   selectedPermissions: Permission[];
 }
 
-export interface CreateRoleState {
+export type CreateRoleState = {
   roleName: string;
   selectedPermissions: Permission[];
   isSubmitting: boolean;

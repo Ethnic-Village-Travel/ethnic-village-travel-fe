@@ -18,7 +18,7 @@ import {
 import { AddReviewCard } from '../features/tour/tour-detail/add-review-card';
 import StarRating from './star-rating';
 
-interface ReviewItemProps {
+type ReviewItemProps = {
   review: Review;
   onEdit?: (review: Review) => void;
   onDelete?: (review: Review) => void;

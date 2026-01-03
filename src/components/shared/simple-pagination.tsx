@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-r
 
 import { Button } from '@/components/ui/button';
 
-interface SimplePaginationProps {
+type SimplePaginationProps = {
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;

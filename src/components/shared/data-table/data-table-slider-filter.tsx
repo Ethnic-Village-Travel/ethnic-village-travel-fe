@@ -12,7 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
 
-interface Range {
+type Range = {
   min: number;
   max: number;
 }
@@ -23,7 +23,7 @@ function getIsValidRange(value: unknown): value is RangeValue {
   return Array.isArray(value) && value.length === 2 && typeof value[0] === 'number' && typeof value[1] === 'number';
 }
 
-interface DataTableSliderFilterProps<TData> {
+type DataTableSliderFilterProps<TData> = {
   column: Column<TData, unknown>;
   title?: string;
 }

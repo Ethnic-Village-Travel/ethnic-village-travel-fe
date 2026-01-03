@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import type { BookingData, GuestCount, PromotionInfo } from '../booking-wizard-context';
 import { calculatePromotionPrice } from './price-breakdown';
 
-export interface BookingSummaryCardProps {
+export type BookingSummaryCardProps = {
   bookingData: BookingData;
   locale: 'vi' | 'en' | 'ko';
   className?: string;
@@ -62,7 +62,10 @@ export function BookingSummaryCard({ bookingData, locale, className }: BookingSu
   }, [bookingData.promotion, tourInfo?.promotions]);
 
   const priceDetails = useMemo(
-    () => calculateSummaryPrice(bookingData.guestCount, adultPrice, childPrice, activePromotion),
+    () => {
+      const result = calculateSummaryPrice(bookingData.guestCount, adultPrice, childPrice, activePromotion);
+      return result;
+    },
     [bookingData.guestCount, adultPrice, childPrice, activePromotion],
   );
 

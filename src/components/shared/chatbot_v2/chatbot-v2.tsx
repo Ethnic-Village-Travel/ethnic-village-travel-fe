@@ -7,7 +7,7 @@ import { Bot, Loader2, MessageCircle, RotateCcw, Send, Sparkles, User, X } from 
 import { defaultChatbotV2Config, getChatbotPosition, type ChatbotV2Config } from './chatbot-config-v2';
 import type { ChatRequest, ChatResponse } from './types';
 
-interface ChatbotV2Props {
+type ChatbotV2Props = {
   config?: Partial<ChatbotV2Config>;
 }
 

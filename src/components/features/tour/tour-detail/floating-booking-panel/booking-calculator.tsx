@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useBookingStore } from '@/stores/useBookingStore';
 import { cn } from '@/utils/classnames';
-import { calculateTotalPriceWithPromotion, formatCurrency } from '@/utils/number';
+import { calculateTotalPrice, calculateTotalPriceWithPromotion, formatCurrency } from '@/utils/number';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 
-interface PersonTypeCalculatorProps {
+type PersonTypeCalculatorProps = {
   label: string;
   price: number;
   value: number;
@@ -59,7 +59,9 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
     child: 0,
   });
 
+  const basePrice = calculateTotalPrice(quantities, tour);
   const totalPrice = calculateTotalPriceWithPromotion(quantities, tour);
+  const hasDiscount = tour.promotions && tour.promotions.length > 0 && basePrice !== totalPrice;
   const totalQuantity = quantities.adult + quantities.child;
 
   const handleQuantityChange = (type: keyof typeof quantities) => (value: number) => {
@@ -116,7 +118,14 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
 
       <div className="flex items-center justify-between">
         <span className="text-dark-900 text-base font-bold">{t('total')}</span>
-        <span className="text-dark-900 text-xl font-bold">{formatCurrency(totalPrice, { locale })}</span>
+        <div className="flex flex-col items-end gap-1">
+          {hasDiscount && (
+            <span className="text-sm font-semibold tracking-wide text-gray-500 line-through">
+              {formatCurrency(basePrice, { locale })}
+            </span>
+          )}
+          <span className="text-dark-900 text-xl font-bold">{formatCurrency(totalPrice, { locale })}</span>
+        </div>
       </div>
 
       <Button

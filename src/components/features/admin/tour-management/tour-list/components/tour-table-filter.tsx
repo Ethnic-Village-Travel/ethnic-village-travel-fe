@@ -11,7 +11,7 @@ import type { Option } from '@/types/data-table';
 import { Button } from '@/components/ui/button';
 import { EthnicFilter, SearchFilter, StatusFilter } from '@/components/shared/filter';
 
-interface TourTableFilterProps {
+type TourTableFilterProps = {
   className?: string;
 }
 

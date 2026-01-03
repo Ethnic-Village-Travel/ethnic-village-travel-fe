@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 
 import { ExportPreviewDialog } from './export-preview-dialog';
 
-interface DataExporterProps {
+type DataExporterProps = {
   title: string;
   columns: ExportColumn[];
   onFetchAllData: (filters?: any) => Promise<any[]>;

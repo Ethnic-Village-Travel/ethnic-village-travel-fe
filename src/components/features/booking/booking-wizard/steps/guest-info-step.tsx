@@ -15,12 +15,12 @@ import type { ContactInfo, GuestInfo } from '../booking-wizard-context';
 import { BOOKING_STEPS, useBookingWizard } from '../booking-wizard-context';
 import { WizardNavigation } from '../wizard-navigation';
 
-export interface GuestInfoStepProps {
+export type GuestInfoStepProps = {
   onNext?: () => void;
   onBack?: () => void;
 }
 
-interface FormFieldProps {
+type FormFieldProps = {
   id: string;
   label: string;
   icon: React.ReactNode;

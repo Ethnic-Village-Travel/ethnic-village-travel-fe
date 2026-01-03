@@ -20,7 +20,7 @@ import { GuestCountStep } from './steps/guest-count-step';
 import { GuestInfoStep } from './steps/guest-info-step';
 import { ReviewStep } from './steps/review-step';
 
-export interface BookingWizardProps {
+export type BookingWizardProps = {
   initialData?: Partial<BookingData>;
   onComplete?: (bookingData: BookingData) => Promise<void>;
   onCancel?: () => void;
@@ -48,7 +48,7 @@ const stepTransition = {
   opacity: { duration: 0.2 },
 };
 
-interface BookingWizardContentProps {
+type BookingWizardContentProps = {
   onComplete?: (bookingData: BookingData) => Promise<void>;
   onCancel?: () => void;
   showSidePanel?: boolean;

@@ -3,13 +3,13 @@
 import { cn } from '@/utils/classnames';
 import { Check } from 'lucide-react';
 
-export interface StepConfig {
+export type StepConfig = {
   id: number;
   label: string;
   icon?: React.ReactNode;
 }
 
-export interface ProgressIndicatorProps {
+export type ProgressIndicatorProps = {
   steps: StepConfig[];
   currentStep: number;
   completedSteps: Set<number>;

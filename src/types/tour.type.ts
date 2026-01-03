@@ -6,7 +6,7 @@ import { Promotion } from './promotion.type';
 import { Review } from './review.type';
 import { TourServiceInfo } from './service-info.type';
 
-export interface Tour {
+export type Tour = {
   id: string;
   tourId?: string;
   imageUrl: string;
@@ -34,7 +34,7 @@ export interface Tour {
   updatedAt?: string;
 }
 
-export interface TourAvailableDate {
+export type TourAvailableDate = {
   id: string;
   startDate: string;
   endDate: string;
@@ -46,7 +46,7 @@ export interface TourAvailableDate {
   }[];
 }
 
-export interface TourTimeLine {
+export type TourTimeLine = {
   day: number;
   activities: {
     time: string;
@@ -54,7 +54,7 @@ export interface TourTimeLine {
   }[];
 }
 
-export interface TourListRequest {
+export type TourListRequest = {
   page?: number;
   size?: number;
   sortBy?: string;
@@ -70,7 +70,7 @@ export interface TourListRequest {
   maxDuration?: number;
 }
 
-export interface TourAdminListRequest {
+export type TourAdminListRequest = {
   page?: number;
   size?: number;
   sortBy?: string;
@@ -82,7 +82,7 @@ export interface TourAdminListRequest {
   searchKey?: string;
 }
 
-export interface TourListResponse {
+export type TourListResponse = {
   content: Tour[];
   totalElements: number;
   totalPages: number;

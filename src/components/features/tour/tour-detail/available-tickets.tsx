@@ -13,7 +13,7 @@ import { Tour } from '@/types/tour.type';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-interface AvailableTicketsProps {
+type AvailableTicketsProps = {
   tour: Tour;
 }
 

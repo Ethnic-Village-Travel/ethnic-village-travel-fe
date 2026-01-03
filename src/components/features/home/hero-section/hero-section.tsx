@@ -5,7 +5,7 @@ import { cn } from '@/utils';
 
 import { SearchBar } from './search-bar';
 
-interface HeroSectionProps {
+type HeroSectionProps = {
   className?: string;
 }
 

@@ -14,7 +14,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
-interface BookingFiltersProps {
+type BookingFiltersProps = {
   onFilterChange: (filters: Partial<BookingListRequest>) => void;
   showStatusFilter?: boolean;
 }

@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { Tour } from '@/types/tour.type';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-interface TourDetailOverviewProps {
+type TourDetailOverviewProps = {
   tour: Tour;
 }
 

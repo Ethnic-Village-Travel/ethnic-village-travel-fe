@@ -1,6 +1,6 @@
 import { cn } from '@/utils';
 
-interface DividerProps {
+type DividerProps = {
   direction?: 'horizontal' | 'vertical';
   className?: string;
 }

@@ -14,7 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
-interface FilterCardProps {
+type FilterCardProps = {
   filter: FilterConfig;
   isTranslated?: boolean;
   className?: string;

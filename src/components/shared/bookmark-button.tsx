@@ -11,7 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-interface BookmarkButtonProps {
+type BookmarkButtonProps = {
   entityId: string;
   entityType: EntityType;
   isBookmarkedDefault?: boolean;

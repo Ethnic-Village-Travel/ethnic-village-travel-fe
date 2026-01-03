@@ -9,7 +9,7 @@ import { Tour } from '@/types/tour.type';
 import { TourDetailOverview } from './tour-detail-overview';
 import { TourDetailReviews } from './tour-detail-reviews';
 
-interface TourDetailContentProps {
+type TourDetailContentProps = {
   tour: Tour;
 }
 

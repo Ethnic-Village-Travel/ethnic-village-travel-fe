@@ -16,7 +16,7 @@ import { Separator } from '@/components/ui/separator';
 
 import PromotionValidationForm from './promotion-validation-form';
 
-interface PersonTypeCalculatorProps {
+type PersonTypeCalculatorProps = {
   label: string;
   price: number;
   value: number;
@@ -38,7 +38,7 @@ const PersonTypeCalculator = ({ label, price, value, locale }: PersonTypeCalcula
   );
 };
 
-interface BookingCalculatorProps {
+type BookingCalculatorProps = {
   booking: BookingGetResponse;
 }
 
@@ -58,7 +58,22 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
 
   const totalPrice = useMemo(() => calculateTotalPrice(quantities, booking.tour), [quantities, booking.tour]);
 
-  let discountPrice = totalPrice;
+  // Calculate final discounted price based on promotions
+  // Priority: Manual coupon code > Auto-applied direct discount
+  const discountedPrice = useMemo(() => {
+    // If user has entered a coupon code, use that
+    if (promotion) {
+      return applyPromotionToTotal(totalPrice, promotion);
+    }
+
+    // Otherwise, check if tour has auto-applied direct discount
+    if (booking.tour.promotions?.length) {
+      return calculateTotalPriceWithPromotion(quantities, booking.tour);
+    }
+
+    // No promotion
+    return totalPrice;
+  }, [totalPrice, promotion, quantities, booking.tour]);
 
   const handleQuantityChange = (type: keyof typeof quantities) => (value: number) => {
     setQuantities(prev => ({
@@ -88,10 +103,10 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
       // Đợi confirm booking hoàn thành
       await confirmBooking({
         promotionId: promotion?.id,
-        discountAmountApplied: totalPrice,
+        discountAmountApplied: totalPrice - discountedPrice,
         guestInformation: guestInfo,
         additionalInformation: additionalInfo,
-        totalPrice: discountPrice,
+        totalPrice: discountedPrice,
         tourData: booking.tour,
       });
 
@@ -114,33 +129,19 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
     }
   };
 
-  const renderPrice = () => {
-    if (booking.tour.promotions?.length) {
-      discountPrice = calculateTotalPriceWithPromotion(quantities, booking.tour);
-    }
-
-    if (promotion) {
-      discountPrice = applyPromotionToTotal(totalPrice, promotion);
-    }
-
-    if (discountPrice === totalPrice) {
-      return <span className="text-dark-900 text-[30px] font-bold">{formatCurrency(totalPrice, { locale })}</span>;
-    }
-
-    return (
-      <>
-        <span className="text-base font-semibold tracking-wide text-gray-500 line-through">
-          {formatCurrency(totalPrice, { locale })}
-        </span>
-        <span className="text-dark-900 text-[30px] font-bold">{formatCurrency(discountPrice, { locale })}</span>
-      </>
-    );
-  };
-
   return (
     <div className="xl:flex-0 grid gap-4 rounded-[20px] border border-gray-20 bg-white p-[30px] shadow-custom-gray lg:w-[360px]">
       <div className="text-dark-900 flex flex-col text-center text-[30px] font-bold leading-[1.17]">
-        {renderPrice()}
+        {discountedPrice === totalPrice ? (
+          <span className="text-dark-900 text-[30px] font-bold">{formatCurrency(totalPrice, { locale })}</span>
+        ) : (
+          <>
+            <span className="text-base font-semibold tracking-wide text-gray-500 line-through">
+              {formatCurrency(totalPrice, { locale })}
+            </span>
+            <span className="text-dark-900 text-[30px] font-bold">{formatCurrency(discountedPrice, { locale })}</span>
+          </>
+        )}
       </div>
 
       <Separator />

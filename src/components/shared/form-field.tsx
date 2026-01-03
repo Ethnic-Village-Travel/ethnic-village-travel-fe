@@ -30,12 +30,12 @@ export type InputType =
   | 'time'
   | 'color';
 
-export interface Option {
+export type Option = {
   value: string;
   label: string;
 }
 
-export interface SharedFormFieldProps {
+export type SharedFormFieldProps = {
   type: InputType;
   name: string;
   label: ReactNode;

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-interface User {
+type User = {
   id: string;
   email?: string;
   name?: string;

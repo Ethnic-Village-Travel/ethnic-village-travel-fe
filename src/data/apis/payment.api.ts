@@ -3,7 +3,7 @@ import { API } from '@/core/api/config';
 
 import { ApiResponse } from '@/types/api.type';
 
-export interface PaymentLinkResponse {
+export type PaymentLinkResponse = {
   checkoutUrl: string;
   orderCode: number | string; // Backend có thể trả về long
   qrCode?: string;

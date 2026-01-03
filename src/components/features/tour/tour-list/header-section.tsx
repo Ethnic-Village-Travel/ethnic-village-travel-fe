@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 
-interface TourHeaderProps {
+type TourHeaderProps = {
   sortBy: string;
   onSortByChange: (value: string) => void;
   viewMode: 'grid' | 'list';

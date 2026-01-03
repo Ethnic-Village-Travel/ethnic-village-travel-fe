@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-interface CustomerInfoBoxProps {
+type CustomerInfoBoxProps = {
   booking: BookingGetResponse;
   className?: string;
 }

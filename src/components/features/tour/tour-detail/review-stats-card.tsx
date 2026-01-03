@@ -7,7 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import StarRating from '@/components/shared/star-rating';
 
-interface ReviewStatsCardProps {
+type ReviewStatsCardProps = {
   stats: ReviewStats;
 }
 

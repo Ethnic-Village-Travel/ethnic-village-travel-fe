@@ -1,6 +1,6 @@
 import PromotionEditContent from '@/components/features/admin/promotion-management/promotion-edit';
 
-interface PromotionEditPageProps {
+type PromotionEditPageProps = {
   params: {
     id: string;
   };

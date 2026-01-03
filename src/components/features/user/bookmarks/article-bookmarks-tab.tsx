@@ -9,7 +9,7 @@ import { Bookmark } from '@/types/bookmark.type';
 import { Button } from '@/components/ui/button';
 import ArticleItem from '@/components/features/article/article-item';
 
-interface ArticleBookmarksTabProps {
+type ArticleBookmarksTabProps = {
   bookmarks?: Bookmark[];
   visibleItems: number;
   onLoadMore: () => void;

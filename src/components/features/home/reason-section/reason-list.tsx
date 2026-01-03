@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import ReasonCard from './reason-card';
 
-interface Reason {
+type Reason = {
   icon: string;
   title: string;
   description: string;

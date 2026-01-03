@@ -21,7 +21,7 @@ import { AuthPopup } from '@/components/features/auth';
 import { UserMenu } from '@/components/features/user';
 import LanguageSwitcher from '@/components/shared/language-switcher';
 
-interface HeaderProps {
+type HeaderProps = {
   navItemClassName?: ClassNameValue;
 }
 

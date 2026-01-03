@@ -2,7 +2,7 @@ import { BookingStatus } from '@/core/enum/booking.enum';
 
 import { TourInfo } from './booking.type';
 
-export interface BookingStoreResponse {
+export type BookingStoreResponse = {
   id: string;
   tour: TourInfo;
   personCount: Record<string, any>;
@@ -13,7 +13,7 @@ export interface BookingStoreResponse {
   endDate: string;
 }
 
-export interface BookingUpdateResponse {
+export type BookingUpdateResponse = {
   id: string;
   tourSlug: string;
   availableDateId: string;
@@ -24,7 +24,7 @@ export interface BookingUpdateResponse {
   updatedAt: string;
 }
 
-export interface BookingGetResponse {
+export type BookingGetResponse = {
   id: string;
   personCount: Record<string, any>;
   status: BookingStatus;
@@ -40,7 +40,7 @@ export interface BookingGetResponse {
   paymentExpiredDate: string;
 }
 
-export interface BookingListResponse {
+export type BookingListResponse = {
   id: string;
   personCount: Record<string, any>;
   status: string;

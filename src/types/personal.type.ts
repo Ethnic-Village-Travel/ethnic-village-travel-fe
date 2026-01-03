@@ -1,4 +1,4 @@
-export interface PersonalBasicInfo {
+export type PersonalBasicInfo = {
   id: string;
   firstName: string;
   lastName: string;

@@ -31,7 +31,7 @@ const updateUserSchema = zod.object({
 
 type UpdateUserFormData = zod.infer<typeof updateUserSchema>;
 
-interface UserEditContentProps {
+type UserEditContentProps = {
   userId: string;
 }
 

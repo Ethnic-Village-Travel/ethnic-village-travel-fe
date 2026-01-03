@@ -15,7 +15,8 @@ import {
 import { usePayment } from '@/hooks/api/usePayment';
 import { useToast } from '@/hooks/use-toast';
 import type { BookingData } from '@/components/features/booking/booking-wizard';
-import { BookingWizard, clearBookingState } from '@/components/features/booking/booking-wizard';
+import { BookingWizard, clearBookingState, calculatePromotionPrice } from '@/components/features/booking/booking-wizard';
+import { PromotionType } from '@/types/promotion.type';
 
 function OrderPageSkeleton() {
   return (
@@ -118,7 +119,22 @@ export default function OrderPage() {
           }
         : null,
       bookingType: 'self',
-      promotion: null,
+      promotion: (() => {
+        // Use promotions[0] to match Tour Detail display logic (same as tour.promotions[0] in tour detail)
+        // Sort by id to ensure consistent ordering (matching Tour API behavior)
+        const activeDirectDiscounts = booking.tour.promotions
+          ?.filter(p => p.type === PromotionType.DIRECT_DISCOUNT && p.status === 'ACTIVE')
+          .sort((a, b) => a.id.localeCompare(b.id)) || [];
+        const directDiscount = activeDirectDiscounts[0] || null;
+        return directDiscount
+          ? {
+              id: String(directDiscount.id),
+              name: directDiscount.name,
+              discountPercent: directDiscount.discountPercent,
+              maxDiscountAmount: directDiscount.maxDiscountAmount,
+            }
+          : null;
+      })(),
       additionalInfo: booking.additionalInformation || '',
     };
   }, [booking]);
@@ -142,18 +158,23 @@ export default function OrderPage() {
         let discountAmount = 0;
 
         if (bookingData.promotion) {
-          const discount = Math.min(
-            (totalPrice * bookingData.promotion.discountPercent) / 100,
+          const { discountAmount: calculatedDiscount, finalPrice } = calculatePromotionPrice(
+            totalPrice,
+            bookingData.promotion.discountPercent,
             bookingData.promotion.maxDiscountAmount,
           );
-          discountedPrice = totalPrice - discount;
+          discountedPrice = finalPrice;
           promotionId = bookingData.promotion.id;
-          discountAmount = discount;
+          discountAmount = calculatedDiscount;
         } else if (bookingData.tourInfo?.promotions?.[0]) {
           const promo = bookingData.tourInfo.promotions[0];
-          const discount = Math.min((totalPrice * promo.discountPercent) / 100, promo.maxDiscountAmount || Infinity);
-          discountedPrice = totalPrice - discount;
-          discountAmount = discount;
+          const { discountAmount: calculatedDiscount, finalPrice } = calculatePromotionPrice(
+            totalPrice,
+            promo.discountPercent,
+            promo.maxDiscountAmount || Number.MAX_VALUE,
+          );
+          discountedPrice = finalPrice;
+          discountAmount = calculatedDiscount;
         }
 
         await confirmBooking({

@@ -12,10 +12,10 @@ import { Article } from '@/types/article.type';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 
-export interface ArticleItemProps extends Omit<Article, 'content' | 'id'> {
+export type ArticleItemProps = {
   className?: string;
   layout?: 'vertical' | 'horizontal';
-}
+} & Omit<Article, 'content' | 'id'>
 
 const ArticleItem = ({
   title,

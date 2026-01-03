@@ -13,7 +13,7 @@ import { ReviewItem } from '@/components/shared/review-item';
 import { AddReviewCard } from './add-review-card';
 import { ReviewStatsCard } from './review-stats-card';
 
-interface TourDetailReviewsProps {
+type TourDetailReviewsProps = {
   tour: Tour;
 }
 

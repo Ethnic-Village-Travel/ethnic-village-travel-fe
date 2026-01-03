@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { Location } from '@/types/location.type';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-interface PickDropLocationCardProps {
+type PickDropLocationCardProps = {
   location: Location;
 }
 

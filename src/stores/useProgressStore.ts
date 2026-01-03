@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface IProgressStore {
+type IProgressStore = {
   isAnimating: boolean;
   setIsAnimating: (isAnimating: boolean) => void;
 }

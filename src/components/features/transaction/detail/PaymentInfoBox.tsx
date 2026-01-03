@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 
-interface PaymentInfo {
+type PaymentInfo = {
   id: string;
   amount: number;
   status: string;
@@ -13,7 +13,7 @@ interface PaymentInfo {
   accountNumber?: string;
 }
 
-interface PaymentInfoBoxProps {
+type PaymentInfoBoxProps = {
   payment?: PaymentInfo;
   paymentExpiredDate?: string;
 }

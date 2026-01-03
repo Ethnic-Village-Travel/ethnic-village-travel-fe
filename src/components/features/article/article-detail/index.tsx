@@ -4,7 +4,7 @@ import ArticleDetailHeader from './partials/header';
 import ArticleDetailHeroImage from './partials/hero-image';
 import ArticleDetailContent from './partials/content';
 
-interface ArticleDetailPageContentProps {
+type ArticleDetailPageContentProps = {
   article: Article;
 }
 

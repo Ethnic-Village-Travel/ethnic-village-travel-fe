@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 
 import { User } from '@/types/user.type';
 
-interface AuthState {
+type AuthState = {
   accessToken: string;
   refreshToken: string;
   user: User | null;

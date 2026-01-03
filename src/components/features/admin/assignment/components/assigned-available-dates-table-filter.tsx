@@ -18,7 +18,7 @@ import { MultiSelect } from '@/components/shared/multiple-select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { StatusFilter } from '@/components/shared/filter';
 
-interface AssignedAvailableDatesTableFilterProps {
+type AssignedAvailableDatesTableFilterProps = {
   className?: string;
 }
 

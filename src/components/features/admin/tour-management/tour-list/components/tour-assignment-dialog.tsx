@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 
 import { AvailableEmployeeSelect } from './available-employee-select';
 
-interface TourAssignmentDialogProps {
+type TourAssignmentDialogProps = {
   tour?: Tour;
   open: boolean;
   onOpenChange?: (open: boolean) => void;

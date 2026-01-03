@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { cn } from '@/utils';
 
-interface SectionContainerProps {
+type SectionContainerProps = {
   children: ReactNode;
   className?: string;
   background?: 'white' | 'gray';

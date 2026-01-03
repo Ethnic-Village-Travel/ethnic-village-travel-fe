@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { CacheData, ChatSession, Message } from '../components/shared/chatbot_v2/types';
 
-interface UseChatSessionReturn {
+type UseChatSessionReturn = {
   sessionId: string | null;
   messages: Message[];
   cache: CacheData;

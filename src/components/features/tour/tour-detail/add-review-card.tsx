@@ -8,7 +8,7 @@ import { Review } from '@/types/review.type';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
-interface AddReviewCardProps {
+type AddReviewCardProps = {
   review?: Review;
   onSubmit: (data: { rating: number; content: string }) => void;
   onCancel?: () => void;

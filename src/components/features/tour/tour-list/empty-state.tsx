@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 
 type EmptyStateNamespace = 'tour.list.empty' | 'tour.detail.similar.empty';
 
-interface EmptyStateProps {
+type EmptyStateProps = {
   namespace?: EmptyStateNamespace;
 }
 

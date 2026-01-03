@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { Article } from '@/types/article.type';
 
-interface ArticleDetailHeroImageProps {
+type ArticleDetailHeroImageProps = {
   article: Article;
 }
 

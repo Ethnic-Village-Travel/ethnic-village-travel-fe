@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
-interface TransactionHeaderProps {
+type TransactionHeaderProps = {
   booking: BookingGetResponse;
   onBack: () => void;
 }

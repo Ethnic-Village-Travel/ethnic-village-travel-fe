@@ -1,6 +1,6 @@
 import ArticleEditContent from '@/components/features/admin/article-management/article-edit';
 
-interface AdminArticleEditPageProps {
+type AdminArticleEditPageProps = {
   params: {
     id: string;
   };

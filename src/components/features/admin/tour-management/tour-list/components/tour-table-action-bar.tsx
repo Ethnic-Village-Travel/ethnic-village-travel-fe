@@ -20,7 +20,7 @@ const actions = ['update-status', 'update-priority', 'export', 'delete'] as cons
 
 type Action = (typeof actions)[number];
 
-interface ToursTableActionBarProps {
+type ToursTableActionBarProps = {
   table: Table<Tour>;
 }
 

@@ -11,7 +11,7 @@ export enum PromotionErrorCode {
   PROMOTION_OUT_OF_STOCK = 'PROMOTION_OUT_OF_STOCK',
 }
 
-export interface PromotionValidateResponse {
+export type PromotionValidateResponse = {
   id: string;
   name: string;
   discountPercent: number;
@@ -25,7 +25,7 @@ export enum PromotionType {
   DIRECT_DISCOUNT = 'DIRECT_DISCOUNT',
 }
 
-export interface Promotion {
+export type Promotion = {
   id: string;
   name: string;
   description?: string;
@@ -43,7 +43,7 @@ export interface Promotion {
   tours?: { id: string; title: string }[]; // Tours this promotion applies to
 }
 
-export interface PromotionCreateRequest {
+export type PromotionCreateRequest = {
   name: string;
   description?: string;
   discountPercent: number;
@@ -57,7 +57,7 @@ export interface PromotionCreateRequest {
   tourIds?: string[]; // Empty = applies to all tours
 }
 
-export interface PromotionUpdateRequest {
+export type PromotionUpdateRequest = {
   name: string;
   description?: string;
   discountPercent: number;
@@ -70,7 +70,7 @@ export interface PromotionUpdateRequest {
   // Note: type and code cannot be updated
 }
 
-export interface PromotionAdminListRequest {
+export type PromotionAdminListRequest = {
   search?: string; // Search by name or code
   status?: PromotionStatus;
   type?: PromotionType;
@@ -82,7 +82,7 @@ export interface PromotionAdminListRequest {
   sortDirection?: 'ASC' | 'DESC';
 }
 
-export interface PromotionListResponse {
+export type PromotionListResponse = {
   content: Promotion[];
   totalElements: number;
   totalPages: number;

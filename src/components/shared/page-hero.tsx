@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { cn } from '@/utils';
 
-interface PageHeroProps {
+type PageHeroProps = {
   title: string;
   description?: string;
   backgroundImage: string;

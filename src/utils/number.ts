@@ -49,28 +49,20 @@ export function calculateTotalPrice(quantities: { adult: number; child: number }
 }
 
 export function calculateTotalPriceWithPromotion(quantities: { adult: number; child: number }, tour: Tour | TourInfo) {
-  const adultSubtotal = quantities.adult * (tour.adultPrice || 0);
-  const childSubtotal = quantities.child * (tour.childPrice || 0);
+  const totalPrice = calculateTotalPrice(quantities, tour);
 
   if (!tour.promotions?.[0]?.discountPercent) {
-    return adultSubtotal + childSubtotal;
+    return totalPrice;
   }
 
-  // Calculate discount for adult tickets
-  const adultDiscountAmount = Math.min(
-    (tour.promotions?.[0]?.discountPercent / 100) * adultSubtotal,
-    tour.promotions?.[0]?.maxDiscountAmount || Number.MAX_VALUE,
-  );
-  const adultTotal = adultSubtotal - adultDiscountAmount;
+  // Apply discount to total price (matching backend logic)
+  // Backend: MIN(basePrice × discountPercent ÷ 100, maxDiscountAmount)
+  const promotion = tour.promotions[0];
+  const discount = (promotion.discountPercent / 100) * totalPrice;
+  const maxDiscount = promotion.maxDiscountAmount ?? Number.MAX_VALUE;
 
-  // Calculate discount for child tickets
-  const childDiscountAmount = Math.min(
-    (tour.promotions?.[0]?.discountPercent / 100) * childSubtotal,
-    tour.promotions?.[0]?.maxDiscountAmount || Number.MAX_VALUE,
-  );
-  const childTotal = childSubtotal - childDiscountAmount;
-
-  return adultTotal + childTotal;
+  const discountApplied = Math.min(discount, maxDiscount);
+  return totalPrice - discountApplied;
 }
 
 export function applyPromotionToTotal(

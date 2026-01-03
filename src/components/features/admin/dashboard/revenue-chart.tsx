@@ -30,7 +30,7 @@ function formatFullCurrency(value: number) {
   }).format(value);
 }
 
-interface CustomTooltipProps {
+type CustomTooltipProps = {
   active?: boolean;
   payload?: Array<{ value: number; dataKey: string; color: string }>;
   label?: string;

@@ -1,7 +1,7 @@
 import { BookingStatus } from '@/core/enum/booking.enum';
 import { TourAvailableDateStatus } from '@/core/enum/tour.enum';
 
-export interface AdminBookingListRequest {
+export type AdminBookingListRequest = {
   tourId?: string;
   tourAvailableDateIds?: string[];
   status?: BookingStatus[];
@@ -13,7 +13,7 @@ export interface AdminBookingListRequest {
   order?: 'asc' | 'desc';
 }
 
-export interface BookingFilters {
+export type BookingFilters = {
   tourId?: string;
   tourAvailableDateIds?: string[];
   status?: BookingStatus[];
@@ -21,7 +21,7 @@ export interface BookingFilters {
   toDate?: string;
 }
 
-export interface AdminBooking {
+export type AdminBooking = {
   bookingId: string;
   bookerDetail: {
     email: string;

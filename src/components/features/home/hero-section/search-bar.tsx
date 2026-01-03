@@ -19,11 +19,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 
-interface SearchBarProps {
+type SearchBarProps = {
   className?: string;
 }
 
-interface SearchData {
+type SearchData = {
   location: string;
   date: Date | undefined;
   keyword: string;

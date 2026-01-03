@@ -31,7 +31,7 @@ import { usePayment, usePaymentLink } from '@/hooks/api/usePayment';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/utils/classnames';
 
-interface BookingCardProps {
+type BookingCardProps = {
   booking: BookingListItem;
   index?: number;
 }

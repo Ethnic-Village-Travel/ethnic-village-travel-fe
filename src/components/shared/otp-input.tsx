@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils';
 
-interface OtpInputProps {
+type OtpInputProps = {
   value: string;
   onChange: (value: string) => void;
   numInputs?: number;

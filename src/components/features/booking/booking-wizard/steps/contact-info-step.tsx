@@ -14,12 +14,12 @@ import { Label } from '@/components/ui/label';
 import { BOOKING_STEPS, useBookingWizard } from '../booking-wizard-context';
 import { WizardNavigation } from '../wizard-navigation';
 
-export interface ContactInfoStepProps {
+export type ContactInfoStepProps = {
   onNext?: () => void;
   onBack?: () => void;
 }
 
-interface FormFieldProps {
+type FormFieldProps = {
   id: string;
   label: string;
   icon: React.ReactNode;

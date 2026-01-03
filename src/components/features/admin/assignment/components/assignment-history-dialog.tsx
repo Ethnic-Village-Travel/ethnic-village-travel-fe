@@ -19,7 +19,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useAssignmentHistory } from '@/hooks/api/useTourAssignment';
 import type { AssignmentHistoryRequest } from '@/types/tour-assignment.type';
 
-interface AssignmentHistoryDialogProps {
+type AssignmentHistoryDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   request: AssignmentHistoryRequest | null;

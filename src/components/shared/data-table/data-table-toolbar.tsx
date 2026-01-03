@@ -12,9 +12,9 @@ import { DataTableFacetedFilter } from '@/components/shared/data-table/data-tabl
 import { DataTableSliderFilter } from '@/components/shared/data-table/data-table-slider-filter';
 import { DataTableViewOptions } from '@/components/shared/data-table/data-table-view-options';
 
-interface DataTableToolbarProps<TData> extends React.ComponentProps<'div'> {
+type DataTableToolbarProps<TData> = {
   table: Table<TData>;
-}
+} & React.ComponentProps<'div'>
 
 export function DataTableToolbar<TData>({ table, children, className, ...props }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
@@ -50,7 +50,7 @@ export function DataTableToolbar<TData>({ table, children, className, ...props }
     </div>
   );
 }
-interface DataTableToolbarFilterProps<TData> {
+type DataTableToolbarFilterProps<TData> = {
   column: Column<TData>;
 }
 

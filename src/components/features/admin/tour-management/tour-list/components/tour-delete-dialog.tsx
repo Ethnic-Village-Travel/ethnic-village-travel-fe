@@ -32,11 +32,11 @@ import {
 
 // import { deleteTour } from '../_lib/actions';
 
-interface DeleteTourDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+type DeleteTourDialogProps = {
   tours: Row<Tour>['original'][];
   showTrigger?: boolean;
   onSuccess?: () => void;
-}
+} & React.ComponentPropsWithoutRef<typeof Dialog>
 
 export default function DeleteTourDialog({ tours, showTrigger = true, onSuccess, ...props }: DeleteTourDialogProps) {
   const [isDeletePending, startDeleteTransition] = React.useTransition();

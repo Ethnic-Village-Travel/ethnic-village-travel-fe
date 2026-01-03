@@ -3,14 +3,14 @@ import api from '@/core/api/api';
 
 import { Location } from '@/types/location.type';
 
-export interface LocationListParams {
+export type LocationListParams = {
   page?: number;
   size?: number;
   sortBy?: string;
   order?: 'asc' | 'desc';
 }
 
-export interface LocationListResponse {
+export type LocationListResponse = {
   data: Location[];
 }
 

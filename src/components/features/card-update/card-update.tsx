@@ -17,7 +17,7 @@ export type CardUpdateField = Omit<SharedFormFieldProps, 'name'> & {
   defaultValue: string;
 };
 
-interface CardUpdateProps {
+type CardUpdateProps = {
   title: string;
   className?: string;
   formSchema: z.ZodObject<any>;

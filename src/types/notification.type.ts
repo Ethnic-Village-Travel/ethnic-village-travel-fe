@@ -55,7 +55,7 @@ export enum NotificationChannel {
   IN_APP = 'IN_APP',
 }
 
-export interface Notification {
+export type Notification = {
   id: string;
   type: NotificationType;
   title: string;
@@ -66,7 +66,7 @@ export interface Notification {
   isRead: boolean;
 }
 
-export interface NotificationListRequest {
+export type NotificationListRequest = {
   type?: NotificationType;
   isRead?: boolean;
   notificationId?: string;
@@ -76,7 +76,7 @@ export interface NotificationListRequest {
   order?: 'asc' | 'desc';
 }
 
-export interface NotificationListResponse {
+export type NotificationListResponse = {
   content: Notification[];
   totalElements: number;
   totalPages: number;
@@ -84,7 +84,7 @@ export interface NotificationListResponse {
   number: number;
 }
 
-export interface NotificationRecipient {
+export type NotificationRecipient = {
   notification: Notification;
   readAt: string | null;
   sentAt: string;

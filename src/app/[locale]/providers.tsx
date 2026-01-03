@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { UserDetailsLoader } from '@/components/features/auth';
 
-export interface ProgressProps {
+export type ProgressProps = {
   isAnimating: boolean;
 }
 

@@ -2,7 +2,7 @@ import { ArticleStatus } from '@/core/enum/article.enum';
 
 import { Tag } from './tag.type';
 
-export interface Article {
+export type Article = {
   id: string;
   title: string;
   slug: string;
@@ -17,7 +17,7 @@ export interface Article {
   tags?: Tag[];
 }
 
-export interface ArticleListRequest {
+export type ArticleListRequest = {
   searchKey?: string;
   sortBy?: string;
   order?: string;
@@ -26,7 +26,7 @@ export interface ArticleListRequest {
   size?: number;
 }
 
-export interface ArticleListResponse {
+export type ArticleListResponse = {
   content: Article[];
   totalElements: number;
   totalPages: number;
@@ -34,12 +34,12 @@ export interface ArticleListResponse {
   number: number;
 }
 
-export interface ArticleAdmin extends Article {
+export type ArticleAdmin = {
   createdAt: string;
   updatedAt: string;
-}
+} & Article
 
-export interface ArticleAdminListRequest {
+export type ArticleAdminListRequest = {
   searchKey?: string;
   status?: ArticleStatus;
   page?: number;
@@ -48,7 +48,7 @@ export interface ArticleAdminListRequest {
   order?: string;
 }
 
-export interface ArticleAdminPayload {
+export type ArticleAdminPayload = {
   title: string;
   slug?: string;
   status?: ArticleStatus;
@@ -59,6 +59,6 @@ export interface ArticleAdminPayload {
   tagIds?: string[];
 }
 
-export interface ArticleAdminStatusPayload {
+export type ArticleAdminStatusPayload = {
   status: ArticleStatus;
 }

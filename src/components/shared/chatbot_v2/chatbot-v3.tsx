@@ -26,7 +26,7 @@ import { toast, Toaster } from 'sonner';
 import { defaultChatbotV3Config, getChatbotPosition, type ChatbotV3Config } from './chatbot-config-v3';
 import type { ChatRequest, ChatResponse } from './types';
 
-interface ChatbotV3Props {
+type ChatbotV3Props = {
   config?: Partial<ChatbotV3Config>;
 }
 

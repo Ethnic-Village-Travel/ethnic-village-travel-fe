@@ -2,15 +2,15 @@ import { create } from 'zustand';
 
 import type { EmployeeBasicResponse } from '@/types/employee.type';
 
-export interface AssignedGuideByDate {
+export type AssignedGuideByDate = {
   [dateId: string]: EmployeeBasicResponse | null;
 }
 
-export interface TourAssignments {
+export type TourAssignments = {
   [tourId: string]: AssignedGuideByDate;
 }
 
-interface TourAssignmentStore {
+type TourAssignmentStore = {
   // State
   tourAssignments: TourAssignments;
   activeTourId: string | null;

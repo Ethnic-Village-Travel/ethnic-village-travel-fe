@@ -1,11 +1,11 @@
-export interface ApiResponse<T = any> {
+export type ApiResponse<T = any> = {
   code: number;
   success: boolean;
   message: string;
   data?: T;
 }
 
-export interface PaginatedResponse<T> {
+export type PaginatedResponse<T> = {
   content: T[];
   totalElements: number;
   totalPages: number;
@@ -16,7 +16,7 @@ export interface PaginatedResponse<T> {
   empty: boolean;
 }
 
-export interface ApiError {
+export type ApiError = {
   message: string;
   error: string;
   statusCode: number;
