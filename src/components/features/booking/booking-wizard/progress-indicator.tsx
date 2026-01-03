@@ -31,7 +31,7 @@ export function ProgressIndicator({
   };
 
   return (
-    <div className={cn('flex items-center justify-between', className)}>
+    <nav aria-label="Tiến trình đặt tour" className={cn('flex items-center justify-between', className)}>
       {steps.map((step, index) => {
         const isCompleted = completedSteps.has(step.id);
         const isCurrent = step.id === currentStep;
@@ -43,6 +43,14 @@ export function ProgressIndicator({
               type="button"
               onClick={() => handleStepClick(step.id)}
               disabled={!isClickable}
+              aria-label={
+                isCurrent
+                  ? `Bước hiện tại: ${step.label}`
+                  : isCompleted
+                    ? `Bước đã hoàn thành: ${step.label}. Nhấn để quay lại`
+                    : `Bước ${step.id + 1}: ${step.label}`
+              }
+              aria-current={isCurrent ? 'step' : undefined}
               className={cn(
                 'flex flex-col items-center gap-2',
                 isClickable && 'cursor-pointer',
@@ -56,6 +64,7 @@ export function ProgressIndicator({
                   isCurrent && !isCompleted && 'border-primary bg-white text-primary',
                   !isCurrent && !isCompleted && 'border-gray-300 bg-white text-gray-400',
                 )}
+                aria-hidden="true"
               >
                 {isCompleted ? (
                   <Check className="h-5 w-5" data-testid={`step-${step.id}-checkmark`} />
@@ -75,12 +84,15 @@ export function ProgressIndicator({
               </span>
             </button>
             {index < steps.length - 1 && (
-              <div className={cn('mx-2 h-0.5 flex-1', completedSteps.has(step.id) ? 'bg-primary' : 'bg-gray-200')} />
+              <div
+                className={cn('mx-2 h-0.5 flex-1', completedSteps.has(step.id) ? 'bg-primary' : 'bg-gray-200')}
+                aria-hidden="true"
+              />
             )}
           </div>
         );
       })}
-    </div>
+    </nav>
   );
 }
 
@@ -90,17 +102,18 @@ export function MobileProgressIndicator({
   completedSteps,
 }: Omit<ProgressIndicatorProps, 'onStepClick'>) {
   const currentStepConfig = steps.find(s => s.id === currentStep);
+  const progressCount = completedSteps.size + (completedSteps.has(currentStep) ? 0 : 1);
 
   return (
-    <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
+    <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3" role="progressbar" aria-valuenow={progressCount} aria-valuemin={1} aria-valuemax={steps.length} aria-label={`Tiến trình đặt tour: Bước ${currentStep + 1} trong ${steps.length}`}>
       <div className="flex items-center gap-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-medium text-white">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-medium text-white" aria-hidden="true">
           {currentStep + 1}
         </div>
         <span className="text-sm font-medium text-gray-700">{currentStepConfig?.label}</span>
       </div>
-      <span className="text-sm text-gray-500">
-        {completedSteps.size + (completedSteps.has(currentStep) ? 0 : 1)}/{steps.length}
+      <span className="text-sm text-gray-500" aria-label={`${progressCount} trên ${steps.length} bước`}>
+        {progressCount}/{steps.length}
       </span>
     </div>
   );

@@ -115,12 +115,15 @@ export const BookmarkButton = ({
             )}
             onClick={handleToggleBookmark}
             disabled={isLoading}
+            aria-label={tooltipText}
+            aria-pressed={isBookmarked}
           >
             <Bookmark
               className={cn(
                 'h-[1.2rem] w-[1.2rem] transition-transform group-hover:scale-110',
                 isBookmarked ? 'fill-current' : 'fill-none',
               )}
+              aria-hidden="true"
             />
             {showText && labelText}
           </Button>

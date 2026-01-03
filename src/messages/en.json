@@ -1429,8 +1429,10 @@
         "name_placeholder": "Enter your full name",
         "email": "Email",
         "email_placeholder": "Enter your email address",
+        "email_helper": "Example: example@email.com",
         "phone": "Phone Number",
         "phone_placeholder": "Enter phone number (10 digits)",
+        "phone_helper": "Example: 0901234567 or +84901234567",
         "errors": {
           "name_required": "Please enter your name",
           "email_required": "Please enter your email",
@@ -1451,8 +1453,10 @@
         "name_placeholder": "Enter guest's full name",
         "email": "Email",
         "email_placeholder": "Enter guest's email address",
+        "email_helper": "Example: example@email.com",
         "phone": "Phone Number",
         "phone_placeholder": "Enter guest's phone number (10 digits)",
+        "phone_helper": "Example: 0901234567 or +84901234567",
         "errors": {
           "name_required": "Please enter the guest's name",
           "email_required": "Please enter the guest's email",

@@ -674,7 +674,7 @@
         "about": "Giới thiệu",
         "services": "Dịch vụ",
         "destinations": "Điểm đến",
-        "blog": "Blog",
+        "blog": "Bài viết",
         "contact": "Liên hệ"
       },
       "auth": {
@@ -702,7 +702,7 @@
         "testimonials": "Đánh giá",
         "partners": "Đối tác",
         "press": "Báo chí",
-        "blog": "Blog"
+        "blog": "Bài viết"
       },
       "support": {
         "title": "Hỗ trợ",
@@ -1429,8 +1429,10 @@
         "name_placeholder": "Nhập họ và tên của bạn",
         "email": "Email",
         "email_placeholder": "Nhập địa chỉ email",
+        "email_helper": "Ví dụ: example@email.com",
         "phone": "Số điện thoại",
         "phone_placeholder": "Nhập số điện thoại (10 chữ số)",
+        "phone_helper": "Ví dụ: 0901234567 hoặc +84901234567",
         "errors": {
           "name_required": "Vui lòng nhập họ và tên",
           "email_required": "Vui lòng nhập email",
@@ -1451,8 +1453,10 @@
         "name_placeholder": "Nhập họ và tên khách",
         "email": "Email",
         "email_placeholder": "Nhập địa chỉ email khách",
+        "email_helper": "Ví dụ: example@email.com",
         "phone": "Số điện thoại",
         "phone_placeholder": "Nhập số điện thoại khách (10 chữ số)",
+        "phone_helper": "Ví dụ: 0901234567 hoặc +84901234567",
         "errors": {
           "name_required": "Vui lòng nhập họ và tên",
           "email_required": "Vui lòng nhập email",

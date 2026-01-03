@@ -2,7 +2,7 @@ export const RouteConstant = {
   home: '/',
   about: '/about',
   services: '/services',
-  blog: '/blog',
+  blog: '/article',
   contact: '/contact',
 
   login: '/login',

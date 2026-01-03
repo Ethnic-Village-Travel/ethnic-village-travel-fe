@@ -81,7 +81,12 @@ export default function PaginationClient({
     for (let i = startPage; i <= endPage; i++) {
       items.push(
         <PaginationItem key={i}>
-          <PaginationLink href={createPageUrl(i)} isActive={i === page}>
+          <PaginationLink
+            href={createPageUrl(i)}
+            isActive={i === page}
+            aria-label={i === page ? `Trang hiện tại, trang ${i}` : `Đi tới trang ${i}`}
+            aria-current={i === page ? 'page' : undefined}
+          >
             {i}
           </PaginationLink>
         </PaginationItem>,
@@ -107,41 +112,45 @@ export default function PaginationClient({
     return items;
   }, [page, pageSize, range, showFirstLast, createPageUrl]);
 
-  if (pageSize <= 1) return null;
+  if (pageSize <= 1) {
+    return null;
+  }
 
   const disabledIconClass = 'flex h-9 w-9 items-center justify-center text-muted-foreground';
   const isFirstPage = page === 1;
   const isLastPage = page === pageSize;
 
   return (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          {isFirstPage ? (
-            <span className={disabledIconClass}>
-              <ChevronLeft className="h-4 w-4" />
-            </span>
-          ) : (
-            <PaginationLink href={createPageUrl(page - 1)} aria-label="Go to previous page">
-              <ChevronLeft className="h-4 w-4" />
-            </PaginationLink>
-          )}
-        </PaginationItem>
+    <nav aria-label="Phân trang">
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            {isFirstPage ? (
+              <span className={disabledIconClass} aria-label="Trang trước (không khả dụng)">
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              </span>
+            ) : (
+              <PaginationLink href={createPageUrl(page - 1)} aria-label={`Đi tới trang ${page - 1}`}>
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              </PaginationLink>
+            )}
+          </PaginationItem>
 
-        {pages}
+          {pages}
 
-        <PaginationItem>
-          {isLastPage ? (
-            <span className={disabledIconClass}>
-              <ChevronRight className="h-4 w-4" />
-            </span>
-          ) : (
-            <PaginationLink href={createPageUrl(page + 1)} aria-label="Go to next page">
-              <ChevronRight className="h-4 w-4" />
-            </PaginationLink>
-          )}
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+          <PaginationItem>
+            {isLastPage ? (
+              <span className={disabledIconClass} aria-label="Trang sau (không khả dụng)">
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              </span>
+            ) : (
+              <PaginationLink href={createPageUrl(page + 1)} aria-label={`Đi tới trang ${page + 1}`}>
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              </PaginationLink>
+            )}
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </nav>
   );
 }

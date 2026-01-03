@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import Link from 'next/link';
 import { BookingStatus } from '@/core/enum/booking.enum';
 import { Receipt, CheckCircle2, RefreshCw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -6,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { BookingListRequest } from '@/types/booking';
 import { useApiBookingList } from '@/hooks/api/useBooking';
 import { useQueryConfig } from '@/hooks/use-query-config';
+import { Button } from '@/components/ui/button';
 import PaginationClient from '@/components/shared/pagination-client';
 
 import BookingCard from './booking-card';
@@ -88,10 +90,12 @@ const EmptyState = () => {
       </p>
 
       {/* CTA Button */}
-      <button className="mt-6 flex items-center gap-2 rounded-md bg-green px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-green/90 hover:shadow-md">
-        <Receipt className="h-4 w-4" />
-        <span>{t('explore_tours') || 'Explore tours'}</span>
-      </button>
+      <Button asChild className="mt-6 bg-green text-white hover:bg-green/90" variant="default">
+        <Link href="/tour">
+          <Receipt className="mr-2 h-4 w-4" />
+          <span>{t('explore_tours') || 'Explore tours'}</span>
+        </Link>
+      </Button>
     </div>
   );
 };

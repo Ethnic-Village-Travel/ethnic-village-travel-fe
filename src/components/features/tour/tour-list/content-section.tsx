@@ -9,6 +9,7 @@ import { useFilteredTourList } from '@/hooks/api/useFilteredTourList';
 import { useQueryConfig } from '@/hooks/use-query-config';
 import { TourItem } from '@/components/features/tour/tour-card';
 import PaginationClient from '@/components/shared/pagination-client';
+import Loading from '@/components/shared/loading';
 
 import { EmptyState } from './empty-state';
 import { SORT_OPTIONS, TourHeader } from './header-section';
@@ -65,12 +66,7 @@ export default function TourContentSection() {
 
       <div className="grid gap-6">
         {isLoading ? (
-          <div className="flex items-center justify-center py-8">
-            <div className="flex items-center gap-2">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-500 border-t-transparent"></div>
-              <span className="text-gray-600">{t('searching')}</span>
-            </div>
-          </div>
+          <Loading text={t('searching')} size="md" />
         ) : isEmpty ? (
           <EmptyState />
         ) : (
