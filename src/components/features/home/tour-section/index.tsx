@@ -74,7 +74,7 @@ const TourSection = () => {
 
   return (
     <section className="flex flex-col items-center gap-6">
-      <TitleSection title="Best Place For Holiday" description="Best Place For Holiday" />
+      <TitleSection title={tTour('title')} description={tTour('description')} />
 
       <div className="flex w-full flex-wrap gap-3">
         {allTabs.map(tab => {

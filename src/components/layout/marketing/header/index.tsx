@@ -49,6 +49,8 @@ const Header = ({ navItemClassName }: HeaderProps) => {
     setIsMenuOpen(false);
   };
 
+  console.log(user);
+
   const NavLinks = ({ isMobileNav = false }: { isMobileNav?: boolean }) => (
     <ul className={cn('flex items-center gap-6 2xl:gap-8', isMobileNav && 'flex-col items-start gap-4 space-y-2')}>
       {navLinks.map(link => (
@@ -167,7 +169,7 @@ const Header = ({ navItemClassName }: HeaderProps) => {
                       <div className="flex flex-col gap-2 border-t pt-4">
                         <div className="mb-2 flex items-center gap-3 px-2">
                           <Avatar className="h-10 w-10">
-                            <AvatarImage src={user.avatar} />
+                            <AvatarImage src={user.personal?.avatar || user.avatar} />
                             <AvatarFallback className="bg-gray-200 text-black">
                               {user.personal?.firstName?.[0]}
                               {user.personal?.lastName?.[0]}

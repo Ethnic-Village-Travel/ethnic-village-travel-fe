@@ -55,15 +55,20 @@ export function LoginPopup() {
 
         refetchUserDetails();
 
-        toast({
-          title: t('login_success'),
-          variant: 'default',
-        });
         form.reset();
 
         const redirectUrl = searchParams.get('redirect');
         if (redirectUrl) {
           router.push(redirectUrl);
+          return;
+        }
+
+        if (user.roles.includes('ADMIN') || user.roles.includes('ROLE_ADMIN')) {
+          router.push('/admin');
+        } else if (user.roles.includes('ROLE_TOUR_AGENCY') || user.roles.includes('TOUR_AGENCY')) {
+          router.push('/admin/assigned-available-dates');
+        } else {
+          router.push('/');
         }
       } else {
         toast({

@@ -434,9 +434,15 @@
     "title": "Xin chào!",
     "about": "Đi tới trang giới thiệu",
     "tour": {
+      "title": "Điểm Đến Tuyệt Vời Cho Kỳ Nghỉ",
+      "description": "Điểm Đến Tuyệt Vời Cho Kỳ Nghỉ",
       "popular": "Phổ biến",
       "outstanding": "Nổi bật",
       "best_price": "Giá tốt nhất"
+    },
+    "article": {
+      "title": "Travel Vibes – Cảm Nhận Mỗi Hành Trình",
+      "description": "Những câu chuyện, mẹo và cảm hứng cho mọi tâm hồn yêu du lịch"
     },
     "reasons": [
       {

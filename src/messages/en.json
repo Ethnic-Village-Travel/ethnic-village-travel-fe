@@ -434,9 +434,15 @@
     "title": "Hello world!",
     "about": "Go to about page",
     "tour": {
+      "title": "Best Place For Holiday",
+      "description": "Best Place For Holiday",
       "popular": "Popular",
       "outstanding": "Outstanding",
       "best_price": "Best Price"
+    },
+    "article": {
+      "title": "Travel Vibes – Feel Every Journey",
+      "description": "Stories, tips & inspo for every wanderer at heart"
     },
     "reasons": [
       {

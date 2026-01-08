@@ -2,23 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
 import { RouteConstant } from '@/core/constants/route';
-import {
-  BarChart3,
-  Bell,
-  Bot,
-  Calendar,
-  CalendarCheck,
-  Compass,
-  FileText,
-  LayoutGrid,
-  Newspaper,
-  Package,
-  Search,
-  ShieldCheck,
-  User,
-} from 'lucide-react';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { Calendar, CalendarCheck, Compass, LayoutGrid, Search, ShieldCheck, User } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -65,6 +52,7 @@ const COMMAND_ITEMS: CommandConfig = {
 export default function SearchCommand() {
   const router = useRouter();
   const t = useTranslations('admin.search_command');
+  const { user } = useAuthStore();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -103,13 +91,17 @@ export default function SearchCommand() {
           <CommandList>
             <CommandEmpty>{t('empty')}</CommandEmpty>
             {COMMAND_SECTIONS.map(sectionKey => {
-              const items = COMMAND_ITEMS[sectionKey];
+              const items = COMMAND_ITEMS[sectionKey].filter(item => {
+                if (user?.roles?.includes('ROLE_TOUR_AGENCY')) {
+                  return item.labelKey === 'management.tour_assignment';
+                }
+                return true;
+              });
+
+              if (items.length === 0) return null;
+
               return (
-                <CommandGroup
-                  className="border-b py-2"
-                  heading={t(`sections.${sectionKey}`)}
-                  key={sectionKey}
-                >
+                <CommandGroup className="border-b py-2" heading={t(`sections.${sectionKey}`)} key={sectionKey}>
                   {items.map(item => (
                     <CommandItem
                       key={item.labelKey}
