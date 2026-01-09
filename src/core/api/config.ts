@@ -1,12 +1,4 @@
-const getApiRoot = () => {
-  const uri = process.env.NEXT_PUBLIC_SERVER_URI || '';
-  if (uri.startsWith('https://')) {
-    return uri.replace('https://', 'http://');
-  }
-  return uri;
-};
-
-export const API_ROOT = getApiRoot();
+export const API_ROOT = process.env.NEXT_PUBLIC_SERVER_URI;
 
 export const TIMEOUT: number = 150000;
 
