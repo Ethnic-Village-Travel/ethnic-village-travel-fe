@@ -539,6 +539,7 @@
       "review": "Review",
       "days": "Days",
       "location": "Location",
+      "ethnic": "Ethnic",
       "duration_format": "{days} Days/{nights} Nights",
       "share": "Share",
       "share_success": "Tour link copied",

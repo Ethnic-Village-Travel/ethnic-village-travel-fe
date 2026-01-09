@@ -11,10 +11,10 @@ import {
 } from '@/utils';
 import { cn } from '@/utils/classnames';
 import { useLocale, useTranslations } from 'next-intl';
-import logger from '@/libs/logger';
 
 import { BookingGetResponse } from '@/types/booking/booking.response';
 import { PromotionValidateResponse } from '@/types/promotion.type';
+import logger from '@/libs/logger';
 import { useApiBookingConfirm } from '@/hooks/api/useBooking';
 import { usePayment } from '@/hooks/api/usePayment';
 import { useToast } from '@/hooks/use-toast';
@@ -29,7 +29,7 @@ type PersonTypeCalculatorProps = {
   value: number;
   locale: 'vi' | 'en' | 'ko';
   onChange: (value: number) => void;
-}
+};
 
 const PersonTypeCalculator = ({ label, price, value, locale }: PersonTypeCalculatorProps) => {
   return (
@@ -47,7 +47,7 @@ const PersonTypeCalculator = ({ label, price, value, locale }: PersonTypeCalcula
 
 type BookingCalculatorProps = {
   booking: BookingGetResponse;
-}
+};
 
 export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
   const t = useTranslations('order');

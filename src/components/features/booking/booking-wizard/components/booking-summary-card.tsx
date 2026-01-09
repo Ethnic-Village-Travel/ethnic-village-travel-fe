@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { formatCurrency } from '@/utils/number';
+import { formatCurrency, getBestActiveDirectDiscount } from '@/utils/number';
 import { Calendar, MapPin, Tag, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -15,7 +15,7 @@ export type BookingSummaryCardProps = {
   bookingData: BookingData;
   locale: 'vi' | 'en' | 'ko';
   className?: string;
-}
+};
 
 function calculateSummaryPrice(
   guestCount: GuestCount,
@@ -49,25 +49,27 @@ export function BookingSummaryCard({ bookingData, locale, className }: BookingSu
 
   const activePromotion = useMemo(() => {
     if (bookingData.promotion) return bookingData.promotion;
-    const tourPromo = tourInfo?.promotions?.[0];
-    if (tourPromo) {
-      return {
-        id: String(tourPromo.id),
-        name: tourPromo.name,
-        discountPercent: tourPromo.discountPercent,
-        maxDiscountAmount: tourPromo.maxDiscountAmount,
-      };
-    }
-    return null;
-  }, [bookingData.promotion, tourInfo?.promotions]);
 
-  const priceDetails = useMemo(
-    () => {
-      const result = calculateSummaryPrice(bookingData.guestCount, adultPrice, childPrice, activePromotion);
-      return result;
-    },
-    [bookingData.guestCount, adultPrice, childPrice, activePromotion],
-  );
+    // Get best DIRECT_DISCOUNT promotion (highest discount %)
+    if (tourInfo) {
+      const bestPromo = getBestActiveDirectDiscount(tourInfo);
+      if (bestPromo) {
+        return {
+          id: String(bestPromo.id),
+          name: bestPromo.name,
+          discountPercent: bestPromo.discountPercent,
+          maxDiscountAmount: bestPromo.maxDiscountAmount,
+        };
+      }
+    }
+
+    return null;
+  }, [bookingData.promotion, tourInfo]);
+
+  const priceDetails = useMemo(() => {
+    const result = calculateSummaryPrice(bookingData.guestCount, adultPrice, childPrice, activePromotion);
+    return result;
+  }, [bookingData.guestCount, adultPrice, childPrice, activePromotion]);
 
   const totalGuests = bookingData.guestCount.adult + bookingData.guestCount.child;
 
