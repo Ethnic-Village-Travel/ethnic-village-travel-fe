@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
+import type { PluginAPI } from 'tailwindcss/types/config';
 
 const config: Config = {
   darkMode: ['class'],
@@ -7,6 +9,7 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: ['shadow-2xs', 'shadow-xs', 'shadow-sm', 'shadow', 'shadow-md', 'shadow-lg', 'shadow-xl', 'shadow-2xl'],
   theme: {
     extend: {
       fontFamily: {
@@ -20,10 +23,12 @@ const config: Config = {
       },
       boxShadow: {
         'custom-blue': '0 0 4px 1.5px var(--shadow)',
+        'custom-gray': '0px 55px 70px 0px rgba(0, 0, 0, 0.03), 0px 55px 90px 0px rgba(0, 0, 0, 0.03)',
       },
       colors: {
         star: 'var(--star)',
         shadow: 'var(--shadow)',
+        success: 'var(--success)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -93,6 +98,16 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        sidebar: {
+          DEFAULT: '#f9fafb',
+          foreground: '#333333',
+          primary: '#3b82f6',
+          'primary-foreground': '#ffffff',
+          accent: '#e0f2fe',
+          'accent-foreground': '#1e3a8a',
+          border: '#e5e7eb',
+          ring: '#3b82f6',
+        },
 
         // Tertiary Colors
         tertiary: {
@@ -118,7 +133,11 @@ const config: Config = {
           '5': 'var(--dark-dark-5)',
           '10': 'var(--dark-dark-10)',
           '20': 'var(--dark-dark-20)',
-          '75': 'var(--dark-dark-75)',
+          '30': 'var(--dark-dark-30)',
+          '40': 'var(--dark-dark-40)',
+          '50': 'var(--dark-dark-50)',
+          '60': 'var(--dark-dark-60)',
+          '70': 'var(--dark-dark-70)',
           '80': 'var(--dark-dark-80)',
           '90': 'var(--dark-dark-90)',
         },
@@ -182,8 +201,32 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      keyframes: {
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 2s infinite',
+      },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+
+    plugin(function ({ addComponents }: PluginAPI) {
+      addComponents({
+        '.full-bleed': {
+          position: 'relative',
+          width: '100vw',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+        },
+      });
+    }),
+  ],
 };
 export default config;

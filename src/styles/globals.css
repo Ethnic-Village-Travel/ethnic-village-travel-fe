@@ -14,6 +14,36 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Custom Scrollbar */
+  .custom-scrollbar {
+    @apply overflow-x-auto pb-2;
+
+    &::-webkit-scrollbar {
+      @apply h-1.5;
+    }
+
+    &::-webkit-scrollbar-track {
+      @apply rounded-full bg-gray-100;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply rounded-full bg-primary-500;
+    }
+  }
+
+  /* Hide Scrollbar */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none;
+      /* Chrome, Safari and Opera */
+    }
+  }
 }
 
 @layer base {
@@ -47,6 +77,7 @@ body {
     /* Custom Colors */
     --star: #fbbf00;
     --shadow: rgba(105, 197, 249, 0.25);
+    --success: #12B76A;
 
     /* Primary Colors */
     --primary-primary-100: #d3ebf9;
@@ -102,7 +133,11 @@ body {
     --dark-dark-5: rgba(15, 20, 22, 0.05);
     --dark-dark-10: rgba(15, 20, 22, 0.1);
     --dark-dark-20: rgba(15, 20, 22, 0.2);
-    --dark-dark-75: rgba(15, 20, 22, 0.75);
+    --dark-dark-30: rgba(15, 20, 22, 0.3);
+    --dark-dark-40: rgba(15, 20, 22, 0.4);
+    --dark-dark-50: rgba(15, 20, 22, 0.5);
+    --dark-dark-60: rgba(15, 20, 22, 0.6);
+    --dark-dark-70: rgba(15, 20, 22, 0.7);
     --dark-dark-80: rgba(15, 20, 22, 0.8);
     --dark-dark-90: rgba(15, 20, 22, 0.9);
 
@@ -186,5 +221,65 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .article-content {
+    max-width: none;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: hsl(var(--foreground));
+  }
+
+  .article-content > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .article-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+
+  .article-content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: hsl(var(--foreground) / 0.9);
+  }
+
+  .article-content p {
+    margin: 0 0 1rem;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .article-content a {
+    color: hsl(var(--primary));
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 150ms ease;
+  }
+
+  .article-content a:hover {
+    color: hsl(var(--primary) / 0.8);
+  }
+
+  .article-content strong {
+    color: hsl(var(--foreground));
+  }
+
+  .article-content ul,
+  .article-content ol {
+    margin: 0 0 1rem 1.25rem;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .article-content li {
+    margin-bottom: 0.25rem;
   }
 }

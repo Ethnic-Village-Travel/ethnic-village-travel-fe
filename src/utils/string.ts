@@ -1,17 +1,7 @@
-/**
- * Function to check if string has white space
- * @param str - String to check
- * @returns Boolean
- */
 export function hasWhiteSpace(str: string) {
   return /\s/g.test(str);
 }
 
-/**
- * Function to hash string to number
- * @param str - String to hash
- * @returns Number
- */
 export function hashStringToNumber(str: string): number {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -21,11 +11,6 @@ export function hashStringToNumber(str: string): number {
   return Math.abs(hash);
 }
 
-/**
- * Function to remove Vietnamese tones
- * @param str - String to remove Vietnamese tones
- * @returns String without Vietnamese tones
- */
 function removeVietnameseTones(str: string) {
   return str
     .normalize('NFD')
@@ -34,11 +19,6 @@ function removeVietnameseTones(str: string) {
     .replace(/Đ/g, 'D');
 }
 
-/**
- * Function to slugify string
- * @param str - String to slugify
- * @returns Slugified string
- */
 export function slugify(str: string) {
   return removeVietnameseTones(str)
     .toLowerCase()
@@ -46,4 +26,22 @@ export function slugify(str: string) {
     .replace(/\s+/g, ' ')
     .trim()
     .replace(/ /g, '-');
+}
+
+export function toSnakeCase(str: string): string {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9\s]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '_');
+}
+
+export function getInitialName(firstName: string, lastName: string): string {
+  return [firstName, lastName]
+    .filter(Boolean)
+    .map(word => word[0])
+    .join('')
+    .toUpperCase();
 }

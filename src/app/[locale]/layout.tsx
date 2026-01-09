@@ -2,12 +2,11 @@ import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import { notFound } from 'next/navigation';
+import { routing } from '@/libs/i18n-navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 
-import { routing } from '@/lib/i18n-navigation';
-import Footer from '@/components/layout/footer';
-import Header from '@/components/layout/header';
+import { Toaster } from '@/components/ui/toaster';
 import Loading from '@/components/shared/loading';
 
 import Providers from './providers';
@@ -19,14 +18,6 @@ const roboto = Roboto({
   subsets: ['latin'],
   weight: ['300', '400', '500', '700'],
 });
-
-// const geistMono = localFont({
-//   src: "./fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
-//   weight: "100 900",
-// });
-
-//geistSans.variable
 
 export const metadata: Metadata = {
   title: {
@@ -63,13 +54,9 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <Suspense fallback={<Loading fullScreen text="Đang tải trang..." />}>
-              <div className="relative flex min-h-screen w-full flex-col gap-10">
-                <Header navItemClassName="text-dark" />
-                <main className="mx-auto mt-[80px] w-full max-w-screen-2xl flex-1 px-4 md:px-8 lg:px-16 xl:px-28">
-                  {children}
-                </main>
-                <Footer />
-              </div>
+              {children}
+
+              <Toaster />
             </Suspense>
           </Providers>
         </NextIntlClientProvider>

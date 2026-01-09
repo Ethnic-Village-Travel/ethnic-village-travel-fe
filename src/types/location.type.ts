@@ -1,7 +1,8 @@
-export interface Location {
-  id: number;
-  city: string;
+export type Location = {
+  id: string;
   address?: string;
+  city: string;
+  province: string;
   latitude?: number;
   longitude?: number;
 }

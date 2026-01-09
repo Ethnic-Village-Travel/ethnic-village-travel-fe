@@ -2,97 +2,129 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { RouteConstant } from '@/constants/route';
+import { RouteConstant } from '@/core/constants/route';
 import { cn } from '@/utils';
+import dayjs from 'dayjs';
+import { ArrowBigUp, Clock3, Eye } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
+import { Article } from '@/types/article.type';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 
-export interface ArticleItemProps {
-  id: string;
-  title: string;
-  author: string;
-  readTime: number;
-  thumbnailUrl?: string;
-  slug: string;
+export type ArticleItemProps = {
   className?: string;
   layout?: 'vertical' | 'horizontal';
-  description?: string;
-  date?: string;
-  tags?: string[];
-}
+} & Omit<Article, 'content' | 'id'>
 
 const ArticleItem = ({
-  id,
   title,
-  author,
-  readTime,
-  thumbnailUrl = '/images/blog-card-thumbnail.png',
   slug,
-  className,
-  layout = 'vertical',
-  description,
-  date,
+  summary,
+  imageUrl,
+  upvote,
+  views,
+  publishedDate,
   tags,
+  className,
+  layout = 'horizontal',
 }: ArticleItemProps) => {
+  const t = useTranslations('article.item');
   const isHorizontal = layout === 'horizontal';
 
+  let formattedDate: string | null = null;
+  if (publishedDate) {
+    const date = dayjs(publishedDate);
+    if (date.isValid()) {
+      formattedDate = date.format('DD/MM/YYYY');
+    }
+  }
+
+  const readTime = Math.ceil((summary?.length || 0) / 200);
+
   return (
-    <Link href={`${RouteConstant.article_detail.replace(':slug', slug)}`} className="block w-full">
-      <Card
-        className={cn(
-          'h-full w-full overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-md',
-          {
-            'flex flex-col md:flex-row': isHorizontal,
-          },
-          className,
-        )}
+    <Card
+      className={cn(
+        'group relative flex h-full w-full overflow-hidden transition-all duration-300 hover:shadow-lg',
+        {
+          'flex-row': isHorizontal,
+          'flex-col': !isHorizontal,
+        },
+        className,
+      )}
+    >
+      
+      <Link
+        href={`${RouteConstant.article_detail.replace(':slug', slug)}`}
+        className={cn('relative shrink-0 overflow-hidden', {
+          'w-80': isHorizontal,
+          'w-full': !isHorizontal,
+        })}
       >
         <div
-          className={cn('relative h-[154px] w-full', {
-            'h-[200px] flex-shrink-0 md:h-auto md:w-[350px]': isHorizontal,
+          className={cn('relative overflow-hidden', {
+            'h-full min-h-[220px]': isHorizontal,
+            'aspect-[4/3]': !isHorizontal,
           })}
         >
-          <Image src={thumbnailUrl} alt={title} fill style={{ objectFit: 'cover' }} priority />
+          <Image
+            src={imageUrl || '/images/blog-card-thumbnail.png'}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            priority
+          />
         </div>
-        <CardContent
-          className={cn('flex flex-col gap-3 p-4', {
-            'flex-grow p-5': isHorizontal,
-          })}
-        >
-          <div>
-            {tags && tags.length > 0 && (
-              <div className="mb-2 flex h-[44px] flex-wrap gap-1">
-                {tags.map(tag => (
-                  <Badge key={tag} autoVariant shape="rounded" size="sm">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
-            <h3
-              className={cn('line-clamp-2 text-base font-bold text-dark', {
-                'mb-2 line-clamp-2 text-xl md:line-clamp-1 md:text-2xl': isHorizontal,
-              })}
-            >
-              {title}
-            </h3>
-            {isHorizontal && description && <p className="mb-3 mt-2 line-clamp-3 text-gray-600">{description}</p>}
+      </Link>
+
+      <CardContent className="flex flex-1 flex-col p-5">
+        
+        {formattedDate ? (
+          <div className="mb-2 text-sm text-gray-500">{t('published_on', { date: formattedDate })}</div>
+        ) : null}
+
+        <Link href={`${RouteConstant.article_detail.replace(':slug', slug)}`} className="mb-3">
+          <h3 className="line-clamp-2 text-xl font-bold transition-colors hover:text-primary">{title}</h3>
+        </Link>
+
+        {tags && tags.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-1.5">
+            {tags.map(tag => (
+              <Badge
+                key={tag.id}
+                shape="rounded"
+                size="sm"
+                style={{
+                  backgroundColor: tag.color || '#6B7280',
+                  color: '#FFFFFF',
+                }}
+              >
+                {tag.name}
+              </Badge>
+            ))}
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-bold text-dark">{author}</span>
-            <span className="text-gray-500">·</span>
-            <span className="text-sm text-gray-500">{readTime} phút đọc</span>
-            {isHorizontal && date && (
-              <>
-                <span className="text-gray-500">·</span>
-                <span className="text-sm text-gray-500">{date}</span>
-              </>
-            )}
+        )}
+
+        {summary && <p className="mb-auto line-clamp-3 text-sm text-gray-600">{summary}</p>}
+
+        <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex w-full items-center justify-between gap-4">
+            <div className="flex items-center gap-1">
+              <Eye className="size-4" />
+              <span className="text-xs">{views || 0}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <ArrowBigUp className="size-4" />
+              <span className="text-xs">{upvote || 0}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Clock3 className="size-4" />
+              <span className="text-xs">{t('read_time', { minutes: readTime })}</span>
+            </div>
           </div>
-        </CardContent>
-      </Card>
-    </Link>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

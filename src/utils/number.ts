@@ -1,5 +1,9 @@
+import { TourInfo } from '@/types/booking/booking.type';
+import { Tour } from '@/types/tour.type';
+
 const EXCEEDING_LIMIT_VALUE = 1.79769313e308;
 const STANDARD_SUFFIXES = ['', 'K', 'M', 'B', 'T'];
+const VND_TO_USD_RATE = 25000;
 
 const EXTENDED_SUFFIXES: string[] = (() => {
   const suffixes: string[] = [];
@@ -22,12 +26,10 @@ export function formatShortNumber(number: number | string | bigint | undefined |
   if (Math.abs(value) < 1000) {
     formattedValue = Number(value.toFixed(decimals));
   } else if (value < 1e15) {
-    // Standard suffixes: K, M, B, T
     const exponent = Math.min(Math.floor(Math.log10(value) / 3), STANDARD_SUFFIXES.length - 1);
     formattedValue = value / 10 ** (exponent * 3);
     suffix = STANDARD_SUFFIXES[exponent];
   } else {
-    // Extended suffixes: aa, ab, ..., cz
     const exponent = Math.floor(Math.log10(value) / 3) - 4;
     if (exponent >= EXTENDED_SUFFIXES.length) return '999cz';
     formattedValue = value / 10 ** ((exponent + 4) * 3);
@@ -35,6 +37,41 @@ export function formatShortNumber(number: number | string | bigint | undefined |
   }
 
   return `${Number(formattedValue.toFixed(decimals))}${suffix}`;
+}
+
+export function calculateTotalPrice(quantities: { adult: number; child: number }, tour: Tour | TourInfo) {
+  const adultSubtotal = quantities.adult * (tour.adultPrice || 0);
+  const childSubtotal = quantities.child * (tour.childPrice || 0);
+
+  return adultSubtotal + childSubtotal;
+}
+
+export function calculateTotalPriceWithPromotion(quantities: { adult: number; child: number }, tour: Tour | TourInfo) {
+  const totalPrice = calculateTotalPrice(quantities, tour);
+
+  if (!tour.promotions?.[0]?.discountPercent) {
+    return totalPrice;
+  }
+
+  const promotion = tour.promotions[0];
+  const discount = (promotion.discountPercent / 100) * totalPrice;
+  const maxDiscount = promotion.maxDiscountAmount ?? Number.MAX_VALUE;
+
+  const discountApplied = Math.min(discount, maxDiscount);
+  return totalPrice - discountApplied;
+}
+
+export function applyPromotionToTotal(
+  total: number,
+  promotion?: { discountPercent?: number; maxDiscountAmount?: number },
+): number {
+  if (!promotion?.discountPercent) return total;
+
+  const discount = (promotion.discountPercent / 100) * total;
+  const maxDiscount = promotion.maxDiscountAmount ?? Number.MAX_VALUE;
+
+  const discountApplied = Math.min(discount, maxDiscount);
+  return total - discountApplied;
 }
 
 export function formatNumber(
@@ -71,21 +108,63 @@ export function formatNumber(
   return result;
 }
 
-export function formatCurrencyVND(
-  value: number | string,
-  discount_percent?: number,
-  max_discount_amount?: number,
+export function currencyToNumber(value: string): number {
+  const number = value.replace(/[^0-9]/g, '');
+  return parseInt(number, 10);
+}
+
+export function formatCurrency(
+  value: number | string | undefined | null,
+  options?: {
+    locale?: 'vi' | 'en' | 'ko';
+    discount_percent?: number;
+    max_discount_amount?: number;
+  },
 ): string {
+  if (value === undefined || value === null) return '0';
+
+  const { locale = 'vi', discount_percent = 0, max_discount_amount = 0 } = options || {};
+
   let number = typeof value === 'string' ? parseFloat(value) : value;
 
-  if (isNaN(number)) return '0đ';
+  if (isNaN(number)) return locale === 'vi' ? '0đ' : locale === 'ko' ? '₩0' : '$0';
 
-  if (discount_percent) {
-    const rawDiscount = (number * discount_percent) / 100;
-    const discount = max_discount_amount ? Math.min(rawDiscount, max_discount_amount) : rawDiscount;
-
-    number = number - discount;
+  if (discount_percent && max_discount_amount) {
+    number = calculateDiscount(number, discount_percent, max_discount_amount);
   }
 
-  return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ';
+  if (locale === 'en') {
+    number = Math.round((number / VND_TO_USD_RATE) * 100) / 100;
+  }
+
+  const currencyFormatters = {
+    vi: (n: number) => n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ',
+    en: (n: number) => '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+    ko: (n: number) => '₩' + n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+  };
+
+  return currencyFormatters[locale](number);
+}
+
+export function calculateDiscount(value: number, discountPercent: number, maxDiscountAmount: number) {
+  const rawDiscount = (value * discountPercent) / 100;
+  const discount = maxDiscountAmount ? Math.min(rawDiscount, maxDiscountAmount) : rawDiscount;
+  return value - discount;
+}
+
+export function calculateRatingPercentage(
+  ratingCounts: {
+    [key: number]: number;
+  },
+  totalReviews: number,
+) {
+  const ratingPercentage: {
+    [key: number]: number;
+  } = {};
+
+  for (let i = 1; i <= Object.keys(ratingCounts).length; i++) {
+    ratingPercentage[i] = (ratingCounts[i] / totalReviews) * 100;
+  }
+
+  return ratingPercentage;
 }
