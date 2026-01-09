@@ -91,10 +91,6 @@ function useSortableContext(name: keyof typeof SORTABLE_ERRORS) {
 }
 
 interface GetItemValue<T> {
-  /**
-   * Callback that returns a unique identifier for each sortable item. Required for array of objects.
-   * @example getItemValue={(item) => item.id}
-   */
   getItemValue: (item: T) => UniqueIdentifier;
 }
 
@@ -479,7 +475,7 @@ export {
   ItemHandle,
   Overlay,
   Root,
-  //
+
   Sortable,
   SortableContent,
   SortableItem,

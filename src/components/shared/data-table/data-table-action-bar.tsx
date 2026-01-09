@@ -11,11 +11,11 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
-interface DataTableActionBarProps<TData> extends React.ComponentProps<typeof motion.div> {
+type DataTableActionBarProps<TData> = {
   table: Table<TData>;
   visible?: boolean;
   container?: Element | DocumentFragment | null;
-}
+} & React.ComponentProps<typeof motion.div>
 
 function DataTableActionBar<TData>({
   table,
@@ -72,10 +72,10 @@ function DataTableActionBar<TData>({
   );
 }
 
-interface DataTableActionBarActionProps extends React.ComponentProps<typeof Button> {
+type DataTableActionBarActionProps = {
   tooltip?: string;
   isPending?: boolean;
-}
+} & React.ComponentProps<typeof Button>
 
 function DataTableActionBarAction({
   size = 'sm',
@@ -117,7 +117,7 @@ function DataTableActionBarAction({
   );
 }
 
-interface DataTableActionBarSelectionProps<TData> {
+type DataTableActionBarSelectionProps<TData> = {
   table: Table<TData>;
 }
 

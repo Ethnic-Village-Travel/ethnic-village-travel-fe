@@ -1,4 +1,4 @@
-export interface DashboardStats {
+export type DashboardStats = {
   totalRevenue: number;
   newBookingsCount: number;
   upcomingDeparturesCount: number;
@@ -6,7 +6,7 @@ export interface DashboardStats {
   revenueGrowthPercent: number | null;
 }
 
-export interface UpcomingDeparture {
+export type UpcomingDeparture = {
   tourId: string;
   availableDateId: string;
   tourTitle: string;
@@ -17,20 +17,20 @@ export interface UpcomingDeparture {
   status: 'FULL' | 'SUFFICIENT' | 'NEED_MORE' | 'AVAILABLE';
 }
 
-export interface RevenueChartData {
+export type RevenueChartData = {
   date: string;
   currentRevenue: number;
   previousRevenue: number;
 }
 
-export interface TopDestination {
+export type TopDestination = {
   locationId: string;
   locationName: string;
   percentage: number;
   bookingCount: number;
 }
 
-export interface RecentBooking {
+export type RecentBooking = {
   id: string;
   customerName: string | null;
   customerPhone: string | null;

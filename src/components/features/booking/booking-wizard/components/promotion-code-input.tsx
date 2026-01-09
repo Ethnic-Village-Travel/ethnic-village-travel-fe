@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 
 import { useBookingWizard } from '../booking-wizard-context';
 
-export interface PromotionCodeInputProps {
+export type PromotionCodeInputProps = {
   tourId: string;
   className?: string;
 }

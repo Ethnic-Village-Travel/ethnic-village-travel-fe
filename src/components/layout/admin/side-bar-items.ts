@@ -1,16 +1,12 @@
 import { PermissionMap } from '@/core/constants/permission-map';
 import { RouteConstant } from '@/core/constants/route';
 import {
-  BarChart3,
-  Bell,
-  Bot,
   Briefcase,
   Calendar,
   CalendarCheck,
   Compass,
   LayoutGrid,
   Newspaper,
-  Package,
   Percent,
   ShieldCheck,
   Tags,
@@ -84,18 +80,6 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       href: RouteConstant.admin_booking,
       permission: PermissionMap[RouteConstant.admin_booking],
     },
-    {
-      label: 'order',
-      icon: Package,
-      href: RouteConstant.admin_order,
-      permission: PermissionMap[RouteConstant.admin_order],
-    },
-    {
-      label: 'report',
-      icon: BarChart3,
-      href: RouteConstant.admin_report,
-      permission: PermissionMap[RouteConstant.admin_report],
-    },
   ],
   'section.content': [
     {
@@ -103,18 +87,6 @@ export const SIDEBAR_NAV_ITEMS: Record<string, SIDEBAR_NAV_ITEM_PROP[]> = {
       icon: Newspaper,
       href: RouteConstant.admin_article,
       permission: PermissionMap[RouteConstant.admin_article],
-    },
-    {
-      label: 'notification',
-      icon: Bell,
-      href: RouteConstant.admin_notification,
-      permission: PermissionMap[RouteConstant.admin_notification],
-    },
-    {
-      label: 'chatbot',
-      icon: Bot,
-      href: RouteConstant.admin_chatbot,
-      permission: PermissionMap[RouteConstant.admin_chatbot],
     },
   ],
 } as const;

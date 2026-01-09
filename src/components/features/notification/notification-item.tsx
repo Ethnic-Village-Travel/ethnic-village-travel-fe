@@ -5,7 +5,7 @@ import { CheckCircle2, Circle, Clock3 } from 'lucide-react';
 
 import { Notification } from '@/types/notification.type';
 
-interface NotificationItemProps {
+type NotificationItemProps = {
   notification: Notification;
   onMarkAsRead?: (id: string) => void;
 }

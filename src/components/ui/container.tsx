@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { ComponentPropsWithoutRef, ReactElement } from 'react';
 import { cn } from '@/utils';

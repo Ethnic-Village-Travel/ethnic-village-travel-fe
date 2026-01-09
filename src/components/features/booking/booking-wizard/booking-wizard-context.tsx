@@ -5,31 +5,31 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 
 import type { TourInfo } from '@/types/booking/booking.type';
 
-export interface GuestCount {
+export type GuestCount = {
   adult: number;
   child: number;
 }
 
-export interface ContactInfo {
+export type ContactInfo = {
   name: string;
   email: string;
   phone: string;
 }
 
-export interface GuestInfo {
+export type GuestInfo = {
   name: string;
   email: string;
   phone: string;
 }
 
-export interface PromotionInfo {
+export type PromotionInfo = {
   id: string;
   name: string;
   discountPercent: number;
   maxDiscountAmount: number;
 }
 
-export interface BookingData {
+export type BookingData = {
   tourId: string;
   tourSlug: string;
   tourInfo: TourInfo | null;
@@ -44,7 +44,7 @@ export interface BookingData {
   additionalInfo: string;
 }
 
-export interface BookingWizardState {
+export type BookingWizardState = {
   currentStep: number;
   completedSteps: Set<number>;
   bookingData: BookingData;
@@ -52,7 +52,7 @@ export interface BookingWizardState {
   isLoading: boolean;
 }
 
-export interface BookingWizardActions {
+export type BookingWizardActions = {
   goToStep: (step: number) => void;
   nextStep: () => void;
   prevStep: () => void;
@@ -96,14 +96,14 @@ const initialState: BookingWizardState = {
   isLoading: false,
 };
 
-interface BookingWizardContextValue {
+type BookingWizardContextValue = {
   state: BookingWizardState;
   actions: BookingWizardActions;
 }
 
 const BookingWizardContext = createContext<BookingWizardContextValue | null>(null);
 
-interface BookingWizardProviderProps {
+type BookingWizardProviderProps = {
   children: ReactNode;
   initialData?: Partial<BookingData>;
 }

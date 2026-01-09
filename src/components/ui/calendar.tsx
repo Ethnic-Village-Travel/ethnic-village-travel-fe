@@ -19,7 +19,7 @@ function Calendar({
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>['variant'];
 }) {
-  // Provide empty fallback for class names since getDefaultClassNames is not available
+
   const defaultClassNames = {
     root: '',
     months: '',
@@ -152,7 +152,7 @@ function Calendar({
 }
 
 function CalendarDayButton({ className, day, modifiers, ...props }: React.ComponentProps<typeof DayButton>) {
-  // Provide empty fallback for class names
+
   const defaultClassNames = { day: '' };
 
   const ref = React.useRef<HTMLButtonElement>(null);

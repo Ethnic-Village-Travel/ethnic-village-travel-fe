@@ -1,8 +1,5 @@
 import { RouteConstant } from '@/core/constants/route';
 
-/**
- * Routes that require admin permissions
- */
 export const ADMIN_ROUTES = [
   RouteConstant.admin_dashboard,
   RouteConstant.admin_user,
@@ -28,26 +25,15 @@ export const ADMIN_ROUTES = [
   RouteConstant.admin_assigned_available_dates,
 ];
 
-/**
- * Routes that require authentication
- */
 export const PROTECTED_ROUTES = [
   RouteConstant.personal,
   RouteConstant.personal_bookmark,
   RouteConstant.personal_transaction,
   RouteConstant.personal_account,
-  // Add all admin routes to protected routes
+
   ...ADMIN_ROUTES,
 ];
 
-/**
- * Routes that require admin permissions (keeping for backward compatibility)
- */
-// Removed duplicate ADMIN_ROUTES definition
-
-/**
- * Check if a route requires authentication
- */
 export const isProtectedRoute = (path: string): boolean => {
   return PROTECTED_ROUTES.some(route => {
     const pattern = route.replace(/:[\w]+/g, '[^/]+');
@@ -56,16 +42,10 @@ export const isProtectedRoute = (path: string): boolean => {
   });
 };
 
-/**
- * Check if a route requires admin permissions
- */
 export const isAdminRoute = (path: string): boolean => {
   return path.startsWith('/admin');
 };
 
-/**
- * Get the appropriate login redirect URL
- */
 export const getLoginRedirectUrl = (currentPath: string, locale: string = 'vi'): string => {
   const loginUrl = `/${locale}/`;
   const redirectParam = encodeURIComponent(currentPath);

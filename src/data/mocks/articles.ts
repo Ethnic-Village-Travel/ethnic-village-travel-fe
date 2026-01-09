@@ -1,9 +1,6 @@
 import { ArticleItemProps } from '@/components/features/article/article-item';
 import { Tag } from '@/types/tag.type';
 
-/**
- * Mock data for articles
- */
 export const MOCK_ARTICLES: ArticleItemProps[] = [
   {
     title: 'Các nguồn tài nguyên hữu ích cho 1 front-end developer',

@@ -1,6 +1,6 @@
 import { User } from './user.type';
 
-export interface ReviewUser {
+export type ReviewUser = {
   id: number;
   name: string;
   avatar?: string;
@@ -11,7 +11,7 @@ export interface ReviewUser {
   };
 }
 
-export interface Review {
+export type Review = {
   id: number;
   userId: number;
   rating: number;
@@ -24,7 +24,7 @@ export interface Review {
   updatedAt: Date;
 }
 
-export interface ReviewStats {
+export type ReviewStats = {
   totalReviews: number;
   averageRating: number;
   ratingCounts: {

@@ -14,29 +14,26 @@ import { DataTableViewOptions } from '@/components/shared/data-table/data-table-
 import { getAssignedAvailableDatesTableColumns } from './assigned-available-dates-table-columns';
 import { AssignedAvailableDatesTableFilter } from './assigned-available-dates-table-filter';
 import { AssignmentHistoryDialog } from './assignment-history-dialog';
-import type { AssignmentHistoryRequest } from '@/types/tour-assignment.type';
+import { TourStatusUpdateDialog } from './tour-status-update-dialog';
 
 export function AssignedAvailableDatesTable() {
   const queryConfig = useQueryConfig();
   const t = useTranslations('admin');
   const { user } = useAuthStore();
-  // Backend returns roles with "ROLE_" prefix (e.g., "ROLE_ADMIN")
-  const isAdmin = user?.roles?.some(role => {
-    const normalizedRole = role?.toUpperCase().replace(/^ROLE_/, '');
-    return normalizedRole === 'ADMIN';
-  }) ?? false;
+  const isAdmin =
+    user?.roles?.some(role => {
+      const normalizedRole = role?.toUpperCase().replace(/^ROLE_/, '');
+      return normalizedRole === 'ADMIN';
+    }) ?? false;
 
-  // State for row actions
   const [rowAction, setRowAction] = useState<{
     id: string;
-    action: 'cancel' | 'history';
+    action: 'cancel' | 'history' | 'update-status';
     row?: AssignedAvailableDateResponse;
   } | null>(null);
 
-  // Build request params from URL query config
   const requestParams = useMemo(() => {
-    const page =
-      typeof queryConfig.page === 'number' && queryConfig.page > 0 ? queryConfig.page - 1 : 0;
+    const page = typeof queryConfig.page === 'number' && queryConfig.page > 0 ? queryConfig.page - 1 : 0;
 
     const params = {
       page,
@@ -45,7 +42,6 @@ export function AssignedAvailableDatesTable() {
       order: (queryConfig.order as 'asc' | 'desc') || 'desc',
     } as any;
 
-    // Add filters if present
     if (queryConfig.search) {
       params.searchKey = queryConfig.search as string;
     }
@@ -54,7 +50,6 @@ export function AssignedAvailableDatesTable() {
       params.tourStatus = statusArray;
     }
 
-    // Use existing date fields from queryConfig
     if (queryConfig.start_date) {
       params.fromDate = queryConfig.start_date as string;
     }
@@ -62,8 +57,7 @@ export function AssignedAvailableDatesTable() {
       params.toDate = queryConfig.end_date as string;
     }
 
-    // Add employee filter (Admin only)
-    if (queryConfig.employee_ids) {
+    if (isAdmin && queryConfig.employee_ids) {
       const employeeIdsArray = Array.isArray(queryConfig.employee_ids)
         ? queryConfig.employee_ids
         : [queryConfig.employee_ids as string];
@@ -71,12 +65,10 @@ export function AssignedAvailableDatesTable() {
     }
 
     return params;
-  }, [queryConfig]);
+  }, [queryConfig, isAdmin]);
 
-  // Fetch assigned available dates
   const { data, isLoading, error } = useAssignedAvailableDates(requestParams);
 
-  // Extract data from response with multiple safety checks
   const assignedDates = useMemo(() => {
     if (!data || !data.data || !Array.isArray(data.data.content)) {
       return [];
@@ -98,10 +90,9 @@ export function AssignedAvailableDatesTable() {
         isAdmin,
         setRowAction,
       }),
-    [t, isAdmin], // Add proper dependencies
+    [t, isAdmin],
   );
 
-  // Always create table - useDataTable hook must be called unconditionally
   const { table } = useDataTable<AssignedAvailableDateResponse>({
     data: assignedDates,
     columns,
@@ -117,10 +108,9 @@ export function AssignedAvailableDatesTable() {
   });
 
   const dataTableProps: Partial<DataTableProps<AssignedAvailableDateResponse>> = {
-    loading: isLoading ?? false, // Use same pattern as tour-table.tsx
+    loading: isLoading ?? false,
   };
 
-  // Handle error state - but still after all hooks are called
   if (error) {
     return (
       <div className="flex h-32 items-center justify-center">
@@ -150,7 +140,6 @@ export function AssignedAvailableDatesTable() {
         </div>
       </DataTable>
 
-      {/* Handle History Action */}
       <AssignmentHistoryDialog
         open={rowAction?.action === 'history'}
         onOpenChange={open => {
@@ -168,7 +157,16 @@ export function AssignedAvailableDatesTable() {
         }
       />
 
-      {/* Handle Cancel Action */}
+      <TourStatusUpdateDialog
+        open={rowAction?.action === 'update-status'}
+        onOpenChange={open => {
+          if (!open) {
+            setRowAction(null);
+          }
+        }}
+        assignment={rowAction?.action === 'update-status' ? (rowAction.row ?? null) : null}
+      />
+
       {rowAction?.action === 'cancel' && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="mx-4 w-full max-w-md rounded-lg bg-white p-6">
@@ -183,8 +181,6 @@ export function AssignedAvailableDatesTable() {
               </button>
               <button
                 onClick={() => {
-                  // TODO: Implement cancel assignment API call
-                  console.log('Cancel assignment:', rowAction.id);
                   setRowAction(null);
                 }}
                 className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"

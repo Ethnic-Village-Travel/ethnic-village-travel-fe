@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useChatSession } from '@/stores/useChatSession';
+import logger from '@/libs/logger';
 import {
   Bot,
   Loader2,
@@ -26,24 +27,10 @@ import { toast, Toaster } from 'sonner';
 import { defaultChatbotV3Config, getChatbotPosition, type ChatbotV3Config } from './chatbot-config-v3';
 import type { ChatRequest, ChatResponse } from './types';
 
-interface ChatbotV3Props {
+type ChatbotV3Props = {
   config?: Partial<ChatbotV3Config>;
 }
 
-/**
- * Chatbot V3 - Modern Minimal UI with Enhanced UX
- *
- * Features:
- * - Fully responsive (mobile-first)
- * - Smooth animations with framer-motion
- * - Markdown support with syntax highlighting
- * - Message actions (copy, regenerate)
- * - Auto-resizing textarea
- * - Keyboard shortcuts (ESC to close, Shift+Enter for newline)
- * - Focus management and accessibility
- * - Unread badge notification
- * - Toast notifications for actions
- */
 const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -63,7 +50,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     chatbotConfig.sessionConfig.maxMessages,
   );
 
-  // Auto-scroll to bottom when messages change
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -74,7 +60,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     scrollToBottom();
   }, [messages, showTypingIndicator, isOpen]);
 
-  // Track unread messages
   useEffect(() => {
     if (!isOpen && messages.length > lastMessageCountRef.current) {
       const newMessages = messages.length - lastMessageCountRef.current;
@@ -83,21 +68,18 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     lastMessageCountRef.current = messages.length;
   }, [messages, isOpen]);
 
-  // Clear unread count when opening
   useEffect(() => {
     if (isOpen) {
       setUnreadCount(0);
     }
   }, [isOpen]);
 
-  // Focus input when opening
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isOpen]);
 
-  // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -109,7 +91,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  // Check API health on mount
   useEffect(() => {
     const checkHealth = async () => {
       try {
@@ -118,7 +99,7 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
           setApiError('API không khả dụng');
         }
       } catch (error) {
-        console.error('Health check failed:', error);
+        logger.error('Health check failed:', error);
         setApiError('Không thể kết nối API');
       }
     };
@@ -126,12 +107,10 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     checkHealth();
   }, [chatbotConfig.apiUrl]);
 
-  // Send message to FastAPI
   const sendMessage = async (retryMessage?: string) => {
     const messageToSend = retryMessage || inputValue.trim();
     if (isWaitingResponse || messageToSend === '' || !chatbotConfig.apiUrl) return;
 
-    // Add user message to UI (only if not retry)
     if (!retryMessage) {
       addMessage({
         role: 'user',
@@ -146,13 +125,11 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     setApiError(null);
 
     try {
-      // Convert messages to history format for backend
       const history = messages.map(msg => ({
         role: msg.role,
         content: msg.content,
       }));
 
-      // Prepare request matching FastAPI ChatRequest model
       const requestBody: ChatRequest = {
         message: messageToSend,
         session_id: sessionId || undefined,
@@ -174,21 +151,19 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
 
       setShowTypingIndicator(false);
 
-      // Add assistant message to UI
       addMessage({
         role: 'assistant',
         content: data.response,
         timestamp: Date.now(),
       });
 
-      // Update cache from backend response
       if (data.cache) {
         updateCache(data.cache);
       }
 
       toast.success('Đã nhận phản hồi từ AI');
     } catch (error) {
-      console.error('Chatbot error:', error);
+      logger.error('Chatbot error:', error);
       setShowTypingIndicator(false);
       setApiError(chatbotConfig.errorMessage);
 
@@ -204,7 +179,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     }
   };
 
-  // Handle textarea key press
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && !isWaitingResponse) {
       e.preventDefault();
@@ -212,7 +186,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     }
   };
 
-  // Reset chat session
   const handleReset = async () => {
     if (!confirm('Bạn có chắc muốn xóa toàn bộ lịch sử chat?')) return;
 
@@ -228,12 +201,11 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
       setApiError(null);
       toast.success('Đã xóa lịch sử chat');
     } catch (error) {
-      console.error('Failed to reset chat:', error);
+      logger.error('Failed to reset chat:', error);
       toast.error('Không thể xóa lịch sử');
     }
   };
 
-  // Copy message to clipboard
   const handleCopy = async (content: string, index: number) => {
     try {
       await navigator.clipboard.writeText(content);
@@ -245,25 +217,20 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     }
   };
 
-  // Regenerate last assistant message
   const handleRegenerate = () => {
     if (messages.length < 2) return;
 
-    // Find the last user message
     const lastUserMessage = [...messages].reverse().find(msg => msg.role === 'user');
     if (lastUserMessage) {
-      // Remove last assistant message
       const updatedMessages = messages.slice(0, -1);
       clearMessages();
       updatedMessages.forEach(msg => addMessage(msg));
 
-      // Resend the user message
       sendMessage(lastUserMessage.content);
       toast.info('Đang tạo lại phản hồi...');
     }
   };
 
-  // Typing indicator component
   const TypingIndicator = () => (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -285,7 +252,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     </motion.div>
   );
 
-  // Markdown components with syntax highlighting
   const markdownComponents = {
     code({ node, inline, className, children, ...props }: any) {
       const match = /language-(\w+)/.exec(className || '');
@@ -323,7 +289,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
     <>
       <Toaster position="top-center" richColors />
       <div className={`fixed ${getChatbotPosition(chatbotConfig.position)} z-50`}>
-        {/* Chat Toggle Button */}
         <AnimatePresence>
           {!isOpen && (
             <motion.button
@@ -354,7 +319,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
           )}
         </AnimatePresence>
 
-        {/* Chatbot Window */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -366,7 +330,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                 h-[600px] w-[400px] max-sm:fixed max-sm:inset-4 max-sm:h-auto max-sm:w-auto
                 md:h-[600px] md:w-[400px]`}
             >
-              {/* Header */}
               <div
                 className={`${chatbotConfig.theme.primaryColor} flex items-center justify-between rounded-t-lg p-4 text-white shadow-md`}
               >
@@ -403,7 +366,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                 </div>
               </div>
 
-              {/* API Error Alert */}
               {apiError && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
@@ -415,7 +377,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                 </motion.div>
               )}
 
-              {/* Messages Container */}
               {isLoading ? (
                 <div className="flex flex-1 items-center justify-center bg-gray-50">
                   <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
@@ -461,7 +422,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                         transition={{ duration: 0.2 }}
                         className={`group flex items-start space-x-2 ${msg.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
                       >
-                        {/* Avatar */}
                         <div
                           className={`flex h-8 min-w-8 items-center justify-center rounded-full text-xs text-white shadow-md ${
                             msg.role === 'user'
@@ -472,7 +432,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                           {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                         </div>
 
-                        {/* Message bubble */}
                         <div className="flex max-w-[75%] flex-col">
                           <div
                             className={`rounded-lg p-3 shadow-sm ${
@@ -492,7 +451,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                             )}
                           </div>
 
-                          {/* Message Actions */}
                           <div className="mt-1 flex items-center justify-between px-1">
                             <p className={`text-xs ${msg.role === 'user' ? 'text-blue-400' : 'text-gray-400'}`}>
                               {new Date(msg.timestamp).toLocaleTimeString('vi-VN', {
@@ -533,7 +491,6 @@ const ChatbotV3: React.FC<ChatbotV3Props> = ({ config = {} }) => {
                 </div>
               )}
 
-              {/* Input Area */}
               <div className="rounded-b-lg border-t border-gray-200 bg-white p-4 shadow-inner">
                 <div className="flex space-x-2">
                   <TextareaAutosize

@@ -1,16 +1,9 @@
 import { ExportColumn } from '@/types/export/export.types';
 
-/**
- * Helper function to get nested object value by key path
- * Example: getNestedValue({user: {name: 'John'}}, 'user.name') => 'John'
- */
 export function getNestedValue(obj: any, path: string): any {
   return path.split('.').reduce((current, key) => current?.[key], obj);
 }
 
-/**
- * Helper function to process export data and handle nested keys
- */
 export function processExportData(data: any[], columns: ExportColumn[]): Record<string, any>[] {
   return data.map(row => {
     const processedRow: Record<string, any> = {};
@@ -24,9 +17,6 @@ export function processExportData(data: any[], columns: ExportColumn[]): Record<
   });
 }
 
-/**
- * Helper function to sanitize filename
- */
 export function sanitizeFilename(filename: string): string {
   return filename
     .toLowerCase()
@@ -35,9 +25,6 @@ export function sanitizeFilename(filename: string): string {
     .replace(/^_|_$/g, '');
 }
 
-/**
- * Helper function to generate timestamp-based filename
- */
 export function generateFilename(title: string): string {
   const sanitizedTitle = sanitizeFilename(title);
   const timestamp = new Date().toISOString().split('T')[0];

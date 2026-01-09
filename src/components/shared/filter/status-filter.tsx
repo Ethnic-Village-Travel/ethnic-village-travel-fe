@@ -17,7 +17,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 
-interface StatusFilterProps {
+type StatusFilterProps = {
   title: string;
   options: Option[];
   selectedValues: string[];

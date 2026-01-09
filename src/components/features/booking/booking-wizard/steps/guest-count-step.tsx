@@ -11,11 +11,12 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
 import { BOOKING_STEPS, useBookingWizard } from '../booking-wizard-context';
+import { calculatePromotionPrice } from '../components/price-breakdown';
 import { WizardNavigation } from '../wizard-navigation';
 
-export interface GuestCountStepProps {
+export type GuestCountStepProps = {
   onNext?: () => void;
-}
+};
 
 export function calculateTotalPriceForWizard(
   guestCount: { adult: number; child: number },
@@ -29,11 +30,13 @@ export function calculateTotalPriceForWizard(
     return { originalPrice, discountedPrice: originalPrice, discountAmount: 0 };
   }
 
-  const rawDiscount = (originalPrice * promotion.discountPercent) / 100;
-  const discountAmount = Math.min(rawDiscount, promotion.maxDiscountAmount || Number.MAX_VALUE);
-  const discountedPrice = originalPrice - discountAmount;
+  const { discountAmount, finalPrice } = calculatePromotionPrice(
+    originalPrice,
+    promotion.discountPercent,
+    promotion.maxDiscountAmount || Number.MAX_VALUE,
+  );
 
-  return { originalPrice, discountedPrice, discountAmount };
+  return { originalPrice, discountedPrice: finalPrice, discountAmount };
 }
 
 export function validateGuestCount(
@@ -57,7 +60,7 @@ export function validateGuestCount(
   };
 }
 
-interface GuestCounterProps {
+type GuestCounterProps = {
   label: string;
   price: number;
   value: number;
@@ -66,7 +69,7 @@ interface GuestCounterProps {
   min?: number;
   max?: number;
   disabled?: boolean;
-}
+};
 
 function GuestCounter({ label, price, value, locale, onChange, min = 0, max = 99, disabled }: GuestCounterProps) {
   const handleDecrement = useCallback(() => {
@@ -128,19 +131,20 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
   const availableSlots = bookingData.availableSlots || 0;
   const effectiveSlots = availableSlots > 0 ? availableSlots : Number.MAX_SAFE_INTEGER;
 
-  // Use auto-applied promotion from bookingData, fallback to tour promotions
   const promotion = bookingData.promotion || tourInfo?.promotions?.[0] || null;
 
   const { originalPrice, discountedPrice, discountAmount } = useMemo(
-    () =>
-      calculateTotalPriceForWizard(
+    () => {
+      const result = calculateTotalPriceForWizard(
         bookingData.guestCount,
         adultPrice,
         childPrice,
         promotion
           ? { discountPercent: promotion.discountPercent, maxDiscountAmount: promotion.maxDiscountAmount || 0 }
           : null,
-      ),
+      );
+      return result;
+    },
     [bookingData.guestCount, adultPrice, childPrice, promotion],
   );
 

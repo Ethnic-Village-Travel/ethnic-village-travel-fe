@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator';
 
 import type { GuestCount, PromotionInfo } from '../booking-wizard-context';
 
-export interface PriceBreakdownProps {
+export type PriceBreakdownProps = {
   guestCount: GuestCount;
   adultPrice: number;
   childPrice: number;

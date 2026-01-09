@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { Ethnic } from '@/types/ethnic.type';
 import { Location } from '@/types/location.type';
 
-interface MetaState {
+type MetaState = {
   ethnics: Ethnic[];
   locations: Location[];
   setEthnics: (ethnics: Ethnic[]) => void;

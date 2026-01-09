@@ -5,23 +5,15 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import { useChatSession } from '@/stores/useChatSession';
 import { Bot, Loader2, MessageCircle, RotateCcw, Send, Sparkles, User, X } from 'lucide-react';
 
+import logger from '@/libs/logger';
+
 import { defaultChatbotV2Config, getChatbotPosition, type ChatbotV2Config } from './chatbot-config-v2';
 import type { ChatRequest, ChatResponse } from './types';
 
-interface ChatbotV2Props {
+type ChatbotV2Props = {
   config?: Partial<ChatbotV2Config>;
-}
+};
 
-/**
- * Chatbot V2 - Using FastAPI from main.py
- *
- * Features:
- * - Session management with localStorage persistence
- * - Connects to FastAPI backend (main.py)
- * - Automatic session restoration
- * - Typing indicator
- * - Message history
- */
 const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -51,7 +43,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     scrollToBottom();
   }, [messages, showTypingIndicator, isOpen]);
 
-  // Check API health on mount
   useEffect(() => {
     const checkHealth = async () => {
       try {
@@ -60,7 +51,7 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
           setApiError('API không khả dụng');
         }
       } catch (error) {
-        console.error('Health check failed:', error);
+        logger.error('Health check failed:', error);
         setApiError('Không thể kết nối API');
       }
     };
@@ -68,13 +59,11 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     checkHealth();
   }, [chatbotConfig.apiUrl]);
 
-  // Send message to FastAPI
   const sendMessage = async () => {
     if (isWaitingResponse || inputValue.trim() === '' || !chatbotConfig.apiUrl) return;
 
     const userMessage = inputValue.trim();
 
-    // Add user message to UI
     addMessage({
       role: 'user',
       content: userMessage,
@@ -87,18 +76,16 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     setApiError(null);
 
     try {
-      // Convert messages to history format for backend
       const history = messages.map(msg => ({
         role: msg.role,
         content: msg.content,
       }));
 
-      // Prepare request matching FastAPI ChatRequest model
       const requestBody: ChatRequest = {
         message: userMessage,
         session_id: sessionId || undefined,
-        history: history, // Send full history to backend
-        cache: cache, // Send cache to backend
+        history: history,
+        cache: cache,
       };
 
       console.log('Sending request:', {
@@ -131,28 +118,20 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
       }
 
       const data: ChatResponse = await response.json();
-      console.log('Received response:', {
-        response_length: data.response.length,
-        session_id: data.session_id,
-        cache_keys: Object.keys(data.cache || {}),
-      });
 
       setShowTypingIndicator(false);
 
-      // Add assistant message to UI
       addMessage({
         role: 'assistant',
         content: data.response,
         timestamp: Date.now(),
       });
 
-      // Update cache from backend response
       if (data.cache) {
         updateCache(data.cache);
-        console.log('Cache updated from backend:', Object.keys(data.cache));
       }
     } catch (error) {
-      console.error('Chatbot error:', error);
+      logger.error('Chatbot error:', error);
       setShowTypingIndicator(false);
       setApiError(chatbotConfig.errorMessage);
 
@@ -166,20 +145,17 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     }
   };
 
-  // Handle Enter key press
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !isWaitingResponse) {
       sendMessage();
     }
   };
 
-  // Reset chat session
   const handleReset = async () => {
     if (!confirm('Bạn có chắc muốn xóa toàn bộ lịch sử chat?')) return;
 
     try {
       if (sessionId) {
-        // Call FastAPI reset endpoint
         await fetch(`${chatbotConfig.apiUrl}/chat/reset`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -188,13 +164,11 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
 
       clearMessages();
       setApiError(null);
-      console.log('Chat reset successfully');
     } catch (error) {
-      console.error('Failed to reset chat:', error);
+      logger.error('Failed to reset chat:', error);
     }
   };
 
-  // Typing indicator component
   const TypingIndicator = () => (
     <div className="flex items-start space-x-2">
       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-white">
@@ -211,19 +185,15 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     </div>
   );
 
-  // Format message content (support line breaks and clickable links)
   const formatContent = (content: string) => {
-    // Regular expression to detect URLs
     const urlRegex = /(https?:\/\/[^\s]+)/g;
 
     return content.split('\n').map((line, lineIndex) => {
-      // Split line by URLs
       const parts = line.split(urlRegex);
 
       return (
         <React.Fragment key={lineIndex}>
           {parts.map((part, partIndex) => {
-            // Check if this part is a URL
             if (urlRegex.test(part)) {
               return (
                 <a
@@ -248,7 +218,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
 
   return (
     <div className={`fixed ${getChatbotPosition(chatbotConfig.position)} z-50`}>
-      {/* Chat Toggle Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -263,12 +232,10 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
         </button>
       )}
 
-      {/* Chatbot Window */}
       {isOpen && (
         <div
           className={`${chatbotConfig.theme.backgroundColor} rounded-lg border shadow-2xl ${chatbotConfig.theme.borderColor} flex h-[600px] w-[400px] flex-col transition-all duration-300`}
         >
-          {/* Header */}
           <div
             className={`${chatbotConfig.theme.primaryColor} flex items-center justify-between rounded-t-lg p-4 text-white shadow-md`}
           >
@@ -300,13 +267,13 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
               </button>
             </div>
           </div>
-          {/* API Error Alert */}
+
           {apiError && (
             <div className="border-b border-red-200 bg-red-50 p-2 text-center">
               <p className="text-xs text-red-600">{apiError}</p>
             </div>
           )}
-          {/* Messages Container */}
+
           {isLoading ? (
             <div className="flex flex-1 items-center justify-center bg-gray-50">
               <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
@@ -341,7 +308,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
                   key={index}
                   className={`flex items-start space-x-2 ${msg.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
                 >
-                  {/* Avatar */}
                   <div
                     className={`flex h-8 min-w-8 items-center justify-center rounded-full text-xs text-white shadow-md ${
                       msg.role === 'user'
@@ -352,7 +318,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
                     {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                   </div>
 
-                  {/* Message bubble */}
                   <div className="flex max-w-[75%] flex-col">
                     <div
                       className={`rounded-lg p-3 shadow-sm ${
@@ -378,7 +343,7 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
               {showTypingIndicator && <TypingIndicator />}
             </div>
           )}
-          {/* Input Area */}
+
           <div className="rounded-b-lg border-t border-gray-200 bg-white p-4 shadow-inner">
             <div className="flex space-x-2">
               <input
@@ -400,17 +365,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
               </button>
             </div>
           </div>
-          {/* Cache Debug Panel (Development Only)
-          {process.env.NODE_ENV === 'development' && Object.keys(cache).length > 0 && (
-            <details className="border-t border-gray-200 bg-gray-50 p-2">
-              <summary className="cursor-pointer text-xs font-medium text-gray-600 hover:text-gray-800">
-                🔍 Cache Data (Dev Only)
-              </summary>
-              <div className="mt-2 max-h-40 overflow-auto rounded border border-gray-200 bg-white p-2">
-                <pre className="text-xs text-gray-700">{JSON.stringify(cache, null, 2)}</pre>
-              </div>
-            </details>
-          )} */}
         </div>
       )}
     </div>

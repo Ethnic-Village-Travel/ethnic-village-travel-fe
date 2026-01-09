@@ -101,6 +101,7 @@ export const AdminAPI = {
     ASSIGNED_AVAILABLE_DATES: '/admin/tour-assignments/assigned-available-dates',
     CALENDAR_ASSIGNMENTS: '/admin/tour-assignments/calendar',
     HISTORY: '/admin/tour-assignments/history',
+    UPDATE_STATUS: '/admin/tour-assignments/update-status',
   },
   ROLE: {
     LIST: '/admin/role',

@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 
-export interface WizardNavigationProps {
+export type WizardNavigationProps = {
   onBack?: () => void;
   onContinue: () => void;
   showBack?: boolean;
@@ -15,7 +15,7 @@ export interface WizardNavigationProps {
   continueLabel?: string;
   backLabel?: string;
   className?: string;
-}
+};
 
 export function WizardNavigation({
   onBack,
@@ -30,19 +30,33 @@ export function WizardNavigation({
   const t = useTranslations('booking.wizard');
 
   return (
-    <div className={cn('flex items-center justify-between gap-4 pt-6', className)}>
+    <div className={cn('flex items-center justify-between gap-4', className)}>
       {showBack && onBack ? (
-        <Button type="button" variant="outline" onClick={onBack} disabled={isLoading} className="gap-2">
-          <ArrowLeft className="h-4 w-4" />
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onBack}
+          disabled={isLoading}
+          className="gap-2"
+          aria-label={backLabel || t('back')}
+        >
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           {backLabel || t('back')}
         </Button>
       ) : (
         <div />
       )}
-      <Button type="button" onClick={onContinue} disabled={isContinueDisabled || isLoading} className="min-w-[120px]">
+      <Button
+        type="button"
+        onClick={onContinue}
+        disabled={isContinueDisabled || isLoading}
+        className="min-w-[120px]"
+        aria-label={continueLabel || t('continue')}
+        aria-busy={isLoading}
+      >
         {isLoading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
             {t('processing')}
           </>
         ) : (

@@ -6,7 +6,7 @@ import { ApiResponse } from '@/types/api.type';
 import { Article, ArticleListResponse } from '@/types/article.type';
 import ArticleDetailPageContent from '@/components/features/article/article-detail';
 
-interface ArticleDetailPageProps {
+type ArticleDetailPageProps = {
   params: { slug: string; locale: string };
 }
 

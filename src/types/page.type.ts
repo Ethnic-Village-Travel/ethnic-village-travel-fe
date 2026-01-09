@@ -1,4 +1,4 @@
-export interface PageResponse<T> {
+export type PageResponse<T> = {
   content: T[];
   pageable: {
     pageNumber: number;

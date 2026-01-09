@@ -7,8 +7,6 @@ export const AssignedAvailableDatesHeader = () => {
   const t = useTranslations('admin');
   const { user } = useAuthStore();
 
-  // Determine title based on user role
-  // Backend returns roles with "ROLE_" prefix (e.g., "ROLE_ADMIN")
   const isAdmin = user?.roles?.some(role => {
     const normalizedRole = role?.toUpperCase().replace(/^ROLE_/, '');
     return normalizedRole === 'ADMIN';

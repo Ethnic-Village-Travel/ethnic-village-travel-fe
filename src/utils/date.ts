@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 import 'dayjs/locale/vi';
 
-interface FormatTourDatesOptions {
+type FormatTourDatesOptions = {
   locale?: 'en' | 'vi';
   dateFormat?: string;
 }

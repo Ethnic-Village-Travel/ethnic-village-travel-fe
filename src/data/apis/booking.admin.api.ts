@@ -11,9 +11,6 @@ import type {
 } from '@/types/booking/booking.admin.response';
 
 export const bookingAdminApi = {
-  /**
-   * Search tours for filter dropdown
-   */
   searchTours: async (searchKey: string = ''): Promise<ApiResponse<TourBasicResponse[]>> => {
     try {
       const queryString = encodeQueryData({ searchKey });
@@ -27,9 +24,6 @@ export const bookingAdminApi = {
     }
   },
 
-  /**
-   * Get tour available dates for date filter
-   */
   getTourAvailableDates: async (tourId: string): Promise<ApiResponse<TourAvailableDateResponse[]>> => {
     try {
       const queryString = encodeQueryData({ tourId });
@@ -45,12 +39,9 @@ export const bookingAdminApi = {
     }
   },
 
-  /**
-   * Get admin booking list with filters and pagination
-   */
   getAdminBookingList: async (params: AdminBookingListRequest): Promise<ApiResponse<AdminBookingResponse>> => {
     try {
-      // Transform params to query string compatible format
+
       const queryParams: Record<string, string | number | boolean | null | undefined> = {
         ...params,
         tourAvailableDateIds: params.tourAvailableDateIds?.join(','),

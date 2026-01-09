@@ -5,6 +5,7 @@ import { notFound, useParams, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import { BookingStatus } from '@/core/enum/booking.enum';
 import { useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import {
   useApiBookingCancel,
@@ -15,7 +16,8 @@ import {
 import { usePayment } from '@/hooks/api/usePayment';
 import { useToast } from '@/hooks/use-toast';
 import type { BookingData } from '@/components/features/booking/booking-wizard';
-import { BookingWizard, clearBookingState } from '@/components/features/booking/booking-wizard';
+import { BookingWizard, clearBookingState, calculatePromotionPrice } from '@/components/features/booking/booking-wizard';
+import { PromotionType } from '@/types/promotion.type';
 
 function OrderPageSkeleton() {
   return (
@@ -118,7 +120,21 @@ export default function OrderPage() {
           }
         : null,
       bookingType: 'self',
-      promotion: null,
+      promotion: (() => {
+
+        const activeDirectDiscounts = booking.tour.promotions
+          ?.filter(p => p.type === PromotionType.DIRECT_DISCOUNT && p.status === 'ACTIVE')
+          .sort((a, b) => a.id.localeCompare(b.id)) || [];
+        const directDiscount = activeDirectDiscounts[0] || null;
+        return directDiscount
+          ? {
+              id: String(directDiscount.id),
+              name: directDiscount.name,
+              discountPercent: directDiscount.discountPercent,
+              maxDiscountAmount: directDiscount.maxDiscountAmount,
+            }
+          : null;
+      })(),
       additionalInfo: booking.additionalInformation || '',
     };
   }, [booking]);
@@ -142,18 +158,23 @@ export default function OrderPage() {
         let discountAmount = 0;
 
         if (bookingData.promotion) {
-          const discount = Math.min(
-            (totalPrice * bookingData.promotion.discountPercent) / 100,
+          const { discountAmount: calculatedDiscount, finalPrice } = calculatePromotionPrice(
+            totalPrice,
+            bookingData.promotion.discountPercent,
             bookingData.promotion.maxDiscountAmount,
           );
-          discountedPrice = totalPrice - discount;
+          discountedPrice = finalPrice;
           promotionId = bookingData.promotion.id;
-          discountAmount = discount;
+          discountAmount = calculatedDiscount;
         } else if (bookingData.tourInfo?.promotions?.[0]) {
           const promo = bookingData.tourInfo.promotions[0];
-          const discount = Math.min((totalPrice * promo.discountPercent) / 100, promo.maxDiscountAmount || Infinity);
-          discountedPrice = totalPrice - discount;
-          discountAmount = discount;
+          const { discountAmount: calculatedDiscount, finalPrice } = calculatePromotionPrice(
+            totalPrice,
+            promo.discountPercent,
+            promo.maxDiscountAmount || Number.MAX_VALUE,
+          );
+          discountedPrice = finalPrice;
+          discountAmount = calculatedDiscount;
         }
 
         await confirmBooking({
@@ -174,7 +195,7 @@ export default function OrderPage() {
           throw new Error('Cannot create payment link');
         }
       } catch (error) {
-        console.error('Failed to complete booking:', error);
+        logger.error('Failed to complete booking:', error);
         toast({
           variant: 'destructive',
           title: t('confirm_failed'),
@@ -191,7 +212,7 @@ export default function OrderPage() {
       try {
         await cancelBooking();
       } catch (error) {
-        console.error('Failed to cancel booking:', error);
+        logger.error('Failed to cancel booking:', error);
       } finally {
         clearBookingState();
         const redirectUrl = booking?.tour?.slug

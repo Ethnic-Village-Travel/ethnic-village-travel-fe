@@ -1,11 +1,11 @@
-export interface ExportColumn {
+export type ExportColumn = {
   key: string;
   title: string;
   dataType?: 'string' | 'number' | 'date' | 'boolean';
   formatter?: (value: any) => string;
 }
 
-export interface ExportConfig {
+export type ExportConfig = {
   title: string;
   filename: string;
   columns: ExportColumn[];
@@ -14,7 +14,7 @@ export interface ExportConfig {
   excludeColumns?: string[];
 }
 
-export interface ExportPreviewProps {
+export type ExportPreviewProps = {
   config: ExportConfig;
   isOpen: boolean;
   onClose: () => void;

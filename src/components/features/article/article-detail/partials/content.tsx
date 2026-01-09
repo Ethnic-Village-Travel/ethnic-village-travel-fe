@@ -1,7 +1,7 @@
 import { Article } from '@/types/article.type';
 import { Card, CardContent } from '@/components/ui/card';
 
-interface ArticleDetailContentProps {
+type ArticleDetailContentProps = {
   article: Article;
 }
 

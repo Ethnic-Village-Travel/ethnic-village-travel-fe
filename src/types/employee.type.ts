@@ -1,6 +1,6 @@
 import type { PersonalBasicInfo } from './personal.type';
 
-export interface EmployeeBasicResponse {
+export type EmployeeBasicResponse = {
   id: string;
   email: string;
   description: string;
@@ -8,7 +8,7 @@ export interface EmployeeBasicResponse {
   personal?: PersonalBasicInfo;
 }
 
-export interface EmployeeAdmin {
+export type EmployeeAdmin = {
   id: string;
   email: string;
   personal?: {
@@ -29,7 +29,7 @@ export interface EmployeeAdmin {
   updatedAt: string;
 }
 
-export interface UpdateEmployeeRequest {
+export type UpdateEmployeeRequest = {
   firstName?: string;
   lastName?: string;
   phoneNumber?: string;
@@ -40,7 +40,7 @@ export interface UpdateEmployeeRequest {
   password?: string;
 }
 
-export interface CreateEmployeeRequest {
+export type CreateEmployeeRequest = {
   email: string;
   password: string;
   firstName?: string;
@@ -52,12 +52,12 @@ export interface CreateEmployeeRequest {
   roleId?: string;
 }
 
-export interface EmployeeFilters {
+export type EmployeeFilters = {
   search?: string;
   isActive?: boolean;
 }
 
-export interface EmployeeSelectedResponse {
+export type EmployeeSelectedResponse = {
   id: string;
   email: string;
   personal?: {
@@ -66,15 +66,15 @@ export interface EmployeeSelectedResponse {
   } | null;
 }
 
-export interface EmployeeDateRangeRequest {
+export type EmployeeDateRangeRequest = {
   startDate: string;
   endDate: string;
 }
 
-export interface AssignedEmployeesByDatesRequest {
+export type AssignedEmployeesByDatesRequest = {
   availableDateIds: string[];
 }
 
-export interface AssignedEmployeesByDatesResponse {
+export type AssignedEmployeesByDatesResponse = {
   assignedEmployeesByDate: { [dateId: string]: EmployeeBasicResponse[] };
 }

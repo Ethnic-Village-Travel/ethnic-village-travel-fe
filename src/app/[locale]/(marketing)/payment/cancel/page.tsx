@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { bookingApi } from '@/data/apis/booking.api';
 import { AlertCircle, MapPin } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -29,15 +30,14 @@ export default function PaymentCancelPage() {
       try {
         setIsCancelling(true);
 
-        // Soft cancel - don't block UI if fails (Tier 2)
         await bookingApi.cancelByOrderCode(orderCode).catch((error) => {
-          console.warn('Soft cancel failed, scheduler will handle it (Tier 3):', error);
+          logger.warn('Soft cancel failed, scheduler will handle it (Tier 3):', error);
         });
 
         setCancelled(true);
       } catch (error) {
-        // Graceful degradation - scheduler will cleanup
-        console.warn('Error during soft cancel:', error);
+
+        logger.warn('Error during soft cancel:', error);
       } finally {
         setIsCancelling(false);
       }

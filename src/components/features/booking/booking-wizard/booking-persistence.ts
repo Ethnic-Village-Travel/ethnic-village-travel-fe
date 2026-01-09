@@ -3,7 +3,7 @@ import type { BookingData, BookingWizardState } from './booking-wizard-context';
 const BOOKING_STORAGE_KEY = 'ethnic_village_booking_state';
 const EXPIRATION_TIME_MS = 30 * 60 * 1000;
 
-export interface PersistedBookingState {
+export type PersistedBookingState = {
   bookingId: string;
   bookingData: BookingData;
   currentStep: number;

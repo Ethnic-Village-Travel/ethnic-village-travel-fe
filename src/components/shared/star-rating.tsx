@@ -1,7 +1,7 @@
 import { cn } from '@/utils';
 import { Star } from 'lucide-react';
 
-interface StarRatingProps {
+type StarRatingProps = {
   average: number;
   readOnly?: boolean;
   onChange?: (value: number) => void;

@@ -60,9 +60,9 @@ export default function BookingTabContent() {
 
   return (
     <div className="w-full">
-      {/* Main Content */}
+      
       <div className="relative mx-auto max-w-5xl space-y-5">
-        {/* Header Section */}
+        
         <header className="flex items-center gap-4 rounded-lg border border-border bg-card p-5 shadow-sm">
           <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary shadow-sm">
             <Receipt className="h-6 w-6 text-white" strokeWidth={2.5} />
@@ -77,10 +77,8 @@ export default function BookingTabContent() {
           </div>
         </header>
 
-        {/* Filters Section */}
         <BookingFilters onFilterChange={handleFilterChange} showStatusFilter={activeTab === TABS.OTHERS} />
 
-        {/* Tabs Section */}
         <Tabs
           defaultValue={TABS.PENDING}
           className="w-full"
@@ -88,7 +86,7 @@ export default function BookingTabContent() {
           value={activeTab}
         >
           <TabsList className="mb-5 inline-flex h-auto rounded-lg border border-border bg-card p-1.5 shadow-sm">
-            {/* Pending Tab */}
+            
             <TabsTrigger
               value={TABS.PENDING}
               className="flex items-center gap-2 rounded-lg px-5 py-2.5 font-roboto text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-muted data-[state=inactive]:hover:text-foreground"
@@ -97,7 +95,6 @@ export default function BookingTabContent() {
               <span>{t('tabs.pending')}</span>
             </TabsTrigger>
 
-            {/* Others Tab */}
             <TabsTrigger
               value={TABS.OTHERS}
               className="flex items-center gap-2 rounded-lg px-5 py-2.5 font-roboto text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-muted data-[state=inactive]:hover:text-foreground"

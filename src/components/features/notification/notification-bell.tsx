@@ -7,7 +7,7 @@ import { NotificationDropdown } from './notification-dropdown';
 export function NotificationBell() {
   const { data: unreadCountData } = useUnreadCount();
   const unreadCount = unreadCountData?.data || 0;
-  useNotificationSSE(); // duy trì SSE connection
+  useNotificationSSE();
 
   return <NotificationDropdown />;
 }

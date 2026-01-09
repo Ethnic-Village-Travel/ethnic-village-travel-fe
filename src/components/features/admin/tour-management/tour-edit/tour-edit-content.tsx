@@ -1,13 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import { TourStatusEnum } from '@/core/enum/tour.enum';
 import { currencyToNumber, formatCurrency } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ImageIcon, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
@@ -174,11 +173,6 @@ export default function TourEditContent({ tourId }: TourEditContentProps) {
   };
 
   const onError = (errors: any) => {
-    console.log('=== VALIDATION ERRORS ===');
-    console.log(JSON.stringify(errors, null, 2));
-    Object.keys(errors).forEach(key => {
-      console.log(`Field: ${key}`, errors[key]);
-    });
     toast({
       title: 'Vui lòng kiểm tra lại thông tin',
       description: Object.keys(errors).join(', '),
@@ -226,7 +220,9 @@ export default function TourEditContent({ tourId }: TourEditContentProps) {
                           }}
                         />
                         {uploading && (
-                          <span className="text-xs text-muted-foreground">{t('uploading' as any) || 'Uploading...'}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {t('uploading' as any) || 'Uploading...'}
+                          </span>
                         )}
                       </div>
                       {field.value && (

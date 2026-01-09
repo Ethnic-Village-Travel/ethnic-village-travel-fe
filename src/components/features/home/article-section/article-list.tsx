@@ -6,7 +6,7 @@ import { useArticleList } from '@/hooks/useArticle';
 
 import ArticleItem from '../../article/article-item';
 
-interface ArticleListProps {
+type ArticleListProps = {
   className?: string;
 }
 

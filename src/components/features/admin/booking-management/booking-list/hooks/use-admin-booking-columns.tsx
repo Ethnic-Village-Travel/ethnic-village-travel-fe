@@ -186,32 +186,6 @@ export function useAdminBookingColumns(): ColumnDef<AdminBooking>[] {
       },
       enableSorting: false,
     },
-    // {
-    //   accessorKey: 'createdAt',
-    //   header: ({ column }) => <DataTableColumnHeader column={column} title={t('booking.list.table.created_at')} />,
-    //   cell: ({ row }) => {
-    //     const createdAt = row.getValue('createdAt') as string;
-
-    //     if (!createdAt) {
-    //       return <div className="text-sm text-muted-foreground">-</div>;
-    //     }
-
-    //     try {
-    //       const date = new Date(createdAt);
-    //       if (isNaN(date.getTime())) {
-    //         return <div className="text-sm text-muted-foreground">-</div>;
-    //       }
-
-    //       return (
-    //         <div className="min-w-[140px] text-sm text-muted-foreground">
-    //           {format(date, 'dd/MM/yyyy HH:mm', { locale: vi })}
-    //         </div>
-    //       );
-    //     } catch (error) {
-    //       return <div className="text-sm text-muted-foreground">-</div>;
-    //     }
-    //   },
-    // },
     {
       id: 'actions',
       header: t('booking.list.table.actions'),

@@ -10,12 +10,10 @@ import ArticleList from './article-list';
 
 const ArticleSection = () => {
   const t = useTranslations('common');
+  const tArticle = useTranslations('home.article');
   return (
     <section className="flex flex-col items-center gap-6">
-      <TitleSection
-        title="Travel Vibes – Feel Every Journey"
-        description="Stories, tips & inspo for every wanderer at heart"
-      />
+      <TitleSection title={tArticle('title')} description={tArticle('description')} />
       <ArticleList />
       <Button asChild>
         <Link href={`${RouteConstant.article}`}>

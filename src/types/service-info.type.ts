@@ -1,6 +1,6 @@
 import { TourServiceInfoType } from '@/core/enum/tour-service-info.enum';
 
-export interface Service {
+export type Service = {
   id: number;
   name: string;
   description: string;
@@ -9,7 +9,7 @@ export interface Service {
   deleted?: boolean;
 }
 
-export interface TourServiceInfo {
+export type TourServiceInfo = {
   id: string;
   name: string;
   description: string;
@@ -17,7 +17,7 @@ export interface TourServiceInfo {
   type?: TourServiceInfoType;
 }
 
-export interface ServiceInfoBasic {
+export type ServiceInfoBasic = {
   id: string;
   name: string;
   description?: string;

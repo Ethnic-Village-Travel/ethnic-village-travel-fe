@@ -8,6 +8,7 @@ import { canRetryPayment, getTimeRemaining } from '@/utils/payment';
 import { paymentApi } from '@/data/apis/payment.api';
 import { Clock, CreditCard, Mail, MapPin, Phone, User, XCircle } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
+import logger from '@/libs/logger';
 
 import type { TimelineDay } from '@/types/booking/booking.type';
 import { Link } from '@/libs/i18n-navigation';
@@ -81,12 +82,10 @@ export default function OrderViewPage() {
 
   const { data: booking, isLoading, isError } = useApiBookingGetByOrderCode(orderCode);
 
-  // Payment states (Tier 1 UX)
   const [timeRemaining, setTimeRemaining] = useState<string | null>(null);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
 
-  // Update countdown every second
   useEffect(() => {
     if (!booking?.paymentExpiredDate) return;
 
@@ -106,13 +105,11 @@ export default function OrderViewPage() {
     try {
       setIsProcessingPayment(true);
 
-      // Create/get payment link
       const paymentData = await paymentApi.createPayment(booking.id);
 
-      // Redirect to PayOS
       window.location.href = paymentData.checkoutUrl;
     } catch (error) {
-      console.error('Failed to create payment link:', error);
+      logger.error('Failed to create payment link:', error);
       alert('Không thể tạo link thanh toán. Vui lòng thử lại.');
     } finally {
       setIsProcessingPayment(false);
@@ -126,10 +123,9 @@ export default function OrderViewPage() {
       setIsCancelling(true);
       await bookingApi.cancelByOrderCode(orderCode);
 
-      // Reload to show updated status
       router.refresh();
     } catch (error) {
-      console.error('Failed to cancel booking:', error);
+      logger.error('Failed to cancel booking:', error);
       alert('Không thể hủy booking. Vui lòng thử lại.');
     } finally {
       setIsCancelling(false);
@@ -216,7 +212,6 @@ export default function OrderViewPage() {
                     <span className="font-mono text-sm text-gray-500">#{orderCode}</span>
                   </div>
 
-                  {/* Tier 1 UX: Payment Actions */}
                   {canRetryPayment(booking.status, booking.paymentExpiredDate) && (
                     <div className="flex flex-col gap-2">
                       {timeRemaining && (

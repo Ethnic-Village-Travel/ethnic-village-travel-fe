@@ -5,10 +5,10 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-r
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-interface DataTablePaginationProps<TData> extends React.ComponentProps<'div'> {
+type DataTablePaginationProps<TData> = {
   table: Table<TData>;
   pageSizeOptions?: number[];
-}
+} & React.ComponentProps<'div'>
 
 export function DataTablePagination<TData>({
   table,

@@ -11,7 +11,7 @@ import { useQueryConfig } from '@/hooks/use-query-config';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-interface ArticleSearchBarProps {
+type ArticleSearchBarProps = {
   className?: string;
 }
 

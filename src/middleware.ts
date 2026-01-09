@@ -31,7 +31,6 @@ function extractLocaleFromPath(pathname: string): { locale: string; pathWithoutL
 }
 
 function hasAccess(userPermissions: string[], path: string): boolean {
-  // Kiểm tra tài khoản bị khóa
   if (userPermissions.includes(ACCOUNT_LOCKED)) {
     return false;
   }
@@ -46,12 +45,10 @@ function hasAccess(userPermissions: string[], path: string): boolean {
     return false;
   }
 
-  // Check admin dashboard access first
   if (path.startsWith('/admin') && !userPermissions.includes(ADMIN_DASHBOARD_READ)) {
     return false;
   }
 
-  // Kiểm tra permissions cụ thể cho các route /admin
   const matchedRoute = Object.keys(PermissionMap).find(route => {
     const normalizedRoute = normalizePath(route);
     const regex = new RegExp(`^${normalizedRoute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`);
@@ -59,7 +56,6 @@ function hasAccess(userPermissions: string[], path: string): boolean {
     return isMatch;
   });
 
-  // Nếu không có permissions yêu cầu cụ thể, chỉ cần ADMIN_DASHBOARD_READ cho /admin
   if (!matchedRoute) {
     const result = !path.startsWith('/admin') || userPermissions.includes(ADMIN_DASHBOARD_READ);
     return result;
@@ -71,7 +67,6 @@ function hasAccess(userPermissions: string[], path: string): boolean {
 }
 
 function requiresAuth(path: string): boolean {
-  // Admin routes always require authentication
   if (path.startsWith('/admin')) {
     return true;
   }
@@ -120,7 +115,6 @@ export default async function middleware(request: NextRequest, event: NextFetchE
 
   const hasPermission = hasAccess(authData.permissions, pathWithoutLocale);
 
-  // if (authData.permissions.length <= 0 || !hasPermission) {
   if (!hasPermission) {
     return NextResponse.redirect(new URL(`/${locale}/403`, request.url));
   }

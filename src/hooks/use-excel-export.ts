@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getNestedValue } from '@/utils/export-helpers';
 import * as XLSX from 'xlsx';
+import logger from '@/libs/logger';
 
 import { ExportConfig } from '@/types/export/export.types';
 
@@ -11,16 +12,13 @@ export function useExcelExport() {
     setIsExporting(true);
 
     try {
-      // Prepare data with index column
       const exportData = config.data.map((row, index) => {
         const newRow: Record<string, any> = {};
 
-        // Add index column if requested
         if (config.includeIndex) {
           newRow['STT'] = index + 1;
         }
 
-        // Add data columns
         config.columns.forEach(column => {
           const value = getNestedValue(row, column.key);
           newRow[column.title] = column.formatter ? column.formatter(value) : value || '';
@@ -29,28 +27,24 @@ export function useExcelExport() {
         return newRow;
       });
 
-      // Create workbook and worksheet
       const wb = XLSX.utils.book_new();
       const ws = XLSX.utils.json_to_sheet(exportData);
 
-      // Set column widths
       const colWidths = [];
       if (config.includeIndex) {
-        colWidths.push({ wch: 5 }); // STT column
+        colWidths.push({ wch: 5 });
       }
       config.columns.forEach(() => {
-        colWidths.push({ wch: 20 }); // Default column width
+        colWidths.push({ wch: 20 });
       });
       ws['!cols'] = colWidths;
 
-      // Add worksheet to workbook
       XLSX.utils.book_append_sheet(wb, ws, config.title);
 
-      // Generate and download file
       const fileName = `${config.filename}.xlsx`;
       XLSX.writeFile(wb, fileName);
     } catch (error) {
-      console.error('Export failed:', error);
+      logger.error('Export failed:', error);
       throw error;
     } finally {
       setIsExporting(false);

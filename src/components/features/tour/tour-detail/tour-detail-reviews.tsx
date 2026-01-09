@@ -13,7 +13,7 @@ import { ReviewItem } from '@/components/shared/review-item';
 import { AddReviewCard } from './add-review-card';
 import { ReviewStatsCard } from './review-stats-card';
 
-interface TourDetailReviewsProps {
+type TourDetailReviewsProps = {
   tour: Tour;
 }
 
@@ -36,7 +36,6 @@ export function TourDetailReviews({ tour }: TourDetailReviewsProps) {
     isReportingReview,
   } = useReview();
 
-  // Calculate review stats from actual data
   const stats = {
     totalReviews: reviews.length,
     averageRating: reviews.length > 0 ? calculateRatingStats(reviews).average : 0,
@@ -132,7 +131,7 @@ export function TourDetailReviews({ tour }: TourDetailReviewsProps) {
       },
       {
         onSuccess: () => {
-          // Do nothing, just show toast
+
         },
       },
     );
@@ -140,10 +139,9 @@ export function TourDetailReviews({ tour }: TourDetailReviewsProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* Review stats */}
+      
       <ReviewStatsCard stats={stats} />
 
-      {/* Add review */}
       <div className="rounded-2xl border px-6 py-4">
         {editingReview ? (
           <AddReviewCard
@@ -157,7 +155,6 @@ export function TourDetailReviews({ tour }: TourDetailReviewsProps) {
         )}
       </div>
 
-      {/* Review list */}
       <div className="flex flex-col gap-4">
         {reviews.length === 0 ? (
           <div className="text-center text-gray-500">{t('no_reviews')}</div>
@@ -180,7 +177,6 @@ export function TourDetailReviews({ tour }: TourDetailReviewsProps) {
         )}
       </div>
 
-      {/* Load more button */}
       {visibleReviews < reviews.length && (
         <div className="flex justify-center">
           <Button onClick={handleLoadMore}>{t('load_more')}</Button>

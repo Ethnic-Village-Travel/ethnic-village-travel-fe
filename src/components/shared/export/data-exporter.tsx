@@ -3,11 +3,13 @@ import { FileSpreadsheet } from 'lucide-react';
 
 import { ExportColumn, ExportConfig } from '@/types/export/export.types';
 import { useExcelExport } from '@/hooks/use-excel-export';
+import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
+import logger from '@/libs/logger';
 
 import { ExportPreviewDialog } from './export-preview-dialog';
 
-interface DataExporterProps {
+type DataExporterProps = {
   title: string;
   columns: ExportColumn[];
   onFetchAllData: (filters?: any) => Promise<any[]>;
@@ -21,6 +23,7 @@ export function DataExporter({ title, columns, onFetchAllData, currentFilters, c
   const [isLoadingData, setIsLoadingData] = useState(false);
 
   const { exportToExcel, isExporting } = useExcelExport();
+  const { toast } = useToast();
 
   const handleExportClick = async () => {
     setIsLoadingData(true);
@@ -38,8 +41,12 @@ export function DataExporter({ title, columns, onFetchAllData, currentFilters, c
       setExportConfig(config);
       setIsPreviewOpen(true);
     } catch (error) {
-      console.error('Failed to fetch export data:', error);
-      // TODO: Add toast notification for error
+      logger.error('Failed to fetch export data:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Lỗi khi tải dữ liệu',
+        description: 'Không thể tải dữ liệu để xuất file. Vui lòng thử lại.',
+      });
     } finally {
       setIsLoadingData(false);
     }

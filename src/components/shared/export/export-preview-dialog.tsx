@@ -21,7 +21,7 @@ export function ExportPreviewDialog({
   totalRecords,
   isLoading,
 }: ExportPreviewProps) {
-  const previewData = config.data.slice(0, 10); // Show first 10 records
+  const previewData = config.data.slice(0, 10);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import { BookingStatus } from '@/core/enum/booking.enum';
 import { useUserStore } from '@/stores/useUserStore';
 import { Receipt, Clock, RefreshCw } from 'lucide-react';
@@ -7,12 +8,12 @@ import { useTranslations } from 'next-intl';
 import { BookingListRequest } from '@/types/booking';
 import { useApiBookingList } from '@/hooks/api/useBooking';
 import { useQueryConfig } from '@/hooks/use-query-config';
+import { Button } from '@/components/ui/button';
 import PaginationClient from '@/components/shared/pagination-client';
 
 import BookingCard from './booking-card';
 import { TABS } from './booking-tab';
 
-// Loading Skeleton Component
 const BookingCardSkeleton = ({ index }: { index: number }) => (
   <div
     className="relative overflow-hidden rounded-lg border border-border bg-card"
@@ -23,12 +24,10 @@ const BookingCardSkeleton = ({ index }: { index: number }) => (
     <div className="absolute left-0 right-0 top-0 h-0.5 bg-gradient-to-r from-muted via-muted-foreground/20 to-muted animate-pulse" />
 
     <div className="flex flex-col lg:flex-row">
-      {/* Image skeleton */}
       <div className="relative h-44 w-full flex-shrink-0 overflow-hidden lg:h-auto lg:w-52">
         <div className="h-full w-full animate-pulse bg-gradient-to-br from-muted via-muted/50 to-muted" />
       </div>
 
-      {/* Content skeleton */}
       <div className="flex flex-1 flex-col p-4">
         <div className="mb-3 flex items-start justify-between gap-3">
           <div className="flex-1 space-y-2">
@@ -60,18 +59,15 @@ const BookingCardSkeleton = ({ index }: { index: number }) => (
       </div>
     </div>
 
-    {/* Shimmer effect */}
     <div className="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
   </div>
 );
 
-// Empty State Component
 const EmptyState = () => {
   const t = useTranslations('personal.booking_pending_list');
 
   return (
     <div className="flex flex-col items-center justify-center py-12">
-      {/* Icon container */}
       <div className="relative mb-6">
         <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-secondary/10">
           <div className="absolute -right-1 -top-1 flex h-8 w-8 items-center justify-center rounded-full bg-card shadow-md">
@@ -81,7 +77,6 @@ const EmptyState = () => {
         </div>
       </div>
 
-      {/* Text content */}
       <h3 className="mb-2 text-center text-lg font-bold text-foreground">
         {t('empty_title') || 'No pending transactions'}
       </h3>
@@ -89,16 +84,16 @@ const EmptyState = () => {
         {t('empty_description') || 'Pending payments will appear here. Explore our amazing tours!'}
       </p>
 
-      {/* CTA Button */}
-      <button className="mt-6 flex items-center gap-2 rounded-md bg-secondary px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md">
-        <Receipt className="h-4 w-4" />
-        <span>{t('explore_tours') || 'Explore tours'}</span>
-      </button>
+      <Button asChild className="mt-6" variant="default">
+        <Link href="/tour">
+          <Receipt className="mr-2 h-4 w-4" />
+          <span>{t('explore_tours') || 'Explore tours'}</span>
+        </Link>
+      </Button>
     </div>
   );
 };
 
-// Error State Component
 const ErrorState = () => {
   const t = useTranslations('personal.booking_pending_list');
 

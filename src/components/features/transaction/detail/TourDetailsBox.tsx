@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
-interface TourDetailsBoxProps {
+type TourDetailsBoxProps = {
   booking: BookingGetResponse;
   className?: string;
 }
@@ -16,20 +16,17 @@ export const TourDetailsBox: React.FC<TourDetailsBoxProps> = ({ booking, classNa
   const t = useTranslations('personal.detail');
   const { tour } = booking;
 
-  // Format duration
   const formatDuration = (days: number) => {
     if (days === 1) return t('format.single_day');
     return t('format.day_night', { days, nights: days - 1 });
   };
 
-  // Format location
   const formatLocation = (location: any) => {
     const notSpecified = t('format.not_specified');
     if (!location) return notSpecified;
     return `${location.city || location.province || location.name || notSpecified}`;
   };
 
-  // Format price
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -58,7 +55,7 @@ export const TourDetailsBox: React.FC<TourDetailsBoxProps> = ({ booking, classNa
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Tour Image & Title */}
+        
         <div className="overflow-hidden rounded-lg">
           {tour.imageUrl ? (
             <img src={tour.imageUrl} alt={tour.title} className="h-40 w-full object-cover" />
@@ -79,9 +76,8 @@ export const TourDetailsBox: React.FC<TourDetailsBoxProps> = ({ booking, classNa
 
         <Separator />
 
-        {/* Tour Details */}
         <div className="space-y-3">
-          {/* Duration */}
+          
           <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-primary" strokeWidth={2.5} />
@@ -90,7 +86,6 @@ export const TourDetailsBox: React.FC<TourDetailsBoxProps> = ({ booking, classNa
             <span className="font-semibold text-foreground">{formatDuration(tour.duration)}</span>
           </div>
 
-          {/* Adult Price */}
           <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
             <div className="flex items-center gap-2">
               <DollarSign className="h-4 w-4 text-primary" strokeWidth={2.5} />
@@ -99,7 +94,6 @@ export const TourDetailsBox: React.FC<TourDetailsBoxProps> = ({ booking, classNa
             <span className="font-semibold text-primary">{formatPrice(tour.adultPrice)}</span>
           </div>
 
-          {/* Child Price */}
           {tour.childPrice && tour.childPrice > 0 && (
             <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
               <div className="flex items-center gap-2">
@@ -113,7 +107,6 @@ export const TourDetailsBox: React.FC<TourDetailsBoxProps> = ({ booking, classNa
 
         <Separator />
 
-        {/* Tour Highlights */}
         <div>
           <h5 className="mb-3 font-roboto text-sm font-bold text-foreground">{t('tour_info.highlights')}</h5>
           <div className="space-y-2">
@@ -133,7 +126,6 @@ export const TourDetailsBox: React.FC<TourDetailsBoxProps> = ({ booking, classNa
 
         <Separator />
 
-        {/* Actions */}
         <div className="space-y-2">
           <Button variant="outline" size="sm" className="w-full justify-start gap-2">
             <ExternalLink className="h-4 w-4" />

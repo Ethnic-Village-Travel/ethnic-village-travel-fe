@@ -1,5 +1,9 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { RouteConstant } from '@/core/constants/route';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { useTranslations } from 'next-intl';
 
 import {
@@ -13,6 +17,14 @@ import { Shell } from '@/components/shared/shell';
 
 export default function Dashboard() {
   const t = useTranslations('admin.dashboard');
+  const { user } = useAuthStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user?.roles?.includes('ROLE_TOUR_AGENCY')) {
+      router.replace(RouteConstant.admin_assigned_available_dates);
+    }
+  }, [user, router]);
 
   return (
     <div className="space-y-6 p-6">
@@ -23,7 +35,6 @@ export default function Dashboard() {
 
       <Shell className="gap-6">
         <section>
-          <h2 className="mb-4 text-lg font-semibold">{t('sections.key_metrics')}</h2>
           <DashboardStatsCards />
         </section>
 

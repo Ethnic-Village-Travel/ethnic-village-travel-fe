@@ -8,7 +8,7 @@ export type PersonInfo = {
   phone: string;
 };
 
-interface BookingStore {
+type BookingStore = {
   selectedDateId: string | number | undefined;
   availableSlots: number | undefined;
   guestInfo: PersonInfo | null;

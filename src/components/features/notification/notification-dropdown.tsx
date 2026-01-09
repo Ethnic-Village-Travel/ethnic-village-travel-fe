@@ -24,7 +24,7 @@ export function NotificationDropdown() {
   const { data: notificationsData, isLoading } = useNotifications({
     page: 0,
     size: 10,
-    // lấy cả read và unread để không bị trống khi mark all
+
   });
 
   const notifications = notificationsData?.data?.content || [];

@@ -22,7 +22,6 @@ export default function HomePage() {
 
       <ReasonSection />
 
-      {/* <PaginationClient queryConfig={queryConfig} pageSize={20} showFirstLast /> */}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { Tour } from '@/types/tour.type';
 
 import { TourItem } from '../../tour/tour-card';
 
-interface TourListProps {
+type TourListProps = {
   tours: Tour[];
   isLoading?: boolean;
   isError?: boolean;

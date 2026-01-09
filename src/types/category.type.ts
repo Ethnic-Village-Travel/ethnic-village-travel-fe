@@ -3,7 +3,7 @@ export enum CategoryStatus {
   DISABLED = 'DISABLED',
 }
 
-export interface Category {
+export type Category = {
   id: string;
   name: string;
   slug: string;
@@ -14,7 +14,7 @@ export interface Category {
   tourCount?: number;
 }
 
-export interface CategoryTourBasic {
+export type CategoryTourBasic = {
   id: string;
   slug: string;
   title: string;
@@ -24,11 +24,11 @@ export interface CategoryTourBasic {
   discountPercent?: number;
 }
 
-export interface CategoryWithTours extends Omit<Category, 'tourCount'> {
+export type CategoryWithTours = {
   tours: CategoryTourBasic[];
-}
+} & Omit<Category, 'tourCount'>
 
-export interface CategoryCreateRequest {
+export type CategoryCreateRequest = {
   name: string;
   description?: string;
   imageUrl?: string;
@@ -36,7 +36,7 @@ export interface CategoryCreateRequest {
   displayOrder?: number;
 }
 
-export interface CategoryUpdateRequest {
+export type CategoryUpdateRequest = {
   name?: string;
   description?: string;
   imageUrl?: string;
@@ -44,6 +44,6 @@ export interface CategoryUpdateRequest {
   displayOrder?: number;
 }
 
-export interface CategoryTourRequest {
+export type CategoryTourRequest = {
   tourIds: string[];
 }

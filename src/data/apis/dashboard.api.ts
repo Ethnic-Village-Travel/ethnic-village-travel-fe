@@ -10,9 +10,9 @@ export const dashboardApi = {
     return data;
   },
 
-  getUpcomingDepartures: async (days: number = 7) => {
+  getUpcomingDepartures: async (days: number = 7, limit: number = 10) => {
     const { data } = await api.get<ApiResponse<UpcomingDeparture[]>>(
-      `${AdminAPI.DASHBOARD.UPCOMING_DEPARTURES}?days=${days}`,
+      `${AdminAPI.DASHBOARD.UPCOMING_DEPARTURES}?days=${days}&limit=${limit}`,
     );
     return data;
   },

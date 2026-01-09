@@ -39,7 +39,6 @@ export function DateFilterCard() {
       params.delete('endDate');
     }
 
-    // Reset page về 0 khi filter
     params.set('page', '0');
 
     router.push(`${pathname}?${params.toString()}`);

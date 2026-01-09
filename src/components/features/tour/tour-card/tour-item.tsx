@@ -20,9 +20,10 @@ type TourItemProps = {
 };
 
 export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
-  const ratingObj = tour.avgRating
-    ? { average: tour.avgRating, total: tour.ratingCount }
-    : calculateRatingStats(tour.reviews || []);
+  const ratingObj =
+    tour.avgRating && tour.ratingCount !== undefined && tour.ratingCount !== null
+      ? { average: tour.avgRating, total: tour.ratingCount }
+      : calculateRatingStats(tour.reviews || []);
   const t = useTranslations('tour.item');
   const { details } = useUserStore();
   const isBookmarked = details?.bookmarks?.some(
@@ -72,7 +73,6 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
 
       <CardContent className={cn('flex flex-1 flex-col p-3')}>
         <div className="flex flex-1 flex-col">
-          {/* Title */}
           <div className="mb-2 flex items-start justify-between gap-2">
             <Link href={`${RouteConstant.tour}/${tour.slug}`} className="group/title block flex-1">
               <h3

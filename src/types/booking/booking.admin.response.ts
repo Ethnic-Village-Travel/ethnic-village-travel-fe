@@ -1,11 +1,11 @@
 import { AdminBooking } from './booking.admin';
 
-export interface TourBasicResponse {
+export type TourBasicResponse = {
   tourId: string;
   title: string;
 }
 
-export interface TourAvailableDateResponse {
+export type TourAvailableDateResponse = {
   id: string;
   startDate: string;
   endDate: string;
@@ -18,7 +18,7 @@ export interface TourAvailableDateResponse {
   };
 }
 
-export interface AdminBookingResponse {
+export type AdminBookingResponse = {
   content: AdminBooking[];
   totalElements: number;
   totalPages: number;
@@ -27,7 +27,7 @@ export interface AdminBookingResponse {
   last: boolean;
 }
 
-export interface AdminBookingDetail {
+export type AdminBookingDetail = {
   id: string;
   tourAvailableDate: {
     id: string;

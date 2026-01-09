@@ -64,10 +64,9 @@ export default function PersonalNavigationTab() {
     return pathnameWithoutLocale === href || pathname === href;
   };
 
-  // Sidebar content
   const SidebarContent = () => (
     <div className="space-y-4">
-      {/* User Profile Card */}
+      
       <Card className="overflow-hidden">
         <div className="relative h-20 bg-gradient-to-br from-primary via-primary-600 to-secondary">
           <div className="absolute -bottom-8 left-4">
@@ -83,7 +82,6 @@ export default function PersonalNavigationTab() {
           <h2 className="font-roboto text-lg font-bold text-foreground">{fullName}</h2>
           <p className="mt-0.5 text-sm text-muted-foreground">{user?.email}</p>
 
-          {/* Quick Stats */}
           <div className="mt-4 grid grid-cols-2 gap-3">
             <div className="bg-primary/5 rounded-lg p-3 text-center">
               <div className="flex items-center justify-center gap-1.5">
@@ -107,7 +105,6 @@ export default function PersonalNavigationTab() {
         </CardContent>
       </Card>
 
-      {/* Navigation Menu */}
       <Card>
         <CardContent className="p-2">
           <nav>
@@ -176,12 +173,11 @@ export default function PersonalNavigationTab() {
 
   return (
     <>
-      {/* Desktop Sidebar */}
+      
       <aside className="sticky top-24 hidden w-full lg:block">
         <SidebarContent />
       </aside>
 
-      {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-custom-blue transition-all hover:scale-105 hover:shadow-xl lg:hidden"
@@ -190,7 +186,6 @@ export default function PersonalNavigationTab() {
         {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </button>
 
-      {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity lg:hidden"
@@ -198,7 +193,6 @@ export default function PersonalNavigationTab() {
         />
       )}
 
-      {/* Mobile Sidebar */}
       <aside
         className={cn(
           'fixed bottom-0 left-0 right-0 z-40 max-h-[85vh] overflow-y-auto rounded-t-2xl bg-background p-5 shadow-2xl transition-transform duration-300 ease-out lg:hidden',

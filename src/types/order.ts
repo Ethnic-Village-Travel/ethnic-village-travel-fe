@@ -1,4 +1,4 @@
-export interface Order {
+export type Order = {
   id: number;
   startDate: Date;
   endDate: Date;

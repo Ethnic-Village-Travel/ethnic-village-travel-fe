@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import { TourStatusEnum } from '@/core/enum/tour.enum';
@@ -7,9 +8,9 @@ import { currencyToNumber, formatCurrency } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 
 import { TourCreateRequest } from '@/types/tour.type';
+import logger from '@/libs/logger';
 import { createTourSchema, TourCreateFormValues } from '@/libs/schemas/tour.schema';
 import { useFetchEthnics, useFetchLocations } from '@/hooks/api/useMetaData';
 import { useAdminCreateTour } from '@/hooks/api/useTour';
@@ -38,7 +39,7 @@ export default function TourCreateContent() {
     defaultValues: {
       image: '',
       status: TourStatusEnum.DRAFT.value,
-      duration: 3, // Default 3 days
+      duration: 3,
       itinerary: [],
       ethnic: [],
       included: [],
@@ -56,10 +57,8 @@ export default function TourCreateContent() {
   const onSubmit = async (data: TourCreateFormValues) => {
     if (!data) return;
 
-    // Use form duration instead of calculating
     const duration = data.duration;
 
-    // Map form data to TourCreateRequest
     const payload: TourCreateRequest = {
       title: data.title,
       imageUrl: data.image,
@@ -104,8 +103,7 @@ export default function TourCreateContent() {
   };
 
   const onError = (errors: any) => {
-    console.log('❌ Form validation errors:', errors);
-    console.log('Form state:', form.formState);
+    logger.warn('Form validation errors:', errors);
   };
 
   return (
@@ -116,9 +114,7 @@ export default function TourCreateContent() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit, onError)} className="grid grid-cols-2 gap-6">
-              {/* Left Column */}
               <div className="space-y-4">
-                {/* Image Upload */}
                 <FormField
                   control={form.control}
                   name="image"
@@ -156,7 +152,9 @@ export default function TourCreateContent() {
                               }}
                             />
                             {uploading && (
-                              <span className="text-xs text-muted-foreground">{t('uploading' as any) || 'Đang tải...'}</span>
+                              <span className="text-xs text-muted-foreground">
+                                {t('uploading' as any) || 'Đang tải...'}
+                              </span>
                             )}
                           </div>
                           {field.value && (
@@ -183,7 +181,6 @@ export default function TourCreateContent() {
                   )}
                 />
 
-                {/* Title */}
                 <FormField
                   control={form.control}
                   name="title"
@@ -201,7 +198,6 @@ export default function TourCreateContent() {
                   )}
                 />
 
-                {/* Location */}
                 <FormField
                   control={form.control}
                   name="location"
@@ -240,7 +236,6 @@ export default function TourCreateContent() {
                   )}
                 />
 
-                {/* Ethnic Groups */}
                 <FormField
                   control={form.control}
                   name="ethnic"
@@ -263,7 +258,6 @@ export default function TourCreateContent() {
                   )}
                 />
 
-                {/* Duration */}
                 <FormField
                   control={form.control}
                   name="duration"
@@ -296,7 +290,6 @@ export default function TourCreateContent() {
                 />
 
                 <div className="grid grid-cols-2 gap-4">
-                  {/* Status */}
                   <FormField
                     control={form.control}
                     name="status"
@@ -322,7 +315,6 @@ export default function TourCreateContent() {
                       </FormItem>
                     )}
                   />
-                  {/* Published Date */}
                   <FormField
                     control={form.control}
                     name="publishedDate"
@@ -358,7 +350,6 @@ export default function TourCreateContent() {
                   />
                 </div>
 
-                {/* Pickup Location */}
                 <FormField
                   control={form.control}
                   name="pickupLocation"
@@ -400,9 +391,7 @@ export default function TourCreateContent() {
                   )}
                 />
 
-                {/* Prices Group */}
                 <div className="grid grid-cols-2 gap-4">
-                  {/* Adult Price */}
                   <FormField
                     control={form.control}
                     name="adultPrice"
@@ -429,7 +418,6 @@ export default function TourCreateContent() {
                     )}
                   />
 
-                  {/* Child Price */}
                   <FormField
                     control={form.control}
                     name="childPrice"
@@ -458,13 +446,11 @@ export default function TourCreateContent() {
                 </div>
               </div>
 
-              {/* Right Column */}
               <div className="space-y-4">
                 <AvailableDates form={form} />
 
                 <InExService form={form} />
 
-                {/* Overview */}
                 <FormField
                   control={form.control}
                   name="overview"
@@ -482,10 +468,8 @@ export default function TourCreateContent() {
                   )}
                 />
 
-                {/* Tour Itinerary */}
                 <TourItinerary form={form} />
               </div>
-              {/* Submit Button */}
               <Button type="submit" className="w-fit">
                 {t('tourCreate.submit')}
               </Button>

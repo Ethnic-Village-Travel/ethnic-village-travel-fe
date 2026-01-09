@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 
-interface TourHeaderProps {
+type TourHeaderProps = {
   sortBy: string;
   onSortByChange: (value: string) => void;
   viewMode: 'grid' | 'list';
@@ -54,11 +54,7 @@ export function TourHeader({ sortBy, onSortByChange, viewMode, onViewModeChange,
                 {t(option.labelKey)}
               </SelectItem>
             ))}
-            {/* <SelectItem value="default">{t('sort.default')}</SelectItem>
-            <SelectItem value="price-asc">{t('sort.price_low_high')}</SelectItem>
-            <SelectItem value="price-desc">{t('sort.price_high_low')}</SelectItem>
-            <SelectItem value="rating-desc">{t('sort.rating')}</SelectItem>
-            <SelectItem value="duration-desc">{t('sort.duration')}</SelectItem> */}
+            
           </SelectContent>
         </Select>
 

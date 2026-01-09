@@ -47,7 +47,7 @@ export const UserMenu = () => {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="flex items-center gap-2 px-3 py-1 hover:bg-white-10">
             <Avatar className="h-8 w-8">
-              <AvatarImage src={user.avatar} />
+              <AvatarImage src={user.personal?.avatar || user.avatar} />
               <AvatarFallback className={isHomePage ? 'bg-white/20 text-white' : 'bg-gray-200 text-black'}>
                 {user.personal?.firstName?.[0]}
                 {user.personal?.lastName?.[0]}

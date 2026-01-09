@@ -3,21 +3,27 @@
 import { useState } from 'react';
 import { useBookingStore } from '@/stores/useBookingStore';
 import { cn } from '@/utils/classnames';
-import { calculateTotalPriceWithPromotion, formatCurrency, getBestActiveDirectDiscount } from '@/utils/number';
+import {
+  calculateTotalPrice,
+  calculateTotalPriceWithPromotion,
+  formatCurrency,
+  getBestActiveDirectDiscount,
+} from '@/utils/number';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-interface PersonTypeCalculatorProps {
+type PersonTypeCalculatorProps = {
   label: string;
   price: number;
   value: number;
   locale: 'vi' | 'en' | 'ko';
   onChange: (value: number) => void;
-}
+};
 
 const PersonTypeCalculator = ({ label, price, value, locale, onChange }: PersonTypeCalculatorProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +65,9 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
     child: 0,
   });
 
+  const basePrice = calculateTotalPrice(quantities, tour);
   const totalPrice = calculateTotalPriceWithPromotion(quantities, tour);
+  const hasDiscount = tour.promotions && tour.promotions.length > 0 && basePrice !== totalPrice;
   const totalQuantity = quantities.adult + quantities.child;
 
   // Get best DIRECT_DISCOUNT promotion for display
@@ -72,11 +80,34 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
     };
     const newTotal = newQuantities.adult + newQuantities.child;
 
-    // Only update if new total is within available slots
     if (availableSlots === undefined || newTotal <= availableSlots) {
       setQuantities(newQuantities);
     }
   };
+
+  const isDisabled =
+    !selectedDateId || !availableSlots || availableSlots === 0 || totalPrice === 0 || totalQuantity > availableSlots;
+
+  const getDisabledReason = (): string | null => {
+    if (!selectedDateId) {
+      return t('disabled_reasons.select_date') || 'Vui lòng chọn ngày';
+    }
+    if (!availableSlots || availableSlots === 0) {
+      return t('disabled_reasons.no_slots') || 'Đã hết chỗ';
+    }
+    if (totalQuantity === 0) {
+      return t('disabled_reasons.select_guests') || 'Vui lòng chọn số lượng khách';
+    }
+    if (totalQuantity > availableSlots) {
+      return t('disabled_reasons.exceed_slots', { count: availableSlots }) || `Chỉ còn ${availableSlots} chỗ`;
+    }
+    if (totalPrice === 0) {
+      return t('disabled_reasons.invalid_price') || 'Tổng tiền phải lớn hơn 0';
+    }
+    return null;
+  };
+
+  const disabledReason = getDisabledReason();
 
   return (
     <div className="grid w-full gap-4 rounded-[20px] border border-gray-20 bg-white p-5 shadow-custom-gray sm:p-[30px] xl:w-[360px]">
@@ -119,26 +150,41 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
 
       <div className="flex items-center justify-between">
         <span className="text-dark-900 text-base font-bold">{t('total')}</span>
-        <span className="text-dark-900 text-xl font-bold">{formatCurrency(totalPrice, { locale })}</span>
+        <div className="flex flex-col items-end gap-1">
+          {hasDiscount && (
+            <span className="text-sm font-semibold tracking-wide text-gray-500 line-through">
+              {formatCurrency(basePrice, { locale })}
+            </span>
+          )}
+          <span className="text-dark-900 text-xl font-bold">{formatCurrency(totalPrice, { locale })}</span>
+        </div>
       </div>
 
-      <Button
-        onClick={() => onBook?.(tour.slug || '', quantities, selectedDateId)}
-        disabled={
-          !selectedDateId ||
-          !availableSlots ||
-          availableSlots === 0 ||
-          totalPrice === 0 ||
-          totalQuantity > availableSlots
-        }
-        className={cn(
-          'hover:bg-primary/90 h-auto w-full bg-primary py-5 text-white',
-          'text-base font-normal leading-[1.625]',
-          'disabled:cursor-not-allowed disabled:bg-gray-300',
-        )}
-      >
-        {t('book_now')}
-      </Button>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="w-full">
+              <Button
+                onClick={() => onBook?.(tour.slug || '', quantities, selectedDateId)}
+                disabled={isDisabled}
+                className={cn(
+                  'hover:bg-primary/90 h-auto w-full bg-primary py-5 text-white',
+                  'text-base font-normal leading-[1.625]',
+                  'disabled:cursor-not-allowed disabled:bg-gray-300',
+                )}
+                aria-label={disabledReason || t('book_now')}
+              >
+                {t('book_now')}
+              </Button>
+            </span>
+          </TooltipTrigger>
+          {disabledReason && (
+            <TooltipContent side="top" className="max-w-xs">
+              <p>{disabledReason}</p>
+            </TooltipContent>
+          )}
+        </Tooltip>
+      </TooltipProvider>
     </div>
   );
 };

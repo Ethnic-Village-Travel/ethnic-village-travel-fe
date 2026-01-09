@@ -3,4 +3,3 @@ import { ArticleListContent } from '@/components/features/admin/article-manageme
 export default function AdminArticleListPage() {
   return <ArticleListContent />;
 }
-

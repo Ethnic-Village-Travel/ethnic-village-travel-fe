@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { DataTableColumnHeader } from '@/components/shared/data-table/data-table-column-header';
 
-interface GetTourTableColumnsProps {
+type GetTourTableColumnsProps = {
   setRowAction: React.Dispatch<
     React.SetStateAction<{
       id: number | string;

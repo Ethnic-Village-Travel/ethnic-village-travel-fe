@@ -1,4 +1,4 @@
-// Transaction Detail Components
+
 export { TransactionHeader } from './TransactionHeader';
 export { BookingInfoBox } from './BookingInfoBox';
 export { CustomerInfoBox } from './CustomerInfoBox';

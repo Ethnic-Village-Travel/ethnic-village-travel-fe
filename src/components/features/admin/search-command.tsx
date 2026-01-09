@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { Calendar, CalendarCheck, Compass, LayoutGrid, Search, ShieldCheck, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -51,6 +52,7 @@ const COMMAND_ITEMS: CommandConfig = {
 export default function SearchCommand() {
   const t = useTranslations('admin.search_command');
   const router = useRouter();
+  const { user } = useAuthStore();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -89,7 +91,15 @@ export default function SearchCommand() {
           <CommandList>
             <CommandEmpty>{t('empty')}</CommandEmpty>
             {COMMAND_SECTIONS.map(sectionKey => {
-              const items = COMMAND_ITEMS[sectionKey];
+              const items = COMMAND_ITEMS[sectionKey].filter(item => {
+                if (user?.roles?.includes('ROLE_TOUR_AGENCY')) {
+                  return item.labelKey === 'management.tour_assignment';
+                }
+                return true;
+              });
+
+              if (items.length === 0) return null;
+
               return (
                 <CommandGroup className="border-b py-2" heading={t(`sections.${sectionKey}`)} key={sectionKey}>
                   {items.map(item => (

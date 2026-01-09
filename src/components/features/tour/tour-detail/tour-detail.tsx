@@ -16,7 +16,6 @@ const TourDetail = ({ slug }: { slug: string }) => {
   const { data: response, isLoading, isError } = useTourDetail(slug);
   const tour = response?.data;
 
-  // Use ML-based similar tours
   const { data: similarToursResponse } = useQuery({
     queryKey: ['similar-tours', tour?.slug],
     queryFn: async () => {

@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-interface CustomerInfoBoxProps {
+type CustomerInfoBoxProps = {
   booking: BookingGetResponse;
   className?: string;
 }
@@ -16,17 +16,15 @@ interface CustomerInfoBoxProps {
 export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, className = '' }) => {
   const t = useTranslations('personal.detail');
 
-  // Extract customer info from bookerDetail
   const customerName = booking.bookerDetail?.fullName || booking.bookerDetail?.name || t('customer_info.not_updated');
   const customerEmail = booking.bookerDetail?.email || t('customer_info.not_updated');
   const customerPhone =
     booking.bookerDetail?.phoneNumber || booking.bookerDetail?.phone || t('customer_info.not_updated');
 
-  // Format phone number for display
   const formatPhoneNumber = (phone: string) => {
     const notUpdated = t('customer_info.not_updated');
     if (!phone || phone === notUpdated) return notUpdated;
-    // Format Vietnamese phone numbers
+
     const cleaned = phone.replace(/\D/g, '');
     if (cleaned.length === 10) {
       return `${cleaned.slice(0, 3)} ${cleaned.slice(3, 6)} ${cleaned.slice(6)}`;
@@ -34,7 +32,6 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
     return phone;
   };
 
-  // Get initials for avatar
   const getInitials = (name: string) => {
     if (!name || name === t('customer_info.not_updated')) return '?';
     const parts = name.split(' ');
@@ -44,7 +41,6 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
     return name[0].toUpperCase();
   };
 
-  // Create mailto link
   const createMailtoLink = () => {
     const subject = `Liên hệ về đơn đặt tour #${booking.id.slice(-8)}`;
     const tourName = booking.tour?.title || 'Tour';
@@ -52,7 +48,6 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
     return `mailto:${customerEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
-  // Create tel link
   const createTelLink = () => {
     return `tel:${customerPhone}`;
   };
@@ -72,7 +67,7 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
-        {/* Customer Profile */}
+        
         <div className="flex items-center gap-4">
           <Avatar className="h-14 w-14 border-2 border-secondary/20">
             <AvatarFallback className="bg-gradient-to-br from-primary to-secondary font-roboto text-lg font-bold text-white">
@@ -89,9 +84,8 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
           </div>
         </div>
 
-        {/* Contact Information */}
         <div className="space-y-3">
-          {/* Email */}
+          
           <div className="flex items-start gap-3 rounded-lg bg-muted/50 p-3 transition-colors hover:bg-muted">
             <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-blue-500/10">
               <Mail className="h-4 w-4 text-blue-600" strokeWidth={2.5} />
@@ -102,7 +96,6 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
             </div>
           </div>
 
-          {/* Phone */}
           <div className="flex items-start gap-3 rounded-lg bg-muted/50 p-3 transition-colors hover:bg-muted">
             <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-green-500/10">
               <Phone className="h-4 w-4 text-green-600" strokeWidth={2.5} />
@@ -114,7 +107,6 @@ export const CustomerInfoBox: React.FC<CustomerInfoBoxProps> = ({ booking, class
           </div>
         </div>
 
-        {/* Contact Actions */}
         {(isValidEmail || isValidPhone) && (
           <div className="flex gap-2 border-t border-border pt-4">
             {isValidEmail && (

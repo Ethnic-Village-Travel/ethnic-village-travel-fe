@@ -1,8 +1,9 @@
+import type React from 'react';
 import { DataTableConfig } from '@/libs/data-table-config';
 import type { ColumnSort, RowData } from '@tanstack/react-table';
 
 declare module '@tanstack/react-table' {
-  // biome-ignore lint/correctness/noUnusedVariables: <explanation>
+
   interface ColumnMeta<TData extends RowData, TValue> {
     label?: string;
     placeholder?: string;
@@ -14,7 +15,7 @@ declare module '@tanstack/react-table' {
   }
 }
 
-export interface Option {
+export type Option = {
   label: string;
   value: string;
   count?: number;
@@ -25,6 +26,6 @@ export type FilterOperator = DataTableConfig['operators'][number];
 export type FilterVariant = DataTableConfig['filterVariants'][number];
 export type JoinOperator = DataTableConfig['joinOperators'][number];
 
-export interface ExtendedColumnSort<TData> extends Omit<ColumnSort, 'id'> {
+export type ExtendedColumnSort<TData> = {
   id: Extract<keyof TData, string>;
-}
+} & Omit<ColumnSort, 'id'>

@@ -1,4 +1,4 @@
-export interface Ethnic {
+export type Ethnic = {
   id: string;
   name: string;
   code: string;

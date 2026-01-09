@@ -1,7 +1,7 @@
 import { EntityType } from '@/core/constants/entity';
 import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 
-export interface Bookmark {
+export type Bookmark = {
   id: number;
   entityType: EntityType;
   entityId: string;
@@ -10,16 +10,16 @@ export interface Bookmark {
   updatedAt: string;
 }
 
-export interface BookmarkRequest {
+export type BookmarkRequest = {
   entityId: string;
   entityType: EntityType;
 }
 
-export interface BookmarkUpdateResponse {
+export type BookmarkUpdateResponse = {
   bookmark: Bookmark;
 }
 
-export interface BookmarkResponse {
+export type BookmarkResponse = {
   bookmarks: Bookmark[];
   total: number;
   isBookmarked: boolean;

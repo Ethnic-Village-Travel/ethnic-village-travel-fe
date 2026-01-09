@@ -1,4 +1,4 @@
-export interface ChatbotV2Config {
+export type ChatbotV2Config = {
   apiUrl: string;
   title: string;
   placeholder: string;
@@ -12,13 +12,13 @@ export interface ChatbotV2Config {
     borderColor: string;
   };
   sessionConfig: {
-    maxMessages: number; // Maximum messages to keep in history
-    storageKey: string; // localStorage key for session persistence
+    maxMessages: number;
+    storageKey: string;
   };
 }
 
 export const defaultChatbotV2Config: ChatbotV2Config = {
-  // FastAPI endpoint from main.py
+
   apiUrl: process.env.NEXT_PUBLIC_CHATBOT_V2_API_URL || 'http://localhost:8000/api',
   title: 'Trợ lý Du lịch AI',
   placeholder: 'Hỏi về tour du lịch làng dân tộc...',
@@ -33,7 +33,7 @@ export const defaultChatbotV2Config: ChatbotV2Config = {
     borderColor: 'border-gray-200',
   },
   sessionConfig: {
-    maxMessages: 50, // Keep last 50 messages
+    maxMessages: 50,
     storageKey: 'chatbot_v2_session',
   },
 };

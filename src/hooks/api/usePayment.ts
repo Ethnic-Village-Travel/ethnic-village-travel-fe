@@ -1,11 +1,13 @@
 import { paymentApi } from '@/data/apis/payment.api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+import logger from '@/libs/logger';
+
 export function usePayment() {
   const createPaymentMutation = useMutation({
     mutationFn: (bookingId: string) => paymentApi.createPayment(bookingId),
     onError: error => {
-      console.error('Payment creation failed:', error);
+      logger.error('Payment creation failed:', error);
     },
   });
 
@@ -22,7 +24,7 @@ export function usePaymentLink(bookingId: string, enabled = true) {
     queryKey: ['payment-link', bookingId],
     queryFn: () => paymentApi.getPaymentLink(bookingId),
     enabled: enabled && !!bookingId,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
     retry: 2,
   });
 }

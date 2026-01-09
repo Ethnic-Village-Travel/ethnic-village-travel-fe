@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-interface ReasonCardProps {
+type ReasonCardProps = {
   icon: string;
   title: string;
   description: string;

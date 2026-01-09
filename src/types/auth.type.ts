@@ -1,18 +1,18 @@
 import { User } from './user.type';
 
-export interface LoginRequest {
+export type LoginRequest = {
   email: string;
   password: string;
 }
 
-export interface SignupRequest {
+export type SignupRequest = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 }
 
-export interface Personal {
+export type Personal = {
   firstName: string;
   lastName: string;
   avatar?: string;
@@ -21,7 +21,7 @@ export interface Personal {
   dateOfBirth?: string;
 }
 
-export interface LoginResponse {
+export type LoginResponse = {
   accessToken: string;
   refreshToken: string;
   tokenType: string;

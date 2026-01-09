@@ -14,12 +14,12 @@ import { PriceBreakdown } from '../components/price-breakdown';
 import { PromotionCodeInput } from '../components/promotion-code-input';
 import { WizardNavigation } from '../wizard-navigation';
 
-export interface ReviewStepProps {
+export type ReviewStepProps = {
   onBack?: () => void;
   onConfirm?: () => Promise<void>;
 }
 
-interface SectionHeaderProps {
+type SectionHeaderProps = {
   title: string;
   icon: React.ReactNode;
   onEdit: () => void;
