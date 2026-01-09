@@ -1,27 +1,27 @@
-'use client';
+import { Suspense } from 'react';
 
-import { useTranslations } from 'next-intl';
-
-import { useQueryConfig } from '@/hooks/use-query-config';
-import ArticleSection from '@/components/features/home/article-section';
 import { HeroSection } from '@/components/features/home/hero-section';
+import ArticleSection from '@/components/features/home/article-section';
 import ReasonSection from '@/components/features/home/reason-section';
 import TourSection from '@/components/features/home/tour-section';
+import Loading from '@/components/shared/loading';
 
 export default function HomePage() {
-  const t = useTranslations('home');
-  const queryConfig = useQueryConfig();
-
   return (
     <div className="flex w-full flex-col gap-6">
       <HeroSection />
 
-      <TourSection />
+      <Suspense fallback={<Loading text="Đang tải tours..." />}>
+        <TourSection />
+      </Suspense>
 
-      <ArticleSection />
+      <Suspense fallback={<Loading text="Đang tải bài viết..." />}>
+        <ArticleSection />
+      </Suspense>
 
-      <ReasonSection />
-
+      <Suspense fallback={null}>
+        <ReasonSection />
+      </Suspense>
     </div>
   );
 }
