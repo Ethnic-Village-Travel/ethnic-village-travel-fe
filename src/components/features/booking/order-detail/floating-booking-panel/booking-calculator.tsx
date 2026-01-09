@@ -2,7 +2,13 @@
 
 import { useMemo, useState } from 'react';
 import { useBookingStore } from '@/stores/useBookingStore';
-import { applyPromotionToTotal, calculateTotalPrice, calculateTotalPriceWithPromotion, formatCurrency } from '@/utils';
+import {
+  applyPromotionToTotal,
+  calculateTotalPrice,
+  calculateTotalPriceWithPromotion,
+  formatCurrency,
+  getBestActiveDirectDiscount,
+} from '@/utils';
 import { cn } from '@/utils/classnames';
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -160,7 +166,7 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
           onChange={handleQuantityChange('child')}
           locale={locale}
         />
-        {!booking?.tour?.promotions?.length && (
+        {!getBestActiveDirectDiscount(booking.tour) && (
           <PromotionValidationForm promotion={promotion} booking={booking} setPromotion={setPromotion} />
         )}
       </div>

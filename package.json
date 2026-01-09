@@ -68,6 +68,7 @@
     "react-textarea-autosize": "^8.5.9",
     "react-use-draggable-scroll": "^0.4.7",
     "recharts": "^3.5.1",
+    "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
     "sharp": "^0.34.4",
     "sonner": "^2.0.7",
