@@ -26,7 +26,7 @@ export function getErrorMessage(err: unknown) {
   return unknownError;
 }
 
-interface ToastFunction {
+type ToastFunction = {
   (props: { title: string; variant?: 'default' | 'destructive' }): void;
 }
 

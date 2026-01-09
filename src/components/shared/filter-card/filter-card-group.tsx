@@ -4,7 +4,7 @@ import { FilterConfig } from '@/data/mocks/filters';
 
 import { FilterCard } from './filter-card';
 
-interface FilterCardGroupProps {
+type FilterCardGroupProps = {
   filters: FilterConfig[];
 }
 

@@ -5,7 +5,7 @@ import { Bookmark } from '@/types/bookmark.type';
 import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { UserDetailsResponse } from '@/types/user.type';
 
-interface UserState {
+type UserState = {
   details: UserDetailsResponse | null;
   setUserDetails: (details: UserDetailsResponse) => void;
   setUserBookmark: (bookmark: Bookmark) => void;
@@ -45,11 +45,9 @@ export const useUserStore = create<UserState>()(
 
           let updatedBookmarks;
           if (existingIndex >= 0) {
-            // Update existing bookmark
             updatedBookmarks = [...existingBookmarks];
             updatedBookmarks[existingIndex] = bookmark;
           } else {
-            // Add new bookmark
             updatedBookmarks = [...existingBookmarks, bookmark];
           }
 

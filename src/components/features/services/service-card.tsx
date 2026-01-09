@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 
-interface ServiceCardProps {
+type ServiceCardProps = {
   icon: LucideIcon;
   titleKey: string;
   descriptionKey: string;

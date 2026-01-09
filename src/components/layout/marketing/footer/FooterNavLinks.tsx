@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
-interface FooterLinkGroupProps {
+type FooterLinkGroupProps = {
   title: string;
   links: Array<{
     label: string;

@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Article } from '@/types/article.type';
 import { Badge } from '@/components/ui/badge';
 
-interface ArticleDetailHeaderProps {
+type ArticleDetailHeaderProps = {
   article: Article;
 }
 
@@ -62,5 +62,3 @@ export default function ArticleDetailHeader({ article }: ArticleDetailHeaderProp
     </header>
   );
 }
-
-

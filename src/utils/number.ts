@@ -26,12 +26,10 @@ export function formatShortNumber(number: number | string | bigint | undefined |
   if (Math.abs(value) < 1000) {
     formattedValue = Number(value.toFixed(decimals));
   } else if (value < 1e15) {
-    // Standard suffixes: K, M, B, T
     const exponent = Math.min(Math.floor(Math.log10(value) / 3), STANDARD_SUFFIXES.length - 1);
     formattedValue = value / 10 ** (exponent * 3);
     suffix = STANDARD_SUFFIXES[exponent];
   } else {
-    // Extended suffixes: aa, ab, ..., cz
     const exponent = Math.floor(Math.log10(value) / 3) - 4;
     if (exponent >= EXTENDED_SUFFIXES.length) return '999cz';
     formattedValue = value / 10 ** ((exponent + 4) * 3);
@@ -49,28 +47,18 @@ export function calculateTotalPrice(quantities: { adult: number; child: number }
 }
 
 export function calculateTotalPriceWithPromotion(quantities: { adult: number; child: number }, tour: Tour | TourInfo) {
-  const adultSubtotal = quantities.adult * (tour.adultPrice || 0);
-  const childSubtotal = quantities.child * (tour.childPrice || 0);
+  const totalPrice = calculateTotalPrice(quantities, tour);
 
   if (!tour.promotions?.[0]?.discountPercent) {
-    return adultSubtotal + childSubtotal;
+    return totalPrice;
   }
 
-  // Calculate discount for adult tickets
-  const adultDiscountAmount = Math.min(
-    (tour.promotions?.[0]?.discountPercent / 100) * adultSubtotal,
-    tour.promotions?.[0]?.maxDiscountAmount || Number.MAX_VALUE,
-  );
-  const adultTotal = adultSubtotal - adultDiscountAmount;
+  const promotion = tour.promotions[0];
+  const discount = (promotion.discountPercent / 100) * totalPrice;
+  const maxDiscount = promotion.maxDiscountAmount ?? Number.MAX_VALUE;
 
-  // Calculate discount for child tickets
-  const childDiscountAmount = Math.min(
-    (tour.promotions?.[0]?.discountPercent / 100) * childSubtotal,
-    tour.promotions?.[0]?.maxDiscountAmount || Number.MAX_VALUE,
-  );
-  const childTotal = childSubtotal - childDiscountAmount;
-
-  return adultTotal + childTotal;
+  const discountApplied = Math.min(discount, maxDiscount);
+  return totalPrice - discountApplied;
 }
 
 export function applyPromotionToTotal(
@@ -145,7 +133,6 @@ export function formatCurrency(
     number = calculateDiscount(number, discount_percent, max_discount_amount);
   }
 
-  // Convert VND to USD for English locale
   if (locale === 'en') {
     number = Math.round((number / VND_TO_USD_RATE) * 100) / 100;
   }

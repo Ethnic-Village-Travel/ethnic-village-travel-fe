@@ -1,6 +1,6 @@
 import TourDetail from '@/components/features/tour/tour-detail';
 
-interface TourDetailProps {
+type TourDetailProps = {
   params: {
     slug: string;
   };

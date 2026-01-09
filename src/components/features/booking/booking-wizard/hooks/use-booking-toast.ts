@@ -6,7 +6,7 @@ import { toast } from '@/hooks/use-toast';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
-interface ToastOptions {
+type ToastOptions = {
   title?: string;
   description: string;
   type?: ToastType;

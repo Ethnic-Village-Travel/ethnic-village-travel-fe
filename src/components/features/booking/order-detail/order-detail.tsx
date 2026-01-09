@@ -5,6 +5,7 @@ import { notFound, useParams, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
 import { BookingStatus } from '@/core/enum/booking.enum';
 import { useBookingStore } from '@/stores/useBookingStore';
+import logger from '@/libs/logger';
 
 import { useApiBookingGet } from '@/hooks/api/useBooking';
 
@@ -31,7 +32,6 @@ export function OrderDetail() {
       });
     }
 
-    // Redirect to payment page if booking is pending payment
     if (
       booking &&
       'status' in booking &&
@@ -39,7 +39,7 @@ export function OrderDetail() {
       booking.paymentExpiredDate
     ) {
       router.push(`${RouteConstant.payment}/${orderId}`);
-      return () => {};
+      return;
     }
 
     if (booking?.paymentExpiredDate) {
@@ -50,9 +50,7 @@ export function OrderDetail() {
         setPaymentExpired(true);
       }
     }
-
-    return () => {};
-  }, [booking, setContactInfo, setGuestInfo, router, orderId]);
+  }, [booking, setContactInfo, router, orderId]);
 
   if (isLoading) {
     return (
@@ -63,7 +61,7 @@ export function OrderDetail() {
   }
 
   if (isError) {
-    console.error('Failed to fetch booking');
+    logger.error('Failed to fetch booking');
     return notFound();
   }
 

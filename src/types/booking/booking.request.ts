@@ -3,14 +3,14 @@ import { PersonInfo } from '@/stores/useBookingStore';
 
 import { TourInfo } from './booking.type';
 
-export interface BookingStoreRequest {
+export type BookingStoreRequest = {
   tourSlug: string;
   availableDateId: string;
   adultCount: number;
   childCount: number;
 }
 
-export interface BookingUpdateRequest {
+export type BookingUpdateRequest = {
   id: string;
   tourSlug: string;
   availableDateId: number;
@@ -26,7 +26,7 @@ export interface BookingUpdateRequest {
   additionalInformation?: any;
 }
 
-export interface BookingConfirmRequest {
+export type BookingConfirmRequest = {
   promotionId?: string;
   discountAmountApplied?: number;
   guestInformation?: PersonInfo;
@@ -35,7 +35,7 @@ export interface BookingConfirmRequest {
   tourData: TourInfo;
 }
 
-export interface BookingListRequest {
+export type BookingListRequest = {
   bookingTab: 'PENDING' | 'OTHERS';
   status?: BookingStatus[];
   startDate?: string;

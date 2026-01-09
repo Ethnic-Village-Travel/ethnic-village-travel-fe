@@ -12,7 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
 
-interface Range {
+type Range = {
   min: number;
   max: number;
 }
@@ -23,7 +23,7 @@ function getIsValidRange(value: unknown): value is RangeValue {
   return Array.isArray(value) && value.length === 2 && typeof value[0] === 'number' && typeof value[1] === 'number';
 }
 
-interface DataTableSliderFilterProps<TData> {
+type DataTableSliderFilterProps<TData> = {
   column: Column<TData, unknown>;
   title?: string;
 }
@@ -35,8 +35,8 @@ export function DataTableSliderFilter<TData>({ column, title }: DataTableSliderF
     ? (column.getFilterValue() as RangeValue)
     : undefined;
 
-  const defaultRange = column.columnDef.meta?.range;
-  const unit = column.columnDef.meta?.unit;
+  const defaultRange = (column.columnDef.meta as { range?: [number, number] } | undefined)?.range;
+  const unit = (column.columnDef.meta as { unit?: string } | undefined)?.unit;
 
   const { min, max, step } = React.useMemo<Range & { step: number }>(() => {
     let minValue = 0;

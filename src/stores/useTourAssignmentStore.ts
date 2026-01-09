@@ -2,20 +2,19 @@ import { create } from 'zustand';
 
 import type { EmployeeBasicResponse } from '@/types/employee.type';
 
-export interface AssignedGuideByDate {
+export type AssignedGuideByDate = {
   [dateId: string]: EmployeeBasicResponse | null;
 }
 
-export interface TourAssignments {
+export type TourAssignments = {
   [tourId: string]: AssignedGuideByDate;
 }
 
-interface TourAssignmentStore {
-  // State
+type TourAssignmentStore = {
+
   tourAssignments: TourAssignments;
   activeTourId: string | null;
 
-  // Actions
   setActiveTourId: (tourId: string | null) => void;
   setTourAssignments: (tourId: string, assignments: AssignedGuideByDate) => void;
   updateTourAssignments: (tourId: string, newAssignments: AssignedGuideByDate) => void;
@@ -23,11 +22,10 @@ interface TourAssignmentStore {
 }
 
 export const useTourAssignmentStore = create<TourAssignmentStore>(set => ({
-  // Initial state
+
   tourAssignments: {},
   activeTourId: null,
 
-  // Actions
   setActiveTourId: tourId => set({ activeTourId: tourId }),
 
   setTourAssignments: (tourId, assignments) =>

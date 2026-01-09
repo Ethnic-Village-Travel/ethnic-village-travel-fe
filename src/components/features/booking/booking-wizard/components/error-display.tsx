@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
-export interface ErrorDisplayProps {
+export type ErrorDisplayProps = {
   title?: string;
   message: string;
   onRetry?: () => void;
@@ -52,7 +52,7 @@ export function ErrorDisplay({
   return <div className="rounded-lg border border-red-200 bg-red-50 p-4">{content}</div>;
 }
 
-export interface OfflineIndicatorProps {
+export type OfflineIndicatorProps = {
   message?: string;
 }
 

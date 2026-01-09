@@ -10,7 +10,7 @@ import { useTourListByIds } from '@/hooks/api/useTour';
 import { Button } from '@/components/ui/button';
 import { TourItem } from '@/components/features/tour/tour-card';
 
-interface TourBookmarksTabProps {
+type TourBookmarksTabProps = {
   bookmarks?: Bookmark[];
   visibleItems: number;
   onLoadMore: () => void;

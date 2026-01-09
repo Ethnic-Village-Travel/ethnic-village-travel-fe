@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-interface TourSkeletonProps {
+type TourSkeletonProps = {
   layout?: 'vertical' | 'horizontal';
 }
 

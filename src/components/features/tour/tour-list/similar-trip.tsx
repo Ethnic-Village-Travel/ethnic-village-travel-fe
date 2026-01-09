@@ -8,7 +8,7 @@ import { Tour } from '@/types/tour.type';
 import TourItem from '../tour-card/tour-item';
 import { EmptyState } from './empty-state';
 
-interface SimilarTripProps {
+type SimilarTripProps = {
   tours: Tour[];
   className?: string;
 }

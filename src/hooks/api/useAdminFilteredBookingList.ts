@@ -36,9 +36,6 @@ export const useAdminFilteredBookingList = (pageSize: number = 10) => {
     size: baseParams.size,
   };
 
-  console.log('useAdminFilteredBookingList - queryConfig:', queryConfig);
-  console.log('useAdminFilteredBookingList - filterParams:', filterParams);
-
   const {
     data: bookingRes,
     isLoading,
@@ -46,7 +43,7 @@ export const useAdminFilteredBookingList = (pageSize: number = 10) => {
   } = useQuery({
     queryKey: ['admin-bookings', filterParams],
     queryFn: () => bookingAdminApi.getAdminBookingList(filterParams),
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
     retry: 3,
   });
 

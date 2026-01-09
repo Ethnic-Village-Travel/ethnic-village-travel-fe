@@ -16,9 +16,9 @@ const shellVariants = cva('grid items-center gap-8 pt-6 pb-8 md:py-8', {
   },
 });
 
-interface ShellProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof shellVariants> {
+type ShellProps = {
   as?: React.ElementType;
-}
+} & React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof shellVariants>
 
 function Shell({ className, as: Comp = 'section', variant, ...props }: ShellProps) {
   return <Comp className={cn(shellVariants({ variant }), className)} {...props} />;

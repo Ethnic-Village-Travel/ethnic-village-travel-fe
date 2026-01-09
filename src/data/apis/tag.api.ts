@@ -3,7 +3,7 @@ import api from '@/core/api/api';
 
 import { Tag } from '@/types/tag.type';
 
-export interface TagListResponse {
+export type TagListResponse = {
   data: Tag[];
 }
 

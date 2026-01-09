@@ -40,12 +40,7 @@ const ARRAY_SEPARATOR = ',';
 const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
 
-interface UseDataTableProps<TData>
-  extends Omit<
-      TableOptions<TData>,
-      'state' | 'pageCount' | 'getCoreRowModel' | 'manualFiltering' | 'manualPagination' | 'manualSorting'
-    >,
-    Required<Pick<TableOptions<TData>, 'pageCount'>> {
+type UseDataTableProps<TData> = {
   initialState?: Omit<Partial<TableState>, 'sorting'> & {
     sorting?: ExtendedColumnSort<TData>[];
   };
@@ -58,7 +53,10 @@ interface UseDataTableProps<TData>
   shallow?: boolean;
   startTransition?: React.TransitionStartFunction;
   queryConfig?: { sort_by?: string; order?: 'asc' | 'desc' };
-}
+} & Omit<
+      TableOptions<TData>,
+      'state' | 'pageCount' | 'getCoreRowModel' | 'manualFiltering' | 'manualPagination' | 'manualSorting'
+    > & Required<Pick<TableOptions<TData>, 'pageCount'>>
 
 export function useDataTable<TData>(props: UseDataTableProps<TData>) {
   const {
@@ -101,7 +99,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
 
   const pagination: PaginationState = React.useMemo(() => {
     return {
-      pageIndex: page - 1, // zero-based index -> one-based index
+      pageIndex: page - 1,
       pageSize: perPage,
     };
   }, [page, perPage]);
@@ -127,7 +125,6 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
   const [sortBy, setSortBy] = useQueryState('sort_by');
   const [order, setOrder] = useQueryState('order');
 
-  // Khởi tạo sorting từ sortBy và order
   const sorting = React.useMemo(() => {
     return sortBy ? [{ id: sortBy, desc: order === 'desc' }] : [];
   }, [sortBy, order]);
@@ -161,7 +158,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     if (enableAdvancedFilter) return {};
 
     return filterableColumns.reduce<Record<string, Parser<string> | Parser<string[]>>>((acc, column) => {
-      if (column.meta?.options) {
+      if ((column.meta as { options?: Array<{ label: string; value: string }> } | undefined)?.options) {
         acc[column.id ?? ''] = parseAsArrayOf(parseAsString, ARRAY_SEPARATOR).withOptions(queryStateOptions);
       } else {
         acc[column.id ?? ''] = parseAsString.withOptions(queryStateOptions);

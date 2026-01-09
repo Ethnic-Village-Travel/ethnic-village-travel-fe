@@ -20,7 +20,7 @@ const statusConfig: Record<string, { label: string; variant: 'default' | 'second
 
 export function UpcomingDepartures() {
   const t = useTranslations('admin.dashboard');
-  const { data: departures, isLoading, error } = useUpcomingDepartures(7);
+  const { data: departures, isLoading, error } = useUpcomingDepartures(7, 10);
 
   if (isLoading) {
     return (
@@ -85,7 +85,7 @@ export function UpcomingDepartures() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {departures.map(departure => {
+              {departures.slice(0, 10).map(departure => {
                 const status = statusConfig[departure.status] || statusConfig.AVAILABLE;
                 const highlighted = isHighlighted(departure.startDate);
 

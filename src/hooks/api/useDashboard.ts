@@ -13,10 +13,10 @@ export const useDashboardStats = () => {
   });
 };
 
-export const useUpcomingDepartures = (days: number = 7) => {
+export const useUpcomingDepartures = (days: number = 7, limit: number = 10) => {
   return useQuery({
-    queryKey: ['dashboard', 'upcoming-departures', days],
-    queryFn: () => dashboardApi.getUpcomingDepartures(days),
+    queryKey: ['dashboard', 'upcoming-departures', days, limit],
+    queryFn: () => dashboardApi.getUpcomingDepartures(days, limit),
     select: response => response.data as UpcomingDeparture[],
     staleTime: 60 * 1000,
   });

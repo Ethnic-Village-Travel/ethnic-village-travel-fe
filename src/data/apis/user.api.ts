@@ -4,7 +4,7 @@ import { API } from '@/core/api/config';
 import { ApiResponse } from '@/types/api.type';
 import { UserDetailsResponse, UserPersonal } from '@/types/user.type';
 
-export interface UpdatePersonalRequest {
+export type UpdatePersonalRequest = {
   firstName?: string;
   lastName?: string;
   phoneNumber?: string;
@@ -13,7 +13,7 @@ export interface UpdatePersonalRequest {
   avatar?: string;
 }
 
-export interface UpdatePasswordRequest {
+export type UpdatePasswordRequest = {
   currentPassword: string;
   newPassword: string;
   confirmPassword: string;

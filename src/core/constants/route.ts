@@ -2,7 +2,7 @@ export const RouteConstant = {
   home: '/',
   about: '/about',
   services: '/services',
-  blog: '/blog',
+  blog: '/article',
   contact: '/contact',
 
   login: '/login',
@@ -21,15 +21,12 @@ export const RouteConstant = {
   payment_success: '/payment/success',
   payment_cancel: '/payment/cancel',
 
-  // Protected routes (require authentication)
-
   personal: '/personal',
   personal_bookmark: '/personal/bookmark',
   personal_transaction: '/personal/transaction',
   personal_transaction_detail: '/personal/transaction/:id',
   personal_account: '/personal/account',
 
-  //Admin routes (require admin permissions)
   admin_auth: '/admin/auth',
   admin_dashboard: '/admin',
 

@@ -19,14 +19,6 @@ const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
 });
 
-// const geistMono = localFont({
-//   src: "./fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
-//   weight: "100 900",
-// });
-
-//geistSans.variable
-
 export const metadata: Metadata = {
   title: {
     template: '%s | Ethnic Village Travel',

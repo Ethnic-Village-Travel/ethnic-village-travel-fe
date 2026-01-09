@@ -30,13 +30,11 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 
-// import { deleteTour } from '../_lib/actions';
-
-interface DeleteTourDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+type DeleteTourDialogProps = {
   tours: Row<Tour>['original'][];
   showTrigger?: boolean;
   onSuccess?: () => void;
-}
+} & React.ComponentPropsWithoutRef<typeof Dialog>
 
 export default function DeleteTourDialog({ tours, showTrigger = true, onSuccess, ...props }: DeleteTourDialogProps) {
   const [isDeletePending, startDeleteTransition] = React.useTransition();
@@ -45,18 +43,6 @@ export default function DeleteTourDialog({ tours, showTrigger = true, onSuccess,
   const t = useTranslations('admin.tour.list');
 
   function onDelete() {
-    // startDeleteTransition(async () => {
-    //   const { error } = await deleteTour({
-    //     ids: tours.map(task => task.id),
-    //   });
-    //   if (error) {
-    //     toast({ title: error, variant: 'destructive' });
-    //     return;
-    //   }
-    //   props.onOpenChange?.(false);
-    //   toast({ title: 'Tour deleted', variant: 'default' });
-    //   onSuccess?.();
-    // });
   }
 
   if (isDesktop) {

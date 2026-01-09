@@ -1,46 +1,43 @@
-import { TourStatus } from '@/core/enum/tour.enum';
+import { TourAvailableDateStatus, TourStatus } from '@/core/enum/tour.enum';
 
 import type { EmployeeBasicResponse } from './employee.type';
 import { Location } from './location.type';
 import { TourAvailableDate } from './tour.type';
 
-export interface TourAssignmentRequest {
+export type TourAssignmentRequest = {
   assignments: {
-    [availableDateId: string]: string; // Single guideId per date
+    [availableDateId: string]: string;
   };
-}
+};
 
-export interface TourAssignmentResponse {
+export type TourAssignmentResponse = {
   id: string;
   guide: EmployeeBasicResponse;
   tourAvailableDateId: string;
   assignedBy: string;
-}
+};
 
-export interface SingleAssignmentRequest {
+export type SingleAssignmentRequest = {
   tourAvailableDateId: string;
   guideId: string;
-}
+};
 
-// New types for Assigned Available Dates feature
-export interface AssignedAvailableDatesRequest {
+export type AssignedAvailableDatesRequest = {
   page: number;
   size: number;
   sortBy: string;
   order: 'asc' | 'desc';
 
-  // Common filters (Tour Agency + Admin)
   tourStatus?: TourStatus[];
-  fromDate?: string; // ISO date string
-  toDate?: string; // ISO date string
+  fromDate?: string;
+  toDate?: string;
   tourId?: string;
-  searchKey?: string; // Search by tour title
+  searchKey?: string;
 
-  // Admin-only filters
-  employeeIds?: string[]; // Filter by specific employees (Admin only)
-}
+  employeeIds?: string[];
+};
 
-export interface TourBasicInfo {
+export type TourBasicInfo = {
   id: string;
   title: string;
   slug: string;
@@ -48,46 +45,42 @@ export interface TourBasicInfo {
   status: TourStatus;
   duration: number;
   pickUpLocation?: Location;
-}
+};
 
-export interface AssignedAvailableDateResponse {
+export type AssignedAvailableDateResponse = {
   assignmentId: string;
   assignedBy: string;
   assignedDate?: string;
 
-  // Tour Available Date Information
   tourAvailableDate: TourAvailableDate;
 
-  // Tour Information
   tour: TourBasicInfo;
 
-  // Guide Information (only visible to Admin)
   guide?: EmployeeBasicResponse;
-}
+};
 
-export interface AssignedAvailableDateListResponse {
+export type AssignedAvailableDateListResponse = {
   content: AssignedAvailableDateResponse[];
   totalElements: number;
   totalPages: number;
   size: number;
-  number: number; // current page number
+  number: number;
   first: boolean;
   last: boolean;
   numberOfElements: number;
-}
+};
 
-// Calendar View Types
-export interface CalendarAssignmentsRequest {
-  startDate: string; // ISO date string
-  endDate: string; // ISO date string
-  tourId?: string; // Optional filter by tour
-}
+export type CalendarAssignmentsRequest = {
+  startDate: string;
+  endDate: string;
+  tourId?: string;
+};
 
-export interface CalendarAssignmentResponse {
+export type CalendarAssignmentResponse = {
   assignmentId: string;
-  startDate: string; // ISO date string
-  endDate: string; // ISO date string
-  assignedDate?: string; // ISO datetime string
+  startDate: string;
+  endDate: string;
+  assignedDate?: string;
   assignedBy?: string;
 
   tourId: string;
@@ -104,16 +97,15 @@ export interface CalendarAssignmentResponse {
   guideId: string;
   guideName: string;
   guideEmail: string;
-}
+};
 
-// Assignment History Types
-export interface AssignmentHistoryRequest {
+export type AssignmentHistoryRequest = {
   assignmentId?: string;
   tourAvailableDateId?: string;
   guideId?: string;
-}
+};
 
-export interface AssignmentHistoryResponse {
+export type AssignmentHistoryResponse = {
   id: string;
   assignmentId: string;
   tourAvailableDateId: string;
@@ -128,5 +120,17 @@ export interface AssignmentHistoryResponse {
   previousStatus?: string;
   newStatus?: string;
 
-  createdAt: string; // ISO datetime string
-}
+  createdAt: string;
+};
+
+export type UpdateTourAvailableDateStatusRequest = {
+  tourAvailableDateId: string;
+  status: TourAvailableDateStatus;
+};
+
+export type TourAvailableDateStatusUpdateResponse = {
+  tourAvailableDateId: string;
+  previousStatus: TourAvailableDateStatus;
+  newStatus: TourAvailableDateStatus;
+  updatedAt: string;
+};

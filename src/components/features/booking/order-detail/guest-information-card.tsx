@@ -13,7 +13,7 @@ const formSchema = z.object({
   phone: z.string().regex(/^[0-9]{10}$/, 'Phone number must have 10 digits'),
 });
 
-interface GuestInformationCardProps {
+type GuestInformationCardProps = {
   booking?: BookingGetResponse;
 }
 
@@ -28,7 +28,6 @@ export default function GuestInformationCard({ booking }: GuestInformationCardPr
   };
 
   const getGuestInformation = (guestInfo: PersonInfo | null): CardUpdateField[] => {
-    // Get detail based on booking type
     const detail = guestInfo || booking?.bookerDetail || booking?.passengerDetail;
 
     return [

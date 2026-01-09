@@ -11,7 +11,7 @@ export enum PromotionErrorCode {
   PROMOTION_OUT_OF_STOCK = 'PROMOTION_OUT_OF_STOCK',
 }
 
-export interface PromotionValidateResponse {
+export type PromotionValidateResponse = {
   id: string;
   name: string;
   discountPercent: number;
@@ -25,7 +25,7 @@ export enum PromotionType {
   DIRECT_DISCOUNT = 'DIRECT_DISCOUNT',
 }
 
-export interface Promotion {
+export type Promotion = {
   id: string;
   name: string;
   description?: string;
@@ -40,24 +40,24 @@ export interface Promotion {
   usedCount: number;
   createdAt: string;
   updatedAt: string;
-  tours?: { id: string; title: string }[]; // Tours this promotion applies to
+  tours?: { id: string; title: string }[];
 }
 
-export interface PromotionCreateRequest {
+export type PromotionCreateRequest = {
   name: string;
   description?: string;
   discountPercent: number;
   maxDiscountAmount: number;
-  startDate: string; // ISO datetime string
-  endDate: string; // ISO datetime string
+  startDate: string;
+  endDate: string;
   status: PromotionStatus;
   type: PromotionType;
-  code?: string; // Required if type = COUPON_CODE
+  code?: string;
   usageLimit: number;
-  tourIds?: string[]; // Empty = applies to all tours
+  tourIds?: string[];
 }
 
-export interface PromotionUpdateRequest {
+export type PromotionUpdateRequest = {
   name: string;
   description?: string;
   discountPercent: number;
@@ -67,22 +67,22 @@ export interface PromotionUpdateRequest {
   status: PromotionStatus;
   usageLimit?: number;
   tourIds?: string[];
-  // Note: type and code cannot be updated
+
 }
 
-export interface PromotionAdminListRequest {
-  search?: string; // Search by name or code
+export type PromotionAdminListRequest = {
+  search?: string;
   status?: PromotionStatus;
   type?: PromotionType;
-  fromDate?: string; // ISO datetime string
-  toDate?: string; // ISO datetime string
+  fromDate?: string;
+  toDate?: string;
   page?: number;
   size?: number;
   sortBy?: string;
   sortDirection?: 'ASC' | 'DESC';
 }
 
-export interface PromotionListResponse {
+export type PromotionListResponse = {
   content: Promotion[];
   totalElements: number;
   totalPages: number;

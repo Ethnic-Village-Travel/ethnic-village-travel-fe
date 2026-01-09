@@ -3,6 +3,7 @@ import { notificationApi } from '@/data/apis/notification.api';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { getCookie } from '@/utils/cookie';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import logger from '@/libs/logger';
 
 import { Notification, NotificationListRequest, NotificationListResponse } from '@/types/notification.type';
 import { ApiResponse } from '@/types/api.type';
@@ -44,13 +45,12 @@ export const useMarkAllAsRead = () => {
   return useMutation({
     mutationFn: () => notificationApi.markAllAsRead(),
     onSuccess: () => {
-      // giảm count về 0
+
       queryClient.setQueryData([NOTIFICATION_QUERY_KEY.UNREAD_COUNT], (old: any) => {
         if (!old?.data) return { data: 0, success: true };
         return { ...old, data: 0 };
       });
 
-      // giữ list, chỉ cập nhật isRead/readAt
       queryClient.setQueryData([NOTIFICATION_QUERY_KEY.LIST, { page: 0, size: 10 }], (old: any) => {
         if (!old?.data?.content) return old;
         return {
@@ -111,13 +111,13 @@ export const useNotificationSSE = () => {
               };
             },
           );
-          // tăng unread count ngay
+
           queryClient.setQueryData([NOTIFICATION_QUERY_KEY.UNREAD_COUNT], (old: any) => {
             const current = old?.data ?? 0;
             return { success: true, data: current + 1 };
           });
         } catch (error) {
-          console.error('Error parsing SSE message:', error);
+          logger.error('Error parsing SSE message:', error);
         }
       };
 
@@ -142,12 +142,12 @@ export const useNotificationSSE = () => {
             return { success: true, data: current + 1 };
           });
         } catch (error) {
-          console.error('Error parsing SSE notification event:', error);
+          logger.error('Error parsing SSE notification event:', error);
         }
       });
 
       eventSource.onerror = error => {
-        console.error('SSE connection error:', error);
+        logger.error('SSE connection error:', error);
         setIsConnected(false);
         eventSource.close();
 
@@ -160,7 +160,7 @@ export const useNotificationSSE = () => {
         }, 5000);
       };
     } catch (error) {
-      console.error('Error creating SSE connection:', error);
+      logger.error('Error creating SSE connection:', error);
       setIsConnected(false);
     }
   };

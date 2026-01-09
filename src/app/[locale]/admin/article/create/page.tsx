@@ -3,4 +3,3 @@ import ArticleCreateContent from '@/components/features/admin/article-management
 export default function AdminArticleCreatePage() {
   return <ArticleCreateContent />;
 }
-

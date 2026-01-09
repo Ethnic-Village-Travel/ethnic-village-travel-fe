@@ -1,13 +1,10 @@
-/**
- * TypeScript types matching FastAPI Pydantic models from main.py
- */
 
-export interface MessageItem {
+export type MessageItem = {
   role: 'user' | 'assistant';
   content: string;
 }
 
-export interface CacheData {
+export type CacheData = {
   tour_list?: {
     tours: any[];
     query: string;
@@ -41,53 +38,47 @@ export interface CacheData {
   } | null;
 }
 
-export interface ChatRequest {
+export type ChatRequest = {
   message: string;
   session_id?: string;
   history?: MessageItem[];
   cache?: CacheData;
 }
 
-export interface ChatResponse {
+export type ChatResponse = {
   response: string;
   session_id: string;
   cache: CacheData;
 }
 
-export interface ChatHistoryItem {
+export type ChatHistoryItem = {
   role: 'user' | 'assistant';
   content: string;
 }
 
-export interface ChatHistoryResponse {
+export type ChatHistoryResponse = {
   session_id: string;
   history: ChatHistoryItem[];
   count: number;
 }
 
-export interface SessionResponse {
+export type SessionResponse = {
   session_id: string;
   message: string;
 }
 
-export interface HealthResponse {
+export type HealthResponse = {
   status: string;
   version: string;
 }
 
-/**
- * Frontend message type for UI display
- */
-export interface Message {
+export type Message = {
   role: 'user' | 'assistant';
   content: string;
   timestamp: number;
 }
 
-/**
- * Session storage structure for localStorage
- */
-export interface ChatSession {
+export type ChatSession = {
   session_id: string;
   messages: Message[];
   last_updated: number;

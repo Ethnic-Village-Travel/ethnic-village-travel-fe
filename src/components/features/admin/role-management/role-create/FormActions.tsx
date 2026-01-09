@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 
-interface FormActionsProps {
+type FormActionsProps = {
   isSubmitting?: boolean;
 }
 

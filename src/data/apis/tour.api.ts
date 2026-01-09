@@ -15,7 +15,6 @@ import {
 
 export type TabType = 'popular' | 'outstanding' | 'best_price';
 
-// Map frontend TabType to backend enum values
 const mapTabTypeToBackend = (tabType: TabType): TourFilterTabType => {
   const mapping: Record<TabType, TourFilterTabType> = {
     popular: TourFilterTabType.POPULAR,
@@ -77,7 +76,6 @@ export const tourApi = {
       const queryString = encodeQueryData(requestBody);
       const { data } = await api.get<ApiResponse<TourListResponse>>(`${API.TOUR.FILTER_TAB}?${queryString}`);
 
-      // Extract tours from pagination response and return in expected format
       return {
         code: data.code,
         success: data.success,
@@ -97,8 +95,6 @@ export const tourApi = {
       throw new Error('Failed to get similar tours');
     }
   },
-
-  //-------------------------Admin------------------------------------------------
 
   getAdminTourList: async (params: TourAdminListRequest): Promise<ApiResponse<TourListResponse>> => {
     try {

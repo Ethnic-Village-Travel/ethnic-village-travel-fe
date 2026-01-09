@@ -22,7 +22,6 @@ export default function PromotionCreateContent() {
   const createPromotion = useCreateAdminPromotion();
   const { toast } = useToast();
 
-  // Fetch tours for selection
   const { data: toursData, isLoading: isLoadingTours } = useQuery({
     queryKey: ['tours-for-promotion'],
     queryFn: () => tourApi.getTourList({ page: 0, size: 1000 }),

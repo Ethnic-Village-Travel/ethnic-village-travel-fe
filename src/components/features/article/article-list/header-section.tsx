@@ -10,7 +10,7 @@ export const SORT_OPTIONS = {
   RELEVANCE: { sortBy: 'relevance', order: 'desc' },
 };
 
-interface ArticleHeaderProps {
+type ArticleHeaderProps = {
   sortBy: string;
   onSortByChange: (value: string) => void;
   disabled?: boolean;

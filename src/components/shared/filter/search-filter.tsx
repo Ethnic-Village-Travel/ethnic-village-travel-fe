@@ -4,7 +4,7 @@ import { Search } from 'lucide-react';
 import { useDebouncedCallback } from '@/hooks/use-debounced-callback';
 import { Input } from '@/components/ui/input';
 
-interface SearchFilterProps {
+type SearchFilterProps = {
   title: string;
   defaultValue: string;
   onChange: (updates: Record<string, string | string[] | undefined>) => void;

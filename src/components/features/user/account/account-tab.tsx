@@ -19,11 +19,9 @@ export default function AccountTabContent() {
   const updatePasswordMutation = useUpdatePassword();
   const { toast } = useToast();
 
-  // Edit mode states
   const [isEditingPersonal, setIsEditingPersonal] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
 
-  // Personal Info Form State
   const [personalForm, setPersonalForm] = useState({
     firstName: user?.personal?.firstName || '',
     lastName: user?.personal?.lastName || '',
@@ -33,7 +31,6 @@ export default function AccountTabContent() {
     avatar: user?.personal?.avatar || '',
   });
 
-  // Sync form with user data when it changes
   useEffect(() => {
     if (user?.personal) {
       setPersonalForm({
@@ -47,24 +44,20 @@ export default function AccountTabContent() {
     }
   }, [user?.personal]);
 
-  // Error states
   const [personalErrors, setPersonalErrors] = useState<Record<string, string>>({});
   const [passwordErrors, setPasswordErrors] = useState<Record<string, string>>({});
 
-  // Password Form State
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   });
 
-  // Handle Edit Personal Info
   const handleEditPersonal = () => {
     setIsEditingPersonal(true);
     setPersonalErrors({});
   };
 
-  // Handle Cancel Personal Info
   const handleCancelPersonal = () => {
     setPersonalForm({
       firstName: user?.personal?.firstName || '',
@@ -78,7 +71,6 @@ export default function AccountTabContent() {
     setPersonalErrors({});
   };
 
-  // Handle Personal Info Update
   const handlePersonalInfoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setPersonalErrors({});
@@ -97,20 +89,17 @@ export default function AccountTabContent() {
         variant: 'destructive',
       });
 
-      // Set field errors if available
       if (error?.response?.data?.errors) {
         setPersonalErrors(error.response.data.errors);
       }
     }
   };
 
-  // Handle Edit Password
   const handleEditPassword = () => {
     setIsEditingPassword(true);
     setPasswordErrors({});
   };
 
-  // Handle Cancel Password
   const handleCancelPassword = () => {
     setPasswordForm({
       currentPassword: '',
@@ -121,12 +110,10 @@ export default function AccountTabContent() {
     setPasswordErrors({});
   };
 
-  // Handle Password Update
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setPasswordErrors({});
 
-    // Validate passwords match
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
       const error = t('password.mismatch');
       setPasswordErrors({ confirmPassword: error });
@@ -137,7 +124,6 @@ export default function AccountTabContent() {
       return;
     }
 
-    // Validate password length
     if (passwordForm.newPassword.length < 8) {
       const error = t('password.requirements');
       setPasswordErrors({ newPassword: error });
@@ -167,7 +153,6 @@ export default function AccountTabContent() {
         variant: 'destructive',
       });
 
-      // Set field errors if available
       if (error?.response?.data?.errors) {
         setPasswordErrors(error.response.data.errors);
       } else if (errorMessage.includes('incorrect') || errorMessage.includes('không đúng')) {
@@ -180,7 +165,6 @@ export default function AccountTabContent() {
     <div className="w-full space-y-6">
       <h1 className="text-2xl font-bold text-dark-90">{t('title')}</h1>
 
-      {/* Personal Information Card */}
       <Card className="w-full border-gray-20">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -202,7 +186,6 @@ export default function AccountTabContent() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handlePersonalInfoSubmit} className="space-y-4">
-            {/* Avatar Display/Input */}
             <div className="space-y-2">
               <Label htmlFor="avatar" className="text-sm font-medium text-dark-80">
                 {t('personal_info.avatar')}
@@ -244,7 +227,6 @@ export default function AccountTabContent() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {/* First Name */}
               <div className="space-y-2">
                 <Label htmlFor="firstName" className="text-sm font-medium text-dark-80">
                   {t('personal_info.first_name')}
@@ -260,7 +242,6 @@ export default function AccountTabContent() {
                 {personalErrors.firstName && <p className="text-xs text-destructive">{personalErrors.firstName}</p>}
               </div>
 
-              {/* Last Name */}
               <div className="space-y-2">
                 <Label htmlFor="lastName" className="text-sm font-medium text-dark-80">
                   {t('personal_info.last_name')}
@@ -277,7 +258,6 @@ export default function AccountTabContent() {
               </div>
             </div>
 
-            {/* Phone Number */}
             <div className="space-y-2">
               <Label htmlFor="phoneNumber" className="text-sm font-medium text-dark-80">
                 {t('personal_info.phone_number')}
@@ -293,7 +273,6 @@ export default function AccountTabContent() {
               {personalErrors.phoneNumber && <p className="text-xs text-destructive">{personalErrors.phoneNumber}</p>}
             </div>
 
-            {/* Date of Birth */}
             <div className="space-y-2">
               <Label htmlFor="dateOfBirth" className="text-sm font-medium text-dark-80">
                 {t('personal_info.date_of_birth')}
@@ -309,7 +288,6 @@ export default function AccountTabContent() {
               {personalErrors.dateOfBirth && <p className="text-xs text-destructive">{personalErrors.dateOfBirth}</p>}
             </div>
 
-            {/* Address */}
             <div className="space-y-2">
               <Label htmlFor="address" className="text-sm font-medium text-dark-80">
                 {t('personal_info.address')}
@@ -325,7 +303,6 @@ export default function AccountTabContent() {
               {personalErrors.address && <p className="text-xs text-destructive">{personalErrors.address}</p>}
             </div>
 
-            {/* Action Buttons - Only show when editing */}
             {isEditingPersonal && (
               <div className="flex justify-end gap-3 pt-4">
                 <Button
@@ -350,7 +327,6 @@ export default function AccountTabContent() {
         </CardContent>
       </Card>
 
-      {/* Security Settings Card */}
       <Card className="w-full border-gray-20">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -373,7 +349,6 @@ export default function AccountTabContent() {
         <CardContent>
           {isEditingPassword ? (
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
-              {/* Current Password */}
               <div className="space-y-2">
                 <Label htmlFor="currentPassword" className="text-sm font-medium text-dark-80">
                   {t('password.current_password')}
@@ -391,7 +366,6 @@ export default function AccountTabContent() {
                 )}
               </div>
 
-              {/* New Password */}
               <div className="space-y-2">
                 <Label htmlFor="newPassword" className="text-sm font-medium text-dark-80">
                   {t('password.new_password')}
@@ -409,7 +383,6 @@ export default function AccountTabContent() {
                 {passwordErrors.newPassword && <p className="text-xs text-destructive">{passwordErrors.newPassword}</p>}
               </div>
 
-              {/* Confirm Password */}
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword" className="text-sm font-medium text-dark-80">
                   {t('password.confirm_password')}
@@ -428,7 +401,6 @@ export default function AccountTabContent() {
                 )}
               </div>
 
-              {/* Action Buttons */}
               <div className="flex justify-end gap-3 pt-4">
                 <Button
                   type="button"

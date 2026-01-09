@@ -31,9 +31,12 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const t = useTranslations('admin.sidebar');
   const { user } = useAuthStore();
-  const userName = user?.personal?.firstName && user?.personal?.lastName 
-    ? `${user.personal.firstName} ${user.personal.lastName}` 
-    : user?.roles?.[0] ? `${user.roles[0]} User` : 'User';
+  const userName =
+    user?.personal?.firstName && user?.personal?.lastName
+      ? `${user.personal.firstName} ${user.personal.lastName}`
+      : user?.roles?.[0]
+        ? `${user.roles[0]} User`
+        : 'User';
   const userEmail = user?.email;
 
   const permissions = useMemo(() => {
@@ -69,17 +72,27 @@ export default function AdminSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-        {Object.entries(SIDEBAR_NAV_ITEMS).map(([section, items]) => (
-          <SidebarGroup key={section}>
-            <SidebarGroupLabel>{t(section as any)}</SidebarGroupLabel>
-            <SidebarGroupContent className="flex list-none flex-col gap-2">
-              <SidebarMenu>
-                {items.map(item => {
-                  if (item.href.startsWith('/admin') && !permissions.includes(ADMIN_DASHBOARD_READ)) return null;
+        {Object.entries(SIDEBAR_NAV_ITEMS).map(([section, items]) => {
+          const filteredItems = items.filter(item => {
+            if (user?.roles?.includes('ROLE_TOUR_AGENCY')) {
+              return item.label === 'tour_assigned_available_dates';
+            }
 
-                  if (!item.permission || !item.permission.some(p => permissions.includes(p))) return null;
+            if (item.href.startsWith('/admin') && !permissions.includes(ADMIN_DASHBOARD_READ)) return false;
 
-                  return (
+            if (!item.permission || !item.permission.some(p => permissions.includes(p))) return false;
+
+            return true;
+          });
+
+          if (filteredItems.length === 0) return null;
+
+          return (
+            <SidebarGroup key={section}>
+              <SidebarGroupLabel>{t(section as any)}</SidebarGroupLabel>
+              <SidebarGroupContent className="flex list-none flex-col gap-2">
+                <SidebarMenu>
+                  {filteredItems.map(item => (
                     <SidebarMenuItem key={item.label}>
                       <SidebarMenuButton
                         className={cn({
@@ -92,17 +105,20 @@ export default function AdminSidebar() {
                         {t(item.label as any)}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
-                  );
-                })}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          );
+        })}
       </SidebarContent>
 
       <SidebarFooter className="border-t">
         <SidebarMenuItem className="cursor-pointer list-none">
-          <SidebarMenuButton onClick={handleLogout} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+          <SidebarMenuButton
+            onClick={handleLogout}
+            className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+          >
             <LogOut className="h-4 w-4" /> {t('logout')}
           </SidebarMenuButton>
         </SidebarMenuItem>

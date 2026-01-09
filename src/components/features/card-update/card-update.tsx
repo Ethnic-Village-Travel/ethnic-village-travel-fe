@@ -5,6 +5,7 @@ import { cn } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import logger from '@/libs/logger';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,7 +18,7 @@ export type CardUpdateField = Omit<SharedFormFieldProps, 'name'> & {
   defaultValue: string;
 };
 
-interface CardUpdateProps {
+type CardUpdateProps = {
   title: string;
   className?: string;
   formSchema: z.ZodObject<any>;
@@ -38,7 +39,6 @@ export default function CardUpdate({
 }: CardUpdateProps) {
   type FormData = z.infer<typeof formSchema>;
 
-  // Check if all required fields have values
   const hasAllRequiredFields = () => {
     return fields.every(field => {
       if (field.required) {
@@ -86,13 +86,12 @@ export default function CardUpdate({
       if (onSubmit) {
         await onSubmit(data);
       } else {
-        // Default submit behavior
+
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => {
           formData.append(key, value);
         });
 
-        // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1500));
       }
 
@@ -101,10 +100,9 @@ export default function CardUpdate({
         message: 'Form submitted successfully!',
       });
 
-      // Always set isUpdating to false after successful submission
       setIsUpdating(false);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      logger.error('Error submitting form:', error);
       setSubmitResult({
         success: false,
         message: 'An error occurred while submitting the form.',

@@ -1,5 +1,5 @@
 import { tourAssignmentApi } from '@/data/apis/tour-assignment.api';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import type {
   AssignedAvailableDatesRequest,
@@ -7,6 +7,7 @@ import type {
   CalendarAssignmentsRequest,
   SingleAssignmentRequest,
   TourAssignmentRequest,
+  UpdateTourAvailableDateStatusRequest,
 } from '@/types/tour-assignment.type';
 
 export const useAssignTourEmployees = () => {
@@ -29,11 +30,6 @@ export const useTourAssignments = (payload: any) => {
   });
 };
 
-/**
- * Hook for fetching assigned available dates with role-based filtering
- * Tour Agency: only see their own assignments
- * Admin: see all assignments with optional filters
- */
 export const useAssignedAvailableDates = (
   params: AssignedAvailableDatesRequest,
   options?: {
@@ -46,10 +42,10 @@ export const useAssignedAvailableDates = (
     queryKey: ['assigned-available-dates', params],
     queryFn: () => tourAssignmentApi.getAssignedAvailableDates(params),
     enabled: options?.enabled ?? true,
-    staleTime: options?.staleTime ?? 5 * 60 * 1000, // 5 minutes
+    staleTime: options?.staleTime ?? 5 * 60 * 1000,
     refetchOnWindowFocus: options?.refetchOnWindowFocus ?? false,
     retry: (failureCount, error) => {
-      // Don't retry on 4xx errors (client errors)
+
       if (error instanceof Error && error.message.includes('4')) {
         return false;
       }
@@ -58,10 +54,6 @@ export const useAssignedAvailableDates = (
   });
 };
 
-/**
- * Hook for fetching calendar assignments for a date range
- * Used for calendar view display
- */
 export const useCalendarAssignments = (
   params: CalendarAssignmentsRequest,
   options?: {
@@ -73,7 +65,7 @@ export const useCalendarAssignments = (
     queryKey: ['calendar-assignments', params],
     queryFn: () => tourAssignmentApi.getCalendarAssignments(params),
     enabled: options?.enabled ?? true,
-    staleTime: options?.staleTime ?? 5 * 60 * 1000, // 5 minutes
+    staleTime: options?.staleTime ?? 5 * 60 * 1000,
     retry: (failureCount, error) => {
       if (error instanceof Error && error.message.includes('4')) {
         return false;
@@ -83,10 +75,6 @@ export const useCalendarAssignments = (
   });
 };
 
-/**
- * Hook for fetching assignment history
- * Used to display timeline of assignment changes
- */
 export const useAssignmentHistory = (
   params: AssignmentHistoryRequest,
   options?: {
@@ -98,12 +86,25 @@ export const useAssignmentHistory = (
     queryKey: ['assignment-history', params],
     queryFn: () => tourAssignmentApi.getAssignmentHistory(params),
     enabled: options?.enabled ?? true,
-    staleTime: options?.staleTime ?? 5 * 60 * 1000, // 5 minutes
+    staleTime: options?.staleTime ?? 5 * 60 * 1000,
     retry: (failureCount, error) => {
       if (error instanceof Error && error.message.includes('4')) {
         return false;
       }
       return failureCount < 3;
+    },
+  });
+};
+
+export const useUpdateTourAvailableDateStatus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: UpdateTourAvailableDateStatusRequest) =>
+      tourAssignmentApi.updateTourAvailableDateStatus(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['assigned-available-dates'] });
+      queryClient.invalidateQueries({ queryKey: ['calendar-assignments'] });
     },
   });
 };

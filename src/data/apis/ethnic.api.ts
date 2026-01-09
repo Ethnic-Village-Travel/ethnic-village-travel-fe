@@ -3,14 +3,14 @@ import api from '@/core/api/api';
 
 import { Ethnic } from '@/types/ethnic.type';
 
-export interface EthnicListParams {
+export type EthnicListParams = {
   page?: number;
   size?: number;
   sortBy?: string;
   order?: 'asc' | 'desc';
 }
 
-export interface EthnicListResponse {
+export type EthnicListResponse = {
   data: Ethnic[];
 }
 

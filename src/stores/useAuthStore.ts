@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 
 import { User } from '@/types/user.type';
 
-interface AuthState {
+type AuthState = {
   accessToken: string;
   refreshToken: string;
   user: User | null;
@@ -37,7 +37,6 @@ export const useAuthStore = create<AuthState>()(
       enterOtpOpen: false,
       otpEmail: '',
       setAuth: ({ accessToken, refreshToken, user }) => {
-        // Set cookies cho middleware
         if (typeof window !== 'undefined') {
           setCookie('accessToken', accessToken, 1);
           setCookie('refreshToken', refreshToken, 7);
@@ -60,7 +59,6 @@ export const useAuthStore = create<AuthState>()(
       setEnterOtpOpen: open => set({ enterOtpOpen: open }),
       setOtpEmail: email => set({ otpEmail: email }),
       logout: () => {
-        // Clear cookies
         if (typeof window !== 'undefined') {
           setCookie('accessToken', '', -1);
           setCookie('refreshToken', '', -1);

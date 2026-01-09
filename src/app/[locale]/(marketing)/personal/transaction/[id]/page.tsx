@@ -26,7 +26,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
-interface TransactionDetailPageProps {
+type TransactionDetailPageProps = {
   params: {
     id: string;
   };
@@ -75,7 +75,6 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
     queryFn: () => bookingApi.get(params.id),
   });
 
-  // Helper functions
   const getStatusConfig = (status: string) => {
     const configs = {
       PENDING_PAYMENT: {
@@ -156,7 +155,7 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
   return (
     <div className="min-h-screen bg-muted/30">
       <div className="mx-auto max-w-7xl px-4 py-6">
-        {/* Header with Back Button */}
+        
         <div className="mb-6 flex items-center justify-between">
           <Button variant="ghost" onClick={() => router.back()} className="gap-2">
             <ArrowLeft className="h-4 w-4" />
@@ -174,7 +173,6 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
           </div>
         </div>
 
-        {/* Status Banner */}
         <Card
           className="mb-6 overflow-hidden border-l-4"
           style={{ borderLeftColor: statusConfig.iconColor.replace('text-', '') }}
@@ -203,11 +201,10 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
           </CardContent>
         </Card>
 
-        {/* Main Content - New Layout */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {/* Left Column - Tour & Timeline */}
+          
           <div className="space-y-6 lg:col-span-2">
-            {/* Tour Information */}
+            
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -253,7 +250,6 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
               </CardContent>
             </Card>
 
-            {/* Booking Timeline */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -263,7 +259,7 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {/* Timeline Item - Booking Date */}
+                  
                   <div className="flex gap-4">
                     <div className="flex flex-col items-center">
                       <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-full">
@@ -277,7 +273,6 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                     </div>
                   </div>
 
-                  {/* Timeline Item - Start Date */}
                   <div className="flex gap-4">
                     <div className="flex flex-col items-center">
                       <div className="bg-green/10 flex h-10 w-10 items-center justify-center rounded-full">
@@ -291,7 +286,6 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
                     </div>
                   </div>
 
-                  {/* Timeline Item - End Date */}
                   <div className="flex gap-4">
                     <div className="flex flex-col items-center">
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/10">
@@ -307,7 +301,6 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
               </CardContent>
             </Card>
 
-            {/* Payment Details */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -359,7 +352,6 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
             </Card>
           </div>
 
-          {/* Right Column - Customer Info */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -411,7 +403,6 @@ export default function TransactionDetailPage({ params }: TransactionDetailPageP
               </CardContent>
             </Card>
 
-            {/* Tour Highlights */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-base">Dịch vụ bao gồm</CardTitle>

@@ -26,7 +26,8 @@
         "general": "Tổng quan",
         "users": "Người dùng & Phân quyền",
         "business": "Kinh doanh",
-        "content": "Nội dung & Tiện ích"
+        "content": "Nội dung & Tiện ích",
+        "functions": "Chức năng"
       },
       "dashboard": "Bảng điều khiển",
       "user": "Khách hàng",
@@ -214,6 +215,14 @@
         "no_data": "Không có dữ liệu",
         "actions": "Hành động",
         "not_available": "Không có",
+        "update_status": "Cập nhật trạng thái",
+        "update_status_title": "Cập nhật trạng thái tour",
+        "current_status": "Trạng thái hiện tại",
+        "select_new_status": "Chọn trạng thái mới",
+        "status_updated_success": "Đã cập nhật",
+        "status_updated_desc": "Trạng thái tour đã được cập nhật thành công",
+        "status_update_failed": "Cập nhật thất bại",
+        "no_status_transition_available": "Không có trạng thái khả dụng để chuyển từ trạng thái hiện tại",
         "view_history": "Xem lịch sử"
       }
     },
@@ -406,15 +415,34 @@
       "search": "Tìm",
       "no_results": "Không tìm thấy kết quả",
       "no_tours": "Chưa có tour nào trong danh mục"
+    },
+    "promotion": {
+      "title": "Quản lý khuyến mãi",
+      "description": "Quản lý các chương trình khuyến mãi và mã giảm giá",
+      "create": "Tạo khuyến mãi",
+      "edit": "Chỉnh sửa",
+      "delete": "Xóa",
+      "status": "Trạng thái",
+      "code": "Mã",
+      "discount": "Giảm giá",
+      "start_date": "Ngày bắt đầu",
+      "end_date": "Ngày kết thúc",
+      "empty": "Chưa có khuyến mãi nào"
     }
   },
   "home": {
     "title": "Xin chào!",
     "about": "Đi tới trang giới thiệu",
     "tour": {
+      "title": "Điểm Đến Tuyệt Vời Cho Kỳ Nghỉ",
+      "description": "Điểm Đến Tuyệt Vời Cho Kỳ Nghỉ",
       "popular": "Phổ biến",
       "outstanding": "Nổi bật",
       "best_price": "Giá tốt nhất"
+    },
+    "article": {
+      "title": "Travel Vibes – Cảm Nhận Mỗi Hành Trình",
+      "description": "Những câu chuyện, mẹo và cảm hứng cho mọi tâm hồn yêu du lịch"
     },
     "reasons": [
       {
@@ -652,7 +680,7 @@
         "about": "Giới thiệu",
         "services": "Dịch vụ",
         "destinations": "Điểm đến",
-        "blog": "Blog",
+        "blog": "Bài viết",
         "contact": "Liên hệ"
       },
       "auth": {
@@ -680,7 +708,7 @@
         "testimonials": "Đánh giá",
         "partners": "Đối tác",
         "press": "Báo chí",
-        "blog": "Blog"
+        "blog": "Bài viết"
       },
       "support": {
         "title": "Hỗ trợ",
@@ -1407,8 +1435,10 @@
         "name_placeholder": "Nhập họ và tên của bạn",
         "email": "Email",
         "email_placeholder": "Nhập địa chỉ email",
+        "email_helper": "Ví dụ: example@email.com",
         "phone": "Số điện thoại",
         "phone_placeholder": "Nhập số điện thoại (10 chữ số)",
+        "phone_helper": "Ví dụ: 0901234567 hoặc +84901234567",
         "errors": {
           "name_required": "Vui lòng nhập họ và tên",
           "email_required": "Vui lòng nhập email",
@@ -1429,8 +1459,10 @@
         "name_placeholder": "Nhập họ và tên khách",
         "email": "Email",
         "email_placeholder": "Nhập địa chỉ email khách",
+        "email_helper": "Ví dụ: example@email.com",
         "phone": "Số điện thoại",
         "phone_placeholder": "Nhập số điện thoại khách (10 chữ số)",
+        "phone_helper": "Ví dụ: 0901234567 hoặc +84901234567",
         "errors": {
           "name_required": "Vui lòng nhập họ và tên",
           "email_required": "Vui lòng nhập email",

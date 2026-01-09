@@ -1,6 +1,3 @@
-/**
- * @see https://github.com/mantinedev/mantine/blob/master/packages/@mantine/hooks/src/use-debounced-callback/use-debounced-callback.ts
- */
 
 import * as React from 'react';
 

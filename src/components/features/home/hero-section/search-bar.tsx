@@ -1,6 +1,5 @@
 'use client';
 
-import { log } from 'node:console';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { RouteConstant } from '@/core/constants/route';
@@ -19,11 +18,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 
-interface SearchBarProps {
+type SearchBarProps = {
   className?: string;
 }
 
-interface SearchData {
+type SearchData = {
   location: string;
   date: Date | undefined;
   keyword: string;
@@ -59,8 +58,6 @@ export function SearchBar({ className }: SearchBarProps) {
       l: [searchData.location],
       date: searchData.date ? format(searchData.date, 'yyyy-MM-dd') : undefined,
     });
-
-    console.log(searchData);
 
     router.push(`${RouteConstant.tour}?${params.toString()}`);
   };

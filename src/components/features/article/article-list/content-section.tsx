@@ -51,7 +51,6 @@ export default function ArticleContentSection() {
         hasSearchKey={!!searchKey}
       />
 
-      {/* Show results count when not loading and has results */}
       {!isLoading && articles.length > 0 && (
         <div className="mb-4">
           <p className="text-sm text-gray-600">{t('results_count', { count: totalElements })}</p>

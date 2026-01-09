@@ -60,7 +60,10 @@ export const useFilteredTourList = (pageSize: number = 12) => {
       tagIds: getFilterIds(queryConfig.t, tags, tag => tag.slug),
       minPrice: queryConfig.min,
       maxPrice: queryConfig.max,
-      onSale: (Array.isArray(queryConfig.p) ? queryConfig.p : [queryConfig.p]).includes('on_sale'),
+      onSale:
+        queryConfig.p && queryConfig.p.length > 0
+          ? (Array.isArray(queryConfig.p) ? queryConfig.p : [queryConfig.p]).includes('on_sale')
+          : undefined,
       rating: getFilterValue(FILTERS.rating, queryConfig.r, (value): value is number => typeof value === 'number'),
       minDuration: getFilterValue(
         FILTERS.duration,
@@ -77,7 +80,7 @@ export const useFilteredTourList = (pageSize: number = 12) => {
       order: queryConfig.order,
       sortBy: queryConfig.sort_by,
     },
-    (v, k) => {
+    v => {
       return v === undefined || v === null || (Array.isArray(v) && v.length === 0);
     },
   );

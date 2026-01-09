@@ -9,7 +9,7 @@ import { Bookmark } from '@/types/bookmark.type';
 import { Button } from '@/components/ui/button';
 import ArticleItem from '@/components/features/article/article-item';
 
-interface ArticleBookmarksTabProps {
+type ArticleBookmarksTabProps = {
   bookmarks?: Bookmark[];
   visibleItems: number;
   onLoadMore: () => void;
@@ -18,7 +18,6 @@ interface ArticleBookmarksTabProps {
 function ArticleBookmarksTab({ bookmarks, visibleItems, onLoadMore }: ArticleBookmarksTabProps) {
   const t = useTranslations('personal.bookmark');
 
-  // Note: Using mock data for now since article API is not implemented
   const articles = useMemo(() => MOCK_ARTICLES.slice(0, visibleItems), [visibleItems]);
 
   const hasMoreItems = visibleItems < (bookmarks?.length || 0);

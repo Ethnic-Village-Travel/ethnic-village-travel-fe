@@ -40,7 +40,6 @@ export const useUpdatePersonalInfo = () => {
     mutationFn: (data: UpdatePersonalRequest) => updatePersonalInfo(data),
     onSuccess: response => {
       if (response.success && response.data && user) {
-        // Update user in AuthStore with new personal info from response
         const updatedUser = {
           ...user,
           personal: {

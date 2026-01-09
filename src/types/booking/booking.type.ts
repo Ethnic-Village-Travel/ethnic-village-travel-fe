@@ -3,17 +3,17 @@ import { Location } from '../location.type';
 import { Promotion } from '../promotion.type';
 import { Review } from '../review.type';
 
-export interface TimelineActivity {
+export type TimelineActivity = {
   time: string;
   description: string;
 }
 
-export interface TimelineDay {
+export type TimelineDay = {
   day: number;
   activities: TimelineActivity[];
 }
 
-export interface TourInfo {
+export type TourInfo = {
   id: string;
   title: string;
   overview?: string;

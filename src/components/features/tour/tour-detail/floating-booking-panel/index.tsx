@@ -12,7 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { BookingCalculator } from './booking-calculator';
 import GuildProfileCard from './guild-profile-card';
 
-interface FloatingBookingPanelProps {
+type FloatingBookingPanelProps = {
   tour: Tour;
 }
 
