@@ -1,5 +1,5 @@
 import { TabType, tourApi } from '@/data/apis/tour.api';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { ApiResponse } from '@/types/api.type';
 import { Tour, TourAdminListRequest, TourCreateRequest, TourListRequest } from '@/types/tour.type';
@@ -34,11 +34,15 @@ export const useTourListByIds = (ids: string[]) => {
   });
 };
 
-export const useTourDetail = (slug: string) => {
+export const useTourDetail = (
+  slug: string,
+  options?: Omit<UseQueryOptions<ApiResponse<Tour>>, 'queryKey' | 'queryFn'>,
+) => {
   return useQuery<ApiResponse<Tour>>({
     queryKey: [TOUR_QUERY_KEY.DETAIL, slug],
     queryFn: () => tourApi.getTourDetail(slug),
     enabled: !!slug,
+    ...options,
   });
 };
 

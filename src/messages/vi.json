@@ -565,7 +565,8 @@
         "title": "Tour tương tự",
         "empty": {
           "title": "Không tìm thấy tour tương tự",
-          "description": "Hiện tại không có tour tương tự nào cho tour này."
+          "description": "Hiện tại không có tour tương tự nào cho tour này.",
+          "browse_all_tours": "Xem tất cả tours"
         }
       },
       "booking": {
@@ -583,7 +584,14 @@
         "booking_failed_out_of_stock": "Hết chỗ",
         "booking_failed_invalid_data": "Dữ liệu không hợp lệ",
         "discount": "Giảm giá",
-        "max": "Tối đa"
+        "max": "Tối đa",
+        "disabled_reasons": {
+          "select_date": "Vui lòng chọn ngày",
+          "no_slots": "Đã hết chỗ",
+          "select_guests": "Vui lòng chọn số lượng khách",
+          "exceed_slots": "Chỉ còn {count} chỗ",
+          "invalid_price": "Tổng tiền phải lớn hơn 0"
+        }
       },
       "reviews": {
         "total_reviews": "{count} đánh giá",
