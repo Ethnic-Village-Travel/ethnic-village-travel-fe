@@ -52,6 +52,15 @@ const TourDetailHeader = (tour: Tour) => {
               {tour.locations?.map(location => location.city).join(' - ')}
             </span>
           </div>
+
+          <Separator className="hidden h-[53px] sm:block" orientation="vertical" />
+
+          <div className="flex flex-col gap-1.5">
+            <span className="text-xs text-gray-500 sm:text-sm">{t('ethnic')}</span>
+            <span className="line-clamp-1 text-sm text-dark sm:text-base">
+              {tour.ethnics?.map(ethnic => ethnic.name).join(' - ')}
+            </span>
+          </div>
         </div>
 
         <div className="flex gap-3 sm:gap-4">

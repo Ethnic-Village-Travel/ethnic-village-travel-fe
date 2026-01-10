@@ -15,7 +15,7 @@ export type BookingSummaryCardProps = {
   bookingData: BookingData;
   locale: 'vi' | 'en' | 'ko';
   className?: string;
-}
+};
 
 function calculateSummaryPrice(
   guestCount: GuestCount,
@@ -66,13 +66,10 @@ export function BookingSummaryCard({ bookingData, locale, className }: BookingSu
     return bookingData.promotion || tourPromoInfo;
   }, [bookingData.promotion, tourInfo?.promotions]);
 
-  const priceDetails = useMemo(
-    () => {
-      const result = calculateSummaryPrice(bookingData.guestCount, adultPrice, childPrice, activePromotion);
-      return result;
-    },
-    [bookingData.guestCount, adultPrice, childPrice, activePromotion],
-  );
+  const priceDetails = useMemo(() => {
+    const result = calculateSummaryPrice(bookingData.guestCount, adultPrice, childPrice, activePromotion);
+    return result;
+  }, [bookingData.guestCount, adultPrice, childPrice, activePromotion]);
 
   const totalGuests = bookingData.guestCount.adult + bookingData.guestCount.child;
 

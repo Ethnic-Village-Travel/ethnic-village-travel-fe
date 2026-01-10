@@ -18,7 +18,7 @@ type PersonTypeCalculatorProps = {
   value: number;
   locale: 'vi' | 'en' | 'ko';
   onChange: (value: number) => void;
-}
+};
 
 const PersonTypeCalculator = ({ label, price, value, locale, onChange }: PersonTypeCalculatorProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,11 +78,7 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
   };
 
   const isDisabled =
-    !selectedDateId ||
-    !availableSlots ||
-    availableSlots === 0 ||
-    totalPrice === 0 ||
-    totalQuantity > availableSlots;
+    !selectedDateId || !availableSlots || availableSlots === 0 || totalPrice === 0 || totalQuantity > availableSlots;
 
   const getDisabledReason = (): string | null => {
     if (!selectedDateId) {

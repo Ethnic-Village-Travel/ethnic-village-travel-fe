@@ -1,10 +1,11 @@
 import { TourInfo } from '@/types/booking/booking.type';
-import { Tour } from '@/types/tour.type';
 import { Promotion, PromotionType, PromotionStatus } from '@/types/promotion.type';
+import { Tour } from '@/types/tour.type';
 
 const EXCEEDING_LIMIT_VALUE = 1.79769313e308;
 const STANDARD_SUFFIXES = ['', 'K', 'M', 'B', 'T'];
 const VND_TO_USD_RATE = 25000;
+
 
 const EXTENDED_SUFFIXES: string[] = (() => {
   const suffixes: string[] = [];
@@ -67,7 +68,9 @@ export function findBestDirectDiscountPromotion(promotions?: Promotion[]): Promo
 }
 
 export function calculateTotalPriceWithPromotion(quantities: { adult: number; child: number }, tour: Tour | TourInfo) {
-  const totalPrice = calculateTotalPrice(quantities, tour);
+  const adultSubtotal = quantities.adult * (tour.adultPrice || 0);
+  const childSubtotal = quantities.child * (tour.childPrice || 0);
+  const totalPrice = adultSubtotal + childSubtotal;
 
   const promotion = findBestDirectDiscountPromotion(tour.promotions);
   if (!promotion?.discountPercent) {

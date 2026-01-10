@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { useChatSession } from '@/stores/useChatSession';
 import { Bot, Loader2, MessageCircle, RotateCcw, Send, Sparkles, User, X } from 'lucide-react';
+
 import logger from '@/libs/logger';
 
 import { defaultChatbotV2Config, getChatbotPosition, type ChatbotV2Config } from './chatbot-config-v2';
@@ -10,7 +12,7 @@ import type { ChatRequest, ChatResponse } from './types';
 
 type ChatbotV2Props = {
   config?: Partial<ChatbotV2Config>;
-}
+};
 
 const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +29,10 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
     chatbotConfig.sessionConfig.maxMessages,
   );
 
+  // Get auth token from store
+  const { accessToken, isAuthenticated } = useAuthStore();
+
+  // Auto-scroll to bottom when messages change
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -82,9 +88,28 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
         cache: cache,
       };
 
+      console.log('Sending request:', {
+        message: userMessage,
+        session_id: sessionId,
+        history_count: history.length,
+        cache_keys: Object.keys(cache),
+        has_auth: isAuthenticated,
+      });
+
+      // Prepare headers with optional Authorization
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      // Add Authorization header if user is logged in
+      if (isAuthenticated && accessToken) {
+        headers['Authorization'] = `Bearer ${accessToken}`;
+        console.log('Sending with auth token');
+      }
+
       const response = await fetch(`${chatbotConfig.apiUrl}/chat`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: headers,
         body: JSON.stringify(requestBody),
       });
 
@@ -161,17 +186,14 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
   );
 
   const formatContent = (content: string) => {
-
     const urlRegex = /(https?:\/\/[^\s]+)/g;
 
     return content.split('\n').map((line, lineIndex) => {
-
       const parts = line.split(urlRegex);
 
       return (
         <React.Fragment key={lineIndex}>
           {parts.map((part, partIndex) => {
-
             if (urlRegex.test(part)) {
               return (
                 <a
@@ -196,7 +218,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
 
   return (
     <div className={`fixed ${getChatbotPosition(chatbotConfig.position)} z-50`}>
-      
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -215,7 +236,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
         <div
           className={`${chatbotConfig.theme.backgroundColor} rounded-lg border shadow-2xl ${chatbotConfig.theme.borderColor} flex h-[600px] w-[400px] flex-col transition-all duration-300`}
         >
-          
           <div
             className={`${chatbotConfig.theme.primaryColor} flex items-center justify-between rounded-t-lg p-4 text-white shadow-md`}
           >
@@ -247,13 +267,13 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
               </button>
             </div>
           </div>
-          
+
           {apiError && (
             <div className="border-b border-red-200 bg-red-50 p-2 text-center">
               <p className="text-xs text-red-600">{apiError}</p>
             </div>
           )}
-          
+
           {isLoading ? (
             <div className="flex flex-1 items-center justify-center bg-gray-50">
               <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
@@ -288,7 +308,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
                   key={index}
                   className={`flex items-start space-x-2 ${msg.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
                 >
-                  
                   <div
                     className={`flex h-8 min-w-8 items-center justify-center rounded-full text-xs text-white shadow-md ${
                       msg.role === 'user'
@@ -324,7 +343,7 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
               {showTypingIndicator && <TypingIndicator />}
             </div>
           )}
-          
+
           <div className="rounded-b-lg border-t border-gray-200 bg-white p-4 shadow-inner">
             <div className="flex space-x-2">
               <input
@@ -346,7 +365,6 @@ const ChatbotV2: React.FC<ChatbotV2Props> = ({ config = {} }) => {
               </button>
             </div>
           </div>
-          
         </div>
       )}
     </div>
