@@ -1,8 +1,9 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { AlertCircle, Calendar, Edit2, Mail, Phone, User, Users } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
+import { findBestDirectDiscountPromotion } from '@/utils/number';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -84,7 +85,8 @@ export function ReviewStep({ onBack, onConfirm }: ReviewStepProps) {
   const tourInfo = bookingData.tourInfo;
   const adultPrice = tourInfo?.adultPrice || 0;
   const childPrice = tourInfo?.childPrice || 0;
-  const hasActivePromotion = tourInfo?.promotions && tourInfo.promotions.length > 0;
+  const bestTourPromotion = useMemo(() => findBestDirectDiscountPromotion(tourInfo?.promotions), [tourInfo?.promotions]);
+  const hasActivePromotion = !!bestTourPromotion;
 
   const handleEditSection = useCallback(
     (step: number) => {
@@ -216,7 +218,7 @@ export function ReviewStep({ onBack, onConfirm }: ReviewStepProps) {
         adultPrice={adultPrice}
         childPrice={childPrice}
         promotion={bookingData.promotion}
-        tourPromotion={tourInfo?.promotions?.[0]}
+        tourPromotion={bestTourPromotion || undefined}
         locale={locale}
       />
 

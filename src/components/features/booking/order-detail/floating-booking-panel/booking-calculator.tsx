@@ -6,8 +6,8 @@ import {
   applyPromotionToTotal,
   calculateTotalPrice,
   calculateTotalPriceWithPromotion,
+  findBestDirectDiscountPromotion,
   formatCurrency,
-  getBestActiveDirectDiscount,
 } from '@/utils';
 import { cn } from '@/utils/classnames';
 import { useLocale, useTranslations } from 'next-intl';
@@ -160,7 +160,7 @@ export const BookingCalculator = ({ booking }: BookingCalculatorProps) => {
           onChange={handleQuantityChange('child')}
           locale={locale}
         />
-        {!getBestActiveDirectDiscount(booking.tour) && (
+        {!findBestDirectDiscountPromotion(booking.tour.promotions) && (
           <PromotionValidationForm promotion={promotion} booking={booking} setPromotion={setPromotion} />
         )}
       </div>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { RouteConstant } from '@/core/constants/route';
 import { TourStatusEnum } from '@/core/enum/tour.enum';
 import { splitDateStr } from '@/utils/date';
-import { formatCurrency } from '@/utils/number';
+import { formatCurrency, findBestDirectDiscountPromotion } from '@/utils/number';
 import type { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, Star } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -136,7 +136,7 @@ export function getTourTableColumns({ setRowAction, t }: GetTourTableColumnsProp
       header: ({ column }) => <DataTableColumnHeader column={column} title={t('tour.list.price')} />,
       cell: ({ row }) => {
         const tour = row.original;
-        const promo = tour.promotions && tour.promotions.length > 0 ? tour.promotions[0] : undefined;
+        const promo = findBestDirectDiscountPromotion(tour.promotions);
         return (
           <div className="flex min-w-[140px] flex-col gap-1">
             <div>

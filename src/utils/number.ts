@@ -1,28 +1,10 @@
 import { TourInfo } from '@/types/booking/booking.type';
-import { Promotion } from '@/types/promotion.type';
+import { Promotion, PromotionStatus, PromotionType } from '@/types/promotion.type';
 import { Tour } from '@/types/tour.type';
 
 const EXCEEDING_LIMIT_VALUE = 1.79769313e308;
 const STANDARD_SUFFIXES = ['', 'K', 'M', 'B', 'T'];
 const VND_TO_USD_RATE = 25000;
-
-/**
- * Get the best active DIRECT_DISCOUNT promotion (highest discount %)
- * @param tour - Tour or TourInfo object
- * @returns The promotion with highest discountPercent or null
- */
-export function getBestActiveDirectDiscount(tour: Tour | TourInfo): Promotion | null {
-  if (!tour.promotions?.length) return null;
-
-  const activeDirectDiscounts = tour.promotions.filter(p => p.type === 'DIRECT_DISCOUNT' && p.status === 'ACTIVE');
-
-  if (!activeDirectDiscounts.length) return null;
-
-  // Return promotion with highest discountPercent
-  return activeDirectDiscounts.reduce((best, current) =>
-    (current.discountPercent || 0) > (best.discountPercent || 0) ? current : best,
-  );
-}
 
 const EXTENDED_SUFFIXES: string[] = (() => {
   const suffixes: string[] = [];
@@ -65,32 +47,41 @@ export function calculateTotalPrice(quantities: { adult: number; child: number }
   return adultSubtotal + childSubtotal;
 }
 
+export function findBestDirectDiscountPromotion(promotions?: Promotion[]): Promotion | undefined {
+  if (!promotions || promotions.length === 0) {
+    return undefined;
+  }
+
+  const activeDirectDiscounts = promotions.filter(
+    p => p.type === PromotionType.DIRECT_DISCOUNT && p.status === PromotionStatus.ACTIVE,
+  );
+
+  if (activeDirectDiscounts.length === 0) {
+    return undefined;
+  }
+
+  return activeDirectDiscounts.reduce((best, current) => {
+    if (!best) return current;
+    return current.discountPercent > best.discountPercent ? current : best;
+  }, activeDirectDiscounts[0]);
+}
+
 export function calculateTotalPriceWithPromotion(quantities: { adult: number; child: number }, tour: Tour | TourInfo) {
   const adultSubtotal = quantities.adult * (tour.adultPrice || 0);
   const childSubtotal = quantities.child * (tour.childPrice || 0);
+  const totalPrice = adultSubtotal + childSubtotal;
 
-  // Use helper to get best DIRECT_DISCOUNT promotion
-  const promotion = getBestActiveDirectDiscount(tour);
-
+  const promotion = findBestDirectDiscountPromotion(tour.promotions);
   if (!promotion?.discountPercent) {
-    return adultSubtotal + childSubtotal;
+    return totalPrice;
   }
 
-  // Calculate discount for adult tickets
-  const adultDiscountAmount = Math.min(
-    (promotion.discountPercent / 100) * adultSubtotal,
-    promotion.maxDiscountAmount || Number.MAX_VALUE,
-  );
-  const adultTotal = adultSubtotal - adultDiscountAmount;
-
-  // Calculate discount for child tickets
-  const childDiscountAmount = Math.min(
-    (promotion.discountPercent / 100) * childSubtotal,
-    promotion.maxDiscountAmount || Number.MAX_VALUE,
-  );
-  const childTotal = childSubtotal - childDiscountAmount;
-
-  return adultTotal + childTotal;
+  const rawDiscount = (promotion.discountPercent / 100) * totalPrice;
+  const discountApplied =
+    promotion.maxDiscountAmount !== undefined && promotion.maxDiscountAmount !== null
+      ? Math.min(rawDiscount, promotion.maxDiscountAmount)
+      : rawDiscount;
+  return totalPrice - discountApplied;
 }
 
 export function applyPromotionToTotal(
@@ -99,10 +90,11 @@ export function applyPromotionToTotal(
 ): number {
   if (!promotion?.discountPercent) return total;
 
-  const discount = (promotion.discountPercent / 100) * total;
-  const maxDiscount = promotion.maxDiscountAmount ?? Number.MAX_VALUE;
-
-  const discountApplied = Math.min(discount, maxDiscount);
+  const rawDiscount = (promotion.discountPercent / 100) * total;
+  const discountApplied =
+    promotion.maxDiscountAmount !== undefined && promotion.maxDiscountAmount !== null
+      ? Math.min(rawDiscount, promotion.maxDiscountAmount)
+      : rawDiscount;
   return total - discountApplied;
 }
 
@@ -155,14 +147,14 @@ export function formatCurrency(
 ): string {
   if (value === undefined || value === null) return '0';
 
-  const { locale = 'vi', discount_percent = 0, max_discount_amount = 0 } = options || {};
+  const { locale = 'vi', discount_percent = 0, max_discount_amount } = options || {};
 
   let number = typeof value === 'string' ? parseFloat(value) : value;
 
   if (isNaN(number)) return locale === 'vi' ? '0đ' : locale === 'ko' ? '₩0' : '$0';
 
-  if (discount_percent && max_discount_amount) {
-    number = calculateDiscount(number, discount_percent, max_discount_amount);
+  if (discount_percent && discount_percent > 0) {
+    number = calculateDiscount(number, discount_percent, max_discount_amount ?? Number.MAX_VALUE);
   }
 
   if (locale === 'en') {
@@ -178,9 +170,16 @@ export function formatCurrency(
   return currencyFormatters[locale](number);
 }
 
-export function calculateDiscount(value: number, discountPercent: number, maxDiscountAmount: number) {
+export function calculateDiscount(
+  value: number,
+  discountPercent: number,
+  maxDiscountAmount: number | undefined | null,
+) {
   const rawDiscount = (value * discountPercent) / 100;
-  const discount = maxDiscountAmount ? Math.min(rawDiscount, maxDiscountAmount) : rawDiscount;
+  const discount =
+    maxDiscountAmount !== undefined && maxDiscountAmount !== null
+      ? Math.min(rawDiscount, maxDiscountAmount)
+      : rawDiscount;
   return value - discount;
 }
 

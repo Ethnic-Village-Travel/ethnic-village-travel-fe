@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { formatCurrency } from '@/utils/number';
+import { formatCurrency, findBestDirectDiscountPromotion } from '@/utils/number';
 import { Tag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -23,14 +23,16 @@ export type PriceBreakdownProps = {
 export function calculatePromotionPrice(
   originalPrice: number,
   discountPercent: number,
-  maxDiscountAmount: number,
+  maxDiscountAmount: number | undefined | null,
 ): { discountAmount: number; finalPrice: number } {
   if (!discountPercent || originalPrice <= 0) {
     return { discountAmount: 0, finalPrice: originalPrice };
   }
 
   const rawDiscount = (originalPrice * discountPercent) / 100;
-  const discountAmount = Math.min(rawDiscount, maxDiscountAmount || Number.MAX_VALUE);
+  const discountAmount = maxDiscountAmount !== undefined && maxDiscountAmount !== null
+    ? Math.min(rawDiscount, maxDiscountAmount)
+    : rawDiscount;
   const finalPrice = Math.max(originalPrice - discountAmount, 0);
 
   return { discountAmount, finalPrice };
@@ -51,16 +53,21 @@ export function PriceBreakdown({
     const childTotal = guestCount.child * childPrice;
     const originalPrice = adultTotal + childTotal;
 
+    const tourPromoInfo = tourPromotion
+      ? {
+          id: String(tourPromotion.id),
+          name: tourPromotion.name,
+          discountPercent: tourPromotion.discountPercent,
+          maxDiscountAmount: tourPromotion.maxDiscountAmount,
+        }
+      : null;
+
     const activePromotion =
-      promotion ||
-      (tourPromotion
-        ? {
-            id: String(tourPromotion.id),
-            name: tourPromotion.name,
-            discountPercent: tourPromotion.discountPercent,
-            maxDiscountAmount: tourPromotion.maxDiscountAmount,
-          }
-        : null);
+      promotion && tourPromoInfo
+        ? promotion.discountPercent >= tourPromoInfo.discountPercent
+          ? promotion
+          : tourPromoInfo
+        : promotion || tourPromoInfo;
 
     let discountAmount = 0;
     let finalPrice = originalPrice;
