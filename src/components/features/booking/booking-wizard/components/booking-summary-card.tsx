@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { formatCurrency } from '@/utils/number';
+import { formatCurrency, findBestDirectDiscountPromotion } from '@/utils/number';
 import { Calendar, MapPin, Tag, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -48,17 +48,22 @@ export function BookingSummaryCard({ bookingData, locale, className }: BookingSu
   const childPrice = tourInfo?.childPrice || 0;
 
   const activePromotion = useMemo(() => {
-    if (bookingData.promotion) return bookingData.promotion;
-    const tourPromo = tourInfo?.promotions?.[0];
-    if (tourPromo) {
-      return {
-        id: String(tourPromo.id),
-        name: tourPromo.name,
-        discountPercent: tourPromo.discountPercent,
-        maxDiscountAmount: tourPromo.maxDiscountAmount,
-      };
+    const tourPromo = findBestDirectDiscountPromotion(tourInfo?.promotions);
+    const tourPromoInfo = tourPromo
+      ? {
+          id: String(tourPromo.id),
+          name: tourPromo.name,
+          discountPercent: tourPromo.discountPercent,
+          maxDiscountAmount: tourPromo.maxDiscountAmount,
+        }
+      : null;
+
+    if (bookingData.promotion && tourPromoInfo) {
+      return bookingData.promotion.discountPercent >= tourPromoInfo.discountPercent
+        ? bookingData.promotion
+        : tourPromoInfo;
     }
-    return null;
+    return bookingData.promotion || tourPromoInfo;
   }, [bookingData.promotion, tourInfo?.promotions]);
 
   const priceDetails = useMemo(

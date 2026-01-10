@@ -18,6 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { BookingData } from '@/components/features/booking/booking-wizard';
 import { BookingWizard, clearBookingState, calculatePromotionPrice } from '@/components/features/booking/booking-wizard';
 import { PromotionType } from '@/types/promotion.type';
+import { findBestDirectDiscountPromotion } from '@/utils/number';
 
 function OrderPageSkeleton() {
   return (
@@ -166,15 +167,17 @@ export default function OrderPage() {
           discountedPrice = finalPrice;
           promotionId = bookingData.promotion.id;
           discountAmount = calculatedDiscount;
-        } else if (bookingData.tourInfo?.promotions?.[0]) {
-          const promo = bookingData.tourInfo.promotions[0];
-          const { discountAmount: calculatedDiscount, finalPrice } = calculatePromotionPrice(
-            totalPrice,
-            promo.discountPercent,
-            promo.maxDiscountAmount || Number.MAX_VALUE,
-          );
-          discountedPrice = finalPrice;
-          discountAmount = calculatedDiscount;
+        } else {
+          const promo = findBestDirectDiscountPromotion(bookingData.tourInfo?.promotions);
+          if (promo) {
+            const { discountAmount: calculatedDiscount, finalPrice } = calculatePromotionPrice(
+              totalPrice,
+              promo.discountPercent,
+              promo.maxDiscountAmount,
+            );
+            discountedPrice = finalPrice;
+            discountAmount = calculatedDiscount;
+          }
         }
 
         await confirmBooking({

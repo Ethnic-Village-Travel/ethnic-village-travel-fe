@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo } from 'react';
 import { cn } from '@/utils/classnames';
-import { formatCurrency } from '@/utils/number';
+import { formatCurrency, findBestDirectDiscountPromotion } from '@/utils/number';
 import { AlertCircle, BadgePercent, Calendar, Minus, Plus, Users } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -33,7 +33,7 @@ export function calculateTotalPriceForWizard(
   const { discountAmount, finalPrice } = calculatePromotionPrice(
     originalPrice,
     promotion.discountPercent,
-    promotion.maxDiscountAmount || Number.MAX_VALUE,
+    promotion.maxDiscountAmount,
   );
 
   return { originalPrice, discountedPrice: finalPrice, discountAmount };
@@ -131,7 +131,24 @@ export function GuestCountStep({ onNext }: GuestCountStepProps) {
   const availableSlots = bookingData.availableSlots || 0;
   const effectiveSlots = availableSlots > 0 ? availableSlots : Number.MAX_SAFE_INTEGER;
 
-  const promotion = bookingData.promotion || tourInfo?.promotions?.[0] || null;
+  const bestTourPromotion = findBestDirectDiscountPromotion(tourInfo?.promotions);
+  const tourPromotionInfo = bestTourPromotion
+    ? {
+        id: String(bestTourPromotion.id),
+        name: bestTourPromotion.name,
+        discountPercent: bestTourPromotion.discountPercent,
+        maxDiscountAmount: bestTourPromotion.maxDiscountAmount,
+      }
+    : null;
+
+  const promotion = useMemo(() => {
+    if (bookingData.promotion && tourPromotionInfo) {
+      return bookingData.promotion.discountPercent >= tourPromotionInfo.discountPercent
+        ? bookingData.promotion
+        : tourPromotionInfo;
+    }
+    return bookingData.promotion || tourPromotionInfo;
+  }, [bookingData.promotion, tourPromotionInfo]);
 
   const { originalPrice, discountedPrice, discountAmount } = useMemo(
     () => {

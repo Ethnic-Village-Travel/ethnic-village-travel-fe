@@ -4,7 +4,7 @@ import { RouteConstant } from '@/core/constants/route';
 import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { useUserStore } from '@/stores/useUserStore';
 import { calculateRatingStats, cn } from '@/utils';
-import { formatCurrency } from '@/utils/number';
+import { formatCurrency, findBestDirectDiscountPromotion } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
 import { CalendarDays, MapPin, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -33,7 +33,7 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
       bookmark.status === BookmarkStatus.ACTIVE,
   );
 
-  const promotion = tour.promotions?.find(p => p.type === 'DIRECT_DISCOUNT' && p.status === 'ACTIVE');
+  const promotion = findBestDirectDiscountPromotion(tour.promotions);
 
   const hasPromotion = !!promotion;
   const discountPercent = promotion?.discountPercent;

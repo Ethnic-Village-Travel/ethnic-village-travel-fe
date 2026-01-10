@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useBookingStore } from '@/stores/useBookingStore';
 import { cn } from '@/utils/classnames';
-import { calculateTotalPrice, calculateTotalPriceWithPromotion, formatCurrency } from '@/utils/number';
+import { calculateTotalPrice, calculateTotalPriceWithPromotion, formatCurrency, findBestDirectDiscountPromotion } from '@/utils/number';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
@@ -134,15 +134,18 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
         onChange={handleQuantityChange('child')}
       />
 
-      {tour.promotions && tour.promotions.length > 0 && (
-        <div className="flex items-center justify-between">
-          <span className="text-dark-900 text-base font-bold">{t('discount')}</span>
-          <span className="text-dark-900 text-base">
-            {tour.promotions[0].discountPercent}% ({t('max')}{' '}
-            {formatCurrency(tour.promotions[0].maxDiscountAmount || 0, { locale })})
-          </span>
-        </div>
-      )}
+      {(() => {
+        const bestPromotion = findBestDirectDiscountPromotion(tour.promotions);
+        return bestPromotion ? (
+          <div className="flex items-center justify-between">
+            <span className="text-dark-900 text-base font-bold">{t('discount')}</span>
+            <span className="text-dark-900 text-base">
+              {bestPromotion.discountPercent}% ({t('max')}{' '}
+              {formatCurrency(bestPromotion.maxDiscountAmount || 0, { locale })})
+            </span>
+          </div>
+        ) : null;
+      })()}
 
       <div className="flex items-center justify-between">
         <span className="text-dark-900 text-base font-bold">{t('total')}</span>
