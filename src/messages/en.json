@@ -315,15 +315,8 @@
         "title": "Upcoming Departures",
         "description": "Tours departing in the next 7 days",
         "tour_name": "Tour Name",
-        "departure_date": "Departure Date",
-        "slots": "Slots",
-        "status": "Status",
-        "empty": "No tours departing in this period"
-      },
-      "revenue_chart": {
         "title": "Revenue Chart",
-        "description": "Compare revenue with same period last month",
-        "current": "Current Revenue",
+        "current": "Actual Revenue",
         "previous": "Same Period Last Month"
       },
       "top_destinations": {
@@ -546,6 +539,7 @@
       "review": "Review",
       "days": "Days",
       "location": "Location",
+      "ethnic": "Ethnic",
       "duration_format": "{days} Days/{nights} Nights",
       "share": "Share",
       "share_success": "Tour link copied",
@@ -621,8 +615,8 @@
         "contact_email": "Email",
         "contact_zalo": "Zalo",
         "contact_whatsapp": "WhatsApp",
-        "pickup_location": "Pickup location",
-        "contact_missing": "No contact information yet"
+        "pickup_location": "Pickup Location",
+        "contact_missing": "No contact information available"
       }
     }
   },

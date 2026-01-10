@@ -1,9 +1,28 @@
 import { TourInfo } from '@/types/booking/booking.type';
+import { Promotion } from '@/types/promotion.type';
 import { Tour } from '@/types/tour.type';
 
 const EXCEEDING_LIMIT_VALUE = 1.79769313e308;
 const STANDARD_SUFFIXES = ['', 'K', 'M', 'B', 'T'];
 const VND_TO_USD_RATE = 25000;
+
+/**
+ * Get the best active DIRECT_DISCOUNT promotion (highest discount %)
+ * @param tour - Tour or TourInfo object
+ * @returns The promotion with highest discountPercent or null
+ */
+export function getBestActiveDirectDiscount(tour: Tour | TourInfo): Promotion | null {
+  if (!tour.promotions?.length) return null;
+
+  const activeDirectDiscounts = tour.promotions.filter(p => p.type === 'DIRECT_DISCOUNT' && p.status === 'ACTIVE');
+
+  if (!activeDirectDiscounts.length) return null;
+
+  // Return promotion with highest discountPercent
+  return activeDirectDiscounts.reduce((best, current) =>
+    (current.discountPercent || 0) > (best.discountPercent || 0) ? current : best,
+  );
+}
 
 const EXTENDED_SUFFIXES: string[] = (() => {
   const suffixes: string[] = [];
@@ -47,18 +66,31 @@ export function calculateTotalPrice(quantities: { adult: number; child: number }
 }
 
 export function calculateTotalPriceWithPromotion(quantities: { adult: number; child: number }, tour: Tour | TourInfo) {
-  const totalPrice = calculateTotalPrice(quantities, tour);
+  const adultSubtotal = quantities.adult * (tour.adultPrice || 0);
+  const childSubtotal = quantities.child * (tour.childPrice || 0);
 
-  if (!tour.promotions?.[0]?.discountPercent) {
-    return totalPrice;
+  // Use helper to get best DIRECT_DISCOUNT promotion
+  const promotion = getBestActiveDirectDiscount(tour);
+
+  if (!promotion?.discountPercent) {
+    return adultSubtotal + childSubtotal;
   }
 
-  const promotion = tour.promotions[0];
-  const discount = (promotion.discountPercent / 100) * totalPrice;
-  const maxDiscount = promotion.maxDiscountAmount ?? Number.MAX_VALUE;
+  // Calculate discount for adult tickets
+  const adultDiscountAmount = Math.min(
+    (promotion.discountPercent / 100) * adultSubtotal,
+    promotion.maxDiscountAmount || Number.MAX_VALUE,
+  );
+  const adultTotal = adultSubtotal - adultDiscountAmount;
 
-  const discountApplied = Math.min(discount, maxDiscount);
-  return totalPrice - discountApplied;
+  // Calculate discount for child tickets
+  const childDiscountAmount = Math.min(
+    (promotion.discountPercent / 100) * childSubtotal,
+    promotion.maxDiscountAmount || Number.MAX_VALUE,
+  );
+  const childTotal = childSubtotal - childDiscountAmount;
+
+  return adultTotal + childTotal;
 }
 
 export function applyPromotionToTotal(

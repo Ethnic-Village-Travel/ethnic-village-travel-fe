@@ -4,7 +4,7 @@ import { RouteConstant } from '@/core/constants/route';
 import { BookmarkStatus } from '@/core/enum/bookmark.enum';
 import { useUserStore } from '@/stores/useUserStore';
 import { calculateRatingStats, cn } from '@/utils';
-import { formatCurrency } from '@/utils/number';
+import { formatCurrency, getBestActiveDirectDiscount } from '@/utils/number';
 import { Separator } from '@radix-ui/react-separator';
 import { CalendarDays, MapPin, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -33,7 +33,8 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
       bookmark.status === BookmarkStatus.ACTIVE,
   );
 
-  const promotion = tour.promotions?.find(p => p.type === 'DIRECT_DISCOUNT' && p.status === 'ACTIVE');
+  // Get best DIRECT_DISCOUNT promotion (highest discount %)
+  const promotion = getBestActiveDirectDiscount(tour);
 
   const hasPromotion = !!promotion;
   const discountPercent = promotion?.discountPercent;
@@ -72,7 +73,6 @@ export default function TourItem({ tour, layout = 'vertical' }: TourItemProps) {
 
       <CardContent className={cn('flex flex-1 flex-col p-3')}>
         <div className="flex flex-1 flex-col">
-          
           <div className="mb-2 flex items-start justify-between gap-2">
             <Link href={`${RouteConstant.tour}/${tour.slug}`} className="group/title block flex-1">
               <h3

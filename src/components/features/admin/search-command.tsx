@@ -50,8 +50,8 @@ const COMMAND_ITEMS: CommandConfig = {
 };
 
 export default function SearchCommand() {
-  const router = useRouter();
   const t = useTranslations('admin.search_command');
+  const router = useRouter();
   const { user } = useAuthStore();
   const [open, setOpen] = useState(false);
 
