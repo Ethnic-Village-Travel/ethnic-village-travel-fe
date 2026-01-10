@@ -122,17 +122,13 @@ export default function OrderPage() {
         : null,
       bookingType: 'self',
       promotion: (() => {
-
-        const activeDirectDiscounts = booking.tour.promotions
-          ?.filter(p => p.type === PromotionType.DIRECT_DISCOUNT && p.status === 'ACTIVE')
-          .sort((a, b) => a.id.localeCompare(b.id)) || [];
-        const directDiscount = activeDirectDiscounts[0] || null;
-        return directDiscount
+        const bestPromo = findBestDirectDiscountPromotion(booking.tour.promotions);
+        return bestPromo
           ? {
-              id: String(directDiscount.id),
-              name: directDiscount.name,
-              discountPercent: directDiscount.discountPercent,
-              maxDiscountAmount: directDiscount.maxDiscountAmount,
+              id: String(bestPromo.id),
+              name: bestPromo.name,
+              discountPercent: bestPromo.discountPercent,
+              maxDiscountAmount: bestPromo.maxDiscountAmount,
             }
           : null;
       })(),
@@ -158,26 +154,35 @@ export default function OrderPage() {
         let promotionId: string | undefined;
         let discountAmount = 0;
 
-        if (bookingData.promotion) {
+        // Use the same logic as BookingSummaryCard to select the active promotion
+        const tourPromo = findBestDirectDiscountPromotion(bookingData.tourInfo?.promotions);
+        const tourPromoInfo = tourPromo
+          ? {
+              id: String(tourPromo.id),
+              name: tourPromo.name,
+              discountPercent: tourPromo.discountPercent,
+              maxDiscountAmount: tourPromo.maxDiscountAmount,
+            }
+          : null;
+
+        let activePromotion = null;
+        if (bookingData.promotion && tourPromoInfo) {
+          activePromotion = bookingData.promotion.discountPercent >= tourPromoInfo.discountPercent
+            ? bookingData.promotion
+            : tourPromoInfo;
+        } else {
+          activePromotion = bookingData.promotion || tourPromoInfo;
+        }
+
+        if (activePromotion) {
           const { discountAmount: calculatedDiscount, finalPrice } = calculatePromotionPrice(
             totalPrice,
-            bookingData.promotion.discountPercent,
-            bookingData.promotion.maxDiscountAmount,
+            activePromotion.discountPercent,
+            activePromotion.maxDiscountAmount,
           );
           discountedPrice = finalPrice;
-          promotionId = bookingData.promotion.id;
+          promotionId = activePromotion.id;
           discountAmount = calculatedDiscount;
-        } else {
-          const promo = findBestDirectDiscountPromotion(bookingData.tourInfo?.promotions);
-          if (promo) {
-            const { discountAmount: calculatedDiscount, finalPrice } = calculatePromotionPrice(
-              totalPrice,
-              promo.discountPercent,
-              promo.maxDiscountAmount,
-            );
-            discountedPrice = finalPrice;
-            discountAmount = calculatedDiscount;
-          }
         }
 
         await confirmBooking({
