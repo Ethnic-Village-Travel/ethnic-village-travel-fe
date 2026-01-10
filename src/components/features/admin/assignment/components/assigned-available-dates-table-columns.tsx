@@ -38,7 +38,6 @@ export function getAssignedAvailableDatesTableColumns({
   isAdmin,
   setRowAction,
 }: GetAssignedAvailableDatesTableColumnsProps): ColumnDef<AssignedAvailableDateResponse>[] {
-
   const calculateBookedSlots = (bookedPersonCounts: { adult: number; child: number }[]) => {
     if (!bookedPersonCounts || bookedPersonCounts.length === 0) return 0;
     return bookedPersonCounts.reduce((total, booking) => {
@@ -227,69 +226,5 @@ export function getAssignedAvailableDatesTableColumns({
       },
     });
   }
-
-  columns.push({
-    id: 'actions',
-    header: () => <span className="sr-only">{t('tour.assigned_dates.actions')}</span>,
-    cell: ({ row }) => {
-      const assignment = row.original;
-
-      if (!setRowAction) {
-        return null;
-      }
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">{t('tour.assigned_dates.open_menu')}</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onClick={() =>
-                setRowAction({
-                  id: assignment.assignmentId,
-                  action: 'update-status',
-                  row: assignment,
-                })
-              }
-            >
-              <RefreshCw className="mr-2 h-4 w-4" />
-              {t('tour.assigned_dates.update_status')}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                setRowAction({
-                  id: assignment.assignmentId,
-                  action: 'history',
-                  row: assignment,
-                })
-              }
-            >
-              <History className="mr-2 h-4 w-4" />
-              {t('tour.assigned_dates.view_history')}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                setRowAction({
-                  id: assignment.assignmentId,
-                  action: 'cancel',
-                  row: assignment,
-                })
-              }
-              className="text-destructive"
-            >
-              <X className="mr-2 h-4 w-4" />
-              {t('tour.assigned_dates.request_cancel')}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-    size: 40,
-  });
-
   return columns;
 }

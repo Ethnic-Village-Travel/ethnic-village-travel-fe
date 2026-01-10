@@ -3,7 +3,12 @@
 import { useState } from 'react';
 import { useBookingStore } from '@/stores/useBookingStore';
 import { cn } from '@/utils/classnames';
-import { calculateTotalPrice, calculateTotalPriceWithPromotion, formatCurrency } from '@/utils/number';
+import {
+  calculateTotalPrice,
+  calculateTotalPriceWithPromotion,
+  formatCurrency,
+  getBestActiveDirectDiscount,
+} from '@/utils/number';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Tour } from '@/types/tour.type';
@@ -18,7 +23,7 @@ type PersonTypeCalculatorProps = {
   value: number;
   locale: 'vi' | 'en' | 'ko';
   onChange: (value: number) => void;
-}
+};
 
 const PersonTypeCalculator = ({ label, price, value, locale, onChange }: PersonTypeCalculatorProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,6 +70,9 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
   const hasDiscount = tour.promotions && tour.promotions.length > 0 && basePrice !== totalPrice;
   const totalQuantity = quantities.adult + quantities.child;
 
+  // Get best DIRECT_DISCOUNT promotion for display
+  const bestPromotion = getBestActiveDirectDiscount(tour);
+
   const handleQuantityChange = (type: keyof typeof quantities) => (value: number) => {
     const newQuantities = {
       ...quantities,
@@ -78,11 +86,7 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
   };
 
   const isDisabled =
-    !selectedDateId ||
-    !availableSlots ||
-    availableSlots === 0 ||
-    totalPrice === 0 ||
-    totalQuantity > availableSlots;
+    !selectedDateId || !availableSlots || availableSlots === 0 || totalPrice === 0 || totalQuantity > availableSlots;
 
   const getDisabledReason = (): string | null => {
     if (!selectedDateId) {
@@ -134,12 +138,12 @@ export const BookingCalculator = ({ tour, onBook }: BookingCalculatorProps) => {
         onChange={handleQuantityChange('child')}
       />
 
-      {tour.promotions && tour.promotions.length > 0 && (
+      {bestPromotion && (
         <div className="flex items-center justify-between">
           <span className="text-dark-900 text-base font-bold">{t('discount')}</span>
           <span className="text-dark-900 text-base">
-            {tour.promotions[0].discountPercent}% ({t('max')}{' '}
-            {formatCurrency(tour.promotions[0].maxDiscountAmount || 0, { locale })})
+            {bestPromotion.discountPercent}% ({t('max')}{' '}
+            {formatCurrency(bestPromotion.maxDiscountAmount || 0, { locale })})
           </span>
         </div>
       )}
