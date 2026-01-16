@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ethnic Village Travel - Frontend
 
-## Getting Started
+Next.js 14 frontend for the Ethnic Village Travel platform, a booking system for exploring Vietnamese ethnic culture.
 
-First, run the development server:
+## Quick Start
 
+### Prerequisites
+- Node.js 18+
+- npm / pnpm
+
+### Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to view.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Commands
+- `npm run dev`: Start dev server.
+- `npm run build`: Build for production.
+- `npm run start`: Start production server.
+- `npm run lint`: Run ESLint.
+- `npm run format`: Format code with Prettier.
+- `npm test`: Run tests with Vitest.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
+- `src/app/[locale]/`: App Router (Marketing, Admin, Personal).
+- `src/components/`: UI, Shared, and Feature-based components.
+- `src/core/`: API layer, constants, and global types.
+- `src/hooks/`: Custom React hooks and TanStack Query wrappers.
+- `src/libs/`: 3rd-party configs (i18n, schemas, auth).
+- `src/stores/`: Zustand state management.
 
-## Learn More
+## Documentation
+Comprehensive documentation is available in the `docs/` directory:
+- [Project Overview & PDR](./docs/project-overview-pdr.md)
+- [Codebase Summary](./docs/codebase-summary.md)
+- [Code Standards](./docs/code-standards.md)
+- [System Architecture](./docs/system-architecture.md)
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
+- **Framework**: Next.js 14 (App Router)
+- **State**: Zustand, TanStack Query, nuqs
+- **UI**: Tailwind CSS, Radix UI, shadcn/ui, Framer Motion
+- **Forms**: React Hook Form, Zod
+- **API**: Axios
+- **i18n**: next-intl
+- **Testing**: Vitest, React Testing Library
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Development Workflow
+1. Create a feature branch from `dev`.
+2. Follow [Code Standards](./docs/code-standards.md).
+3. Ensure linting and tests pass.
+4. Open a PR to `dev`.
