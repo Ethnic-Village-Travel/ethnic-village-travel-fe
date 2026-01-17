@@ -44,6 +44,15 @@ graph TD
 - **Persistence**: Auth and user data persisted in cookies.
 - **Reactivity**: Zustand handles immediate UI updates (e.g., sidebar toggle, navigation progress).
 - **Cache**: TanStack Query manages the server-side data cache, ensuring data is stale-while-revalidate.
+- **Form State**: Managed via `react-hook-form` with centralized logic in custom hooks (e.g., `useTourForm`) to bridge between API data and form inputs.
+
+## Component Architecture Patterns
+
+### Form Section Composition
+To manage complexity in large administrative forms, we employ a "Section Composition" pattern:
+1. **Parent Hook**: Centralizes `useForm` initialization, validation schemas, and default values.
+2. **Unified Form Component**: Orchestrates the layout and handles submission logic.
+3. **Atomic Sections**: Individual components (e.g., `TourBasicInfoSection`) that focus on a subset of the form fields, receiving the `form` instance via props. This allows for cleaner code and easier testing of specific form segments.
 
 ## Internationalization (i18n)
 - **Library**: `next-intl`.

@@ -8,6 +8,7 @@
 
 ## Component Patterns
 - **Composition**: Use the `children` prop and Radix-like patterns for flexible components.
+- **Section-Based Composition**: For complex forms (e.g., Tour Management), break the form into logical sections (e.g., `*Section.tsx`) that receive the `form` object from `react-hook-form` as a prop. This improves maintainability and reduces file size.
 - **Custom Hooks**: Extract logic into hooks; keep components focused on presentation.
 - **SharedFormField**: Always use the shared form field wrapper for consistency in validation and styling.
 - **Memoization**: Use `useMemo` and `useCallback` only when performance profiling indicates necessity.

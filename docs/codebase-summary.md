@@ -54,5 +54,19 @@ The project follows a **Feature-Based Architecture**:
 - **Utilities/Core**: kebab-case (e.g., `route-guard.ts`, `api.ts`).
 - **Pages**: `page.tsx` within directory-based routing.
 
+## Refactored Feature Modules
+
+### Tour Management (Admin)
+Location: `src/components/features/admin/tour-management/`
+- **Pattern**: Section-based component composition with a unified form hook.
+- **Unified Form**: `TourForm.tsx` (handles both Create/Edit modes).
+- **Custom Hook**: `useTourForm.ts` centralizes Zod validation and default values.
+- **Atomic Sections**:
+  - `TourBasicInfoSection`: Name, slug, status, duration.
+  - `TourPricingSection`: Adult/Child pricing.
+  - `TourItinerarySection`: Dynamic itinerary steps.
+  - `TourAvailableDatesSection`: Date management.
+  - `TourServicesSection`: Included/Excluded services.
+
 ## Unresolved Questions
 - None at this stage.

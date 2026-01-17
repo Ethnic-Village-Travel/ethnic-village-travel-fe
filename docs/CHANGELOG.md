@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - 2026-01-17
 
 ### Added
+- **Refactor (Phase 02)**: Completed tour management refactoring for admin dashboard.
+  - Unified `TourForm` component replacing duplicate logic in create/edit views.
+  - Extracted 5 atomic section components: `TourBasicInfo`, `TourPricing`, `TourItinerary`, `TourAvailableDates`, `TourServices`.
+  - Introduced `useTourForm` custom hook for centralized validation and default state.
+  - Reduced `tour-create-content.tsx` and `tour-edit-content.tsx` line counts by ~70%.
 - `rehype-raw@^7.0.0` added to dependencies for improved markdown rendering support.
 
 ### Changed

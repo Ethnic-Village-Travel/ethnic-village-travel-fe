@@ -13,9 +13,12 @@
 |-------|-------|
 | Date | 2026-01-17 |
 | Priority | HIGH |
-| Status | PENDING |
+| Status | COMPLETED |
+| Completion Date | 2026-01-17 16:28 |
 | Estimated Effort | 4-6 hours |
-| Files Modified | 4 |
+| Actual Effort | 1.5 hours |
+| Files Modified | 2 |
+| Files Created | 9 |
 
 **Description**: Decompose large tour management components and consolidate create/edit forms to reduce duplication.
 
@@ -199,24 +202,24 @@ npm run lint && npm run build && npm run test:run
 
 ## Todo List
 
-- [ ] Analyze tour-create-content.tsx structure
-- [ ] Analyze tour-edit-content.tsx structure
-- [ ] Diff and document shared vs different code
-- [ ] Create components/ folder
-- [ ] Create hooks/ folder
-- [ ] Extract TourBasicInfoSection
-- [ ] Refactor tour-itinerary.tsx to TourItinerarySection
-- [ ] Refactor available-dates.tsx to TourAvailableDatesSection
-- [ ] Refactor in-ex-service.tsx to TourServicesSection
-- [ ] Extract TourPricingSection
-- [ ] Create useTourForm hook
-- [ ] Create unified TourForm component
-- [ ] Refactor tour-create-content.tsx to use TourForm
-- [ ] Refactor tour-edit-content.tsx to use TourForm
-- [ ] Create barrel exports
-- [ ] Update all import paths
-- [ ] Run lint, build, and tests
-- [ ] Manual testing of create/edit flows
+- [x] Analyze tour-create-content.tsx structure
+- [x] Analyze tour-edit-content.tsx structure
+- [x] Diff and document shared vs different code
+- [x] Create components/ folder
+- [x] Create hooks/ folder
+- [x] Extract TourBasicInfoSection
+- [x] Refactor tour-itinerary.tsx to TourItinerarySection
+- [x] Refactor available-dates.tsx to TourAvailableDatesSection
+- [x] Refactor in-ex-service.tsx to TourServicesSection
+- [x] Extract TourPricingSection
+- [x] Create useTourForm hook
+- [x] Create unified TourForm component
+- [x] Refactor tour-create-content.tsx to use TourForm
+- [x] Refactor tour-edit-content.tsx to use TourForm
+- [x] Create barrel exports
+- [x] Update all import paths
+- [x] Run lint, build, and tests
+- [x] Manual testing of create/edit flows
 
 ---
 
