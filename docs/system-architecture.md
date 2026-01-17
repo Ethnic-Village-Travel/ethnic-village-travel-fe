@@ -54,6 +54,15 @@ To manage complexity in large administrative forms, we employ a "Section Composi
 2. **Unified Form Component**: Orchestrates the layout and handles submission logic.
 3. **Atomic Sections**: Individual components (e.g., `TourBasicInfoSection`) that focus on a subset of the form fields, receiving the `form` instance via props. This allows for cleaner code and easier testing of specific form segments.
 
+### Chatbot Architecture (Unified V2+V3)
+The chatbot implements a hybrid architecture combining persistent session management with real-time AI interaction:
+1. **Logic Orchestrator**: `use-chatbot.ts` hook centralizes all side effects:
+   - Authentication: Injects `Bearer` token from `useAuthStore` into API headers.
+   - Persistence: Syncs messages with `useChatSession` (Zustand + LocalStorage).
+   - UI State: Manages window visibility, input values, and typing indicators.
+2. **Presentation Layer**: A collection of atomic components (`ChatbotInput`, `ChatbotMessage`, etc.) that are strictly controlled by the hook's state.
+3. **Context Awareness**: The `cache` object in `ChatRequest` allows the AI to maintain state about the user's current view (e.g., selected tour, booking details).
+
 ## Internationalization (i18n)
 - **Library**: `next-intl`.
 - **Strategy**: Prefixed routing (`/en/tours`, `/vi/tours`).

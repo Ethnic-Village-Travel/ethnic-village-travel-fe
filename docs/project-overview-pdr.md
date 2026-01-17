@@ -15,6 +15,7 @@ Ethnic Village Travel is a specialized travel booking platform dedicated to show
 - **Admin Dashboard**: Comprehensive management of tours, schedules, assignments, and analytics.
 - **RBAC (Role-Based Access Control)**: Granular permission management for different staff roles.
 - **Internationalization (i18n)**: Full support for Vietnamese (default) and English.
+- **AI Chatbot**: Intelligent assistant for tour recommendations, booking support, and cultural information with context awareness.
 - **User Accounts**: Personal profiles, booking history, and notification management.
 
 ## Business Requirements

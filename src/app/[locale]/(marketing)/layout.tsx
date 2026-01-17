@@ -7,7 +7,7 @@ import Header from '@/components/layout/marketing/header';
 
 import '@/styles/chatbot.css';
 
-const ChatbotV2 = dynamic(() => import('@/components/shared/chatbot_v2').then(mod => ({ default: mod.ChatbotV2 })));
+const Chatbot = dynamic(() => import('@/components/shared/chatbot'));
 
 const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -17,7 +17,7 @@ const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
         <main className="mt-[80px] flex-1">{children}</main>
       </Container>
       <Footer />
-      <ChatbotV2 />
+      <Chatbot />
     </div>
   );
 };

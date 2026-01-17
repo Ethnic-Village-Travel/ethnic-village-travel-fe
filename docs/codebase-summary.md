@@ -68,5 +68,19 @@ Location: `src/components/features/admin/tour-management/`
   - `TourAvailableDatesSection`: Date management.
   - `TourServicesSection`: Included/Excluded services.
 
+### Chatbot (Shared)
+Location: `src/components/shared/chatbot/`
+- **Pattern**: Presentation-Logic Separation (Hook-based).
+- **Core Hook**: `use-chatbot.ts` (manages API calls, V2 auth integration, and session state).
+- **Composition**:
+  - `ChatbotWindow`: Main container for chat interface.
+  - `ChatbotHeader`: Title and actions (reset history).
+  - `ChatbotMessage`: Renders individual messages with Markdown support and copy actions.
+  - `ChatbotInput`: Textarea with auto-resize and send logic.
+  - `ChatbotTrigger`: Floating action button with unread count.
+- **Integration**:
+  - `useAuthStore`: Injecting Bearer tokens for authenticated AI requests.
+  - `useChatSession`: Persistent session and message history management.
+
 ## Unresolved Questions
 - None at this stage.

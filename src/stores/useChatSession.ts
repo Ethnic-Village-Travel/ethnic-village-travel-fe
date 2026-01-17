@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import type { CacheData, ChatSession, Message } from '../components/shared/chatbot_v2/types';
+import type { CacheData, ChatSession, Message } from '@/components/shared/chatbot/types';
 import logger from '@/libs/logger';
 
 type UseChatSessionReturn = {

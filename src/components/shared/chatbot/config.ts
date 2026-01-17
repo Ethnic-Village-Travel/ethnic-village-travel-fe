@@ -1,24 +1,7 @@
-export type ChatbotV2Config = {
-  apiUrl: string;
-  title: string;
-  placeholder: string;
-  welcomeMessage: string;
-  errorMessage: string;
-  position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
-  theme: {
-    primaryColor: string;
-    textColor: string;
-    backgroundColor: string;
-    borderColor: string;
-  };
-  sessionConfig: {
-    maxMessages: number;
-    storageKey: string;
-  };
-}
+import type { ChatbotConfig } from './types';
 
-export const defaultChatbotV2Config: ChatbotV2Config = {
-
+// Default chatbot configuration
+export const defaultChatbotConfig: ChatbotConfig = {
   apiUrl: process.env.NEXT_PUBLIC_CHATBOT_V2_API_URL || 'http://localhost:8000/api',
   title: 'Trợ lý Du lịch AI',
   placeholder: 'Hỏi về tour du lịch làng dân tộc...',
@@ -34,19 +17,18 @@ export const defaultChatbotV2Config: ChatbotV2Config = {
   },
   sessionConfig: {
     maxMessages: 50,
-    storageKey: 'chatbot_v2_session',
+    storageKey: 'chatbot_session', // Unified storage key
   },
+  suggestions: ['Tìm tour miền núi', 'Văn hóa Tày', 'Đặt tour 4 người'],
 };
 
-export const getChatbotPosition = (position: ChatbotV2Config['position']) => {
-  switch (position) {
-    case 'bottom-left':
-      return 'bottom-4 left-4';
-    case 'top-right':
-      return 'top-4 right-4';
-    case 'top-left':
-      return 'top-4 left-4';
-    default:
-      return 'bottom-4 right-4';
-  }
+// Helper function to get position classes
+export const getChatbotPosition = (position: ChatbotConfig['position']): string => {
+  const positions = {
+    'bottom-right': 'bottom-4 right-4',
+    'bottom-left': 'bottom-4 left-4',
+    'top-right': 'top-4 right-4',
+    'top-left': 'top-4 left-4',
+  };
+  return positions[position] || positions['bottom-right'];
 };

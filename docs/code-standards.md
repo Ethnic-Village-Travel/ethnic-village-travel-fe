@@ -11,6 +11,7 @@
 - **Section-Based Composition**: For complex forms (e.g., Tour Management), break the form into logical sections (e.g., `*Section.tsx`) that receive the `form` object from `react-hook-form` as a prop. This improves maintainability and reduces file size.
 - **Custom Hooks**: Extract logic into hooks; keep components focused on presentation.
 - **SharedFormField**: Always use the shared form field wrapper for consistency in validation and styling.
+- **Logic Extraction**: Business logic should be extracted into custom hooks (e.g., `use-chatbot.ts`) using the `Use*Return` type pattern for clarity. Presentation components should remain stateless where possible.
 - **Memoization**: Use `useMemo` and `useCallback` only when performance profiling indicates necessity.
 
 ## State Management
