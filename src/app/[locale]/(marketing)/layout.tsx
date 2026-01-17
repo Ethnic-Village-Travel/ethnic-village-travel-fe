@@ -7,9 +7,7 @@ import Header from '@/components/layout/marketing/header';
 
 import '@/styles/chatbot.css';
 
-const ChatbotV2 = dynamic(() => import('@/components/shared/chatbot_v2').then(mod => ({ default: mod.ChatbotV2 })), {
-  ssr: false,
-});
+const ChatbotV2 = dynamic(() => import('@/components/shared/chatbot_v2').then(mod => ({ default: mod.ChatbotV2 })));
 
 const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   return (

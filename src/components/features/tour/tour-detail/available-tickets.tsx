@@ -20,7 +20,7 @@ type AvailableTicketsProps = {
 const AvailableTickets = ({ tour }: AvailableTicketsProps) => {
   const t = useTranslations('tour.detail.available_tickets');
   const locale = useLocale();
-  const scrollRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
+  const scrollRef = useRef<HTMLDivElement>(null) as React.MutableRefObject<HTMLDivElement>;
   const { events } = useDraggable(scrollRef);
 
   const { selectedDateId, setSelectedDate } = useBookingStore();

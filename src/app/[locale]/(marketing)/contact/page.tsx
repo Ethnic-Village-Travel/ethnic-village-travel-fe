@@ -3,7 +3,13 @@ import { getTranslations } from 'next-intl/server';
 
 import { ContactForm, ContactHero } from '@/components/features/contact';
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   const t = await getTranslations({ locale, namespace: 'contact.meta' });
 
   return {

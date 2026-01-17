@@ -1,11 +1,12 @@
 import PromotionEditContent from '@/components/features/admin/promotion-management/promotion-edit';
 
 type PromotionEditPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function PromotionEditPage({ params }: PromotionEditPageProps) {
+export default async function PromotionEditPage(props: PromotionEditPageProps) {
+  const params = await props.params;
   return <PromotionEditContent id={params.id} />;
 }

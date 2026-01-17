@@ -14,10 +14,10 @@
 |-------|--------|-----------|-------|
 | Phase 1 | ✅ DONE | 2026-01-17 00:20 | 22 packages updated (9 patch, 11 minor, 3 dev tools), Build ✓, Lint ✓ |
 | Phase 2A | ⏸️ DEFERRED | 2026-01-17 00:28 | ESLint 9 incompatible (react-hooks, Next.js), rolled back to ESLint 8 |
-| Phase 2B | 🔜 NEXT | - | Next.js 15 + React 19 (proceeding without 2A) |
+| Phase 2B | ✅ DONE | 2026-01-17 10:54 | Next.js 15.5.9 + React 19.2.3, Async params (13 files), Build ✓, Lint ✓, NOT COMMITTED |
 | Phase 3 | ⏸️ DEFERRED | - | Tailwind v4, Zod v4 |
 
-**Latest Review**: [code-reviewer-260117-phase1-updates.md](./reports/code-reviewer-260117-phase1-updates.md)
+**Latest Review**: [code-reviewer-260117-phase2b-nextjs15-react19.md](./reports/code-reviewer-260117-phase2b-nextjs15-react19.md)
 
 ---
 
@@ -174,11 +174,18 @@ npm install -D \
 # Step 2A.2: Create eslint.config.mjs (see Breaking Changes section)
 ```
 
-#### Phase 2B: Next.js 15 + React 19 (2-4 hours)
+#### Phase 2B: Next.js 15 + React 19 (2-4 hours) ✅ DONE (2026-01-17 10:54)
 
 **Prerequisites**:
-- Complete Phase 2A first
+- ~~Complete Phase 2A first~~ (Deferred - proceeded without ESLint 9)
 - Review async API changes
+
+**Status**: ✅ COMPLETED
+- Next.js 14.2.35 → 15.5.9
+- React 18.3.1 → 19.2.3
+- 13 files migrated to async params
+- Build ✓, Lint ✓ (no new warnings)
+- ⚠️ Changes in working directory (NOT COMMITTED)
 
 ```bash
 # Step 2B.1: Run Next.js upgrade codemod
@@ -196,6 +203,25 @@ npm install -D \
   eslint-config-next@^15 \
   @next/eslint-plugin-next@^15
 ```
+
+**Files Updated**:
+1. package.json, package-lock.json - Dependency versions
+2. src/app/[locale]/layout.tsx - Async params
+3. src/app/[locale]/(marketing)/layout.tsx - Removed ssr: false
+4. src/app/[locale]/(marketing)/tour/[slug]/page.tsx - Async params
+5. src/app/[locale]/(marketing)/article/[slug]/page.tsx - Async params
+6. src/app/[locale]/(marketing)/about/page.tsx - Async params
+7. src/app/[locale]/(marketing)/contact/page.tsx - Async params
+8. src/app/[locale]/(marketing)/services/page.tsx - Async params
+9. src/app/[locale]/(marketing)/personal/transaction/[id]/page.tsx - Async params
+10. src/app/[locale]/admin/article/[id]/edit/page.tsx - Async params
+11. src/app/[locale]/admin/promotion/[id]/edit/page.tsx - Async params
+12. src/app/[locale]/admin/tour/[id]/edit/page.tsx - Async params
+13. src/components/features/tour/tour-detail/available-tickets.tsx - useRef type fix
+14. src/utils/handle-error.ts - isRedirectError removal
+15. tsconfig.json - React 19 types
+
+**Review Report**: [code-reviewer-260117-phase2b-nextjs15-react19.md](./reports/code-reviewer-260117-phase2b-nextjs15-react19.md)
 
 ### Phase 3: Deferred Updates (Future Sprint)
 

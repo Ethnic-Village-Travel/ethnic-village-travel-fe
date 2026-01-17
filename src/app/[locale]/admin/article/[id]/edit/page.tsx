@@ -1,11 +1,12 @@
 import ArticleEditContent from '@/components/features/admin/article-management/article-edit';
 
 type AdminArticleEditPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function AdminArticleEditPage({ params }: AdminArticleEditPageProps) {
+export default async function AdminArticleEditPage(props: AdminArticleEditPageProps) {
+  const params = await props.params;
   return <ArticleEditContent id={params.id} />;
 }

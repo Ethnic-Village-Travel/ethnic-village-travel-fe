@@ -1,4 +1,3 @@
-import { isRedirectError } from 'next/dist/client/components/redirect';
 import { z } from 'zod';
 
 import { ApiResponse } from '@/types/api.type';
@@ -12,11 +11,11 @@ export function getErrorMessage(err: unknown) {
   }
 
   if (err instanceof Error) {
+    // Check if this is a Next.js redirect error (contains NEXT_REDIRECT)
+    if (err.message?.includes('NEXT_REDIRECT')) {
+      return 'Redirecting...';
+    }
     return err.message;
-  }
-
-  if (isRedirectError(err)) {
-    return 'Redirecting...';
   }
 
   if (typeof err === 'string') {

@@ -10,10 +10,10 @@ import { StructuredData } from '@/components/shared/structured-data';
 import TourDetail from '@/components/features/tour/tour-detail';
 
 type TourDetailPageProps = {
-  params: {
+  params: Promise<{
     slug: string;
     locale: string;
-  };
+  }>;
 }
 
 async function fetchTourDetail(slug: string): Promise<Tour | null> {
@@ -39,7 +39,8 @@ async function fetchTourDetail(slug: string): Promise<Tour | null> {
   }
 }
 
-export async function generateMetadata({ params }: TourDetailPageProps): Promise<Metadata> {
+export async function generateMetadata(props: TourDetailPageProps): Promise<Metadata> {
+  const params = await props.params;
   const { slug } = params;
 
   const tour = await fetchTourDetail(slug);
@@ -73,7 +74,8 @@ export async function generateMetadata({ params }: TourDetailPageProps): Promise
   };
 }
 
-export default async function TourDetailPage({ params }: TourDetailPageProps) {
+export default async function TourDetailPage(props: TourDetailPageProps) {
+  const params = await props.params;
   const { slug, locale } = params;
 
   const tour = await fetchTourDetail(slug);

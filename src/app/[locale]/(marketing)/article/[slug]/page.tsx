@@ -11,7 +11,7 @@ import { StructuredData } from '@/components/shared/structured-data';
 import ArticleDetailPageContent from '@/components/features/article/article-detail';
 
 type ArticleDetailPageProps = {
-  params: { slug: string; locale: string };
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 async function fetchArticleDetail(slug: string): Promise<Article | null> {
@@ -49,7 +49,8 @@ async function fetchArticleDetail(slug: string): Promise<Article | null> {
   } as Article;
 }
 
-export async function generateMetadata({ params }: ArticleDetailPageProps): Promise<Metadata> {
+export async function generateMetadata(props: ArticleDetailPageProps): Promise<Metadata> {
+  const params = await props.params;
   const { slug, locale } = params;
 
   const article = await fetchArticleDetail(slug);
@@ -85,7 +86,8 @@ export async function generateMetadata({ params }: ArticleDetailPageProps): Prom
   };
 }
 
-export default async function ArticleDetailPage({ params }: ArticleDetailPageProps) {
+export default async function ArticleDetailPage(props: ArticleDetailPageProps) {
+  const params = await props.params;
   const { slug, locale } = params;
 
   const article = await fetchArticleDetail(slug);

@@ -1,4 +1,5 @@
-'use client';
+'use client';;
+import { use } from "react";
 
 import { useRouter } from 'next/navigation';
 import { bookingApi } from '@/data/apis/booking.api';
@@ -27,9 +28,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
 type TransactionDetailPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 const LoadingState = () => (
@@ -62,7 +63,8 @@ const ErrorState = () => (
   </div>
 );
 
-export default function TransactionDetailPage({ params }: TransactionDetailPageProps) {
+export default function TransactionDetailPage(props: TransactionDetailPageProps) {
+  const params = use(props.params);
   const router = useRouter();
   const t = useTranslations('personal.detail');
 
