@@ -10,7 +10,7 @@
 
 ## Phase 2: Core Feature Implementation
 - [ ] Admin Dashboard Migration (ESLint 9, Flat Config)
-- [ ] Framework Upgrade (Next.js 15, React 19)
+- [x] Framework Upgrade (Next.js 15, React 19) ✅ 2026-01-17
 - [ ] Enhanced Booking Workflow
 - [ ] Tour Content Management System
 - [ ] Advanced User Profiles
@@ -24,8 +24,8 @@
 ---
 
 ## Progress Overview
-- Infrastructure: 95%
-- Core Features: 40%
+- Infrastructure: 100%
+- Core Features: 45%
 - Optimization: 10%
 
 ---
@@ -38,6 +38,11 @@
 - `rehype-raw@7.0.0` for HTML parsing in markdown
 
 #### Changed
+- **Upgrade Framework to Next.js 15.5.9 & React 19.2.3** (Phase 2B)
+  - Migrated 13 files to support Async Request APIs (`params`, `searchParams`, `cookies`, `headers`).
+  - Updated `package.json` with React 19 types and Next.js 15 dependencies.
+  - Refined `useRef` usage and removed deprecated `isRedirectError`.
+  - Verified build, lint, and core functionality.
 - Updated 22 dependencies to latest patch/minor versions (Phase 1)
   - @tanstack/react-query: 5.74.3 → 5.90.18
   - framer-motion: 12.23.26 → 12.26.2
