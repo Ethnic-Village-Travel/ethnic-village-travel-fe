@@ -74,9 +74,7 @@ export default function SharedFormField({
   autoComplete,
   readOnly = false,
 }: SharedFormFieldProps) {
-  const t = translationNamespace
-    ? useTranslations(translationNamespace as Parameters<typeof useTranslations>[0])
-    : undefined;
+  const t = useTranslations(translationNamespace as Parameters<typeof useTranslations>[0]);
 
   const getTranslatedText = (key: string) => {
     if (!translationNamespace || !t) return key;
