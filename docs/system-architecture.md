@@ -6,7 +6,7 @@
 graph TD
     User((User))
     LB[Load Balancer / Cloudflare]
-    FE[Next.js 14 Frontend]
+    FE[Next.js 15 Frontend - React 19]
     BE[Backend API]
     Auth[Auth Service]
     DB[(Database)]
@@ -19,7 +19,7 @@ graph TD
 ```
 
 ## Routing Architecture
-- **Framework**: Next.js App Router.
+- **Framework**: Next.js 15 App Router with React 19.
 - **Dynamic Routing**: `/[locale]/...` structure for i18n.
 - **Middleware**: Intercepts every request (except static assets/API) to:
   1. Detect/set locale.
